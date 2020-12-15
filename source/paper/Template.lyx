@@ -1,0 +1,314 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{setspace}
+%\usepackage[bottom]{footmisc}
+%\usepackage{amsfonts}
+%\usepackage{pdflscape}
+%\usepackage{amsmath}
+%\usepackage{amssymb}
+\usepackage{datetime}
+%\usepackage{mathptmx}
+%\usepackage{stmaryrd}
+%\usepackage[justification=centering]{caption}
+%\usepackage{mathptmx}
+%\usepackage{titlesec}
+%\usepackage{scrextend}
+%\DeclareSymbolFont{epsilon}{OML}{ntxmi}{m}{it}
+%\DeclareMathSymbol{\epsilon}{\mathord}{epsilon}{"0F}
+
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Corr}{Corr}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\E}{E}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator{\V}{V}
+\DeclareMathOperator{\logit}{logit}
+\DeclareMathOperator{\I}{I}
+\DeclareMathOperator{\plim}{plim}
+\DeclareMathOperator{\diag}{diag}
+
+
+\DeclareMathOperator*{\argmax}{arg\,max} 
+\DeclareMathOperator*{\argmin}{arg\,min} 
+
+\date{}
+\end_preamble
+\use_default_options false
+\begin_modules
+theorems-ams-bytype
+theorems-ams-extended-bytype
+\end_modules
+\maintain_unincluded_children false
+\begin_local_layout
+Format 66
+Style Claim
+CopyStyle             Remark
+LatexName             claim
+LabelString           "Claim \thetheorem."
+Font
+  Shape               Up
+  Size                Normal
+  Series              Default
+EndFont
+LabelFont
+  Shape               Up
+  Series              Default
+EndFont
+Preamble
+  \theoremstyle{definition}
+  \newtheorem{claim}{\protect\claimname}
+EndPreamble
+LangPreamble
+  \providecommand{\claimname}{_(Claim)}
+EndLangPreamble
+BabelPreamble
+  \addto\captions$$lang{\renewcommand{\claimname}{_(Claim)}}
+EndBabelPreamble
+End
+\end_local_layout
+\language english
+\language_package none
+\inputencoding utf8
+\fontencoding global
+\font_roman "ae" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family rmdefault
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command bibtex
+\index_command default
+\paperfontsize 12
+\spacing onehalf
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plainnat
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1.25in
+\topmargin 1.25in
+\rightmargin 1.25in
+\bottommargin 1.25in
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Template
+\end_layout
+
+\begin_layout Author
+First Author, 
+\emph on
+Institution
+\emph default
+
+\begin_inset Newline newline
+\end_inset
+
+Second Author, 
+\emph on
+Institution
+\series bold
+\emph default
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+We thank our dedicated research assistants for their contributions to this
+ project.
+ E-mail: author@institution.edu.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Date
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+monthname
+\backslash
+ 
+\backslash
+number
+\backslash
+year
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Abstract
+\noindent
+Some abstract
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{spacing}{1.32}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Some Section
+\end_layout
+
+\begin_layout Standard
+Some text
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{spacing}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+\start_of_appendix
+References
+\end_layout
+
+\begin_layout Standard
+\align block
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+leftskip=2em 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+parindent=-2em
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+onehalfspacing
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+noindent
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Author.
+ YYYY.
+ Title.
+ 
+\shape italic
+Journal
+\shape default
+ Vol: pages.
+\end_layout
+
+\end_body
+\end_document
