@@ -3,6 +3,8 @@
 *.pyc
 *.lyx~
 *.lyx#
+*.RDS
+*.RData
 *.Rhistory
 *.Rapp.history
 *.DS_Store
