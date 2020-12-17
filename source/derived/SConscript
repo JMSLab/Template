@@ -1,0 +1,6 @@
+Import('*')
+
+target = ['#output/derived/test/test.dta']
+source = ['#source/derived/test/build.do',
+          '#source/raw/test/data.csv']
+env.Stata(target, source)

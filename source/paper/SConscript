@@ -1,0 +1,6 @@
+Import('*')
+
+target = ['#output/paper/Template.pdf']
+source = ['#source/paper/Template.lyx']
+
+env.Lyx(target, source)

@@ -1,0 +1,3 @@
+release: release/repo-test_branch/test_version/release_content.zip
+paper.pdf
+plot.pdf
