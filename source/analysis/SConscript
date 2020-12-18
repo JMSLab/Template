@@ -1,0 +1,15 @@
+Import('*')
+
+target = ['#output/analysis/top_gdp/sconscript.log',
+          '#output/analysis/top_gdp/top_gdp.txt']
+source = ['#source/analysis/top_gdp/top_gdp_table.R',
+          '#output/derived/gdp_education/gdp_education.csv']
+env.R(target, source)
+
+target = ['#output/analysis/plots/sconscript.log',
+          '#output/analysis/plots/gdp_educ.eps']
+source = ['#source/analysis/plots/plot.m',
+          '#output/derived/gdp_education/gdp_education_logs.csv']
+env.Matlab(target, source)
+
+

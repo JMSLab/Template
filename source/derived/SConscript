@@ -1,6 +1,11 @@
 Import('*')
 
-target = ['#output/derived/test/test.dta']
-source = ['#source/derived/test/build.do',
-          '#source/raw/test/data.csv']
+target = ['#output/derived/gdp_education/gdp_education_logs.csv']
+source = ['#source/derived/gdp_education/takelogs.do']
 env.Stata(target, source)
+
+target = ['#output/derived/gdp_education/gdp_education.csv']
+source = ['#source/derived/gdp_education/build.py',
+          '#drive/raw/world_bank/orig/API_NY.GDP.PCAP.CD_DS2_en_csv_v2_1740213.csv',
+          '#drive/raw/world_bank/orig/API_SE.XPD.TOTL.GD.ZS_DS2_en_csv_v2_1740282.csv']
+env.Python(target, source)
