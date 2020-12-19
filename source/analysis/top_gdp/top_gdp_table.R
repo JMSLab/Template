@@ -2,7 +2,7 @@ library(dplyr)
 
 Main <- function() {
   
-  df <- read.csv("./output/derived/gdp_education/gdp_education.csv")
+  df <- read.csv("./output/derived/wb_clean/gdp_education.csv")
   
   df <- df %>%
     select(Country.Name, GDP_2010) %>%

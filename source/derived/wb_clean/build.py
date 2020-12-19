@@ -6,7 +6,7 @@ import os
 
 def Main():
     RAW_DIR = ".\\drive\\raw\\world_bank\\orig"
-    OUT_DIR = ".\\output\\derived\\gdp_education"
+    OUT_DIR = ".\\output\\derived\\wb_clean"
     df = PrepareData(RAW_DIR)
     df.to_csv(os.path.join(OUT_DIR, "gdp_education.csv"), index = False)
 

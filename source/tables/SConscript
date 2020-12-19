@@ -1,6 +1,6 @@
 Import('env')
 
-env.Tablefill(target = ['#output/tables/top_gdp.lyx'],
-              source = ['#source/tables/top_gdp.lyx',
-                        '#output/analysis/top_gdp/top_gdp.txt'])
-
+target = ['#output/tables/top_gdp.lyx']
+source = ['#source/tables/top_gdp.lyx',
+          '#output/analysis/top_gdp/top_gdp.txt']
+env.Tablefill(target, source)
