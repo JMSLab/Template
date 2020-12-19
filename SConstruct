@@ -10,7 +10,9 @@ sys.dont_write_bytecode = True # Don't write .pyc files
 env = Environment(ENV = {'PATH' : os.environ['PATH']}, 
                   IMPLICIT_COMMAND_DEPENDENCIES = 0,
                   BUILDERS = {'R'         : Builder(action = gs.build_r),
+                              'Tablefill' : Builder(action = gs.build_tables),
                               'Stata'     : Builder(action = gs.build_stata),
+                              'Matlab'    : Builder(action = gs.build_matlab),
                               'Python'    : Builder(action = gs.build_python),
                               'Lyx'       : Builder(action = gs.build_lyx)})
 env.Decider('MD5-timestamp') # Only computes hash if time-stamp changed
@@ -19,4 +21,6 @@ Export('env')
 gs.start_log('develop', '')
 
 SConscript('source/derived/SConscript')
+SConscript('source/analysis/SConscript')
+SConscript('source/tables/SConscript')
 SConscript('source/paper/SConscript')
