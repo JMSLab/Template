@@ -102,6 +102,14 @@ name "tab:top_gdp"
 
 \begin_layout Plain Layout
 \align center
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
 
 \size tiny
 \begin_inset Tabular
