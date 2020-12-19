@@ -4,7 +4,7 @@
 import pandas as pd
 import os
 
-def main():
+def Main():
     RAW_DIR = ".\\drive\\raw\\world_bank\\orig"
     OUT_DIR = ".\\output\\derived\\gdp_education"
     df = PrepareData(RAW_DIR)
@@ -27,6 +27,4 @@ def PrepareData(RAW_DIR):
     
     return gdp_and_educ
 
-main()
-
-    
+Main()
