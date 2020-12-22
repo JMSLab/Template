@@ -65,7 +65,7 @@ In addition, each project may use other specialized tools (e.g. R, Stata, Matlab
 
 - `temp/` is often used by scripts to store temporary data files.
 
-- Issue folders: When working on issues, you may create an issue folder at the top of the directory (e.g. `./issue1_task_name`). Code and deliverables related to the issue are organized inside the issue folder, but anything that is meant to be integrated into the project should be sorted into a sub-folder in `./source`.
+- Issue folders: When working on issues, you may create an issue folder at the top of the directory (e.g. `./issue1_task_name`). Code and deliverables related to the issue are organized inside the issue folder, but anything that is meant to be integrated into the project should be sorted into a sub-folder in `source/`.
 
 ### SConscript files
 
