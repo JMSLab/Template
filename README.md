@@ -18,7 +18,7 @@ In addition, each project may use other specialized tools (e.g. R, Stata, Matlab
 
 ### Quick start
 
-1. Open a shell and clone the repository. For example,
+1. Open the command-line and clone the repository. For example,
 
     ```
     git clone https://github.com/JMSLab/Template ProjectName
@@ -45,9 +45,9 @@ In addition, each project may use other specialized tools (e.g. R, Stata, Matlab
 
     - The default names that SCons assumes for the programs are in `source/lib/builders/executables.txt`.
 
-    - To have SCons look for a custom executable name or path, define a command-line variable named `JMSLAB_EXE_PROGRAM=/path/to/executable`. e.g. `JMSLAB_EXE_STATA=StataSE.exe` or `JMSLAB_EXE_STATA="C:\Program Files (x86)\Stata16\StataSE.exe"`.
+    - To have SCons use a custom executable name or path, define a command-line variable named `JMSLAB_EXE_PROGRAM=/path/to/executable`. e.g. `JMSLAB_EXE_STATA=StataSE.exe` or `JMSLAB_EXE_STATA="C:\Program Files (x86)\Stata16\StataSE.exe"`.
 
-7. Compile the directory by running `scons` from the project's root folder.
+7. To compile the project, open the command-line and run `scons` from the project's root folder.
 
 ### Repository Structure
 
