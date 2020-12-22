@@ -1,5 +1,5 @@
 import os
-from gslab_builder import GSLabBuilder
+from .gslab_builder import GSLabBuilder
 
 
 def build_r(target, source, env):

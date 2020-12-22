@@ -3,8 +3,8 @@ import shutil
 import hashlib
 import sys
 
-import gslab_scons.misc as misc
-from gslab_builder import GSLabBuilder
+from .. import misc
+from .gslab_builder import GSLabBuilder
 
 
 def build_matlab(target, source, env):
@@ -56,7 +56,7 @@ class MatlabBuilder(GSLabBuilder):
     def add_call_args(self):
         '''
         '''
-        source_hash = hashlib.sha1(self.source_file).hexdigest()
+        source_hash = hashlib.sha1(self.source_file.encode('utf-8')).hexdigest()
         source_exec = 'source_%s' % source_hash
         exec_file   = source_exec + '.m'
         shutil.copy(self.source_file, exec_file)

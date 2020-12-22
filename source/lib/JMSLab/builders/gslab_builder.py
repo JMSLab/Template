@@ -3,8 +3,8 @@ import os
 import subprocess
 import sys
 
-import gslab_scons.misc as misc
-from gslab_scons._exception_classes import ExecCallError, TargetNonexistenceError, BadExtensionError
+from .. import misc
+from .._exception_classes import ExecCallError, TargetNonexistenceError, BadExtensionError
 
 class GSLabBuilder(object):
     '''
@@ -188,6 +188,6 @@ class GSLabBuilder(object):
             builder_log_msg = '*** Builder log created: {%s}\n' \
                               '*** Builder log completed: {%s}\n%s' \
                               % (start_time, end_time, content)
-        with open(self.log_file, mode = 'wb') as f:
+        with open(self.log_file, mode = 'w') as f:
             f.write(builder_log_msg)
         return None

@@ -7,7 +7,8 @@ import yaml
 import getpass
 import fnmatch
 # Import gslab_scons modules
-import _exception_classes
+from . import _exception_classes
+
 
 def make_heading(s):
     '''
@@ -29,7 +30,7 @@ def is_scons_dry_run(cl_args_list = []):
 
 def is_unix():
     '''
-    This function return True if the user's platform is Unix and false 
+    This function return True if the user's platform is Unix and false
     otherwise.
     '''
     unix = ['darwin', 'linux', 'linux2']
@@ -46,7 +47,7 @@ def is_64_windows():
 
 def is_in_path(program):
     '''
-    This general helper function checks whether `program` exists in the 
+    This general helper function checks whether `program` exists in the
     user's path environment variable.
     '''
     if os.access(program, os.X_OK):
@@ -118,7 +119,7 @@ def load_yaml_value(path, key):
 
         except yaml.scanner.ScannerError:
             message = "%s is a corrupted yaml file. Delete file and recreate? (y/n) "
-            response = str(raw_input(message % path))
+            response = str(input(message % path))
             if response.lower() == 'y':
                 os.remove(path)
                 yaml_contents = None
@@ -137,7 +138,7 @@ def load_yaml_value(path, key):
             if key == "github_token":
                 val = getpass.getpass(prompt=(prompt % key))
             else:
-                val = str(raw_input(prompt % key))
+                val = str(input(prompt % key))
             if re.sub('"', '', re.sub('\'', '', val.lower())) == "none":
                 val = None
             f.write('%s: %s\n' % (key, val))
@@ -184,9 +185,9 @@ def get_executable(language_name, manual_executables = {}):
         'anything builder': ''
     }
     lower_name = language_name.lower().strip()
-    manual_executables = {str(k).lower().strip(): str(v).lower().strip() 
+    manual_executables = {str(k).lower().strip(): str(v).lower().strip()
                           for k, v in manual_executables.items()}
-    manual_executables = {k: v for k, v in manual_executables.items() 
+    manual_executables = {k: v for k, v in manual_executables.items()
                           if k and v and v not in ['none', 'no', 'false', 'n', 'f']}
     try:
         executable = manual_executables[lower_name]
@@ -199,7 +200,7 @@ def get_executable(language_name, manual_executables = {}):
         executable = default_executables[lower_name]
         if lower_name == 'stata':
             if is_unix():
-                executable = 'stata-mp'
+                executable = '/home/mauricio/.local/stata15/stata-mp'
             elif sys.platform == 'win32':
                 executable = 'StataMP-64.exe'
             else:
@@ -265,32 +266,32 @@ def add_two_dict_keys(d = {}, common_key = '', key1 = 'global', key2 = 'user'):
     return items
 
 
-def flatten_dict(d, parent_key = '', sep = ':', 
+def flatten_dict(d, parent_key = '', sep = ':',
                  safe_keys = True, skip_keys = ()):
     '''
     Recursively flatten nested dictionaries. Default sep between keys is ':'.
-    Using safe_keys avoids overwriting values assigned to the same key 
+    Using safe_keys avoids overwriting values assigned to the same key
     in the flattened dict. Does so by adding _(`times repeated`) to the key.
     Keeps track of repeated keys using the skip_keys argument.
     '''
     items = []
     for key, val in sorted(d.items()):
         # Create name of new key
-        if parent_key is not '':
+        if parent_key:
             prefix = parent_key + sep
         else:
             prefix = ''
         new_key = prefix + key
         # If safe_keys is True, give new key a unique name and record it.
-        if safe_keys is not True:
+        if not safe_keys:
             pass
-        else:    
+        else:
             if new_key in skip_keys:
                 new_key_base = new_key.split('_')[0]
-                # Regex for new_key optionally folowed by underscore 
+                # Regex for new_key optionally folowed by underscore
                 # and some digits. Then string must end.
                 key_regex = re.compile('%s(?:_\d+)?$' % new_key_base)
-                num_same_keys = len([True for skip_key in skip_keys 
+                num_same_keys = len([True for skip_key in skip_keys
                                      if bool(key_regex.match(skip_key))])
                 if num_same_keys > 0:
                     new_key = '%s_%s' % (new_key_base, num_same_keys)
@@ -300,7 +301,7 @@ def flatten_dict(d, parent_key = '', sep = ':',
                 pass
             skip_keys += (new_key,)
         try: # Recursive case
-            items.extend(flatten_dict(val, parent_key = new_key, 
+            items.extend(flatten_dict(val, parent_key = new_key,
                                       skip_keys = skip_keys).items())
         except AttributeError: # Base case
             items.append((new_key, val))

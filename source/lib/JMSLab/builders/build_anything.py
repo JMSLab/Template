@@ -2,8 +2,8 @@ import os
 import copy
 import warnings
 
-from gslab_builder import GSLabBuilder
-import gslab_scons.misc as misc
+from .. import misc
+from .gslab_builder import GSLabBuilder
 
 
 def build_anything(target, source, action, env, warning = True, **kw):

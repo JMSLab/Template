@@ -4,7 +4,7 @@ import glob
 from datetime import datetime
 import subprocess
 import shutil
-import gslab_scons.misc as misc
+from . import misc
 
 
 def start_log(mode, cl_args_list = sys.argv, log = 'sconstruct.log'):
@@ -20,7 +20,7 @@ def start_log(mode, cl_args_list = sys.argv, log = 'sconstruct.log'):
         f.write(start_message)
 
     if misc.is_unix():
-        sys.stdout = os.popen('tee -a %s' % log, 'wb')
+        sys.stdout = os.popen('tee -a %s' % log, 'w')
     elif sys.platform == 'win32':
         sys.stdout = open(log, 'ab')
 

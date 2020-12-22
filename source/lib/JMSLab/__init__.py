@@ -10,7 +10,7 @@ Please consult the docstrings of the gslab_scons builders belonging to
 this module for additonal information on their functionalities.
 '''
 import os
-import misc
+from . import misc
 from .log                      import start_log, end_log
 from .log_paths_dict           import log_paths_dict, record_dir
 from .scons_debrief            import scons_debrief
@@ -19,7 +19,7 @@ from .builders.build_r         import build_r
 from .builders.build_latex     import build_latex
 from .builders.build_lyx       import build_lyx
 from .builders.build_stata     import build_stata
-from .builders.build_tables    import build_tables
+# from .builders.build_tables    import build_tables
 from .builders.build_python    import build_python
 from .builders.build_matlab    import build_matlab
 from .builders.build_anything  import build_anything
