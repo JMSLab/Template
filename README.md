@@ -57,7 +57,7 @@ In addition, each project may use other specialized tools (e.g. R, Stata, Matlab
 
     - Each folder in source has an analogous output folder in `output/` and/or `drive/`. For instance, the code in `source/analysis/plots/` saves output to `output/analysis/plots/`.
 
-- `output/` and `drive/` should mimic the folder structure in source.
+- `output/` and `drive/` should mimic the folder structure in `source/`.
 
     - With the exception of large raw files, every file here is produced by `source/`, and folders correspond to an analogous source folder in `source/`.
 
