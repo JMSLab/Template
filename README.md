@@ -10,7 +10,11 @@
     - And [git-lfs](https://git-lfs.github.com/) for versioning large files.
 - [LyX](https://www.lyx.org/Download) for writing documents.
 
-In addition, each project may use other specialized tools (e.g. R, Stata, Matlab, LaTeX).
+In addition, each project may use other specialized tools. For the working example in this template, install:
+
+- [R](https://www.r-project.org/)
+- [Stata](https://www.stata.com/install-guide/)
+- [Matlab](https://www.mathworks.com/help/install/install-products.html)
 
 ### Quick start
 
@@ -21,29 +25,23 @@ In addition, each project may use other specialized tools (e.g. R, Stata, Matlab
     cd ProjectName
     ```
 
-2. Create a folder called `temp` for temporary files.
+2. Create a symbolic link called `drive` to _a local copy_ the project's datastore, if one exists for the project (e.g. a Dropbox or Google Drive folder).
 
-3. Create a symbolic link called `drive` to _a local copy_ the project's Dropbox drive (datastore), if one exists for the project.
+    - Do _not_ link a "live" copy of the datastore (i.e. one that is synchronized to the internet). Work with a local, off-line copy before modifying the live copy;  otherwise the data may get unintentionally overwritten for everyone using the datastore. 
 
-    - Do _not_ link a "live" copy (i.e. one that is synchronized to the internet) of the datastore; otherwise the data may get unintentionally overwritten for everyone using the datastore.
-
-    - Work with a local, off-line copy of the datastore before modifying the live copy.
-
-4. Install Python dependencies:
+3. Install Python dependencies:
 
     ```
     pip install -r source/lib/requirements.txt
     ```
 
-5. Install any additional tools required for the project (e.g. R, Stata, Matlab, LaTeX).
-
-6. Make sure that all the required program executables are in your system's path. 
+4. Make sure that all the required program executables are in your system's path. 
 
     - The default names that SCons assumes for the programs are in `source/lib/builders/executables.txt`.
 
     - To have SCons use a custom executable name or path, define a command-line variable named `JMSLAB_EXE_PROGRAM=/path/to/executable`. e.g. `JMSLAB_EXE_STATA=StataSE.exe` or `JMSLAB_EXE_STATA="C:\Program Files (x86)\Stata16\StataSE.exe"`.
 
-7. To compile the project, open the command-line and run `scons` from the project's root folder.
+5. To compile the project, open the command-line and run `scons` from the project's root folder.
 
 ### Repository Structure
 
