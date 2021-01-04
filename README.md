@@ -1,10 +1,11 @@
 ## JMSLab Template
 
+A template for research projects developed by JMSLab.
+
 ### Prerequisites
 
-- [SCons](https://scons.org) to execute scripts and track dependencies.
-- [Python](https://www.python.org/downloads) 3.8.X or above to run SCons.
-    - You will also need to install the additional dependencies in `source/lib/requirements.txt` (see [quick start](#quick-start) below).
+- [Python](https://www.python.org/downloads) 3.8.X or above to run [SCons](https://scons.org).
+    - You will need to install the dependencies in `source/lib/requirements.txt`, including SCons and other required packages (see [quick start](#quick-start) below).
     - Custom builders for SCons are also written in Python.
 - [git](https://git-scm.com/downloads) for version control.
     - And [git-lfs](https://git-lfs.github.com/) for versioning large files.
@@ -42,6 +43,8 @@ In addition, each project may use other specialized tools. For the working examp
     - To have SCons use a custom executable name or path, define a command-line variable named `JMSLAB_EXE_PROGRAM=/path/to/executable`. e.g. `JMSLAB_EXE_STATA=StataSE.exe` or `JMSLAB_EXE_STATA="C:\Program Files (x86)\Stata16\StataSE.exe"`.
 
 5. To compile the project, open the command-line and run `scons` from the project's root folder.
+
+    - To run a given script or create a given file, run `scons path/to/script_or_file`; this will recursively run all the dependencies required to run the script or create the file.
 
 ### Repository Structure
 
