@@ -4,9 +4,9 @@ A template for research projects developed by JMSLab.
 
 ### Prerequisites
 
-- [Python](https://www.python.org/downloads) 3.8.X or above to run [SCons](https://scons.org).
-    - You will need to install the dependencies in `source/lib/requirements.txt`, including SCons and other required packages (see [quick start](#quick-start) below).
-    - Custom builders for SCons are also written in Python.
+- We recommend installing [Anaconda](https://www.anaconda.com/products/individual) 3.8 or above to get Python.
+    - We use Python to run [SCons](https://scons.org); custom SCons builders are also written in Python.
+    - You will need to install the dependencies in `source/lib/requirements.txt` (including SCons). See [quick start](#quick-start) below.
 - [git](https://git-scm.com/downloads) for version control.
     - And [git-lfs](https://git-lfs.github.com/) for versioning large files.
 - [LyX](https://www.lyx.org/Download) for writing documents.
