@@ -74,7 +74,7 @@ In addition, each project may use other specialized tools. For the working examp
 
 In order to integrate a new script into the SCons build, you need to modify the SConscript file in the corresponding `source/` sub-folder.  For example, to add `source/derived/wb_clean/takelogs.do` to the SCons build, add an entry to `source/derived/SConscript`. In this case:
 
-```
+```python
 target = ['#output/derived/wb_clean/gdp_education_logs.csv']
 source = ['#source/derived/wb_clean/takelogs.do',
           '#output/derived/wb_clean/gdp_education.csv']
