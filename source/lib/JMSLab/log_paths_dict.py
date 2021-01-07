@@ -147,7 +147,7 @@ def get_file_information(f, inpath, include_checksum):
     f_size = str(f.stat().st_size)
     f_info = [f_path, f_size]
     if include_checksum:
-        with open(f.path, 'rU') as infile:
+        with open(f.path, 'r') as infile:
             f_checksum = str(mmh3.hash128(infile.read(), 2017))
         f_info.append(f_checksum)
 

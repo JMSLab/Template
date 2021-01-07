@@ -21,8 +21,8 @@ path = 'gslab_scons.misc'
 class MockDateTime(datetime.datetime):
     @classmethod
     def now(cls):
-        return cls(2017, 1, 20, 
-                   15,   2, 18, 
+        return cls(2017, 1, 20,
+                   15,   2, 18,
                    133911)
 
 
@@ -31,7 +31,7 @@ class TestMisc(unittest.TestCase):
     @mock.patch('gslab_scons.misc.issue_size_warnings')
     def test_scons_debrief(self, mock_size_warn, mock_repo_state):
         target = 'state_of_repo.log'
-        env    = {'MAXIT': '10', 
+        env    = {'MAXIT': '10',
                   'look_in': 'release',
                   'file_MB_limit': '1',
                   'total_MB_limit': '2'}
@@ -42,16 +42,16 @@ class TestMisc(unittest.TestCase):
         with self.assertRaises(KeyError):
             misc.scons_debrief(target, {})
 
-        env = {'MAXIT': 'maxit', 
+        env = {'MAXIT': 'maxit',
                'look_in': 'release',
                'file_MB_limit': '1',
-               'total_MB_limit': '2'}            
+               'total_MB_limit': '2'}
         with self.assertRaises(ValueError):
             misc.scons_debrief(target, env)
 
     #== Tests for stata_command_unix() and stata_command_win() ======
-    # The tests below patch sys.platform to mock various 
-    # operating systems. 
+    # The tests below patch sys.platform to mock various
+    # operating systems.
     @mock.patch('gslab_scons.misc.sys.platform', 'darwin')
     def test_stata_command_unix_mac(self):
         '''
@@ -66,7 +66,7 @@ class TestMisc(unittest.TestCase):
         '''
         Test that stata_command_unix() returns the expected
         command when run on Linux computers.
-        '''        
+        '''
         output = misc.stata_command_unix('stata-se')
         self.assertEqual(output.strip(), 'stata-se -b %s %s')
 
@@ -82,50 +82,50 @@ class TestMisc(unittest.TestCase):
     @mock.patch('gslab_scons.misc.sys.platform', 'cygwin')
     def test_stata_command_unix_other(self):
         '''
-        Test that stata_command_unix() raises an error when 
+        Test that stata_command_unix() raises an error when
         run on non-Windows, non-Mac, non-Linux machines.
         '''
         with self.assertRaises(KeyError):
             output = misc.stata_command_unix('stata-mp')
 
-    @mock.patch('gslab_scons.misc.sys.platform', 'win32')        
+    @mock.patch('gslab_scons.misc.sys.platform', 'win32')
     def test_stata_command_win_windows(self):
         output = misc.stata_command_win('stata-mp')
-        self.assertEqual(output.strip(), 'stata-mp /e do %s %s')           
+        self.assertEqual(output.strip(), 'stata-mp /e do %s %s')
 
-    @mock.patch('gslab_scons.misc.sys.platform', 'darwin')        
+    @mock.patch('gslab_scons.misc.sys.platform', 'darwin')
     def test_stata_command_win_unix(self):
         '''
         Test that stata_command_win() gives a Windows stata
-        command even on a non-Windows machine. 
+        command even on a non-Windows machine.
         '''
         output = misc.stata_command_win('stata-mp')
         self.assertEqual(output.strip(), 'stata-mp /e do %s %s')
 
     #================================================================
-    
+
     def test_is_unix(self):
         '''
         Test that is_unix() returns True on Mac and Linux
-        machines and False otherwise. 
+        machines and False otherwise.
         '''
         platform_ref = 'gslab_scons.misc.sys.platform'
         with mock.patch(platform_ref, 'win32'):
             self.assertFalse(misc.is_unix())
 
         with mock.patch(platform_ref, 'darwin'):
-            self.assertTrue(misc.is_unix())  
+            self.assertTrue(misc.is_unix())
 
         with mock.patch(platform_ref, 'linux'):
-            self.assertTrue(misc.is_unix())    
+            self.assertTrue(misc.is_unix())
 
         with mock.patch(platform_ref, 'atheos'):
-            self.assertFalse(misc.is_unix())     
+            self.assertFalse(misc.is_unix())
 
     def test_is_64_windows(self):
         '''
         Test that is_64_windows() returns True when PROGRAMFILES(X86)
-        is a key in the system environment as accessed through 
+        is a key in the system environment as accessed through
         os.environ.
         '''
         environ = 'gslab_scons.misc.os.environ'
@@ -140,33 +140,33 @@ class TestMisc(unittest.TestCase):
     @mock.patch('gslab_scons.misc.os.access')
     def test_is_in_path(self, mock_access):
         '''
-        Test that is_in_path() returns i) the full path of 
+        Test that is_in_path() returns i) the full path of
         a recognised executable that the function takes as
         an argument and ii) None if the function's argument
-        is not recognised as an executable. 
+        is not recognised as an executable.
         '''
         mock_access.side_effect = self.access_side_effect
 
-        self.assertEqual(misc.is_in_path('stata'), 
+        self.assertEqual(misc.is_in_path('stata'),
                          '/bin/stata')
-        self.assertEqual(misc.is_in_path('executable_file'), 
+        self.assertEqual(misc.is_in_path('executable_file'),
                          'executable_file')
         self.assertFalse(misc.is_in_path('stata-mp'))
-                            
+
     @staticmethod
     def access_side_effect(*args, **kwargs):
         '''
         This function mocks os.access by defining which
-        files our mocked up machine can execute or 
-        otherwise access. 
+        files our mocked up machine can execute or
+        otherwise access.
         '''
         # Define the files to which we have access
-        # Total access        
+        # Total access
         execute_files = ['/bin/stata',
                          'executable_file']
         # Total access except execution
         other_files   = ['test_script.do']
-        
+
         # Access the arguments of the os.access() call.
         path = args[0]
         mode = args[1]
@@ -181,7 +181,7 @@ class TestMisc(unittest.TestCase):
         else:
             result = False
 
-        return result 
+        return result
 
     def test_command_line_args(self):
         env = {'test' : ''}
@@ -197,14 +197,14 @@ class TestMisc(unittest.TestCase):
         self.assertEqual(misc.command_line_args(env), 'Test_1 Test_2')
 
         env = {'CL_ARG' : [True, None, 'Test']}
-        self.assertEqual(misc.command_line_args(env), 'True None Test')             
+        self.assertEqual(misc.command_line_args(env), 'True None Test')
 
     def test_make_list_if_string(self):
-        self.assertEqual(misc.make_list_if_string(['test', 'test']), 
+        self.assertEqual(misc.make_list_if_string(['test', 'test']),
                                                   ['test', 'test'])
         self.assertEqual(misc.make_list_if_string('test'), ['test'])
         self.assertEqual(misc.make_list_if_string(['test']), ['test'])
-        
+
         # We expect the function to raise Type Errors when it receives
         # inputs that are not strings or lists
         with self.assertRaises(TypeError):
@@ -215,8 +215,8 @@ class TestMisc(unittest.TestCase):
     def test_check_code_extension(self):
         '''Unit tests for check_code_extension()
 
-        This method tests that check_code_extensions() associates software with 
-        file extensions as intended. The function should return None in cases 
+        This method tests that check_code_extensions() associates software with
+        file extensions as intended. The function should return None in cases
         where the extension is correctly specified and raise an error otherwise.
         '''
     	self.assertEqual(misc.check_code_extension('test.do',  '.do'),  None)
@@ -225,7 +225,7 @@ class TestMisc(unittest.TestCase):
         self.assertEqual(misc.check_code_extension('test.py',  '.py'),  None)
         self.assertEqual(misc.check_code_extension('test.m',   '.m'),   None)
         self.assertEqual(misc.check_code_extension('test.M',   '.M'),   None)
-    	
+
         with self.assertRaises(ex_classes.BadExtensionError), nostderrout():
             misc.check_code_extension('test.badextension', '.py')
 
@@ -235,7 +235,7 @@ class TestMisc(unittest.TestCase):
         Test that current_time() prints the correct current time
         in the expected format. Here, the "correct current time"
         is a fixed value set within the MockDateTime class.
-        '''                            
+        '''
         the_time = misc.current_time()
         self.assertEqual('2017-01-20 15:02:18', the_time)
 
@@ -243,7 +243,7 @@ class TestMisc(unittest.TestCase):
         maxit = 10
         # Test general functionality
         misc.state_of_repo(maxit)
-        logfile = open('state_of_repo.log', 'rU').read()
+        logfile = open('state_of_repo.log', 'r').read()
         self.assertIn('GIT STATUS', logfile)
         self.assertIn('FILE STATUS', logfile)
 
@@ -253,7 +253,7 @@ class TestMisc(unittest.TestCase):
             with open('state_of_repo/test_%s.txt' % i, 'wb') as f:
                 f.write('Test')
         misc.state_of_repo(maxit)
-        logfile = open('state_of_repo.log', 'rU').read()
+        logfile = open('state_of_repo.log', 'r').read()
         self.assertIn('MAX ITERATIONS', logfile)
 
         # Cleanup
@@ -294,7 +294,7 @@ class TestMisc(unittest.TestCase):
         yaml = 'yaml.yaml'
         def make_yaml(string):
             if os.path.isfile(yaml):
-                os.remove(yaml)  
+                os.remove(yaml)
             with open(yaml, 'wb') as f:
                 f.write('%s\n' % string)
 
@@ -305,25 +305,25 @@ class TestMisc(unittest.TestCase):
         make_yaml('%s: %s' % (key, value))
         self.assertEqual(misc.load_yaml_value(yaml, key), value)
 
-        # Yaml file exists, is not corrupt, and doesn't have key. 
+        # Yaml file exists, is not corrupt, and doesn't have key.
         # User enters value for key.
         make_yaml('bad_key: bad_value')
         self.assertEqual(misc.load_yaml_value(yaml, key), value)
-        
+
         # But now yaml has a correct key and doesn't require user input.
         mock_raw_input.side_effect = lambda x: "bad_value"
         self.assertEqual(misc.load_yaml_value(yaml, key), value)
         mock_raw_input.side_effect = raw_input_side_effect
 
-        # Yaml file exists and is corrupt. User deletes and re-creates. 
+        # Yaml file exists and is corrupt. User deletes and re-creates.
         make_yaml('%s %s' % (key, value))
         self.assertEqual(misc.load_yaml_value(yaml, key), value)
 
-        # Yaml file does not exist. User enters value to create. 
+        # Yaml file does not exist. User enters value to create.
         os.remove(yaml)
         self.assertEqual(misc.load_yaml_value(yaml, key), value)
 
-        # Yaml file does not exist. User enters none value to create. 
+        # Yaml file does not exist. User enters none value to create.
         os.remove(yaml)
         key = 'stata_executable'
         mock_raw_input.side_effect = raw_input_side_effect2
@@ -335,12 +335,12 @@ class TestMisc(unittest.TestCase):
 
         # Test bad
         with self.assertRaises(ex_classes.PrerequisiteError):
-            # Corrupt file and user doesn't choose to delete and re-create 
+            # Corrupt file and user doesn't choose to delete and re-create
             make_yaml('key value')
             misc.load_yaml_value(yaml, 'key')
 
         if os.path.isfile(yaml):
-            os.remove(yaml)  
+            os.remove(yaml)
 
 
     @mock.patch('%s.os.path.expanduser' % path)
@@ -358,6 +358,6 @@ class TestMisc(unittest.TestCase):
         with self.assertRaises(ex_classes.PrerequisiteError):
             misc.check_and_expand_path(3)
 
-            
+
 if __name__ == '__main__':
     unittest.main()

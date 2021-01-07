@@ -171,7 +171,7 @@ class GSLabBuilder(object):
         '''
         Adds beginning and ending times to a log file made for system call.
         '''
-        with open(self.log_file, mode = 'rU') as f:
+        with open(self.log_file, mode = 'r') as f:
             content = f.read()
             f.seek(0, 0)
             builder_log_msg = '*** Builder log created: {%s}\n' \

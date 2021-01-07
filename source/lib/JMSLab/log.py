@@ -41,7 +41,7 @@ def end_log(cl_args_list = sys.argv, log = 'sconstruct.log', excluded_dirs = [],
         f.write(end_message)
 
     # scan sconstruct.log for start time
-    with open(log, "rU") as f:
+    with open(log, "r") as f:
         s = f.readline()
         s = s[s.find('{') + 1: s.find('}')]
         start_time = datetime.strptime(s, "%Y-%m-%d %H:%M:%S")
@@ -60,7 +60,7 @@ def end_log(cl_args_list = sys.argv, log = 'sconstruct.log', excluded_dirs = [],
 
     with open(log, "a") as sconstruct:
         for f in this_run_list:
-            with open(f, 'rU') as sconscript:
+            with open(f, 'r') as sconscript:
                 if this_run_dict[f] == beginning_of_time:
                     warning_string = "*** Warning!!! The log below does not have timestamps," + \
                                      " the Sconscript may not have finished.\n"
@@ -96,7 +96,7 @@ def collect_builder_logs(parent_dir, excluded_dirs = []):
 
     # Read the file at each path to a log and store output complete-time in a dict at filename
     for log_path in log_paths:
-        with open(log_path, 'rU') as f:
+        with open(log_path, 'r') as f:
             try:
                 s = f.readlines()[1]  # line 0 = log start time, line 1 = log end time
             except IndexError:

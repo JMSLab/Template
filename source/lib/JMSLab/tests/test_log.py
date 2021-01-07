@@ -33,9 +33,9 @@ class TestLog(unittest.TestCase):
     @helpers.platform_patch('darwin', path)
     def test_start_log_stdout_on_unix(self):
         '''
-        Test that start_log() leads stdout to be captured in 
-        a log file on Unix machines. 
-        '''    
+        Test that start_log() leads stdout to be captured in
+        a log file on Unix machines.
+        '''
         # Save the initial standard output
         initial_stdout = sys.stdout
         test = "Test message"
@@ -49,7 +49,7 @@ class TestLog(unittest.TestCase):
 
         # Ensure that start_log() actually redirected standard output
         # to a log at the expected path.
-        with open('sconstruct.log', 'rU') as f:
+        with open('sconstruct.log', 'r') as f:
             log_contents = f.read()
 
         message_match = '^\*\*\* New build: \{[0-9\s\-:]+\} \*\*\*\n%s$' % test
@@ -62,19 +62,19 @@ class TestLog(unittest.TestCase):
         '''
         Test that start_log() uses popen() to initialise its log
         on Unix machines.
-        '''    
+        '''
         gs.start_log(mode = 'develop', vers = '')
         mock_popen.assert_called_with('tee -a sconstruct.log', 'wb')
         gs.start_log(mode = 'develop', vers = '', log = 'test_log.txt')
-        mock_popen.assert_called_with('tee -a test_log.txt', 'wb')       
+        mock_popen.assert_called_with('tee -a test_log.txt', 'wb')
 
     # Set the platform to Windows
     @helpers.platform_patch('win32', path)
     def test_start_log_stdout_on_windows(self):
         '''
-        Test that start_log() leads stdout to be captured in 
-        a log file on Windows machines. 
-        '''       
+        Test that start_log() leads stdout to be captured in
+        a log file on Windows machines.
+        '''
         initial_stdout = sys.stdout
         test = "Test message"
 
@@ -83,7 +83,7 @@ class TestLog(unittest.TestCase):
         sys.stdout.close()
         sys.stdout = initial_stdout
 
-        with open('sconstruct.log', 'rU') as f:
+        with open('sconstruct.log', 'r') as f:
             log_contents = f.read()
 
         message_match = '^\*\*\* New build: \{[0-9\s\-:]+\} \*\*\*\n%s$' % test
@@ -100,7 +100,7 @@ class TestLog(unittest.TestCase):
         gs.start_log(mode = 'develop', vers = '')
         mock_open.assert_called_with('sconstruct.log', 'ab')
         gs.start_log(mode = 'develop', vers = '', log = 'test_log.txt')
-        mock_open.assert_called_with('test_log.txt', 'ab')       
+        mock_open.assert_called_with('test_log.txt', 'ab')
 
         mock_popen.assert_not_called()
 
@@ -125,7 +125,7 @@ class TestLog(unittest.TestCase):
 
     @helpers.platform_patch('darwin', path)
     def test_invalid_mode(self):
-        '''Check behaviour when mode argument is invalid'''    
+        '''Check behaviour when mode argument is invalid'''
         with self.assertRaises(Exception):
             gs.start_log(mode = 'release', vers = '')
 
@@ -162,30 +162,30 @@ class TestLog(unittest.TestCase):
 
     def test_log_timestamp(self):
         '''Test that log_timestamp() correctly adds start/end times to a log'''
-        # Write the test log file and use log_timestamp() to add 
+        # Write the test log file and use log_timestamp() to add
         # stand-in starting and ending time messages.
         with open('test.txt', 'wb') as f:
             f.write('TEST CONTENT')
     	gs.log_timestamp('test_time_start', 'test_time_end', 'test.txt')
-        
+
         # Read the test log file and ensure log_timestamp() worked
         # as intended.
-        with open('test.txt', 'rU') as f:
+        with open('test.txt', 'r') as f:
             content = f.read()
-            
+
         test_message = '*** Builder log created: {test_time_start} \n' + \
                        '*** Builder log completed: {test_time_end} \n' + \
                        ' TEST CONTENT'
         self.assertEqual(content, test_message)
         os.remove('test.txt')
-    
+
     @mock.patch('gslab_scons.log.misc.current_time')
     def test_end_log(self, mock_time):
         # Mock the current time
         now = '2000-01-01 0:0:0'
         mock_time.return_value = now
         gs.end_log()
-        with open('./release/sconstruct.log', 'rU') as f:
+        with open('./release/sconstruct.log', 'r') as f:
             line = f.readline()
             self.assertTrue(re.search('Build completed', line))
             self.assertTrue(re.search('\{%s\}' % now, line))

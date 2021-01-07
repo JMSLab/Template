@@ -158,7 +158,7 @@ def upload_asset(github_token, org, repo, release_id, file_name,
     if not os.path.isfile(file_name):
         raise ReleaseError('upload_asset() cannot find file_name')
 
-    files  = {'file': open(file_name, 'rU')}
+    files  = {'file': open(file_name, 'r')}
     header = {'Authorization': 'token %s' % github_token,
               'Content-Type':  content_type}
     path_base   = 'https://uploads.github.com/repos'
@@ -213,7 +213,7 @@ def execute_up_to_date(command):
     logpath = 'temp_log_up_to_date'
     with open(logpath, 'wb') as temp_log:
         subprocess.call(command, stdout = temp_log, stderr = temp_log, shell = True)
-    with open(logpath, 'rU') as temp_log:
+    with open(logpath, 'r') as temp_log:
         output = [line.strip() for line in temp_log]
     os.remove(logpath)
     return output
@@ -238,7 +238,7 @@ def extract_dot_git(path = '.git'):
     '''
     # Read the config file in the repository's .git directory
     try:
-        details = open('%s/config' % path, 'rU').readlines()
+        details = open('%s/config' % path, 'r').readlines()
     except Exception as err:
         raise ReleaseError("Could not read %s/config. Reason: %s" %
                            (path, str(err)))
@@ -272,7 +272,7 @@ def extract_dot_git(path = '.git'):
     repo         = repo_info[0][1]
 
     # Next, find the branch's name
-    branch_info = open('%s/HEAD' % path, 'rU').readlines()
+    branch_info = open('%s/HEAD' % path, 'r').readlines()
     branch = re.findall('ref: refs/heads/(.+)\\n', branch_info[0])[0]
 
     return repo, organisation, branch

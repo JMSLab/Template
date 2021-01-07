@@ -112,7 +112,7 @@ def command_match(command, executable, which = None):
 
 def check_log(test_object, log_path, timestamp = True):
     '''Check for the existence of a (timestamped) log'''
-    with open(log_path, 'rU') as log_file:
+    with open(log_path, 'r') as log_file:
         log_data = log_file.read()
 
     if timestamp:

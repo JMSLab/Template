@@ -121,7 +121,7 @@ def load_yaml_value(path, key):
     yaml_contents = None
     if os.path.isfile(path):
         try:
-            yaml_contents = yaml.load(open(path, 'rU'))
+            yaml_contents = yaml.load(open(path, 'r'))
             if not isinstance(yaml_contents, dict):
                 raise yaml.scanner.ScannerError()
 
