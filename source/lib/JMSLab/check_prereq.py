@@ -4,25 +4,29 @@ import pkg_resources
 
 from . import misc
 from ._exception_classes import PrerequisiteError
+from builders.executables import get_executables
 
 
-def check_prereq(prereq, manual_execs = {}, gslab_vers = None):
+def check_prereq(prereq, gslab_vers = None):
     '''
     Check if the prerequisites for prereq are satisfied.
     If prereq is a program, check that its executable is in the path.
     If prereq is (gslab_)python, check that it is the appropriate version.
     If prereq is git_lfs, check that it has been installed.
     '''
-    prereq_clean = str(prereq).lower().strip()
-    path_checkers = ['r', 'stata', 'matlab', 'lyx', 'latex']
+
+    executables   = get_executables()
+    prereq_clean  = str(prereq).lower().strip()
+    path_checkers = list(executables.keys())
+
     if prereq_clean in path_checkers:
-        executable = misc.get_executable(prereq_clean, manual_execs)
+        executable = misc.get_executable(prereq_clean, executables)
         if not misc.is_in_path(executable):
             message = 'Cannot find executable for %s in PATH.' % prereq_clean
             raise PrerequisiteError(message)
     elif prereq_clean == 'python':
-        if sys.version_info[0] != 2:
-            raise PrerequisiteError('Please use Python 2')
+        if sys.version_info[0] != 3:
+            raise PrerequisiteError('Please use Python 3')
     elif prereq_clean == 'gslab_python':
         required_version  = process_gslab_version(gslab_vers)
         installed_version = pkg_resources.get_distribution('gslab_tools').version
@@ -37,6 +41,7 @@ def check_prereq(prereq, manual_execs = {}, gslab_vers = None):
     else:
         message = 'Cannot find prerequisite check for %s' % prereq
         raise PrerequisiteError(message)
+
     return None
 
 

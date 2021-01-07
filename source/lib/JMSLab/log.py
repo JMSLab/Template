@@ -2,14 +2,13 @@ import os
 import sys
 import glob
 from datetime import datetime
-import subprocess
 import shutil
 from . import misc
 
 
 def start_log(mode, cl_args_list = sys.argv, log = 'sconstruct.log'):
     '''Begins logging a build process'''
-    
+
     if not (mode in ['develop', 'cache']):
         raise Exception("Error: %s is not a defined mode" % mode)
     elif misc.is_scons_dry_run(cl_args_list = cl_args_list):
@@ -24,14 +23,15 @@ def start_log(mode, cl_args_list = sys.argv, log = 'sconstruct.log'):
     elif sys.platform == 'win32':
         sys.stdout = open(log, 'ab')
 
-    sys.stderr = sys.stdout 
+    sys.stderr = sys.stdout
 
     return None
 
 
-def end_log(cl_args_list = sys.argv, log = 'sconstruct.log', excluded_dirs = [], 
+def end_log(cl_args_list = sys.argv, log = 'sconstruct.log', excluded_dirs = [],
             release_dir = './release/'):
     '''Complete the log of a build process.'''
+
     if misc.is_scons_dry_run(cl_args_list = cl_args_list):
         return None
 
@@ -45,13 +45,16 @@ def end_log(cl_args_list = sys.argv, log = 'sconstruct.log', excluded_dirs = [],
         s = s[s.find('{') + 1: s.find('}')]
         start_time = datetime.strptime(s, "%Y-%m-%d %H:%M:%S")
 
-    # gather all sconscript logs 
+    # gather all sconscript logs
     parent_dir = os.getcwd()
     builder_logs = collect_builder_logs(parent_dir, excluded_dirs = excluded_dirs)
-    
+
     # keep only builder logs from this run OR is broken (value == beginning_of_time)
-    beginning_of_time    = datetime.min # to catch broken logs (see collect_builder_logs)
-    this_run_dict = {key:value for key, value in builder_logs.items() if (value > start_time) or value == beginning_of_time}
+    beginning_of_time = datetime.min  # to catch broken logs (see collect_builder_logs)
+    this_run_dict = {
+        key: value for key, value in builder_logs.items()
+        if (value > start_time) or value == beginning_of_time
+    }
     this_run_list = sorted(this_run_dict, key=this_run_dict.get, reverse=True)
 
     with open(log, "a") as sconstruct:
@@ -73,9 +76,9 @@ def end_log(cl_args_list = sys.argv, log = 'sconstruct.log', excluded_dirs = [],
 
 
 def collect_builder_logs(parent_dir, excluded_dirs = []):
-    ''' Recursively return dictionary of files named sconscript*.log 
+    ''' Recursively return dictionary of files named sconscript*.log
         in parent_dir and nested directories.
-        Also return timestamp from those sconscript.log 
+        Also return timestamp from those sconscript.log
         (snippet from SO 3964681)
 
         excluded_dirs (str or list of str):
@@ -83,7 +86,7 @@ def collect_builder_logs(parent_dir, excluded_dirs = []):
         '''
     builder_log_collect = {}
 
-    # Store paths to logs in a list, found from platform-specific command line tool 
+    # Store paths to logs in a list, found from platform-specific command line tool
     rel_parent_dir = os.path.relpath(parent_dir)
     log_name = '*sconscript*.log'
     excluded_dirs = misc.make_list_if_string(excluded_dirs)
@@ -94,16 +97,15 @@ def collect_builder_logs(parent_dir, excluded_dirs = []):
     for log_path in log_paths:
         with open(log_path, 'rU') as f:
             try:
-                s = f.readlines()[1] # line 0 = log start time, line 1 = log end time
+                s = f.readlines()[1]  # line 0 = log start time, line 1 = log end time
             except IndexError:
                 s = ''
-            s = s[s.find('{') + 1: s.find('}')] # find {} time identifier 
+            s = s[s.find('{') + 1: s.find('}')]  # find {} time identifier
             try:
                 builder_log_end_time = datetime.strptime(s, "%Y-%m-%d %H:%M:%S")
-            except ValueError: # if the code breaks, there's no time identifier
+            except ValueError:  # if the code breaks, there's no time identifier
                 beginning_of_time    = datetime.min
                 builder_log_end_time = beginning_of_time
-        builder_log_collect[log_path]  = builder_log_end_time
+        builder_log_collect[log_path] = builder_log_end_time
 
     return builder_log_collect
-    

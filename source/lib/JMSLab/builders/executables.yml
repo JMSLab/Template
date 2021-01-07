@@ -1,0 +1,9 @@
+latex:            pdflatex
+lyx:              lyx
+python:           python
+r:                Rscript
+matlab:           matlab
+stata:            stata-mp
+sas:              sas_en
+tablefill:        ''
+anything builder: ''

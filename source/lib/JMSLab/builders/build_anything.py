@@ -1,5 +1,4 @@
 import os
-import copy
 import warnings
 
 from .. import misc
@@ -7,18 +6,18 @@ from .gslab_builder import GSLabBuilder
 
 
 def build_anything(target, source, action, env, warning = True, **kw):
-    ''' 
-    Anything builder-generator. The generator will create a custom builder 
+    '''
+    Anything builder-generator. The generator will create a custom builder
     that runs `action` and add it as a SCons node, similar to the native env.Command.
     Using gslab_scons.build_anything will utilize our logging mechanism
     and error catching similar to our other builders.
-    `    
+    `
     Parameters
-    target: string or list 
-        The target(s) of the SCons command. The log ends up in the 
+    target: string or list
+        The target(s) of the SCons command. The log ends up in the
         directory of the first specified target.
     source: string or list
-        The source(s) of the SCons command. 
+        The source(s) of the SCons command.
     action: string
         The code to be run by the generated builder.
     env: SCons construction environment, see SCons user guide 7.2.
@@ -26,15 +25,15 @@ def build_anything(target, source, action, env, warning = True, **kw):
         since this is not a Scons.env method like env.Command.
         Special parameters that can be added when using the builder
         log_ext: string
-            Instead of logging to `sconscript.log` in the target dir, 
+            Instead of logging to `sconscript.log` in the target dir,
             the builder will log to `sconscript_<log_ext>.log`.
         origin_log_file: string
             Sometimes, your command may produce a log file in an undesirable location.
             Specifying the that location in this argument leads the builder to append
-            the content of origin_log_file to log_file and delete origin_log_file.            
+            the content of origin_log_file to log_file and delete origin_log_file.
             The builder will crash if this file doesn't exist at the end of the command.
         warning: Boolean
-            Turns off warnings if warning = False. 
+            Turns off warnings if warning = False.
     '''
     import SCons.Builder
     builder_attributes = {
@@ -48,8 +47,8 @@ def build_anything(target, source, action, env, warning = True, **kw):
     builder = AnythingBuilder(target, source, action, local_env, warning, **builder_attributes)
     bkw = {
         'action': builder.build_anything,
-        'target_factory' : local_env.fs.Entry,
-        'source_factory':  local_env.fs.Entry,
+        'target_factory': local_env.fs.Entry,
+        'source_factory': local_env.fs.Entry,
     }
     bld = SCons.Builder.Builder(**bkw)
     return bld(local_env, target, source)
@@ -69,14 +68,14 @@ class AnythingBuilder(GSLabBuilder):
             origin_log_file = env['origin_log_file']
         except KeyError:
             origin_log_file = None
+
         self.origin_log_file = origin_log_file
-        if '>' in action and warning == True:
+        if '>' in action and warning:
             warning_message = '\nThere is a redirection operator > in ' \
                               'your prescribed action key.\n' \
                               'The Anything Builder\'s logging mechanism '\
                               'may not work as intended.'
             warnings.warn(warning_message)
-
 
     @staticmethod
     def to_str(s):
@@ -88,14 +87,12 @@ class AnythingBuilder(GSLabBuilder):
             s = s[1:]
         return s
 
-
     def add_call_args(self):
         '''
         '''
         args = '%s > %s 2>&1' % (self.action, os.path.normpath(self.log_file))
         self.call_args = args
         return None
-
 
     def build_anything(self, **kwargs):
         '''
@@ -104,8 +101,8 @@ class AnythingBuilder(GSLabBuilder):
         '''
         super(AnythingBuilder, self).execute_system_call()
         if self.origin_log_file is not None:
-            with open(log_file, 'ab') as sconscript_log:
-                with open(origin_log_file, 'rU') as origin_log:
+            with open(self.log_file, 'ab') as sconscript_log:
+                with open(self.origin_log_file, 'rU') as origin_log:
                     sconscript_log.write(origin_log.read())
-            os.remove(origin_log_file)
+            os.remove(self.origin_log_file)
         return None

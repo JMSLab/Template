@@ -4,9 +4,13 @@ import sys
 import subprocess
 import datetime
 import yaml
+import shutil
 import getpass
 import fnmatch
-# Import gslab_scons modules
+
+from builders.executables import get_executables
+from textwrap import dedent
+from pathlib import Path
 from . import _exception_classes
 
 
@@ -50,15 +54,18 @@ def is_in_path(program):
     This general helper function checks whether `program` exists in the
     user's path environment variable.
     '''
-    if os.access(program, os.X_OK):
-        return program
+    if shutil.which(program):
+        return shutil.which(program)
+    elif os.access(Path(program).expanduser().resolve(), os.X_OK):
+        return str(Path(program).expanduser().resolve())
     else:
         for path in os.environ['PATH'].split(os.pathsep):
             path = path.strip("'")
-            exe = os.path.join(path, program)
+            exe  = str(Path(path) / program)
             if os.access(exe, os.X_OK):
                 return exe
-            exe = os.path.join(path, program + ".exe")
+
+            exe += ".exe"
             if os.access(exe, os.X_OK):
                 return exe
 
@@ -174,38 +181,29 @@ def get_executable(language_name, manual_executables = {}):
     Get executable stored at language_name of dictionary manual_executables.
     If key doesn't exist, use a default.
     '''
-    default_executables = {
-        'python': 'python',
-        'r': 'Rscript',
-        'stata': '',
-        'matlab': 'matlab',
-        'lyx': 'lyx',
-        'latex': 'pdflatex',
-        'tablefill': '',
-        'anything builder': ''
-    }
     lower_name = language_name.lower().strip()
     manual_executables = {str(k).lower().strip(): str(v).lower().strip()
                           for k, v in manual_executables.items()}
     manual_executables = {k: v for k, v in manual_executables.items()
                           if k and v and v not in ['none', 'no', 'false', 'n', 'f']}
+    default_executables = get_executables(languages = [lower_name])
+
     try:
         executable = manual_executables[lower_name]
     except KeyError:
         has_default_executable = lower_name in default_executables.keys()
         if not has_default_executable:
-            error_message = 'Cannot find default executable for language: %s. ' \
-                            'Try specifying a default.' % language_name
+            error_message = dedent(f"""
+                Cannot find default executable for language: {language_name}.
+                Try specifying a default by defining the environment variable
+
+                    JMSLAB_EXE_{lower_name.upper()}
+            """)
+
             raise _exception_classes.PrerequisiteError(error_message)
+
         executable = default_executables[lower_name]
-        if lower_name == 'stata':
-            if is_unix():
-                executable = '/home/mauricio/.local/stata15/stata-mp'
-            elif sys.platform == 'win32':
-                executable = 'StataMP-64.exe'
-            else:
-                error_message = 'Cannot find default Stata executable. Try specifying manually'
-                raise _exception_classes.PrerequisiteError(error_message)
+
     return executable
 
 
@@ -290,7 +288,7 @@ def flatten_dict(d, parent_key = '', sep = ':',
                 new_key_base = new_key.split('_')[0]
                 # Regex for new_key optionally folowed by underscore
                 # and some digits. Then string must end.
-                key_regex = re.compile('%s(?:_\d+)?$' % new_key_base)
+                key_regex = re.compile(r'%s(?:_\d+)?$' % new_key_base)
                 num_same_keys = len([True for skip_key in skip_keys
                                      if bool(key_regex.match(skip_key))])
                 if num_same_keys > 0:
@@ -300,10 +298,10 @@ def flatten_dict(d, parent_key = '', sep = ':',
             else:
                 pass
             skip_keys += (new_key,)
-        try: # Recursive case
+        try:  # Recursive case
             items.extend(flatten_dict(val, parent_key = new_key,
                                       skip_keys = skip_keys).items())
-        except AttributeError: # Base case
+        except AttributeError:  # Base case
             items.append((new_key, val))
-    return dict(items)
 
+    return dict(items)

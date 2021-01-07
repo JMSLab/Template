@@ -5,11 +5,12 @@ import _release_tools
 from _exception_classes import ReleaseError
 from misc import load_yaml_value, check_and_expand_path
 
+
 def main(version = None,
-         user_yaml = 'config_user.yaml', 
+         user_yaml = 'config_user.yaml',
          release_files = [],
          dont_zip = False,
-         readme = None, 
+         readme = None,
          scons_local_path = 'run.py'):
 
     # Check if user specified a scons_local_path
@@ -28,15 +29,15 @@ def main(version = None,
     if not _release_tools.git_up_to_date():
         raise ReleaseError('Git working tree not clean.')
     elif not _release_tools.scons_up_to_date(scons_local_path):
-        raise ReleaseError('SCons targets not up to date.')  
+        raise ReleaseError('SCons targets not up to date.')
 
     # Extract information about the clone from its .git directory
-    try: 
+    try:
         repo, organisation, branch = _release_tools.extract_dot_git()
-    except: 
-        try: 
+    except:
+        try:
             repo, organisation, branch = _release_tools.extract_dot_git(path = '../.git')
-        except: 
+        except:
             raise ReleaseError("Could not find .git/config in the current directory or parent directory.")
 
     # Determine the version number
@@ -48,7 +49,7 @@ def main(version = None,
         version = re.sub('^version=', '', version)
 
     # Determine whether the user has specified the no_zip option
-    if dont_zip == False:
+    if not dont_zip:
         dont_zip = 'no_zip' in sys.argv
     zip_release = not dont_zip
 
@@ -57,7 +58,7 @@ def main(version = None,
         for root, _, files in os.walk('./release'):
             for file_name in files:
                 # Do not release .DS_Store
-                if not re.search("\.DS_Store", file_name):
+                if not re.search(r"\.DS_Store", file_name):
                     release_files.append(os.path.join(root, file_name))
 
     # Specify the local release directory
@@ -74,15 +75,16 @@ def main(version = None,
 
     # Get GitHub token:
     github_token = load_yaml_value(user_yaml, 'github_token')
-    
-    _release_tools.release(vers              = version, 
+
+    _release_tools.release(vers              = version,
                            DriveReleaseFiles = release_files,
-                           local_release     = local_release, 
-                           org               = organisation, 
+                           local_release     = local_release,
+                           org               = organisation,
                            repo              = repo,
                            target_commitish  = branch,
                            zip_release       = zip_release,
                            github_token      = github_token)
+
 
 if __name__ == '__main__':
     main()

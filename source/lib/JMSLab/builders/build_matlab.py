@@ -5,27 +5,29 @@ import sys
 
 from .. import misc
 from .gslab_builder import GSLabBuilder
+from .._exception_classes import PrerequisiteError
 
 
 def build_matlab(target, source, env):
     '''
     Build targets with a MATLAB command
- 
-    This function executes a MATLAB function to build objects 
+
+    This function executes a MATLAB function to build objects
     specified by target using the objects specified by source.
-    It requires MATLAB to be callable from the command line 
+    It requires MATLAB to be callable from the command line
     via `matlab`.
 
-    Accessing command line arguments from within matlab is 
-    possible via the `command_line_arg = getenv('CL_ARG')`. 
+    Accessing command line arguments from within matlab is
+    possible via the `command_line_arg = getenv('CL_ARG')`.
     '''
     builder_attributes = {
         'name': 'MATLAB',
         'valid_extensions': ['.m'],
     }
     builder = MatlabBuilder(target, source, env, **builder_attributes)
-    builder.execute_system_call()    
+    builder.execute_system_call()
     return None
+
 
 class MatlabBuilder(GSLabBuilder):
     '''
@@ -37,7 +39,6 @@ class MatlabBuilder(GSLabBuilder):
         super(MatlabBuilder, self).__init__(target, source, env, name = name,
                                             exec_opts = exec_opts,
                                             valid_extensions = valid_extensions)
-
 
     def add_executable_options(self):
         '''
@@ -52,7 +53,6 @@ class MatlabBuilder(GSLabBuilder):
         options = ' -nosplash %s -r' % platform_option
         return options
 
-
     def add_call_args(self):
         '''
         '''
@@ -64,7 +64,6 @@ class MatlabBuilder(GSLabBuilder):
         self.call_args = args
         self.exec_file = os.path.normpath(exec_file)
         return None
-
 
     def execute_system_call(self):
         '''

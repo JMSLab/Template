@@ -1,10 +1,10 @@
 import abc
 import os
 import subprocess
-import sys
 
 from .. import misc
 from .._exception_classes import ExecCallError, TargetNonexistenceError, BadExtensionError
+
 
 class GSLabBuilder(object):
     '''
@@ -12,14 +12,14 @@ class GSLabBuilder(object):
     '''
     __metaclass__ = abc.ABCMeta
 
-    def __init__(self, target, source, env, name = 'GSLab Builder', 
+    def __init__(self, target, source, env, name = 'GSLab Builder',
                  valid_extensions = [], exec_opts = ''):
         '''
         Fill builder with information about build step.
-        
+
         Parameters
         ----------
-        target: string or list 
+        target: string or list
             The target(s) of the SCons command.
         source: string or list
             The source(s) of the SCons command. The first source specified
@@ -52,7 +52,6 @@ class GSLabBuilder(object):
         self.add_call_args()
         self.system_call = '%s %s %s' % (self.executable, self.exec_opts, self.call_args)
 
-
     def add_source_file(self, source):
         '''
         Add source file to execute as the first element of source.
@@ -66,12 +65,11 @@ class GSLabBuilder(object):
         self.source_file = os.path.normpath("%s" % source_file)
         return None
 
-
     def add_command_line_arg(self):
         '''
         Store arguments to pass to the executing script on the command line.
 
-        Return the content of env['CL_ARG'] as a string with spaces separating entries. 
+        Return the content of env['CL_ARG'] as a string with spaces separating entries.
         If env['CL_ARG'] doesn't exist, return an empty string.
         '''
         try:
@@ -86,7 +84,6 @@ class GSLabBuilder(object):
         self.cl_arg = "%s" % cl_arg
         return None
 
-
     def add_log_file(self):
         '''
         Store file to which script execution is logged.
@@ -98,14 +95,12 @@ class GSLabBuilder(object):
         self.log_file = os.path.join(self.target_dir, ('sconscript%s.log' % log_ext))
         return None
 
-
     @abc.abstractmethod
     def add_call_args(self):
         '''
         Abstract method to record executable-specific ordering of SCons build step arguments.
         '''
         pass
-
 
     def execute_system_call(self):
         '''
@@ -117,10 +112,9 @@ class GSLabBuilder(object):
         start_time = misc.current_time()
         self.do_call()
         self.check_targets()
-        end_time =  misc.current_time()    
+        end_time = misc.current_time()
         self.timestamp_log(start_time, end_time)
         return None
-
 
     def check_code_extension(self):
         '''
@@ -130,13 +124,12 @@ class GSLabBuilder(object):
         extensions = misc.make_list_if_string(self.valid_extensions)
         if extensions == []:
             return None
-        matches = [True for extension in extensions 
+        matches = [True for extension in extensions
                    if self.source_file.lower().endswith("%s" % extension)]
         if not matches:
             message = 'First argument, %s, must be a file of type %s.' % (self.source_file, extensions)
             raise BadExtensionError(message)
         return None
-
 
     def do_call(self):
         '''
@@ -148,7 +141,6 @@ class GSLabBuilder(object):
         except subprocess.CalledProcessError as ex:
             self.raise_system_call_exception(traceback = ex.output)
         return None
-
 
     def raise_system_call_exception(self, command = '', traceback = ''):
         '''
@@ -165,7 +157,6 @@ class GSLabBuilder(object):
         raise ExecCallError(message)
         return None
 
-
     def check_targets(self):
         '''
         Check that all elements of the target attribute after executing system call.
@@ -176,7 +167,6 @@ class GSLabBuilder(object):
             message = 'The following target files do not exist after build:\n    %s' % missing_targets
             raise TargetNonexistenceError(message)
         return None
-
 
     def timestamp_log(self, start_time, end_time):
         '''

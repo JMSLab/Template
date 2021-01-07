@@ -12,9 +12,9 @@ def build_latex(target, source, env):
 
     Parameters
     ----------
-    target: string or list 
+    target: string or list
         The target of the SCons command. This should be the path
-        of the pdf that the builder is instructed to compile. 
+        of the pdf that the builder is instructed to compile.
     source: string or list
         The source of the SCons command. This should
         be the .tex file that the function will compile as a PDF.
@@ -23,11 +23,12 @@ def build_latex(target, source, env):
     builder_attributes = {
         'name': 'LaTeX',
         'valid_extensions': ['.tex'],
-        'exec_opts':  '-interaction nonstopmode -jobname'
+        'exec_opts': '-interaction nonstopmode -jobname'
     }
     builder = LatexBuilder(target, source, env, **builder_attributes)
     builder.execute_system_call()
     return None
+
 
 class LatexBuilder(GSLabBuilder):
     '''
@@ -36,6 +37,9 @@ class LatexBuilder(GSLabBuilder):
         '''
         '''
         target_name = os.path.splitext(self.target[0])[0]
-        args = '%s %s %s > %s' % (self.cl_arg, target_name, os.path.normpath(self.source_file), os.path.normpath(self.log_file))
+        args = '%s %s %s > %s' % (self.cl_arg,
+                                  target_name,
+                                  os.path.normpath(self.source_file),
+                                  os.path.normpath(self.log_file))
         self.call_args = args
         return None
