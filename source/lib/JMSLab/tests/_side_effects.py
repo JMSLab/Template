@@ -5,6 +5,8 @@ import requests
 import shutil
 import subprocess
 
+from pathlib import Path
+
 from . import _test_helpers as helpers
 
 
@@ -39,9 +41,9 @@ def make_r_side_effect(recognized = True):
 
         if executable == 'Rscript' and log and append == '2>&1':
             with open(log.replace('>', '').strip(), 'wb') as log_file:
-                log_file.write('Test log\n')
-            with open('./test_output.txt', 'wb') as target:
-                target.write('Test target')
+                log_file.write(b'Test log\n')
+            with open('test_output.txt', 'wb') as target:
+                target.write(b'Test target')
 
     return side_effect
 
@@ -54,9 +56,9 @@ def python_side_effect(*args, **kwargs):
     if match.group('log'):
         log_path = re.sub(r'(\s|>)', '', match.group('log'))
         with open(log_path, 'wb') as log_file:
-            log_file.write('Test log')
-        with open('./test_output.txt', 'wb') as target:
-            target.write('Test target')
+            log_file.write(b'Test log')
+        with open('test_output.txt', 'wb') as target:
+            target.write(b'Test target')
 
 
 def make_matlab_side_effect(recognized = True):
@@ -80,9 +82,9 @@ def make_matlab_side_effect(recognized = True):
         if log_match:
             log_path = log_match.group('log')
             with open(log_path, 'wb') as log_file:
-                log_file.write('Test log')
-            with open('./test_output.txt', 'wb') as target:
-                target.write('Test target')
+                log_file.write(b'Test log')
+            with open('test_output.txt', 'wb') as target:
+                target.write(b'Test target')
 
         return None
 
@@ -91,7 +93,7 @@ def make_matlab_side_effect(recognized = True):
 
 def matlab_copy_effect(*args, **kwargs):
     '''Mock copy so that it creates a file with the destination's path'''
-    open(args[1], 'wb').write('test')
+    open(args[1], 'wb').write(b'test')
 
 
 def make_stata_side_effect(recognized = True):
@@ -111,9 +113,9 @@ def make_stata_side_effect(recognized = True):
 
             # Write a log
             with open(stata_log, 'wb') as logfile:
-                logfile.write('Test Stata log.\n')
-            with open('./test_output.txt', 'wb') as target:
-                target.write('Test target')
+                logfile.write(b'Test Stata log.\n')
+            with open('test_output.txt', 'wb') as target:
+                target.write(b'Test target')
 
         else:
             # Raise an error if the executable is not recognised.
@@ -145,6 +147,7 @@ def lyx_side_effect(*args, **kwargs):
 
     executable   = match.group('executable')
     option       = match.group('option')
+    target_file  = match.group('target')
     source       = match.group('source')
     log_redirect = match.group('log_redirect')
 
@@ -157,7 +160,7 @@ def lyx_side_effect(*args, **kwargs):
     if log_redirect:
         log_path = re.sub(r'>\s*', '', log_redirect)
         with open(log_path, 'wb') as log_file:
-            log_file.write('Test log\n')
+            log_file.write(b'Test log\n')
 
     # If LyX is the executable, the options are correctly specified,
     # and the source exists, produce a .pdf file with the same base
@@ -166,15 +169,15 @@ def lyx_side_effect(*args, **kwargs):
     # Mock a list of the files that LyX sees as existing
     # source_exists should be True only if the source script
     # specified in the system command belongs to existing_files.
-    existing_files = ['test_script.lyx', './input/lyx_test_file.lyx']
+    existing_files = ['test_script.lyx', str(Path('input', 'lyx_test_file.lyx'))]
     source_exists  = os.path.abspath(source) in \
         map(os.path.abspath, existing_files)
 
-    if is_lyx and option_type == '-e' and option_setting == 'pdf2' \
+    if is_lyx and option_type == '-E' and option_setting == 'pdf2' \
             and source_exists:
-        out_path = re.sub('lyx$', 'pdf', source, flags = re.I)
-        with open(out_path, 'wb') as out_file:
-            out_file.write('Mock .pdf output')
+
+        with open(target_file, 'wb') as out_file:
+            out_file.write(b'Mock .pdf output')
 
 
 def latex_side_effect(*args, **kwargs):
@@ -194,7 +197,6 @@ def latex_side_effect(*args, **kwargs):
     log_redirect = match.group('log_redirect')
 
     option1_type = re.findall(r'^(-\w+)', option1)[0]
-    interaction  = re.findall(r'\s(\S+)', option1)[0]
     option2_type = re.findall(r'^(-\w+)', option2)[0]
     target_file  = re.findall(r'\s(\S+)', option2)[0]
 
@@ -213,7 +215,7 @@ def latex_side_effect(*args, **kwargs):
     # Mock a list of the files that pdflatex sees as existing
     # source_exists should be True only if the source script
     # specified in the system command belongs to existing_files.
-    existing_files = ['test_script.tex', './input/latex_test_file.tex']
+    existing_files = ['test_script.tex', str(Path('input', 'latex_test_file.tex'))]
     source_exists  = os.path.abspath(source) in \
         map(os.path.abspath, existing_files)
 

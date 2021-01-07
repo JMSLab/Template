@@ -5,10 +5,9 @@ from pathlib import Path
 import unittest
 import shutil
 import mock
-# import sys
 import os
 
-# Import gslab_scons testing helper modules
+# Import testing helper modules
 from . import _test_helpers as helpers
 from . import _side_effects as fx
 
@@ -102,7 +101,7 @@ class TestBuildLateX(unittest.TestCase):
                         [str(Path('input', 'latex_test_file.tex'))], env = True)
 
     def tearDown(self):
-        shutil.rmtree('build')
+        shutil.rmtree(TESTDIR / 'build')
 
 
 if __name__ == '__main__':

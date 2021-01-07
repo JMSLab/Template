@@ -79,11 +79,13 @@ def command_match(command, executable, which = None):
                          command)
 
     elif executable == 'lyx':
-        # e.g. "lyx -e pdf2 file.lyx > ./sconscript.log"
+        # e.g. "lyx -E pdf2 target_file file.lyx > sconscript.log"
         match = re.match(r'\s*'
                          r'(?P<executable>\w+)'
                          r'\s+'
                          r'(?P<option>-\w+\s+\w+)?'
+                         r'\s*'
+                         r'(?P<target>[\.\/\w]+\.\w+)?'
                          r'\s*'
                          r'(?P<source>[\.\/\w]+\.\w+)?'
                          r'\s*'
@@ -91,7 +93,7 @@ def command_match(command, executable, which = None):
                          command)
 
     elif executable == 'pdflatex':
-        # e.g. "pdflatex -interaction nonstopmode -jobname target_file file.tex > ./sconscript.log"
+        # e.g. "pdflatex -interaction nonstopmode -jobname target_file file.tex > sconscript.log"
         match = re.match(r'\s*'
                          r'(?P<executable>\w+)'
                          r'\s+'
@@ -136,7 +138,7 @@ def bad_extension(test_object, builder,
         source = [bad]
 
     with test_object.assertRaises(BadExtensionError):
-        builder(target = './test_output.txt',
+        builder(target = 'test_output.txt',
                 source = source,
                 env    = env)
 
@@ -145,11 +147,11 @@ def standard_test(test_object, builder,
                   extension   = None,
                   system_mock = None,
                   source      = None,
-                  target = './test_output.txt',
-                  env    = {}):
+                  target      = 'test_output.txt',
+                  env         = {}):
     '''Test that builders run without errors and create logs properly.'''
     if not source:
-        source = './test_script.%s' % extension
+        source = 'test_script.%s' % extension
 
     builder(source = source, target = target, env = env)
 
@@ -168,7 +170,7 @@ def standard_test(test_object, builder,
 
 def input_check(test_object, builder, extension,
                 source = 'missing',
-                target = './test_output.txt',
+                target = 'test_output.txt',
                 env    = {},
                 error  = None):
     '''Test builders' behaviour when passed unconventional arguments.'''
@@ -179,7 +181,7 @@ def input_check(test_object, builder, extension,
 
     if not error:
         builder(source = source, target = target, env = env)
-        check_log(test_object, './sconscript.log')
+        check_log(test_object, 'sconscript.log')
     else:
         with test_object.assertRaises(error):
             builder(source = source, target = target, env = env)
@@ -190,8 +192,8 @@ def test_cl_args(test_object, builder, system_mock, extension, env = {}):
     Ensure that builders correctly include command line arguments in
     their system calls.
     '''
-    source = './test_script.%s' % extension
-    target = './test_output.txt'
+    source = 'test_script.%s' % extension
+    target = 'test_output.txt'
 
     # i) Single command line argument
     if env:
@@ -207,7 +209,7 @@ def test_cl_args(test_object, builder, system_mock, extension, env = {}):
 
     test_object.assertIn('test', args.split(' '))
     test_object.assertEqual(len(args.split(' ')), 1)
-    check_log(test_object, './sconscript.log')
+    check_log(test_object, 'sconscript.log')
 
     # Multiple command line arguments
     env['CL_ARG'] = [1, 2, None]
@@ -223,7 +225,7 @@ def test_cl_args(test_object, builder, system_mock, extension, env = {}):
         test_object.assertIn(str(arg), args.split(' '))
 
     test_object.assertEqual(len(args.split(' ')), 3)
-    check_log(test_object, './sconscript.log')
+    check_log(test_object, 'sconscript.log')
 
 
 def mock_release_data(args):
