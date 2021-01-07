@@ -1,7 +1,8 @@
-import os
-import shutil
+import subprocess
 import hashlib
+import shutil
 import sys
+import os
 
 from .. import misc
 from .gslab_builder import GSLabBuilder

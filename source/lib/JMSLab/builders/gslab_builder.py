@@ -148,6 +148,10 @@ class GSLabBuilder(object):
         '''
         if not command:
             command = self.system_call
+
+        if traceback is None:
+            traceback = b''
+
         traceback = f'\n{traceback.decode()}' if traceback else traceback.decode()
         message = '%s did not run successfully. ' \
                   'Please check that the executable, source, and target files are correctly specified. ' \

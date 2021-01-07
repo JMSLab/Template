@@ -1,3 +1,6 @@
+from pathlib import Path
+
+import tempfile
 import mock
 # import sys
 import imp
@@ -126,10 +129,15 @@ def check_log(test_object, log_path, timestamp = True):
 
 
 def bad_extension(test_object, builder,
-                  bad  = 'bad',
+                  bad  = None,
                   good = None,
                   env  = {}):
     '''Ensure builders fail when their first sources have bad extensions'''
+
+    tf = tempfile.NamedTemporaryFile(suffix = '')
+    if bad is None:
+        bad = tf.name
+
     if good:
         # We expect a failure even when a source with a "good" extension
         # is included but is not the first source.
@@ -141,6 +149,8 @@ def bad_extension(test_object, builder,
         builder(target = 'test_output.txt',
                 source = source,
                 env    = env)
+
+    tf.close()
 
 
 def standard_test(test_object, builder,
