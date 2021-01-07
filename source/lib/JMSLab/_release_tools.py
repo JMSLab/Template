@@ -7,7 +7,7 @@ import os
 import shutil
 import subprocess
 
-from _exception_classes import ReleaseError
+from ._exception_classes import ReleaseError
 
 
 def release(vers, org, repo,

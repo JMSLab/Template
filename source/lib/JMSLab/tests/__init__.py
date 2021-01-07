@@ -1,7 +1,8 @@
 '''
-This directory contains the `gslab_scons` library's unit tests. These tests can be run using
-`python -m unittest discover`
-from `gslab_scons/` or from `gslab_scons/tests/`. To run the tests with logging, use:
-`python run_all_tests.py`
-from `gslab_scons/tests/`.
+
+This directory contains the JMSLab SCons' library's unit tests. These
+are modified versions of the unit tests in gslab_scons.  Run via
+
+    python -m unittest JMSLab.tests.test_build_latex
+
 '''

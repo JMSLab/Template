@@ -1,8 +1,9 @@
 import os
 import sys
 import glob
-from datetime import datetime
 import shutil
+
+from datetime import datetime
 from . import misc
 
 

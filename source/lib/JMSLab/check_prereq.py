@@ -4,7 +4,7 @@ import pkg_resources
 
 from . import misc
 from ._exception_classes import PrerequisiteError
-from builders.executables import get_executables
+from .builders.executables import get_executables
 
 
 def check_prereq(prereq, gslab_vers = None):

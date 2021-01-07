@@ -1,3 +1,4 @@
+import subprocess
 import os
 
 from .gslab_builder import GSLabBuilder

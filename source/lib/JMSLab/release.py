@@ -1,9 +1,10 @@
 import re
 import os
 import sys
-import _release_tools
-from _exception_classes import ReleaseError
-from misc import load_yaml_value, check_and_expand_path
+
+from . import _release_tools
+from ._exception_classes import ReleaseError
+from .misc import load_yaml_value, check_and_expand_path
 
 
 def main(version = None,

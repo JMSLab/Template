@@ -148,8 +148,7 @@ class GSLabBuilder(object):
         '''
         if not command:
             command = self.system_call
-        traceback = str(traceback)
-        traceback = '%s%s' % ('\n' * bool(traceback), traceback)
+        traceback = f'\n{traceback}' if traceback else traceback.decode()
         message = '%s did not run successfully. ' \
                   'Please check that the executable, source, and target files are correctly specified. ' \
                   'Check %s and sconstruct.log for errors. ' \
