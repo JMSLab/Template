@@ -12,8 +12,11 @@ import re
 from . import _test_helpers as helpers
 from . import _side_effects as fx
 
+from ..builders.executables import get_executables
 from ..builders.build_matlab import build_matlab
 from .._exception_classes import ExecCallError, PrerequisiteError
+
+MATLAB = get_executables()['matlab']
 
 # Define main test patch
 path  = 'JMSLab.builders.build_matlab'
@@ -54,7 +57,7 @@ class TestBuildMatlab(unittest.TestCase):
         # Extract the system command
         command = mock_check_output.call_args[0][0]
         # Look for the expected executable and options
-        self.assertTrue(re.search('^matlab', command))
+        self.assertTrue(command.rfind(MATLAB) == 0 or re.search('^matlab', command))
         for option in options:
             self.assertIn(option, command.split(' '))
 

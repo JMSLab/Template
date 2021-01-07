@@ -7,7 +7,6 @@ import imp
 import os
 import re
 
-# sys.path.append('../..')
 from .. import misc
 from .._exception_classes import BadExtensionError
 

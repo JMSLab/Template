@@ -109,7 +109,7 @@ def load_yaml_value(path, key):
     Load the yaml value indexed by the key argument in the file
     specified by the path argument.
     '''
-    if key == "stata_executable":
+    if key == "stata":
         prompt = "Enter %s or None to search for defaults: "
     elif key == "github_token":
         prompt = "(Optional) Enter %s to be stored in config_user.yaml.\n"

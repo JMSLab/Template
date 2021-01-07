@@ -7,7 +7,10 @@ import subprocess
 
 from pathlib import Path
 
+from ..builders.executables import get_executables
 from . import _test_helpers as helpers
+
+MATLAB = get_executables()['matlab']
 
 
 def make_r_side_effect(recognized = True):
@@ -74,7 +77,8 @@ def make_matlab_side_effect(recognized = True):
         except KeyError:
             command = args[0]
 
-        if re.search('^matlab', command, flags = re.I) and not recognized:
+        found = command.rfind(MATLAB) == 0 or re.search('^matlab', command, flags = re.I)
+        if found and not recognized:
             raise subprocess.CalledProcessError(1, command)
 
         log_match = re.search(r'> (?P<log>[-\.\w\/]+)', command)

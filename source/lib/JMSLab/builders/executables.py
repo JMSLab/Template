@@ -12,6 +12,6 @@ def get_executables(efile = EXE_FILE, languages = []):
         for lang in list(executables.keys()) + languages:
             ENV = f'JMSLAB_EXE_{lang}'.upper()
             if ENV in os.environ:
-                executables[lang] = os.environ[ENV]
+                executables[lang] = str(Path(os.environ[ENV]).expanduser().resolve())
 
     return executables

@@ -325,7 +325,7 @@ class TestMisc(unittest.TestCase):
 
         # Yaml file does not exist. User enters none value to create.
         os.remove(yaml)
-        key = 'stata_executable'
+        key = 'stata'
         mock_raw_input.side_effect = raw_input_side_effect2
         self.assertEqual(misc.load_yaml_value(yaml, key), None)
 

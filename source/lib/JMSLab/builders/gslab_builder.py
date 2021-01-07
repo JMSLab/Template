@@ -137,6 +137,7 @@ class GSLabBuilder(object):
         Raise an informative exception on error.
         '''
         try:
+            print('debug 1', self.system_call)
             subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
         except subprocess.CalledProcessError as ex:
             self.raise_system_call_exception(traceback = ex.output)
