@@ -128,8 +128,10 @@ class GSLabBuilder(object):
         extensions = misc.make_list_if_string(self.valid_extensions)
         if extensions == []:
             return None
+
         matches = [True for extension in extensions
                    if self.source_file.lower().endswith("%s" % extension)]
+
         if not matches:
             message = 'First argument, %s, must be a file of type %s.' % (self.source_file, extensions)
             raise BadExtensionError(message)
@@ -141,7 +143,6 @@ class GSLabBuilder(object):
         Raise an informative exception on error.
         '''
         try:
-            print('debug 1', self.system_call)
             subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
         except subprocess.CalledProcessError as ex:
             self.raise_system_call_exception(traceback = ex.output)
@@ -157,7 +158,14 @@ class GSLabBuilder(object):
         if traceback is None:
             traceback = b''
 
-        traceback = f'\n{traceback.decode()}' if traceback else traceback.decode()
+        try:
+            traceback = traceback.decode()
+        except AttributeError:
+            pass
+
+        if traceback:
+            traceback = '\n' + traceback
+
         message = '%s did not run successfully. ' \
                   'Please check that the executable, source, and target files are correctly specified. ' \
                   'Check %s and sconstruct.log for errors. ' \

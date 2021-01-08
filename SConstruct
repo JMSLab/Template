@@ -6,11 +6,11 @@ import source.lib.JMSLab as jms
 
 sys.path.append('config')
 sys.dont_write_bytecode = True # Don't write .pyc files
- 
-env = Environment(ENV = {'PATH' : os.environ['PATH']}, 
+
+env = Environment(ENV = {'PATH' : os.environ['PATH']},
                   IMPLICIT_COMMAND_DEPENDENCIES = 0,
                   BUILDERS = {'R'         : Builder(action = jms.build_r),
-                              # 'Tablefill' : Builder(action = jms.build_tables),
+                              'Tablefill' : Builder(action = jms.build_tables),
                               'Stata'     : Builder(action = jms.build_stata),
                               'Matlab'    : Builder(action = jms.build_matlab),
                               'Python'    : Builder(action = jms.build_python),
@@ -22,5 +22,5 @@ jms.start_log('develop', '')
 
 SConscript('source/derived/SConscript')
 SConscript('source/analysis/SConscript')
-# SConscript('source/tables/SConscript')
+SConscript('source/tables/SConscript')
 SConscript('source/paper/SConscript')

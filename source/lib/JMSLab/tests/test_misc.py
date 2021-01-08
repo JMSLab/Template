@@ -5,16 +5,13 @@ from pathlib import Path
 import unittest
 import os
 import re
-import shutil
 import mock
 import datetime
 
 # Import testing helper modules
-from .nostderrout import nostderrout
 from .. import misc
-from .._exception_classes import PrerequisiteError, BadExtensionError
+from .._exception_classes import PrerequisiteError
 from ..builders.executables import get_executables
-from ..builders.gslab_builder import GSLabBuilder
 
 STATA = get_executables()['stata']
 

@@ -1,14 +1,15 @@
+import subprocess
 import os
-from .gslab_builder import GSLabBuilder
 
-from gslab_fill import tablefill
+from .gslab_builder import GSLabBuilder
+from ..tablefill import tablefill
 
 
 def build_tables(target, source, env):
     '''Build a SCons target by filling a table
 
-    This function uses the tablefill function from gslab_fill to produced a
-    filled table from (i) an empty table in a LyX/Tex file and (ii) text files
+    This function uses the tablefill function from to produced a filled
+    table from (i) an empty table in a LyX/Tex file and (ii) text files
     containing data to be used in filling the table.
 
     Parameters
@@ -41,7 +42,7 @@ class TableBuilder(GSLabBuilder):
         super(TableBuilder, self).__init__(target, source, env, name = name,
                                            valid_extensions = valid_extensions,
                                            exec_opts = exec_opts)
-        self.input_string = ' '.join([str(i) for i in source[1:]])
+        self.input_string = ' '.join([str(os.path.normpath(i)) for i in source[1:]])
         self.target_file  = os.path.normpath(self.target[0])
 
     def add_call_args(self):
@@ -54,13 +55,14 @@ class TableBuilder(GSLabBuilder):
         output = tablefill(input    = self.input_string,
                            template = os.path.normpath(self.source_file),
                            output   = os.path.normpath(self.target_file))
+
         with open(self.log_file, 'w') as f:
             f.write(output)
             f.write('\n\n')
-        if 'traceback' in str.lower(output):  # if tablefill.py returns an error
+        if 'traceback' in output.lower():  # if tablefill.py returns an error
             command = 'tablefill(input    = %s,\n' \
                       '          template = %s,\n' \
-                      '          output   = %s)' \
+                      '          output   = %s)'   \
                       % (self.input_string, self.source_file, self.target_file)
             self.raise_system_call_exception(command = command)
         return None
