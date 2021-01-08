@@ -98,7 +98,7 @@ class TestBuildLateX(unittest.TestCase):
         mock_system.side_effect = fx.latex_side_effect
         with self.assertRaises(TypeError):
             build_latex('nonexistent_directory/latex.pdf',
-                        'input/latex_test_file.tex'], env = True)
+                        ['input/latex_test_file.tex'], env = True)
 
     def tearDown(self):
         shutil.rmtree(TESTDIR / 'build')
