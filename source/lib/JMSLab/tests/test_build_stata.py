@@ -149,8 +149,8 @@ class TestBuildStata(unittest.TestCase):
 
         env = {'executable_names': {'stata': 'stata-se'}}
         with self.assertRaises(ExecCallError):
-            build_stata(target = str(Path('build', 'stata.dta')),
-                        source = str(Path('input', 'stata_test_script.do')),
+            build_stata(target = 'build/stata.dta',
+                        source = 'input/stata_test_script.do',
                         env    = env)
 
     @mock.patch('%s.subprocess.check_output' % path)

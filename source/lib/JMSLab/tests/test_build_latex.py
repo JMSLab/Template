@@ -35,7 +35,7 @@ class TestBuildLateX(unittest.TestCase):
         standard inputs.
         '''
         mock_system.side_effect = fx.latex_side_effect
-        target = str(Path('build', 'latex.pdf'))
+        target = 'build/latex.pdf'
         helpers.standard_test(self, build_latex, 'tex',
                               system_mock = mock_system,
                               target = target)
@@ -48,7 +48,7 @@ class TestBuildLateX(unittest.TestCase):
         arguments are lists
         '''
         mock_system.side_effect = fx.latex_side_effect
-        target = [str(Path('build', 'latex.pdf'))]
+        target = ['build/latex.pdf']
         helpers.standard_test(self, build_latex, 'tex',
                               system_mock = mock_system,
                               source = ['test_script.tex'],
@@ -66,8 +66,8 @@ class TestBuildLateX(unittest.TestCase):
         build_latex() without affecting the function's operation.
         '''
         mock_system.side_effect = fx.latex_side_effect
-        target = str(Path('build', 'latex.pdf'))
-        source = [str(Path('input', 'latex_test_file.tex'))]
+        target = 'build/latex.pdf'
+        source = ['input/latex_test_file.tex']
 
         for env in [True, [1, 2, 3], ('a', 'b'), None, TypeError]:
             with self.assertRaises(TypeError):
@@ -82,12 +82,12 @@ class TestBuildLateX(unittest.TestCase):
         mock_system.side_effect = fx.latex_side_effect
         # i) Directory doesn't exist
         with self.assertRaises(ExecCallError):
-            build_latex(str(Path('build', 'latex.pdf')),
-                        [str(Path('bad_dir', 'latex_test_file.tex'))], env = {})
+            build_latex('build/latex.pdf',
+                        ['bad_dir/latex_test_file.tex'], env = {})
         # ii) Directory exists, but file doesn't
         with self.assertRaises(ExecCallError):
-            build_latex(str(Path('build', 'latex.pdf')),
-                        [str(Path('input', 'nonexistent_file.tex'))], env = {})
+            build_latex('build/latex.pdf',
+                        ['input/nonexistent_file.tex'], env = {})
 
     @mock.patch('%s.os.system' % path)
     def test_nonexistent_target_directory(self, mock_system):
@@ -97,8 +97,8 @@ class TestBuildLateX(unittest.TestCase):
         '''
         mock_system.side_effect = fx.latex_side_effect
         with self.assertRaises(TypeError):
-            build_latex(str(Path('nonexistent_directory', 'latex.pdf')),
-                        [str(Path('input', 'latex_test_file.tex'))], env = True)
+            build_latex('nonexistent_directory/latex.pdf',
+                        ['input/latex_test_file.tex'], env = True)
 
     def tearDown(self):
         shutil.rmtree(TESTDIR / 'build')

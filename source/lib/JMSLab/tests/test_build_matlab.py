@@ -84,8 +84,8 @@ class TestBuildMatlab(unittest.TestCase):
         mock_copy.side_effect = fx.matlab_copy_effect
         mock_check_output.side_effect = fx.make_matlab_side_effect(True)
         with self.assertRaises(PrerequisiteError):
-            build_matlab(target = str(Path('build', 'test.mat')),
-                         source = str(Path('input', 'matlab_test_script.m')),
+            build_matlab(target = 'build/test.mat',
+                         source = 'input/matlab_test_script.m',
                          env    = {})
 
     @main_patch
@@ -113,8 +113,8 @@ class TestBuildMatlab(unittest.TestCase):
             fx.make_matlab_side_effect(recognized = False)
 
         with self.assertRaises(ExecCallError):
-            build_matlab(target = str(Path('build', 'test.mat')),
-                         source = str(Path('input', 'matlab_test_script.m')),
+            build_matlab(target = 'build/test.mat',
+                         source = 'input/matlab_test_script.m',
                          env    = {})
 
     def tearDown(self):
