@@ -21,4 +21,3 @@ from .builders.build_stata     import build_stata
 # from .builders.build_tables    import build_tables
 from .builders.build_python    import build_python
 from .builders.build_matlab    import build_matlab
-from .builders.build_anything  import build_anything
