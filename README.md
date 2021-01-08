@@ -38,7 +38,7 @@ In addition, each project may use other specialized tools. For the working examp
 
 4. Make sure that all the required program executables are in your system's path. 
 
-    - The default names that SCons assumes for the programs are in `source/lib/builders/executables.txt`.
+    - The default names that SCons assumes for the programs are in `source/lib/JMSLab/builders/executables.yml`.
 
     - To have SCons use a custom executable name or path, define a command-line variable named `JMSLAB_EXE_PROGRAM=/path/to/executable`. e.g. `JMSLAB_EXE_STATA=StataSE.exe` or `JMSLAB_EXE_STATA="C:\Program Files (x86)\Stata16\StataSE.exe"`.
 
@@ -85,4 +85,4 @@ env.Stata(target, source)
 
 - `source` is a list with the script's name and all of the files used as input; the script must be the first element of the list.
 
-- `env.Stata` is the Stata builder provided in `source/lib/builders`; this is imported and saved as part of the `env` object in the `SConstruct` file at the root of the project. 
+- `env.Stata` is the Stata builder provided in `source/lib/JMSLab/builders`; this is imported and saved as part of the `env` object in the `SConstruct` file at the root of the project. 
