@@ -6,8 +6,8 @@ import pandas as pd
 
 
 def Main():
-    RAW_DIR = Path("drive", "raw", "world_bank", "orig")
-    OUT_DIR = Path("output", "derived", "wb_clean")
+    RAW_DIR = Path("drive/raw/world_bank/orig").resolve()
+    OUT_DIR = Path("output/derived/wb_clean").resolve()
 
     df = PrepareData(RAW_DIR)
     df.to_csv(OUT_DIR / "gdp_education.csv", index = False)
