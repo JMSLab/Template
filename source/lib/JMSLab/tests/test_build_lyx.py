@@ -35,7 +35,7 @@ class TestBuildLyX(unittest.TestCase):
         standard inputs.
         '''
         mock_system.side_effect = fx.lyx_side_effect
-        target = str(Path('build', 'lyx.pdf'))
+        target = 'build/lyx.pdf'
         helpers.standard_test(self, build_lyx, 'lyx',
                               system_mock = mock_system,
                               target = target)
@@ -48,7 +48,7 @@ class TestBuildLyX(unittest.TestCase):
         arguments are lists
         '''
         mock_system.side_effect = fx.lyx_side_effect
-        target = [str(Path('build', 'lyx.pdf'))]
+        target = ['build/lyx.pdf']
         helpers.standard_test(self, build_lyx, 'lyx',
                               system_mock = mock_system,
                               source = ['test_script.lyx'],
@@ -66,8 +66,8 @@ class TestBuildLyX(unittest.TestCase):
         build_lyx() without affecting the function's operation.
         '''
         mock_system.side_effect = fx.lyx_side_effect
-        target = str(Path('build', 'lyx.pdf'))
-        source = [str(Path('input', 'lyx_test_file.lyx'))]
+        target = 'build/lyx.pdf'
+        source = ['input/lyx_test_file.lyx']
 
         for env in [True, [1, 2, 3], ('a', 'b'), None, TypeError]:
             with self.assertRaises(TypeError):
@@ -82,12 +82,12 @@ class TestBuildLyX(unittest.TestCase):
         mock_system.side_effect = fx.lyx_side_effect
         # i) Directory doesn't exist
         with self.assertRaises(ExecCallError):
-            build_lyx(str(Path('build', 'lyx.pdf')),
-                      [str(Path('bad_dir', 'lyx_test_file.lyx'))], env = {})
+            build_lyx('build/lyx.pdf',
+                      ['bad_dir/lyx_test_file.lyx'], env = {})
         # ii) Directory exists, but file doesn't
         with self.assertRaises(ExecCallError):
-            build_lyx(str(Path('build', 'lyx.pdf')),
-                      [str(Path('input', 'nonexistent_file.lyx'))], env = {})
+            build_lyx('build/lyx.pdf',
+                      ['input/nonexistent_file.lyx'], env = {})
 
     @mock.patch('%s.os.system' % path)
     def test_nonexistent_target_directory(self, mock_system):
@@ -97,8 +97,8 @@ class TestBuildLyX(unittest.TestCase):
         '''
         mock_system.side_effect = fx.lyx_side_effect
         with self.assertRaises(TypeError):
-            build_lyx(str(Path('nonexistent_directory', 'lyx.pdf')),
-                      [str(Path('input', 'lyx_test_file.lyx'))], env = True)
+            build_lyx('nonexistent_directory/lyx.pdf',
+                      ['input/lyx_test_file.lyx'], env = True)
 
     def tearDown(self):
         shutil.rmtree(TESTDIR / 'build')
