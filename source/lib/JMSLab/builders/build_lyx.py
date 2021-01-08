@@ -37,7 +37,7 @@ class LyxBuilder(GSLabBuilder):
         '''
         '''
         args = '%s %s %s > %s' % (self.cl_arg,
-                                  self.target[0],
+                                  os.path.normpath(self.target[0]),
                                   os.path.normpath(self.source_file),
                                   os.path.normpath(self.log_file))
         self.call_args = args

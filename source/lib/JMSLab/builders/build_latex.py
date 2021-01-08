@@ -39,7 +39,7 @@ class LatexBuilder(GSLabBuilder):
         '''
         target_name = os.path.splitext(self.target[0])[0]
         args = '%s %s %s > %s' % (self.cl_arg,
-                                  target_name,
+                                  os.path.normpath(target_name),
                                   os.path.normpath(self.source_file),
                                   os.path.normpath(self.log_file))
         self.call_args = args
