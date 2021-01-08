@@ -3,6 +3,7 @@ import sys
 import glob
 import shutil
 
+from pathlib import Path
 from datetime import datetime
 from . import misc
 
@@ -22,7 +23,7 @@ def start_log(mode, cl_args_list = sys.argv, log = 'sconstruct.log'):
     if misc.is_unix():
         sys.stdout = os.popen('tee -a %s' % log, 'w')
     elif sys.platform == 'win32':
-        sys.stdout = open(log, 'ab')
+        sys.stdout = open(log, 'a')
 
     sys.stderr = sys.stdout
 
@@ -30,7 +31,7 @@ def start_log(mode, cl_args_list = sys.argv, log = 'sconstruct.log'):
 
 
 def end_log(cl_args_list = sys.argv, log = 'sconstruct.log', excluded_dirs = [],
-            release_dir = './release/'):
+            release_dir = 'release'):
     '''Complete the log of a build process.'''
 
     if misc.is_scons_dry_run(cl_args_list = cl_args_list):
@@ -69,10 +70,9 @@ def end_log(cl_args_list = sys.argv, log = 'sconstruct.log', excluded_dirs = [],
                 sconstruct.write(sconscript.read())
 
     # move top level logs to /release/ directory.
-    if not os.path.exists(release_dir):
-        os.makedirs(release_dir)
-    for file in glob.glob("*.log"):
-        shutil.move('./' + file, release_dir + file)
+    Path(release_dir).mkdir(parents = True, exist_ok = True)
+    for f in glob.glob("*.log"):
+        shutil.move(f, Path(release_dir, f))
     return None
 
 
