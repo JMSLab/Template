@@ -54,7 +54,7 @@ class TableBuilder(GSLabBuilder):
         output = tablefill(input    = self.input_string,
                            template = os.path.normpath(self.source_file),
                            output   = os.path.normpath(self.target_file))
-        with open(self.log_file, 'wb') as f:
+        with open(self.log_file, 'w') as f:
             f.write(output)
             f.write('\n\n')
         if 'traceback' in str.lower(output):  # if tablefill.py returns an error

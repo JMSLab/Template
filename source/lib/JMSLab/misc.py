@@ -3,9 +3,7 @@ import re
 import sys
 import subprocess
 import datetime
-import yaml
 import shutil
-import getpass
 import fnmatch
 
 from textwrap import dedent
@@ -57,7 +55,7 @@ def is_in_path(program):
     '''
     if shutil.which(program):
         return shutil.which(program)
-    elif os.access(Path(program).expanduser().resolve(), os.X_OK):
+    elif os.access(str(Path(program).expanduser().resolve()), os.X_OK):
         return str(Path(program).expanduser().resolve())
     else:
         for path in os.environ['PATH'].split(os.pathsep):
@@ -102,55 +100,6 @@ def lyx_scan(node, env, path):
                            for source in src_find.findall(contents)]
 
     return SOURCE
-
-
-def load_yaml_value(path, key):
-    '''
-    Load the yaml value indexed by the key argument in the file
-    specified by the path argument.
-    '''
-    if key == "stata":
-        prompt = "Enter %s or None to search for defaults: "
-    elif key == "github_token":
-        prompt = "(Optional) Enter %s to be stored in config_user.yaml.\n"
-        prompt = prompt + "Github token can also be entered without storing to file later:"
-    else:
-        prompt = "Enter %s: "
-
-    # Check if file exists and is not corrupted. If so, load yaml contents.
-    yaml_contents = None
-    if os.path.isfile(path):
-        try:
-            yaml_contents = yaml.load(open(path, 'r'))
-            if not isinstance(yaml_contents, dict):
-                raise yaml.scanner.ScannerError()
-
-        except yaml.scanner.ScannerError:
-            message = "%s is a corrupted yaml file. Delete file and recreate? (y/n) "
-            response = str(input(message % path))
-            if response.lower() == 'y':
-                os.remove(path)
-                yaml_contents = None
-            else:
-                message = "%s is a corrupted yaml file. Please fix." % path
-                raise _exception_classes.PrerequisiteError(message)
-
-    # If key exists, return value. Otherwise, add key-value to file.
-    try:
-        if yaml_contents[key] == "None":
-            return None
-        else:
-            return yaml_contents[key]
-    except:
-        with open(path, 'ab') as f:
-            if key == "github_token":
-                val = getpass.getpass(prompt=(prompt % key))
-            else:
-                val = str(input(prompt % key))
-            if re.sub('"', '', re.sub('\'', '', val.lower())) == "none":
-                val = None
-            f.write('%s: %s\n' % (key, val))
-        return val
 
 
 def check_and_expand_path(path):
@@ -198,7 +147,7 @@ def get_executable(language_name, manual_executables = {}):
                 Cannot find default executable for language: {language_name}.
                 Try specifying a default by defining the environment variable
 
-                    JMSLAB_EXE_{lower_name.upper()}
+                    JMSLAB_EXE_{lower_name.upper().replace(' ', '_')}
             """)
 
             raise _exception_classes.PrerequisiteError(error_message)
@@ -232,7 +181,7 @@ def finder(rel_parent_dir, pattern, excluded_dirs=[]):
 
     try:
         out_paths = subprocess.check_output(
-            command, shell=True).replace('\r\n', '\n')
+            command, shell=True).decode().replace('\r\n', '\n')
         out_paths = out_paths.split('\n')
         # Strip paths and keep non-empty
         out_paths = filter(bool, map(str.strip, out_paths))

@@ -11,4 +11,6 @@ are modified versions of the unit tests in gslab_scons.  Run via
     python -m unittest JMSLab.tests.test_build_python
     python -m unittest JMSLab.tests.test_build_r
     python -m unittest JMSLab.tests.test_build_stata
+    python -m unittest JMSLab.tests.test_build_log
+    python -m unittest JMSLab.tests.test_build_misc
 '''

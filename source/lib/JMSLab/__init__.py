@@ -12,10 +12,7 @@ additonal information on their functionalities.
 '''
 import os
 from . import misc
-from .log                      import start_log, end_log
-from .log_paths_dict           import log_paths_dict, record_dir
-from .scons_debrief            import scons_debrief
-from .check_prereq             import check_prereq
+from .log import start_log, end_log
 
 from .builders.build_r         import build_r
 from .builders.build_latex     import build_latex

@@ -101,7 +101,7 @@ class AnythingBuilder(GSLabBuilder):
         '''
         super(AnythingBuilder, self).execute_system_call()
         if self.origin_log_file is not None:
-            with open(self.log_file, 'ab') as sconscript_log:
+            with open(self.log_file, 'a') as sconscript_log:
                 with open(self.origin_log_file, 'r') as origin_log:
                     sconscript_log.write(origin_log.read())
             os.remove(self.origin_log_file)

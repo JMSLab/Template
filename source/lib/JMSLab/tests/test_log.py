@@ -138,14 +138,19 @@ class TestLog(unittest.TestCase):
         '''
         Test start_log()'s behaviour when its log argument is
         not a string.
+
+        Note: Previous tests had 1 and True, both of which
+        Python tries to evaluate as file descriptors. This
+        ended up messing up Python and the test. See
+
+            https://docs.python.org/3/library/os.html#file-descriptor-operations
         '''
         # initial_stdout = sys.stdout
-        # xx todo: For some reason, 1 and True don't raise error the first time called.
-        # with self.assertRaises(TypeError):
-        #     log.start_log(mode = 'develop', log = 1)
-        #
-        # with self.assertRaises(TypeError):
-        #     log.start_log(mode = 'develop', log = True)
+        with self.assertRaises(TypeError):
+            log.start_log(mode = 'develop', log = 1.0)
+
+        with self.assertRaises(TypeError):
+            log.start_log(mode = 'develop', log = {})
 
         with self.assertRaises(TypeError):
             log.start_log(mode = 'develop', log = [1, 2, 3])

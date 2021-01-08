@@ -39,14 +39,18 @@ class GSLabBuilder(object):
         self.name             = name
         self.valid_extensions = valid_extensions
         self.exec_opts        = exec_opts
+
         # Build system call and store components
         self.add_source_file(source)
         self.target           = [str(t) for t in misc.make_list_if_string(target)]
         self.target_dir       = misc.get_directory(self.target[0])
+
         if 'executable_names' not in env:
             env['executable_names'] = {}
+
         self.executable       = misc.get_executable(name, env['executable_names'])
         self.env              = env
+
         self.add_command_line_arg()
         self.add_log_file()
         self.add_call_args()
