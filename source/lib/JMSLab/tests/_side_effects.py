@@ -1,8 +1,5 @@
 import os
 import re
-import mock
-import requests
-import shutil
 import subprocess
 
 from pathlib import Path
@@ -40,7 +37,7 @@ def make_r_side_effect(recognized = True):
             # If no log path is specified, create one by using the
             # R script's path after replacing .R (if present) with .log.
             source = match.group('source')
-            log    = '%s.log' % re.sub('\.R', '', source)
+            log    = '%s.log' % re.sub(r'\.R', '', source)
 
         if executable == 'Rscript' and log and append == '2>&1':
             with open(log.replace('>', '').strip(), 'wb') as log_file:

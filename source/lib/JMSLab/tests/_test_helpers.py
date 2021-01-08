@@ -1,5 +1,3 @@
-from pathlib import Path
-
 import tempfile
 import mock
 # import sys
