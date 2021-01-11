@@ -1,7 +1,5 @@
 import os
 import sys
-import glob
-import shutil
 
 from pathlib import Path
 from datetime import datetime
@@ -71,8 +69,8 @@ def end_log(cl_args_list = sys.argv, log = 'sconstruct.log', excluded_dirs = [],
 
     # move top level logs to /release/ directory.
     Path(release_dir).mkdir(parents = True, exist_ok = True)
-    for f in glob.glob("*.log"):
-        shutil.move(f, Path(release_dir, f))
+    for f in Path(".").glob("*.log"):
+        f.rename(release_dir / f)
     return None
 
 

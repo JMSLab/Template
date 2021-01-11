@@ -2,8 +2,6 @@ import os
 import re
 import subprocess
 
-from pathlib import Path
-
 from ..builders.executables import get_executables
 from . import _test_helpers as helpers
 
@@ -171,7 +169,7 @@ def lyx_side_effect(*args, **kwargs):
     # Mock a list of the files that LyX sees as existing
     # source_exists should be True only if the source script
     # specified in the system command belongs to existing_files.
-    existing_files = ['test_script.lyx', str(Path('input', 'lyx_test_file.lyx'))]
+    existing_files = ['test_script.lyx', 'input/lyx_test_file.lyx']
     source_exists  = os.path.abspath(source) in \
         map(os.path.abspath, existing_files)
 
@@ -217,7 +215,7 @@ def latex_side_effect(*args, **kwargs):
     # Mock a list of the files that pdflatex sees as existing
     # source_exists should be True only if the source script
     # specified in the system command belongs to existing_files.
-    existing_files = ['test_script.tex', str(Path('input', 'latex_test_file.tex'))]
+    existing_files = ['test_script.tex', 'input/latex_test_file.tex']
     source_exists  = os.path.abspath(source) in \
         map(os.path.abspath, existing_files)
 

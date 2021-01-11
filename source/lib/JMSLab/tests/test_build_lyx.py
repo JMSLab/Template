@@ -20,7 +20,6 @@ path = 'JMSLab.builders.build_lyx'
 # Run tests from test folder
 TESTDIR = Path(__file__).resolve().parent
 os.chdir(TESTDIR)
-# sys.path.append(str(TESTDIR.parents[1]))
 
 
 class TestBuildLyX(unittest.TestCase):
