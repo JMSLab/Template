@@ -7,8 +7,8 @@ are modified versions of the unit tests in gslab_scons.  Run via
 
 You may need to modify the stata executable. For example:
 
-    - On Windows: SET JMSLAB_EXE_STATA="/path/to/stata"
-    - On unix: export JMSLAB_EXE_STATA="/path/to/stata"
+    - On Windows (CMD): SET JMSLAB_EXE_STATA="/path/to/stata"
+    - On *nix (bash):   export JMSLAB_EXE_STATA="/path/to/stata"
 
 Individual tests can be run via
 
