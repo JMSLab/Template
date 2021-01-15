@@ -5,7 +5,7 @@ import sys
 import os
 
 from .. import misc
-from .gslab_builder import GSLabBuilder
+from .jmslab_builder import JMSLabBuilder
 from .._exception_classes import PrerequisiteError
 
 
@@ -30,7 +30,7 @@ def build_matlab(target, source, env):
     return None
 
 
-class MatlabBuilder(GSLabBuilder):
+class MatlabBuilder(JMSLabBuilder):
     '''
     '''
     def __init__(self, target, source, env, name = '', valid_extensions = []):

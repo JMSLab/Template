@@ -3,7 +3,7 @@ import shutil
 import sys
 import os
 
-from .gslab_builder import GSLabBuilder
+from .jmslab_builder import JMSLabBuilder
 from .._exception_classes import PrerequisiteError
 from .. import misc
 
@@ -33,7 +33,7 @@ def build_stata(target, source, env):
     return None
 
 
-class StataBuilder(GSLabBuilder):
+class StataBuilder(JMSLabBuilder):
     '''
     '''
     def __init__(self, target, source, env, name = '', valid_extensions = []):

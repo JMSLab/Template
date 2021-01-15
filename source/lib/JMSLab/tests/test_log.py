@@ -7,7 +7,6 @@ import sys
 import os
 import re
 import mock
-import shutil
 
 # Import testing helper modules
 from .. import log
@@ -25,7 +24,6 @@ class TestLog(unittest.TestCase):
 
     def setUp(self):
         (TESTDIR / 'sconstruct.log').unlink(missing_ok = True)
-        (TESTDIR / 'release').mkdir(exist_ok = True)
 
     # Mock a Unix platform (sys.platform = 'darwin' on  Mac machines).
     @helpers.platform_patch('darwin', '%s.misc' % path)
@@ -125,9 +123,6 @@ class TestLog(unittest.TestCase):
     def test_invalid_mode(self):
         '''Check behaviour when mode argument is invalid'''
         with self.assertRaises(Exception):
-            log.start_log(mode = 'release')
-
-        with self.assertRaises(Exception):
             log.start_log(mode = [1, 2, 3])
 
         with self.assertRaises(Exception):
@@ -170,13 +165,12 @@ class TestLog(unittest.TestCase):
         now = '2000-01-01 0:0:0'
         mock_time.return_value = now
         log.end_log()
-        with open(Path('release', 'sconstruct.log'), 'r') as f:
+        with open(Path('sconstruct.log'), 'r') as f:
             line = f.readline()
             self.assertTrue(re.search('Build completed', line))
             self.assertTrue(re.search(r'\{%s\}' % now, line))
 
     def tearDown(self):
-        shutil.rmtree(TESTDIR / 'release')
         (TESTDIR / 'test_log.txt').unlink(missing_ok = True)
         (TESTDIR / 'sconstruct.log').unlink(missing_ok = True)
 

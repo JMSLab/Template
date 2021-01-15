@@ -1,7 +1,7 @@
 import subprocess
 import os
 
-from .gslab_builder import GSLabBuilder
+from .jmslab_builder import JMSLabBuilder
 
 
 def build_r(target, source, env):
@@ -30,7 +30,7 @@ def build_r(target, source, env):
     return None
 
 
-class RBuilder(GSLabBuilder):
+class RBuilder(JMSLabBuilder):
     '''
     '''
     def add_call_args(self):
