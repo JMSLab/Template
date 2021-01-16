@@ -4,6 +4,7 @@ import subprocess
 
 from .. import misc
 from .._exception_classes import ExecCallError, TargetNonexistenceError, BadExtensionError
+from .executables import get_executable
 
 
 class JMSLabBuilder(object):
@@ -50,7 +51,7 @@ class JMSLabBuilder(object):
         if 'executable_names' not in env:
             env['executable_names'] = {}
 
-        self.executable       = misc.get_executable(name, env['executable_names'])
+        self.executable       = get_executable(name, env['executable_names'])
         self.env              = env
 
         self.add_command_line_arg()

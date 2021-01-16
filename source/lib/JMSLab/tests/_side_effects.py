@@ -2,10 +2,10 @@ import os
 import re
 import subprocess
 
-from ..builders.executables import get_executables
+from ..builders.executables import get_default_executables
 from . import _test_helpers as helpers
 
-MATLAB = get_executables()['matlab']
+MATLAB = get_default_executables()['matlab']
 
 
 def make_r_side_effect(recognized = True):

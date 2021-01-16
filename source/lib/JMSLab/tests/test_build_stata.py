@@ -11,11 +11,11 @@ import os
 from . import _test_helpers as helpers
 from . import _side_effects as fx
 
-from ..builders.executables import get_executables
+from ..builders.executables import get_default_executables
 from ..builders.build_stata import build_stata
 from .._exception_classes import PrerequisiteError, ExecCallError
 
-STATA = get_executables()['stata']
+STATA = get_default_executables()['stata']
 
 # Define path to the builder for use in patching
 path = 'JMSLab.builders.build_stata'
