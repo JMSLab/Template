@@ -1,4 +1,5 @@
 from pathlib import Path
+from shutil import which
 import yaml
 import os
 
@@ -12,6 +13,10 @@ def get_executables(efile = EXE_FILE, languages = []):
         for lang in list(executables.keys()) + languages:
             ENV = f'JMSLAB_EXE_{lang.replace(" ", "_")}'.upper()
             if ENV in os.environ:
-                executables[lang] = str(Path(os.environ[ENV]).expanduser().resolve())
+                program = os.environ[ENV]
+                if which(program):
+                    executables[lang] = which(program)
+                else:
+                    executables[lang] = str(Path(program).expanduser().resolve())
 
     return executables
