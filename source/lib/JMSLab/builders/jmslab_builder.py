@@ -158,7 +158,14 @@ class JMSLabBuilder(object):
         if traceback is None:
             traceback = b''
 
-        traceback = f'\n{traceback.decode()}' if traceback else traceback.decode()
+        try:
+            traceback = traceback.decode()
+        except AttributeError:
+            pass
+
+        if traceback:
+            traceback = '\n' + traceback
+
         message = '%s did not run successfully. ' \
                   'Please check that the executable, source, and target files are correctly specified. ' \
                   'Check %s and sconstruct.log for errors. ' \
