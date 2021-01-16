@@ -1,7 +1,7 @@
 import subprocess
 import os
 
-from .gslab_builder import GSLabBuilder
+from .jmslab_builder import JMSLabBuilder
 
 
 def build_latex(target, source, env):
@@ -31,7 +31,7 @@ def build_latex(target, source, env):
     return None
 
 
-class LatexBuilder(GSLabBuilder):
+class LatexBuilder(JMSLabBuilder):
     '''
     '''
     def add_call_args(self):

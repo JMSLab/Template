@@ -1,7 +1,7 @@
 import subprocess
 import os
 
-from .gslab_builder import GSLabBuilder
+from .jmslab_builder import JMSLabBuilder
 
 
 def build_python(target, source, env):
@@ -29,7 +29,7 @@ def build_python(target, source, env):
     return None
 
 
-class PythonBuilder(GSLabBuilder):
+class PythonBuilder(JMSLabBuilder):
     '''
     '''
     def add_call_args(self):

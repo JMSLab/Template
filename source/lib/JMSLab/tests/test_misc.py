@@ -4,16 +4,11 @@ from pathlib import Path
 
 import unittest
 import os
-import re
 import mock
 import datetime
 
 # Import testing helper modules
 from .. import misc
-from .._exception_classes import PrerequisiteError
-from ..builders.executables import get_executables
-
-STATA = get_executables()['stata']
 
 # Define path to the builder for use in patching
 path = 'JMSLab.misc'
@@ -131,33 +126,6 @@ class TestMisc(unittest.TestCase):
         '''
         the_time = misc.current_time()
         self.assertEqual('2017-01-20 15:02:18', the_time)
-
-    def test_lyx_scan(self):
-        # Open a test LyX file containing dependency statements
-        infile = open(Path('input', 'lyx_test_dependencies.lyx'), 'r').read()
-        # Mock an SCons node object to return this file's contents
-        # when its get_contents() method is called.
-        node   = mock.MagicMock(get_contents = lambda: infile)
-        # Mock an SCons environment object with an EXTENSIONS data attribute
-        env    = mock.MagicMock(EXTENSIONS = ['.lyx', '.txt'])
-        output = misc.lyx_scan(node, env, None)
-        # Ensure lyx_scan scanned the test file correctly
-        self.assertEqual(output, ['lyx_test_file.lyx', 'tables_appendix.txt'])
-
-    @mock.patch('%s.os.path.expanduser' % path)
-    @mock.patch('%s.os.path.isdir' % path)
-    def test_check_and_expand_path(self, mock_is_dir, mock_expanduser):
-        mock_expanduser.side_effect = lambda x: re.sub('~', 'Users/lb', x)
-        mock_is_dir.side_effect     = lambda x: x == 'Users/lb/cache'
-
-        misc.check_and_expand_path('~/cache')
-        misc.check_and_expand_path('Users/lb/cache')
-        with self.assertRaises(PrerequisiteError):
-            misc.check_and_expand_path('~/~/cache')
-        with self.assertRaises(PrerequisiteError):
-            misc.check_and_expand_path('lb/cache')
-        with self.assertRaises(PrerequisiteError):
-            misc.check_and_expand_path(3)
 
 
 if __name__ == '__main__':

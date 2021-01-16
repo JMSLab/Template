@@ -1,11 +1,6 @@
 import os
 import re
-import mock
-import requests
-import shutil
 import subprocess
-
-from pathlib import Path
 
 from ..builders.executables import get_executables
 from . import _test_helpers as helpers
@@ -40,7 +35,7 @@ def make_r_side_effect(recognized = True):
             # If no log path is specified, create one by using the
             # R script's path after replacing .R (if present) with .log.
             source = match.group('source')
-            log    = '%s.log' % re.sub('\.R', '', source)
+            log    = '%s.log' % re.sub(r'\.R', '', source)
 
         if executable == 'Rscript' and log and append == '2>&1':
             with open(log.replace('>', '').strip(), 'wb') as log_file:
@@ -174,7 +169,7 @@ def lyx_side_effect(*args, **kwargs):
     # Mock a list of the files that LyX sees as existing
     # source_exists should be True only if the source script
     # specified in the system command belongs to existing_files.
-    existing_files = ['test_script.lyx', str(Path('input', 'lyx_test_file.lyx'))]
+    existing_files = ['test_script.lyx', 'input/lyx_test_file.lyx']
     source_exists  = os.path.abspath(source) in \
         map(os.path.abspath, existing_files)
 
@@ -220,7 +215,7 @@ def latex_side_effect(*args, **kwargs):
     # Mock a list of the files that pdflatex sees as existing
     # source_exists should be True only if the source script
     # specified in the system command belongs to existing_files.
-    existing_files = ['test_script.tex', str(Path('input', 'latex_test_file.tex'))]
+    existing_files = ['test_script.tex', 'input/latex_test_file.tex']
     source_exists  = os.path.abspath(source) in \
         map(os.path.abspath, existing_files)
 

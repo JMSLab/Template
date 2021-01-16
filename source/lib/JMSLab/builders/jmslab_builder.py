@@ -6,13 +6,15 @@ from .. import misc
 from .._exception_classes import ExecCallError, TargetNonexistenceError, BadExtensionError
 
 
-class GSLabBuilder(object):
+class JMSLabBuilder(object):
     '''
-    Abstract Base Class for custom GSLab SCons builders.
+    Abstract Base Class for custom JMSLab SCons builders.
+
+    Based on GSLabBuilder and ported to Python 3.
     '''
     __metaclass__ = abc.ABCMeta
 
-    def __init__(self, target, source, env, name = 'GSLab Builder',
+    def __init__(self, target, source, env, name = 'JMSLab Builder',
                  valid_extensions = [], exec_opts = ''):
         '''
         Fill builder with information about build step.
