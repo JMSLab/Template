@@ -1,7 +1,7 @@
 import subprocess
 import os
 
-from .gslab_builder import GSLabBuilder
+from .jmslab_builder import JMSLabBuilder
 from ..tablefill import tablefill
 
 
@@ -33,7 +33,7 @@ def build_tables(target, source, env):
     return None
 
 
-class TableBuilder(GSLabBuilder):
+class TableBuilder(JMSLabBuilder):
     '''
     '''
     def __init__(self, target, source, env, name = '', valid_extensions = [], exec_opts = ''):
