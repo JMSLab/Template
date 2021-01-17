@@ -4,7 +4,6 @@ from pathlib import Path
 
 import unittest
 import shutil
-import mock
 import os
 
 # Import testing helper modules
@@ -19,6 +18,7 @@ STATA = get_executables()['stata']
 
 # Define path to the builder for use in patching
 path = 'JMSLab.builders.build_stata'
+mock = unittest.mock
 
 # Run tests from test folder
 TESTDIR = Path(__file__).resolve().parent

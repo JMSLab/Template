@@ -3,15 +3,15 @@
 from pathlib import Path
 
 import unittest
-import os
-import mock
 import datetime
+import os
 
 # Import testing helper modules
 from .. import misc
 
 # Define path to the builder for use in patching
 path = 'JMSLab.misc'
+mock = unittest.mock
 
 # Run tests from test folder
 TESTDIR = Path(__file__).resolve().parent
