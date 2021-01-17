@@ -260,12 +260,13 @@ class TestBuildTables(unittest.TestCase):
         self.assertEqual(len(source) - 1, len(inputs))
 
         # ii) The template argument should be the first source
-        self.assertEqual(str(source[0]), kwargs['template'])
+        self.assertEqual(Path(str(source[0])), Path(kwargs['template']))
 
         # iii) The output argument should be build_tables()'s target argument.
         if isinstance(target, str):
             target = [target]
-        self.assertEqual(target[0], kwargs['output'])
+
+        self.assertEqual(Path(target[0]), Path(kwargs['output']))
 
         mock_tablefill.reset_mock()
 
