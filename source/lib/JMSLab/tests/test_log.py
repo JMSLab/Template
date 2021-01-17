@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 
+from unittest import mock
 from pathlib import Path
 
 import unittest
@@ -13,7 +14,6 @@ from . import _test_helpers as helpers
 
 # Define path to the builder for use in patching
 path = 'JMSLab.log'
-mock = unittest.mock
 
 # Run tests from test folder
 TESTDIR = Path(__file__).resolve().parent
@@ -37,7 +37,6 @@ class TestLog(unittest.TestCase):
         test = "Test message"
         # Call start_log(), which redirects standard output to a log
         log.start_log(mode = 'develop')
-        print(test)
         sys.stdout.close()
 
         # Restore the initial standard output

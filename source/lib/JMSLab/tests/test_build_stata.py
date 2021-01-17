@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 
+from unittest import mock
 from pathlib import Path
 
 import unittest
@@ -18,7 +19,6 @@ STATA = get_default_executables()['stata']
 
 # Define path to the builder for use in patching
 path = 'JMSLab.builders.build_stata'
-mock = unittest.mock
 
 # Run tests from test folder
 TESTDIR = Path(__file__).resolve().parent

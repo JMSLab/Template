@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 
+from unittest import mock
 from pathlib import Path
 
 import unittest
@@ -11,7 +12,6 @@ from .. import misc
 
 # Define path to the builder for use in patching
 path = 'JMSLab.misc'
-mock = unittest.mock
 
 # Run tests from test folder
 TESTDIR = Path(__file__).resolve().parent
@@ -71,7 +71,7 @@ class TestMisc(unittest.TestCase):
         '''
         mock_access.side_effect = self.access_side_effect
 
-        self.assertEqual(misc.is_in_path('stata'), '/bin/stata')
+        self.assertEqual(misc.is_in_path('stata'), str(Path('/bin/stata')))
         self.assertFalse(misc.is_in_path('not_an_executable_file'))
         self.assertFalse(misc.is_in_path('stata-mp'))
 
@@ -84,7 +84,7 @@ class TestMisc(unittest.TestCase):
         '''
         # Define the files to which we have access
         # Total access
-        execute_files = ['/bin/stata',
+        execute_files = [str(Path('/bin/stata')),
                          'executable_file']
         # Total access except execution
         other_files   = ['test_script.do']

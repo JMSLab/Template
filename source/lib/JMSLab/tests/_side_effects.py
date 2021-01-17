@@ -5,7 +5,7 @@ import subprocess
 from ..builders.executables import get_default_executables
 from . import _test_helpers as helpers
 
-MATLAB = get_default_executables()['matlab']
+EXE = get_default_executables()
 
 
 def make_r_side_effect(recognized = True):
@@ -37,7 +37,8 @@ def make_r_side_effect(recognized = True):
             source = match.group('source')
             log    = '%s.log' % re.sub(r'\.R', '', source)
 
-        if executable == 'Rscript' and log and append == '2>&1':
+        found = find_executable(command, EXE['r'], 'Rscript')
+        if executable == 'Rscript' or found and log and append == '2>&1':
             with open(log.replace('>', '').strip(), 'wb') as log_file:
                 log_file.write(b'Test log\n')
             with open('test_output.txt', 'wb') as target:
@@ -72,7 +73,7 @@ def make_matlab_side_effect(recognized = True):
         except KeyError:
             command = args[0]
 
-        found = command.rfind(MATLAB) == 0 or re.search('^matlab', command, flags = re.I)
+        found = find_executable(command, EXE['matlab'], 'matlab')
         if found and not recognized:
             raise subprocess.CalledProcessError(1, command)
 
@@ -154,7 +155,8 @@ def lyx_side_effect(*args, **kwargs):
     option_type    = re.findall(r'^(-\w+)',  option)[0]
     option_setting = re.findall(r'\s(\w+)$', option)[0]
 
-    is_lyx = bool(re.search('^lyx$', executable, flags = re.I))
+    found = find_executable(command, EXE['lyx'], 'lyx')
+    is_lyx = found or bool(re.search('^lyx$', executable, flags = re.I))
 
     # As long as output is redirected, create a log
     if log_redirect:
@@ -200,7 +202,8 @@ def latex_side_effect(*args, **kwargs):
     option2_type = re.findall(r'^(-\w+)', option2)[0]
     target_file  = re.findall(r'\s(\S+)', option2)[0]
 
-    is_pdflatex  = bool(re.search('^pdflatex$', executable, flags = re.I))
+    found = find_executable(command, EXE['latex'], 'pdflatex')
+    is_pdflatex = found or bool(re.search('^pdflatex$', executable, flags = re.I))
 
     # As long as output is redirected, create a log
     if log_redirect:
@@ -224,3 +227,7 @@ def latex_side_effect(*args, **kwargs):
             out_file.write(b'Mock .pdf output')
         with open('%s.log' % target_file, 'wb') as out_file:
             out_file.write(b'Mock .log output')
+
+
+def find_executable(command, default, exe):
+    return command.strip().rfind(default) == 0 or re.search(rf'^{exe}', command, flags = re.I)

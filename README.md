@@ -28,7 +28,7 @@ In addition, each project may use other specialized tools. For the working examp
 
 2. Create a symbolic link called `drive` to _a local copy_ the project's datastore, if one exists for the project (e.g. a Dropbox or Google Drive folder).
 
-    - Do _not_ link a "live" copy of the datastore (i.e. one that is synchronized to the internet). Work with a local, off-line copy before modifying the live copy;  otherwise the data may get unintentionally overwritten for everyone using the datastore. 
+    - Do _not_ link a "live" copy of the datastore (i.e. one that is synchronized to the internet). Work with a local, off-line copy before modifying the live copy;  otherwise the data may get unintentionally overwritten for everyone using the datastore.
 
 3. Install Python dependencies:
 
@@ -36,11 +36,11 @@ In addition, each project may use other specialized tools. For the working examp
     pip install -r source/lib/requirements.txt
     ```
 
-4. Make sure that all the required program executables are in your system's path. 
+4. Make sure that all the required program executables are in your system's path.
 
     - The default names that SCons assumes for the programs are in `source/lib/JMSLab/builders/executables.yml`.
 
-    - To have SCons use a custom executable name or path, define a command-line variable named `JMSLAB_EXE_PROGRAM=/path/to/executable`. e.g. `JMSLAB_EXE_STATA=StataSE.exe` or `JMSLAB_EXE_STATA="C:\Program Files (x86)\Stata16\StataSE.exe"`.
+    - To have SCons use a custom executable name or path, define a command-line (environment) variable named `JMSLAB_EXE_PROGRAM`. e.g. On Windows, `SET JMSLAB_EXE_STATA=StataSE.exe` or `SET JMSLAB_EXE_STATA=C:\Program Files (x86)\Stata16\StataSE.exe`.
 
 5. To compile the project, open the command-line and run `scons` from the project's root folder.
 
@@ -48,7 +48,7 @@ In addition, each project may use other specialized tools. For the working examp
 
 ### Repository Structure
 
-- `source/` contains source scripts and (small) raw data. All of the data cleaning and analysis, and much of the data gathering, takes place here. 
+- `source/` contains source scripts and (small) raw data. All of the data cleaning and analysis, and much of the data gathering, takes place here.
 
     - Do not create any new top-level folders inside of source;  new tasks should be sorted into one of the existing sub-folders.
 
@@ -85,4 +85,4 @@ env.Stata(target, source)
 
 - `source` is a list with the script's name and all of the files used as input; the script must be the first element of the list.
 
-- `env.Stata` is the Stata builder provided in `source/lib/JMSLab/builders`; this is imported and saved as part of the `env` object in the `SConstruct` file at the root of the project. 
+- `env.Stata` is the Stata builder provided in `source/lib/JMSLab/builders`; this is imported and saved as part of the `env` object in the `SConstruct` file at the root of the project.

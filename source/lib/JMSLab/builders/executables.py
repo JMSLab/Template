@@ -59,7 +59,7 @@ def get_default_executables(efile = EXE_FILE, languages = [], warn = False):
     if warn:
         print_executable_warnings(warn_languages)
 
-    return executables
+    return {lang: quotestr(exe) for lang, exe in executables.items()}
 
 
 def get_executable_path(program):
@@ -127,3 +127,9 @@ def print_executable_warnings(warn_languages):
             %s
         """) % indent(os.linesep.join(warn_fmt), '    ')
         print(warn)
+
+
+def quotestr(x, quotechar = '"', contains = None):
+    not_quoted = not (x.startswith(quotechar) or x.endswith(quotechar))
+    x_contains = True if contains is None else x.find(contains) >= 0
+    return quotechar + x + quotechar if not_quoted and x_contains else x

@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 
+from unittest import mock
 from pathlib import Path
 
 import unittest
@@ -14,7 +15,6 @@ from .nostderrout import nostderrout
 
 # Define path to the builder for use in patching
 path = 'JMSLab.builders.build_tables'
-mock = unittest.mock
 
 # Run tests from test folder
 TESTDIR = Path(__file__).resolve().parent
@@ -254,18 +254,19 @@ class TestBuildTables(unittest.TestCase):
         kwargs = mock_tablefill.call_args[1]
 
         # i) input should be the sources (except the first) joined by spaces
-        inputs = kwargs['input'].split()
+        inputs = list(map(Path, kwargs['input'].split()))
         for path in source[1:len(source)]:
-            self.assertIn(str(path), inputs)
+            self.assertIn(Path(str(path)), inputs)
         self.assertEqual(len(source) - 1, len(inputs))
 
         # ii) The template argument should be the first source
-        self.assertEqual(str(source[0]), kwargs['template'])
+        self.assertEqual(Path(str(source[0])), Path(kwargs['template']))
 
         # iii) The output argument should be build_tables()'s target argument.
         if isinstance(target, str):
             target = [target]
-        self.assertEqual(target[0], kwargs['output'])
+
+        self.assertEqual(Path(target[0]), Path(kwargs['output']))
 
         mock_tablefill.reset_mock()
 

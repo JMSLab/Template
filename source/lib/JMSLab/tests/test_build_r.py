@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 
+from unittest import mock
 from pathlib import Path
 
 import unittest
@@ -13,7 +14,6 @@ from . import _side_effects as fx
 from ..builders.build_r import build_r
 from .._exception_classes import ExecCallError
 
-mock = unittest.mock
 system_patch = mock.patch('JMSLab.builders.build_r.subprocess.check_output')
 
 # Run tests from test folder
