@@ -254,9 +254,9 @@ class TestBuildTables(unittest.TestCase):
         kwargs = mock_tablefill.call_args[1]
 
         # i) input should be the sources (except the first) joined by spaces
-        inputs = kwargs['input'].split()
+        inputs = list(map(Path, kwargs['input'].split()))
         for path in source[1:len(source)]:
-            self.assertIn(str(path), inputs)
+            self.assertIn(Path(str(path)), inputs)
         self.assertEqual(len(source) - 1, len(inputs))
 
         # ii) The template argument should be the first source
