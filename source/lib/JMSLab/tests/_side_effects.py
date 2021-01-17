@@ -6,6 +6,7 @@ from ..builders.executables import get_executables
 from . import _test_helpers as helpers
 
 MATLAB = get_executables()['matlab']
+STATA  = get_executables()['stata']
 
 
 def make_r_side_effect(recognized = True):

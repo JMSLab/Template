@@ -37,11 +37,11 @@ def command_match(command, executable, which = None):
         match = re.match(r'\s*'
                          r'(?P<executable>python)'
                          r'\s*'
-                         r'(?P<source>[-\.\/\w]+)'
+                         r'(?P<source>[-\.\/\\\w]+)'
                          r'\s*'
-                         r'(?P<args>(\s?[\.\/\w]+)*)?'
+                         r'(?P<args>(\s?[\.\/\\\w]+)*)?'
                          r'\s*'
-                         r'(?P<log>>\s*[\.\/\w]+)?',
+                         r'(?P<log>>\s*[\.\/\\\w]+)?',
                          command)
 
     elif executable in ['r', 'R']:
@@ -55,11 +55,11 @@ def command_match(command, executable, which = None):
                          r'\s*'
                          r'(?P<option3>--verbose)'
                          r'\s*'
-                         r'(?P<source>[\.\/\w]+\.[rR])'
+                         r'(?P<source>[\.\/\\\w]+\.[rR])'
                          r'\s*'
-                         r'(?P<args>(\s?[\.\/\w]+)*)?'
+                         r'(?P<args>(\s?[\.\/\\\w]+)*)?'
                          r'\s*'
-                         r'(?P<log>>\s*[\.\/\w]+(\.\w+)?)?'
+                         r'(?P<log>>\s*[\.\/\\\w]+(\.\w+)?)?'
                          r'\s*'
                          r'(?P<append>2\>\&1)',
                          command)
@@ -73,24 +73,24 @@ def command_match(command, executable, which = None):
                          r'\s*'
                          r'(?P<do>do)?'
                          r'\s*'
-                         r'(?P<source>[\.\/\w]+\.do)'
+                         r'(?P<source>[\.\/\\\w]+\.do)'
                          r'\s*'
                          r'(?P<args>.*)',
                          command)
 
     elif executable == 'lyx':
         # e.g. "lyx -E pdf2 target_file file.lyx > sconscript.log"
-        match = re.match(r'\s*'
-                         r'(?P<executable>\w+)'
-                         r'\s+'
-                         r'(?P<option>-\w+\s+\w+)?'
-                         r'\s*'
-                         r'(?P<target>[\.\/\w]+\.\w+)?'
-                         r'\s*'
-                         r'(?P<source>[\.\/\w]+\.\w+)?'
-                         r'\s*'
-                         r'(?P<log_redirect>\> [\.\/\w]+\.\w+)?',
-                         command)
+            match = re.match(r'\s*'
+                        r'(?P<executable>\w+)'
+                        r'\s+'
+                        r'(?P<option>-\w+\s+\w+)?'
+                        r'\s*'
+                        r'(?P<target>[\.\/\\\w]+\.\w+)?'
+                        r'\s*'
+                        r'(?P<source>[\.\/\\\w]+\.\w+)?'
+                        r'\s*'
+                        r'(?P<log_redirect>\> [\.\/\\\w]+\.\w+)?',
+                 command)
 
     elif executable == 'pdflatex':
         # e.g. "pdflatex -interaction nonstopmode -jobname target_file file.tex > sconscript.log"
@@ -101,9 +101,9 @@ def command_match(command, executable, which = None):
                          r'\s*'
                          r'(?P<option2>-\w+\s+\S+)?'
                          r'\s*'
-                         r'(?P<source>[\.\/\w]+\.\w+)?'
+                         r'(?P<source>[\.\/\\\w]+\.\w+)?'
                          r'\s*'
-                         r'(?P<log_redirect>\>\s*[\.\/\w]+\.\w+)?',
+                         r'(?P<log_redirect>\>\s*[\.\/\\\w]+\.\w+)?',
                          command)
 
     if which:
@@ -131,7 +131,7 @@ def bad_extension(test_object, builder,
                   env  = {}):
     '''Ensure builders fail when their first sources have bad extensions'''
 
-    tf = tempfile.NamedTemporaryFile(suffix = '')
+    tf = tempfile.NamedTemporaryFile(suffix = '.bad', mode = 'w', delete = False)
     if bad is None:
         bad = tf.name
 
