@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 
+from unittest import mock
 from pathlib import Path
 
 import unittest
@@ -15,7 +16,6 @@ from .._exception_classes import BadExtensionError, ExecCallError
 
 # Define path to the builder for use in patching
 path = 'JMSLab.builders.build_python'
-mock = unittest.mock
 
 # Run tests from test folder
 TESTDIR = Path(__file__).resolve().parent
