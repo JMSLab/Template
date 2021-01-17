@@ -12,11 +12,6 @@ from . import _exception_classes
 from .builders.executables import get_executables
 
 
-def quotestr(x, quotechar = '"'):
-    is_quoted = x.startswith(quotechar) or x.endswith(quotechar)
-    return x if is_quoted else quotechar + x + quotechar
-
-
 def is_scons_dry_run(cl_args_list = []):
     '''
     Determine if SCons is executing as a dry run based on the command line arguments.

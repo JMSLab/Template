@@ -39,7 +39,7 @@ def command_match(command, executable, which = None):
     '''Parse Python, R, and Stata system calls as re.match objects'''
     if executable in ['python', 'py']:
         # e.g. "python script.py cl_arg > script.log"
-        default = quote_and_escape(EXE['python'], command)
+        default = re.escape(EXE['python'])
         match = re.match(r'\s*'
                          rf'(?P<executable>python|{default})'
                          r'\s*'
@@ -52,7 +52,7 @@ def command_match(command, executable, which = None):
 
     elif executable in ['r', 'R']:
         # e.g. "Rscript --no-save --no-restore --verbose script.R input.txt > script.log 2>&1"
-        default = quote_and_escape(EXE['r'], command)
+        default = re.escape(EXE['r'])
         match = re.match(r'\s*'
                          rf'(?P<executable>Rscript|{default})'
                          r'\s+'
@@ -73,7 +73,7 @@ def command_match(command, executable, which = None):
 
     elif executable in ['stata', 'do']:
         # e.g. "stata-mp -e do script.do cl_arg"
-        default = quote_and_escape(EXE['stata'], command)
+        default = re.escape(EXE['stata'])
         match = re.match(r'\s*'
                          rf'(?P<executable>\S+|{default})'
                          r'\s+'
@@ -87,7 +87,7 @@ def command_match(command, executable, which = None):
                          command)
     elif executable == 'lyx':
         # e.g. "lyx -E pdf2 target_file file.lyx > sconscript.log"
-        default = quote_and_escape(EXE['lyx'], command)
+        default = re.escape(EXE['lyx'])
         match = re.match(r'\s*'
                          rf'(?P<executable>\w+|{default})'
                          r'\s+'
@@ -102,7 +102,7 @@ def command_match(command, executable, which = None):
 
     elif executable == 'pdflatex':
         # e.g. "pdflatex -interaction nonstopmode -jobname target_file file.tex > sconscript.log"
-        default = quote_and_escape(EXE['latex'], command)
+        default = re.escape(EXE['latex'])
         match = re.match(r'\s*'
                          rf'(?P<executable>\w+|{default})'
                          r'\s+'
@@ -114,7 +114,6 @@ def command_match(command, executable, which = None):
                          r'\s*'
                          r'(?P<log_redirect>\>\s*[\.\/\\\w]+\.\w+)?',
                          command)
-
 
     if which:
         return match.group(which)
@@ -243,9 +242,3 @@ def test_cl_args(test_object, builder, system_mock, extension, env = {}):
 
     test_object.assertEqual(len(args.split(' ')), 3)
     check_log(test_object, 'sconscript.log')
-
-
-def quote_and_escape(default, command):
-    quote = command.strip().rfind(misc.quotestr(default)) == 0
-    escaped = re.escape(misc.quotestr(default) if quote else default)
-    return escaped
