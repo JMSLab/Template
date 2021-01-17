@@ -30,7 +30,11 @@ def platform_patch(platform, path):
     return total_patch
 
 
-def command_match(command, executable, which = None):
+def command_match(command, executable, default_executable = None, which = None):
+    if default_executable:
+        if command.strip().rfind(default_executable) == 0:
+            command.replace(default_executable, executable, 1)
+
     '''Parse Python, R, and Stata system calls as re.match objects'''
     if executable in ['python', 'py']:
         # e.g. "python script.py cl_arg > script.log"

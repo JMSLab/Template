@@ -5,8 +5,7 @@ import subprocess
 from ..builders.executables import get_executables
 from . import _test_helpers as helpers
 
-MATLAB = get_executables()['matlab']
-STATA  = get_executables()['stata']
+EXE = get_executables()
 
 
 def make_r_side_effect(recognized = True):
@@ -26,7 +25,7 @@ def make_r_side_effect(recognized = True):
         if re.search('R', command, flags = re.I) and not recognized:
             raise subprocess.CalledProcessError(1, command)
 
-        match   = helpers.command_match(command, 'R')
+        match   = helpers.command_match(command, 'R', EXE['r'])
 
         executable = match.group('executable')
         log        = match.group('log')
@@ -50,7 +49,7 @@ def make_r_side_effect(recognized = True):
 def python_side_effect(*args, **kwargs):
     '''    Mock subprocess.check_output for testing build_python()'''
     command = args[0]
-    match   = helpers.command_match(command, 'python')
+    match   = helpers.command_match(command, 'python', EXE['python'])
 
     if match.group('log'):
         log_path = re.sub(r'(\s|>)', '', match.group('log'))
@@ -73,7 +72,7 @@ def make_matlab_side_effect(recognized = True):
         except KeyError:
             command = args[0]
 
-        found = command.rfind(MATLAB) == 0 or re.search('^matlab', command, flags = re.I)
+        found = command.rfind(EXE['matlab']) == 0 or re.search('^matlab', command, flags = re.I)
         if found and not recognized:
             raise subprocess.CalledProcessError(1, command)
 
@@ -105,7 +104,7 @@ def make_stata_side_effect(recognized = True):
     '''
     def stata_side_effect(*args, **kwargs):
         command = args[0]
-        match   = helpers.command_match(command, 'stata')
+        match   = helpers.command_match(command, 'stata', EXE['stata'])
 
         if match.group('executable') == recognized:
             # Find the Stata script's name
@@ -144,7 +143,7 @@ def lyx_side_effect(*args, **kwargs):
     '''
     # Get and parse the command passed to os.system()
     command = args[0]
-    match = helpers.command_match(command, 'lyx')
+    match = helpers.command_match(command, 'lyx', EXE['lyx'])
 
     executable   = match.group('executable')
     option       = match.group('option')
@@ -189,7 +188,7 @@ def latex_side_effect(*args, **kwargs):
     '''
     # Get and parse the command passed to os.system()
     command = args[0]
-    match = helpers.command_match(command, 'pdflatex')
+    match = helpers.command_match(command, 'pdflatex', EXE['latex'])
 
     executable   = match.group('executable')
     option1      = match.group('option1')
