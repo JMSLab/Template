@@ -1,8 +1,8 @@
 from pathlib import Path
 from shutil import which
+
 import yaml
 import os
-
 
 EXE_FILE = Path(__file__).resolve().parents[0] / 'executables.yml'
 
@@ -19,4 +19,10 @@ def get_executables(efile = EXE_FILE, languages = []):
                 else:
                     executables[lang] = str(Path(program).expanduser().resolve())
 
-    return executables
+    return {lang: quotestr(exe) for lang, exe in executables.items()}
+
+
+def quotestr(x, quotechar = '"', contains = None):
+    not_quoted = not (x.startswith(quotechar) or x.endswith(quotechar))
+    x_contains = True if contains is None else x.find(contains) >= 0
+    return quotechar + x + quotechar if not_quoted and x_contains else x

@@ -6,7 +6,10 @@ import re
 
 from unittest import mock
 from .. import misc
+from ..builders.executables import get_executables
 from .._exception_classes import BadExtensionError
+
+EXE = get_executables()
 
 
 def platform_patch(platform, path):
@@ -31,23 +34,27 @@ def platform_patch(platform, path):
 
 
 def command_match(command, executable, which = None):
+    match = None
+
     '''Parse Python, R, and Stata system calls as re.match objects'''
     if executable in ['python', 'py']:
         # e.g. "python script.py cl_arg > script.log"
+        default = re.escape(EXE['python'])
         match = re.match(r'\s*'
-                         r'(?P<executable>python)'
+                         rf'(?P<executable>python|{default})'
                          r'\s*'
-                         r'(?P<source>[-\.\/\w]+)'
+                         r'(?P<source>[-\.\/\\\w]+)'
                          r'\s*'
-                         r'(?P<args>(\s?[\.\/\w]+)*)?'
+                         r'(?P<args>(\s?[\.\/\\\w]+)*)?'
                          r'\s*'
-                         r'(?P<log>>\s*[\.\/\w]+)?',
+                         r'(?P<log>>\s*[\.\/\\\w]+)?',
                          command)
 
     elif executable in ['r', 'R']:
         # e.g. "Rscript --no-save --no-restore --verbose script.R input.txt > script.log 2>&1"
+        default = re.escape(EXE['r'])
         match = re.match(r'\s*'
-                         r'(?P<executable>Rscript)'
+                         rf'(?P<executable>Rscript|{default})'
                          r'\s+'
                          r'(?P<option1>--no-save)'
                          r'\s*'
@@ -55,55 +62,57 @@ def command_match(command, executable, which = None):
                          r'\s*'
                          r'(?P<option3>--verbose)'
                          r'\s*'
-                         r'(?P<source>[\.\/\w]+\.[rR])'
+                         r'(?P<source>[\.\/\\\w]+\.[rR])'
                          r'\s*'
-                         r'(?P<args>(\s?[\.\/\w]+)*)?'
+                         r'(?P<args>(\s?[\.\/\\\w]+)*)?'
                          r'\s*'
-                         r'(?P<log>>\s*[\.\/\w]+(\.\w+)?)?'
+                         r'(?P<log>>\s*[\.\/\\\w]+(\.\w+)?)?'
                          r'\s*'
                          r'(?P<append>2\>\&1)',
                          command)
 
     elif executable in ['stata', 'do']:
         # e.g. "stata-mp -e do script.do cl_arg"
+        default = re.escape(EXE['stata'])
         match = re.match(r'\s*'
-                         r'(?P<executable>\S+)'
+                         rf'(?P<executable>\S+|{default})'
                          r'\s+'
                          r'(?P<options>(\s?[-\/][-A-Za-z]+)+)?'
                          r'\s*'
                          r'(?P<do>do)?'
                          r'\s*'
-                         r'(?P<source>[\.\/\w]+\.do)'
+                         r'(?P<source>[\.\/\\\w]+\.do)'
                          r'\s*'
                          r'(?P<args>.*)',
                          command)
-
     elif executable == 'lyx':
         # e.g. "lyx -E pdf2 target_file file.lyx > sconscript.log"
+        default = re.escape(EXE['lyx'])
         match = re.match(r'\s*'
-                         r'(?P<executable>\w+)'
+                         rf'(?P<executable>\w+|{default})'
                          r'\s+'
                          r'(?P<option>-\w+\s+\w+)?'
                          r'\s*'
-                         r'(?P<target>[\.\/\w]+\.\w+)?'
+                         r'(?P<target>[\.\/\\\w]+\.\w+)?'
                          r'\s*'
-                         r'(?P<source>[\.\/\w]+\.\w+)?'
+                         r'(?P<source>[\.\/\\\w]+\.\w+)?'
                          r'\s*'
-                         r'(?P<log_redirect>\> [\.\/\w]+\.\w+)?',
+                         r'(?P<log_redirect>\> [\.\/\\\w]+\.\w+)?',
                          command)
 
     elif executable == 'pdflatex':
         # e.g. "pdflatex -interaction nonstopmode -jobname target_file file.tex > sconscript.log"
+        default = re.escape(EXE['latex'])
         match = re.match(r'\s*'
-                         r'(?P<executable>\w+)'
+                         rf'(?P<executable>\w+|{default})'
                          r'\s+'
                          r'(?P<option1>-\w+\s+\S+)?'
                          r'\s*'
                          r'(?P<option2>-\w+\s+\S+)?'
                          r'\s*'
-                         r'(?P<source>[\.\/\w]+\.\w+)?'
+                         r'(?P<source>[\.\/\\\w]+\.\w+)?'
                          r'\s*'
-                         r'(?P<log_redirect>\>\s*[\.\/\w]+\.\w+)?',
+                         r'(?P<log_redirect>\>\s*[\.\/\\\w]+\.\w+)?',
                          command)
 
     if which:
@@ -131,7 +140,7 @@ def bad_extension(test_object, builder,
                   env  = {}):
     '''Ensure builders fail when their first sources have bad extensions'''
 
-    tf = tempfile.NamedTemporaryFile(suffix = '')
+    tf = tempfile.NamedTemporaryFile(suffix = '.bad', mode = 'w', delete = False)
     if bad is None:
         bad = tf.name
 
