@@ -3,9 +3,8 @@
 from pathlib import Path
 
 import unittest
-import os
 import shutil
-import mock
+import os
 
 # Import testing helper modules
 from . import _test_helpers as helpers
@@ -16,6 +15,7 @@ from .._exception_classes import ExecCallError
 
 # Define path to the builder for use in patching
 path = 'JMSLab.builders.build_lyx'
+mock = unittest.mock
 
 # Run tests from test folder
 TESTDIR = Path(__file__).resolve().parent
