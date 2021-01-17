@@ -3,9 +3,8 @@
 from pathlib import Path
 
 import unittest
-import os
 import shutil
-import mock
+import os
 
 # Import testing helper modules
 from . import _test_helpers as helpers
@@ -14,6 +13,7 @@ from . import _side_effects as fx
 from ..builders.build_r import build_r
 from .._exception_classes import ExecCallError
 
+mock = unittest.mock
 system_patch = mock.patch('JMSLab.builders.build_r.subprocess.check_output')
 
 # Run tests from test folder

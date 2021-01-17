@@ -3,9 +3,8 @@
 from pathlib import Path
 
 import unittest
-import os
 import shutil
-import mock
+import os
 import re
 
 # Import testing helper modules
@@ -20,6 +19,7 @@ MATLAB = get_executables()['matlab']
 
 # Define main test patch
 path  = 'JMSLab.builders.build_matlab'
+mock = unittest.mock
 
 check_output_patch = mock.patch('%s.subprocess.check_output' % path)
 copy_patch = mock.patch('%s.shutil.copy' % path)

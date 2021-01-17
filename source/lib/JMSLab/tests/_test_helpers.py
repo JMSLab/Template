@@ -1,10 +1,10 @@
 import tempfile
-import mock
 # import sys
 import imp
 import os
 import re
 
+from unittest import mock
 from .. import misc
 from .._exception_classes import BadExtensionError
 
