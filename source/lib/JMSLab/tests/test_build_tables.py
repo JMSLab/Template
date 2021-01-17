@@ -4,7 +4,6 @@ from pathlib import Path
 
 import unittest
 import shutil
-import mock
 import re
 import os
 
@@ -15,6 +14,7 @@ from .nostderrout import nostderrout
 
 # Define path to the builder for use in patching
 path = 'JMSLab.builders.build_tables'
+mock = unittest.mock
 
 # Run tests from test folder
 TESTDIR = Path(__file__).resolve().parent
