@@ -12,6 +12,11 @@ from . import _exception_classes
 from .builders.executables import get_executables
 
 
+def quotestr(x, quotechar = '"'):
+    is_quoted = x.startswith(quotechar) or x.endswith(quotechar)
+    return x if is_quoted else quotechar + x + quotechar
+
+
 def is_scons_dry_run(cl_args_list = []):
     '''
     Determine if SCons is executing as a dry run based on the command line arguments.
@@ -97,10 +102,10 @@ def get_executable(language_name, manual_executables = {}):
     If key doesn't exist, use a default.
     '''
     lower_name = language_name.lower().strip()
-    manual_executables = {str(k).lower().strip(): str(v).lower().strip()
+    manual_executables = {str(k).lower().strip(): str(v).strip()
                           for k, v in manual_executables.items()}
     manual_executables = {k: v for k, v in manual_executables.items()
-                          if k and v and v not in ['none', 'no', 'false', 'n', 'f']}
+                          if k and v and v.lower() not in ['none', 'no', 'false', 'n', 'f']}
     default_executables = get_executables(languages = [lower_name])
 
     try:

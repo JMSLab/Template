@@ -56,7 +56,7 @@ class JMSLabBuilder(object):
         self.add_command_line_arg()
         self.add_log_file()
         self.add_call_args()
-        self.system_call = '%s %s %s' % (self.executable, self.exec_opts, self.call_args)
+        self.system_call = '%s %s %s' % (misc.quotestr(self.executable), self.exec_opts, self.call_args)
 
     def add_source_file(self, source):
         '''

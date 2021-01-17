@@ -25,7 +25,7 @@ def make_r_side_effect(recognized = True):
         if re.search('R', command, flags = re.I) and not recognized:
             raise subprocess.CalledProcessError(1, command)
 
-        match   = helpers.command_match(command, 'R', EXE['r'])
+        match   = helpers.command_match(command, 'R')
 
         executable = match.group('executable')
         log        = match.group('log')
@@ -49,7 +49,7 @@ def make_r_side_effect(recognized = True):
 def python_side_effect(*args, **kwargs):
     '''    Mock subprocess.check_output for testing build_python()'''
     command = args[0]
-    match   = helpers.command_match(command, 'python', EXE['python'])
+    match   = helpers.command_match(command, 'python')
 
     if match.group('log'):
         log_path = re.sub(r'(\s|>)', '', match.group('log'))
@@ -104,7 +104,7 @@ def make_stata_side_effect(recognized = True):
     '''
     def stata_side_effect(*args, **kwargs):
         command = args[0]
-        match   = helpers.command_match(command, 'stata', EXE['stata'])
+        match   = helpers.command_match(command, 'stata')
 
         if match.group('executable') == recognized:
             # Find the Stata script's name
@@ -143,7 +143,7 @@ def lyx_side_effect(*args, **kwargs):
     '''
     # Get and parse the command passed to os.system()
     command = args[0]
-    match = helpers.command_match(command, 'lyx', EXE['lyx'])
+    match = helpers.command_match(command, 'lyx')
 
     executable   = match.group('executable')
     option       = match.group('option')
@@ -188,7 +188,7 @@ def latex_side_effect(*args, **kwargs):
     '''
     # Get and parse the command passed to os.system()
     command = args[0]
-    match = helpers.command_match(command, 'pdflatex', EXE['latex'])
+    match = helpers.command_match(command, 'pdflatex')
 
     executable   = match.group('executable')
     option1      = match.group('option1')
