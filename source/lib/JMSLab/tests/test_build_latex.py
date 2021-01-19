@@ -16,6 +16,8 @@ from .._exception_classes import ExecCallError
 
 # Define path to the builder for use in patching
 path = 'JMSLab.builders.build_latex'
+subprocess_patch = mock.patch('%s.subprocess.check_output' % path)
+system_patch = mock.patch('%s.os.system' % path)
 
 # Run tests from test folder
 TESTDIR = Path(__file__).resolve().parent
@@ -27,29 +29,29 @@ class TestBuildLateX(unittest.TestCase):
     def setUp(self):
         (TESTDIR / 'build').mkdir(exist_ok = True)
 
-    @mock.patch('%s.subprocess.check_output' % path)
-    def test_default(self, mock_system):
+    @subprocess_patch
+    def test_default(self, mock_check_output):
         '''
         Test that build_latex() behaves correctly when provided with
         standard inputs.
         '''
-        mock_system.side_effect = fx.latex_side_effect
+        mock_check_output.side_effect = fx.latex_side_effect
         target = 'build/latex.pdf'
         helpers.standard_test(self, build_latex, 'tex',
-                              system_mock = mock_system,
+                              system_mock = mock_check_output,
                               target = target)
         self.assertTrue(os.path.isfile(target))
 
-    @mock.patch('%s.subprocess.check_output' % path)
-    def test_list_arguments(self, mock_system):
+    @subprocess_patch
+    def test_list_arguments(self, mock_check_output):
         '''
         Check that build_latex() works when its source and target
         arguments are lists
         '''
-        mock_system.side_effect = fx.latex_side_effect
+        mock_check_output.side_effect = fx.latex_side_effect
         target = ['build/latex.pdf']
         helpers.standard_test(self, build_latex, 'tex',
-                              system_mock = mock_system,
+                              system_mock = mock_check_output,
                               source = ['test_script.tex'],
                               target = target)
         self.assertTrue(os.path.isfile(target[0]))
@@ -58,7 +60,7 @@ class TestBuildLateX(unittest.TestCase):
         '''Test that build_latex() recognises an improper file extension'''
         helpers.bad_extension(self, build_latex, good = 'test.tex')
 
-    @mock.patch('%s.os.system' % path)
+    @system_patch
     def test_env_argument(self, mock_system):
         '''
         Test that numerous types of objects can be passed to
@@ -72,7 +74,7 @@ class TestBuildLateX(unittest.TestCase):
             with self.assertRaises(TypeError):
                 build_latex(target, source, env = env)
 
-    @mock.patch('%s.os.system' % path)
+    @system_patch
     def test_nonexistent_source(self, mock_system):
         '''
         Test build_latex()'s behaviour when the source file
@@ -88,7 +90,7 @@ class TestBuildLateX(unittest.TestCase):
             build_latex('build/latex.pdf',
                         ['input/nonexistent_file.tex'], env = {})
 
-    @mock.patch('%s.os.system' % path)
+    @system_patch
     def test_nonexistent_target_directory(self, mock_system):
         '''
         Test build_latex()'s behaviour when the target file's

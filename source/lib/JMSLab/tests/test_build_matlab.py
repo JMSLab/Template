@@ -20,6 +20,7 @@ MATLAB = get_executables()['matlab']
 
 # Define main test patch
 path  = 'JMSLab.builders.build_matlab'
+subprocess_patch = mock.patch('%s.subprocess.check_output' % path)
 
 # Run tests from test folder
 TESTDIR = Path(__file__).resolve().parent
@@ -32,7 +33,7 @@ class TestBuildMatlab(unittest.TestCase):
         (TESTDIR / 'build').mkdir(exist_ok = True)
 
     @helpers.platform_patch('darwin', path)
-    @mock.patch('%s.subprocess.check_output' % path)
+    @subprocess_patch
     def test_unix(self, mock_check_output):
         '''
         Test that build_matlab() creates a log and properly submits
@@ -56,7 +57,7 @@ class TestBuildMatlab(unittest.TestCase):
             self.assertIn(option, command.split(' '))
 
     @helpers.platform_patch('win32', path)
-    @mock.patch('%s.subprocess.check_output' % path)
+    @subprocess_patch
     def test_windows(self, mock_check_output):
         '''
         Test that build_matlab() creates a log and properly submits
@@ -68,7 +69,7 @@ class TestBuildMatlab(unittest.TestCase):
         self.check_call(mock_check_output, ['-nosplash', '-minimize', '-wait'])
 
     @helpers.platform_patch('riscos', path)
-    @mock.patch('%s.subprocess.check_output' % path)
+    @subprocess_patch
     def test_other_os(self, mock_check_output):
         '''
         Test that build_matlab() raises an exception when run on a
@@ -80,7 +81,7 @@ class TestBuildMatlab(unittest.TestCase):
                          source = 'input/matlab_test_script.m',
                          env    = {})
 
-    @mock.patch('%s.subprocess.check_output' % path)
+    @subprocess_patch
     def test_clarg(self, mock_check_output):
         '''
         Test that build_matlab() properly sets command-line arguments
@@ -97,7 +98,7 @@ class TestBuildMatlab(unittest.TestCase):
         '''Test that build_matlab() recognises an improper file extension'''
         helpers.bad_extension(self, build_matlab, good = 'test.m')
 
-    @mock.patch('%s.subprocess.check_output' % path)
+    @subprocess_patch
     def test_no_executable(self, mock_check_output):
         mock_check_output.side_effect = \
             fx.make_matlab_side_effect(recognized = False)

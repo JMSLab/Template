@@ -16,6 +16,7 @@ from .._exception_classes import BadExtensionError, ExecCallError
 
 # Define path to the builder for use in patching
 path = 'JMSLab.builders.build_python'
+subprocess_patch = mock.patch('%s.subprocess.check_output' % path)
 
 # Run tests from test folder
 TESTDIR = Path(__file__).resolve().parent
@@ -27,8 +28,8 @@ class TestBuildPython(unittest.TestCase):
     def setUp(self):
         (TESTDIR / 'build').mkdir(exist_ok = True)
 
-    @mock.patch('%s.subprocess.check_output' % path)
-    def test_log_creation(self, mock_check_output):
+    @subprocess_patch
+    def test_standard(self, mock_check_output):
         '''Test build_python()'s behaviour when given standard inputs.'''
         mock_check_output.side_effect = fx.python_side_effect
         helpers.standard_test(self, build_python, 'py',
@@ -38,12 +39,12 @@ class TestBuildPython(unittest.TestCase):
         '''Test that build_python() recognises an improper file extension'''
         helpers.bad_extension(self, build_python, good = 'test.py')
 
-    @mock.patch('%s.subprocess.check_output' % path)
+    @subprocess_patch
     def test_cl_arg(self, mock_check_output):
         mock_check_output.side_effect = fx.python_side_effect
         helpers.test_cl_args(self, build_python, mock_check_output, 'py')
 
-    @mock.patch('%s.subprocess.check_output' % path)
+    @subprocess_patch
     def test_unintended_inputs(self, mock_check_output):
         '''
         Test that build_python() handles unintended inputs
