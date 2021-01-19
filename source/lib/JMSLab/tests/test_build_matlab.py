@@ -21,10 +21,6 @@ MATLAB = get_executables()['matlab']
 # Define main test patch
 path  = 'JMSLab.builders.build_matlab'
 
-check_output_patch = mock.patch('%s.subprocess.check_output' % path)
-copy_patch = mock.patch('%s.shutil.copy' % path)
-main_patch = lambda f: check_output_patch(copy_patch(f))
-
 # Run tests from test folder
 TESTDIR = Path(__file__).resolve().parent
 os.chdir(TESTDIR)
@@ -36,14 +32,12 @@ class TestBuildMatlab(unittest.TestCase):
         (TESTDIR / 'build').mkdir(exist_ok = True)
 
     @helpers.platform_patch('darwin', path)
-    @main_patch
-    def test_unix(self, mock_copy, mock_check_output):
+    @mock.patch('%s.subprocess.check_output' % path)
+    def test_unix(self, mock_check_output):
         '''
         Test that build_matlab() creates a log and properly submits
         a matlab system command on a Unix machine.
         '''
-        # Mock copy so that it just creates the destination file
-        mock_copy.side_effect = fx.matlab_copy_effect
         mock_check_output.side_effect = fx.make_matlab_side_effect(True)
 
         helpers.standard_test(self, build_matlab, 'm')
@@ -62,39 +56,36 @@ class TestBuildMatlab(unittest.TestCase):
             self.assertIn(option, command.split(' '))
 
     @helpers.platform_patch('win32', path)
-    @main_patch
-    def test_windows(self, mock_copy, mock_check_output):
+    @mock.patch('%s.subprocess.check_output' % path)
+    def test_windows(self, mock_check_output):
         '''
         Test that build_matlab() creates a log and properly submits
         a matlab system command on a Windows machine.
         '''
-        mock_copy.side_effect = fx.matlab_copy_effect
         mock_check_output.side_effect = fx.make_matlab_side_effect(True)
 
         helpers.standard_test(self, build_matlab, 'm')
         self.check_call(mock_check_output, ['-nosplash', '-minimize', '-wait'])
 
     @helpers.platform_patch('riscos', path)
-    @main_patch
-    def test_other_os(self, mock_copy, mock_check_output):
+    @mock.patch('%s.subprocess.check_output' % path)
+    def test_other_os(self, mock_check_output):
         '''
         Test that build_matlab() raises an exception when run on a
         non-Unix, non-Windows operating system.
         '''
-        mock_copy.side_effect = fx.matlab_copy_effect
         mock_check_output.side_effect = fx.make_matlab_side_effect(True)
         with self.assertRaises(PrerequisiteError):
             build_matlab(target = 'build/test.mat',
                          source = 'input/matlab_test_script.m',
                          env    = {})
 
-    @main_patch
-    def test_clarg(self, mock_copy, mock_check_output):
+    @mock.patch('%s.subprocess.check_output' % path)
+    def test_clarg(self, mock_check_output):
         '''
         Test that build_matlab() properly sets command-line arguments
         in its env argument as system environment variables.
         '''
-        mock_copy.side_effect = fx.matlab_copy_effect
         mock_check_output.side_effect = fx.make_matlab_side_effect(True)
 
         env = {'CL_ARG': 'COMMANDLINE'}
@@ -106,9 +97,8 @@ class TestBuildMatlab(unittest.TestCase):
         '''Test that build_matlab() recognises an improper file extension'''
         helpers.bad_extension(self, build_matlab, good = 'test.m')
 
-    @main_patch
-    def test_no_executable(self, mock_copy, mock_check_output):
-        mock_copy.side_effect = fx.matlab_copy_effect
+    @mock.patch('%s.subprocess.check_output' % path)
+    def test_no_executable(self, mock_check_output):
         mock_check_output.side_effect = \
             fx.make_matlab_side_effect(recognized = False)
 
