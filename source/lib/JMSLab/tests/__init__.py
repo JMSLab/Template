@@ -17,6 +17,7 @@ Individual tests can be run via
     python -m unittest JMSLab.tests.test_build_lyx
     python -m unittest JMSLab.tests.test_build_matlab
     python -m unittest JMSLab.tests.test_build_r
+    python -m unittest JMSLab.tests.test_build_python
     python -m unittest JMSLab.tests.test_build_stata
     python -m unittest JMSLab.tests.test_log
     python -m unittest JMSLab.tests.test_misc
