@@ -1,11 +1,12 @@
 '''
 
 This directory contains the JMSLab SCons' library's unit tests. These
-are modified versions of the unit tests in gslab_scons.  Run via
+are modified versions of the unit tests in gslab_scons.  Tests should
+be run from JMSLab's parent directory (should be ../..) via:
 
     python -m unittest discover
 
-You may need to modify the stata executable. For example (note lack
+You may need to modify the Stata executable; for example (note lack
 of quotes on Windows):
 
     - On Windows (CMD): SET JMSLAB_EXE_STATA=/path to/stata.exe

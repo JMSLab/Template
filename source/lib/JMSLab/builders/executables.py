@@ -19,10 +19,10 @@ def get_executables(efile = EXE_FILE, languages = []):
                 else:
                     executables[lang] = str(Path(program).expanduser().resolve())
 
-    return {lang: quotestr(exe) for lang, exe in executables.items()}
+    return {lang: quote_str(exe) for lang, exe in executables.items()}
 
 
-def quotestr(x, quotechar = '"', contains = None):
+def quote_str(x, quotechar = '"', contains = None):
     not_quoted = not (x.startswith(quotechar) or x.endswith(quotechar))
     x_contains = True if contains is None else x.find(contains) >= 0
     return quotechar + x + quotechar if not_quoted and x_contains else x
