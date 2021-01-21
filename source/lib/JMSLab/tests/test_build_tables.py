@@ -15,6 +15,7 @@ from .nostderrout import nostderrout
 
 # Define path to the builder for use in patching
 path = 'JMSLab.builders.build_tables'
+tablefill_patch = mock.patch('%s.tablefill' % path)
 
 # Run tests from test folder
 TESTDIR = Path(__file__).resolve().parent
@@ -34,7 +35,7 @@ class TestBuildTables(unittest.TestCase):
         self.mock_output = "traceback"
         return self.mock_output
 
-    @mock.patch('%s.tablefill' % path)
+    @tablefill_patch
     def test_standard(self, mock_tablefill):
         '''
         Test that build_tables() correctly prepares and passes
@@ -62,7 +63,7 @@ class TestBuildTables(unittest.TestCase):
         build_tables(target, source, {})
         self.check_call(source, target, mock_tablefill)
 
-    @mock.patch('%s.tablefill' % path)
+    @tablefill_patch
     def test_default_string_target(self, mock_tablefill):
         '''
         Test that build_tables() constructs LyX tables correctly when
@@ -77,7 +78,7 @@ class TestBuildTables(unittest.TestCase):
 
         self.check_call(source, target, mock_tablefill)
 
-    @mock.patch('%s.tablefill' % path)
+    @tablefill_patch
     def test_error_traceback(self, mock_tablefill):
         '''
         Test that build_tables() properly outputs traceback.
@@ -104,7 +105,7 @@ class TestBuildTables(unittest.TestCase):
         with self.assertRaises(BadExtensionError), nostderrout():
             build_tables(target, source, {})
 
-    @mock.patch('%s.tablefill' % path)
+    @tablefill_patch
     def test_unintended_inputs(self, mock_tablefill):
         '''
         Test build_tables()'s behaviour when provided with
@@ -148,7 +149,7 @@ class TestBuildTables(unittest.TestCase):
         with self.assertRaises(TypeError):
             build_tables(std_target, source, {})
 
-    @mock.patch('%s.tablefill' % path)
+    @tablefill_patch
     def test_input(self, mock_tablefill):
         mock_tablefill.side_effect = self.table_fill_side_effect
         for ext in ['lyx', 'tex']:
@@ -175,7 +176,7 @@ class TestBuildTables(unittest.TestCase):
                 elif ext == 'lyx':
                     self.tag_compare_lyx(tag_data[n], filled_data[n])
 
-    @mock.patch('%s.tablefill' % path)
+    @tablefill_patch
     def test_breaks_rounding_string(self, mock_tablefill):
         mock_tablefill.side_effect = self.table_fill_side_effect
         for ext in ['lyx', 'tex']:
@@ -188,7 +189,7 @@ class TestBuildTables(unittest.TestCase):
                 error = self.mock_output
                 self.assertIn('InvalidOperation', error)
 
-    @mock.patch('%s.tablefill' % path)
+    @tablefill_patch
     def test_illegal_syntax(self, mock_tablefill):
         mock_tablefill.side_effect = self.table_fill_side_effect
 
@@ -213,7 +214,7 @@ class TestBuildTables(unittest.TestCase):
                 error = self.mock_output
                 self.assertIn('IOError', error)
 
-    @mock.patch('%s.tablefill' % path)
+    @tablefill_patch
     def test_argument_order(self, mock_tablefill):
         mock_tablefill.side_effect = self.table_fill_side_effect
         for ext in ['lyx', 'tex']:
