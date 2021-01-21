@@ -2,10 +2,10 @@ import os
 import re
 import subprocess
 
-from ..builders.executables import get_executables
+from ..builders.executables import get_default_executables
 from . import _test_helpers as helpers
 
-EXE = get_executables()
+EXE = get_default_executables()
 
 
 def make_r_side_effect(recognized = True):

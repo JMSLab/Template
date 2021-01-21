@@ -36,9 +36,9 @@ class LyxBuilder(JMSLabBuilder):
     def add_call_args(self):
         '''
         '''
-        args = '%s %s %s > %s' % (self.cl_arg,
-                                  os.path.normpath(self.target[0]),
+        args = '%s %s %s > %s' % (os.path.normpath(self.target[0]),
                                   os.path.normpath(self.source_file),
+                                  self.cl_arg,
                                   os.path.normpath(self.log_file))
         self.call_args = args
         return None

@@ -1,15 +1,15 @@
+import importlib
 import tempfile
 # import sys
-import imp
 import os
 import re
 
 from unittest import mock
 from .. import misc
-from ..builders.executables import get_executables
+from ..builders.executables import get_default_executables
 from .._exception_classes import BadExtensionError
 
-EXE = get_executables()
+EXE = get_default_executables()
 
 
 def platform_patch(platform, path):
@@ -24,7 +24,7 @@ def platform_patch(platform, path):
     try:
         misc_path = '%s.misc.sys.platform' % path
         # Check whether misc_path is a valid module
-        imp.find_module(misc_path)
+        importlib.util.find_spec(misc_path)
         misc_patch  = mock.patch(misc_path, platform)
         total_patch = lambda f: misc_patch(main_patch(f))
     except ImportError:
