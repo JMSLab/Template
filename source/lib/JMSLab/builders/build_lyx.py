@@ -1,7 +1,7 @@
+import subprocess
 import os
-import shutil
 
-from gslab_builder import GSLabBuilder
+from .jmslab_builder import JMSLabBuilder
 
 
 def build_lyx(target, source, env):
@@ -12,9 +12,9 @@ def build_lyx(target, source, env):
 
     Parameters
     ----------
-    target: string or list 
+    target: string or list
         The target of the SCons command. This should be the path
-        of the pdf that the builder is instructed to compile. 
+        of the pdf that the builder is instructed to compile.
     source: string or list
         The source of the SCons command. This should
         be the .lyx file that the function will compile as a PDF.
@@ -23,29 +23,22 @@ def build_lyx(target, source, env):
     builder_attributes = {
         'name': 'LyX',
         'valid_extensions': ['.lyx'],
-        'exec_opts':  '-e pdf2'
+        'exec_opts': '-E pdf2'
     }
     builder = LyxBuilder(target, source, env, **builder_attributes)
     builder.execute_system_call()
     return None
 
-class LyxBuilder(GSLabBuilder):
+
+class LyxBuilder(JMSLabBuilder):
     '''
     '''
     def add_call_args(self):
         '''
         '''
-        args = '%s %s > %s' % (self.cl_arg, os.path.normpath(self.source_file), os.path.normpath(self.log_file))
+        args = '%s %s %s > %s' % (self.cl_arg,
+                                  os.path.normpath(self.target[0]),
+                                  os.path.normpath(self.source_file),
+                                  os.path.normpath(self.log_file))
         self.call_args = args
         return None
-
-
-    def do_call(self):
-        '''
-        '''
-        super(LyxBuilder, self).do_call()
-        new_pdf = os.path.splitext(self.source_file)[0] + '.pdf'
-        new_pdf_path = os.path.normpath('%s/%s' % (self.target_dir, os.path.basename(new_pdf)))
-        shutil.move(new_pdf, new_pdf_path)
-        return None
-        

@@ -1,5 +1,7 @@
+import subprocess
 import os
-from gslab_builder import GSLabBuilder
+
+from .jmslab_builder import JMSLabBuilder
 
 
 def build_r(target, source, env):
@@ -11,28 +13,31 @@ def build_r(target, source, env):
 
     Parameters
     ----------
-    target: string or list 
+    target: string or list
         The target(s) of the SCons command.
     source: string or list
         The source(s) of the SCons command. The first source specified
-        should be the R script that the builder is intended to execute. 
+        should be the R script that the builder is intended to execute.
     env: SCons construction environment, see SCons user guide 7.2
     '''
     builder_attributes = {
         'name': 'R',
-        'valid_extensions': ['.r'],
+        'valid_extensions': ['.r', '.R'],
         'exec_opts': '--no-save --no-restore --verbose'
     }
     builder = RBuilder(target, source, env, **builder_attributes)
     builder.execute_system_call()
     return None
 
-class RBuilder(GSLabBuilder):
+
+class RBuilder(JMSLabBuilder):
     '''
     '''
     def add_call_args(self):
         '''
         '''
-        args = '%s %s > %s 2>&1' % (os.path.normpath(self.source_file), self.cl_arg, os.path.normpath(self.log_file))
+        args = '%s %s > %s 2>&1' % (os.path.normpath(self.source_file),
+                                    self.cl_arg,
+                                    os.path.normpath(self.log_file))
         self.call_args = args
         return None

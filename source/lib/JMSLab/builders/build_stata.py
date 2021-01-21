@@ -1,24 +1,27 @@
-import os
+import subprocess
 import shutil
 import sys
+import os
 
-import gslab_scons.misc as misc
-from gslab_builder import GSLabBuilder
+from .jmslab_builder import JMSLabBuilder
+from .._exception_classes import PrerequisiteError
+from .. import misc
+
 
 def build_stata(target, source, env):
     '''
     Build targets with a Stata command
- 
+
     This function executes a Stata script to build objects specified
     by target using the objects specified by source.
 
     Parameters
     ----------
-    target: string or list 
+    target: string or list
         The target(s) of the SCons command.
     source: string or list
         The source(s) of the SCons command. The first source specified
-        should be the Stata .do script that the builder is intended to execute. 
+        should be the Stata .do script that the builder is intended to execute.
     env: SCons construction environment, see SCons user guide 7.2
     '''
     builder_attributes = {
@@ -29,7 +32,8 @@ def build_stata(target, source, env):
     builder.execute_system_call()
     return None
 
-class StataBuilder(GSLabBuilder):
+
+class StataBuilder(JMSLabBuilder):
     '''
     '''
     def __init__(self, target, source, env, name = '', valid_extensions = []):
@@ -40,7 +44,6 @@ class StataBuilder(GSLabBuilder):
                                            exec_opts = exec_opts,
                                            valid_extensions = valid_extensions)
 
-
     def add_log_file(self):
         super(StataBuilder, self).add_log_file()
         self.final_sconscript_log = os.path.normpath(self.log_file)
@@ -49,12 +52,11 @@ class StataBuilder(GSLabBuilder):
         self.log_file = os.path.normpath(log_file)
         return None
 
-
     def add_executable_options(self):
         platform_options = {
-            'darwin': ' -e' ,
-            'linux':  ' -b' ,
-            'linux2': ' -b' ,
+            'darwin': ' -e',
+            'linux':  ' -b',
+            'linux2': ' -b',
             'win32':  ' /e do '
         }
         try:
@@ -64,7 +66,6 @@ class StataBuilder(GSLabBuilder):
             raise PrerequisiteError(message)
         return options
 
-
     def add_call_args(self):
         '''
         '''
@@ -72,11 +73,9 @@ class StataBuilder(GSLabBuilder):
         self.call_args = args
         return None
 
-
     def execute_system_call(self):
         '''
         '''
         super(StataBuilder, self).execute_system_call()
         shutil.move(self.log_file, self.final_sconscript_log)
         return None
-
