@@ -1,6 +1,4 @@
 import subprocess
-import hashlib
-import shutil
 import sys
 import os
 
@@ -57,13 +55,9 @@ class MatlabBuilder(JMSLabBuilder):
     def add_call_args(self):
         '''
         '''
-        source_hash = hashlib.sha1(self.source_file.encode('utf-8')).hexdigest()
-        source_exec = 'source_%s' % source_hash
-        exec_file   = source_exec + '.m'
-        shutil.copy(self.source_file, exec_file)
-        args = '%s > %s' % (os.path.normpath(source_exec), os.path.normpath(self.log_file))
+        self.exec_file = os.path.normpath(self.source_file)
+        args = '%s > %s' % (os.path.normpath(self.exec_file), os.path.normpath(self.log_file))
         self.call_args = args
-        self.exec_file = os.path.normpath(exec_file)
         return None
 
     def execute_system_call(self):
@@ -71,5 +65,4 @@ class MatlabBuilder(JMSLabBuilder):
         '''
         os.environ['CL_ARG'] = self.cl_arg
         super(MatlabBuilder, self).execute_system_call()
-        os.remove(self.exec_file)
         return None

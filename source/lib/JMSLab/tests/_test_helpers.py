@@ -33,11 +33,11 @@ def platform_patch(platform, path):
     return total_patch
 
 
-def command_match(command, executable, which = None):
+def command_match(command, language, which = None):
     match = None
 
     '''Parse Python, R, and Stata system calls as re.match objects'''
-    if executable in ['python', 'py']:
+    if language in ['python', 'py']:
         # e.g. "python script.py cl_arg > script.log"
         default = re.escape(EXE['python'])
         match = re.match(r'\s*'
@@ -50,7 +50,7 @@ def command_match(command, executable, which = None):
                          r'(?P<log>>\s*[\.\/\\\w]+)?',
                          command)
 
-    elif executable in ['r', 'R']:
+    elif language in ['r', 'R']:
         # e.g. "Rscript --no-save --no-restore --verbose script.R input.txt > script.log 2>&1"
         default = re.escape(EXE['r'])
         match = re.match(r'\s*'
@@ -71,7 +71,7 @@ def command_match(command, executable, which = None):
                          r'(?P<append>2\>\&1)',
                          command)
 
-    elif executable in ['stata', 'do']:
+    elif language in ['stata', 'do']:
         # e.g. "stata-mp -e do script.do cl_arg"
         default = re.escape(EXE['stata'])
         match = re.match(r'\s*'
@@ -85,7 +85,7 @@ def command_match(command, executable, which = None):
                          r'\s*'
                          r'(?P<args>.*)',
                          command)
-    elif executable == 'lyx':
+    elif language == 'lyx':
         # e.g. "lyx -E pdf2 target_file file.lyx > sconscript.log"
         default = re.escape(EXE['lyx'])
         match = re.match(r'\s*'
@@ -100,7 +100,7 @@ def command_match(command, executable, which = None):
                          r'(?P<log_redirect>\> [\.\/\\\w]+\.\w+)?',
                          command)
 
-    elif executable == 'pdflatex':
+    elif language in ['latex', 'pdflatex']:
         # e.g. "pdflatex -interaction nonstopmode -jobname target_file file.tex > sconscript.log"
         default = re.escape(EXE['latex'])
         match = re.match(r'\s*'

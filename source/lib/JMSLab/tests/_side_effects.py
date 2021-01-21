@@ -91,12 +91,6 @@ def make_matlab_side_effect(recognized = True):
     return side_effect
 
 
-def matlab_copy_effect(*args, **kwargs):
-    '''Mock copy so that it creates a file with the destination's path'''
-    with open(args[1], 'wb') as test_file:
-        test_file.write(b'test')
-
-
 def make_stata_side_effect(recognized = True):
     '''
     Make a side effect mocking the behaviour of

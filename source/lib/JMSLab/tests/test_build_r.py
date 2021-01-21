@@ -14,7 +14,8 @@ from . import _side_effects as fx
 from ..builders.build_r import build_r
 from .._exception_classes import ExecCallError
 
-system_patch = mock.patch('JMSLab.builders.build_r.subprocess.check_output')
+path = 'JMSLab.builders.build_r'
+subprocess_patch = mock.patch('%s.subprocess.check_output' % path)
 
 # Run tests from test folder
 TESTDIR = Path(__file__).resolve().parent
@@ -26,7 +27,7 @@ class TestBuildR(unittest.TestCase):
     def setUp(self):
         (TESTDIR / 'build').mkdir(exist_ok = True)
 
-    @system_patch
+    @subprocess_patch
     def test_standard(self, mock_check_output):
         '''Test build_r()'s behaviour when given standard inputs.'''
         mock_check_output.side_effect = fx.make_r_side_effect(True)
@@ -38,7 +39,7 @@ class TestBuildR(unittest.TestCase):
                               system_mock = mock_check_output,
                               target      = targets)
 
-    @system_patch
+    @subprocess_patch
     def test_cl_arg(self, mock_check_output):
         mock_check_output.side_effect = fx.make_r_side_effect(True)
         helpers.test_cl_args(self, build_r, mock_check_output, 'R')
@@ -47,7 +48,7 @@ class TestBuildR(unittest.TestCase):
         '''Test that build_r() recognises an inappropriate file extension'''
         helpers.bad_extension(self, build_r, good = 'test.r')
 
-    @system_patch
+    @subprocess_patch
     def test_no_executable(self, mock_check_output):
         '''
         Check build_r()'s behaviour when R is not recognised as
@@ -59,7 +60,7 @@ class TestBuildR(unittest.TestCase):
             helpers.standard_test(self, build_r, 'R',
                                   system_mock = mock_check_output)
 
-    @system_patch
+    @subprocess_patch
     def test_unintended_inputs(self, mock_check_output):
         # We expect build_r() to raise an error if its env
         # argument does not support indexing by strings.

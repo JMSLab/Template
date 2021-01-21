@@ -37,6 +37,7 @@ class TestLog(unittest.TestCase):
         test = "Test message"
         # Call start_log(), which redirects standard output to a log
         log.start_log(mode = 'develop')
+        print(test)
         sys.stdout.close()
 
         # Restore the initial standard output
