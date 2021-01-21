@@ -8,7 +8,7 @@ from ..tablefill import tablefill
 def build_tables(target, source, env):
     '''Build a SCons target by filling a table
 
-    This function uses the tablefill function from to produced a filled
+    This function uses the tablefill function to produce a filled
     table from (i) an empty table in a LyX/Tex file and (ii) text files
     containing data to be used in filling the table.
 
