@@ -40,7 +40,7 @@ def get_executable(language_name, manual_executables = {}):
     if not get_executable_path(executable):
         print_executable_warnings([[lower_name, executable]])
 
-    return executable
+    return quote_str(executable)
 
 
 def get_default_executables(efile = EXE_FILE, languages = [], warn = False):
@@ -59,7 +59,7 @@ def get_default_executables(efile = EXE_FILE, languages = [], warn = False):
     if warn:
         print_executable_warnings(warn_languages)
 
-    return {lang: quote_str(exe) for lang, exe in executables.items()}
+    return executables
 
 
 def get_executable_path(program):
@@ -97,7 +97,7 @@ def get_executable_path(program):
     else:
         for path in os.environ['PATH'].split(os.pathsep):
             path = path.strip("'")
-            exe  = os.path.join(path, program)
+            exe  = str(Path(path, program))
             if os.access(exe, os.X_OK):
                 return exe
 

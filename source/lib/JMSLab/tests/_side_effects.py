@@ -2,10 +2,8 @@ import os
 import re
 import subprocess
 
-from ..builders.executables import get_default_executables
+from ..builders.executables import get_executable
 from . import _test_helpers as helpers
-
-EXE = get_default_executables()
 
 
 def make_r_side_effect(recognized = True):
@@ -37,7 +35,7 @@ def make_r_side_effect(recognized = True):
             source = match.group('source')
             log    = '%s.log' % re.sub(r'\.R', '', source)
 
-        found = find_executable(command, EXE['r'], 'Rscript')
+        found = find_executable(command, get_executable('r'), 'Rscript')
         if executable == 'Rscript' or found and log and append == '2>&1':
             with open(log.replace('>', '').strip(), 'wb') as log_file:
                 log_file.write(b'Test log\n')
@@ -73,7 +71,7 @@ def make_matlab_side_effect(recognized = True):
         except KeyError:
             command = args[0]
 
-        found = find_executable(command, EXE['matlab'], 'matlab')
+        found = find_executable(command, get_executable('matlab'), 'matlab')
         if found and not recognized:
             raise subprocess.CalledProcessError(1, command)
 
@@ -149,7 +147,7 @@ def lyx_side_effect(*args, **kwargs):
     option_type    = re.findall(r'^(-\w+)',  option)[0]
     option_setting = re.findall(r'\s(\w+)$', option)[0]
 
-    found = find_executable(command, EXE['lyx'], 'lyx')
+    found = find_executable(command, get_executable('lyx'), 'lyx')
     is_lyx = found or bool(re.search('^lyx$', executable, flags = re.I))
 
     # As long as output is redirected, create a log
@@ -196,7 +194,7 @@ def latex_side_effect(*args, **kwargs):
     option2_type = re.findall(r'^(-\w+)', option2)[0]
     target_file  = re.findall(r'\s(\S+)', option2)[0]
 
-    found = find_executable(command, EXE['latex'], 'pdflatex')
+    found = find_executable(command, get_executable('latex'), 'pdflatex')
     is_pdflatex = found or bool(re.search('^pdflatex$', executable, flags = re.I))
 
     # As long as output is redirected, create a log
