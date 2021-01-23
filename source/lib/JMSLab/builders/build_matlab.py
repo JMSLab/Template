@@ -1,4 +1,6 @@
 import subprocess
+import hashlib
+import shutil
 import sys
 import os
 
@@ -54,10 +56,18 @@ class MatlabBuilder(JMSLabBuilder):
 
     def add_call_args(self):
         '''
+        Matlab automagically changes the working directory to the directory
+        of the script it is executing. Hence we copy the source script to the
+        current working directory.
         '''
-        self.exec_file = os.path.normpath(self.source_file)
-        args = '%s > %s' % (os.path.normpath(self.exec_file), os.path.normpath(self.log_file))
-        self.call_args = args
+        source_hash = hashlib.sha1(self.source_file.encode()).hexdigest()
+        source_exec = f'source_{source_hash}'
+        out_log     = os.path.normpath(self.log_file)
+
+        self.call_args = f'{source_exec} > {out_log}'
+        self.exec_file = source_exec + '.m'
+        shutil.copy(self.source_file, self.exec_file)
+
         return None
 
     def execute_system_call(self):
@@ -65,4 +75,5 @@ class MatlabBuilder(JMSLabBuilder):
         '''
         os.environ['CL_ARG'] = self.cl_arg
         super(MatlabBuilder, self).execute_system_call()
+        os.remove(self.exec_file)
         return None
