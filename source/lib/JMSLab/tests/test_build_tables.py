@@ -11,7 +11,6 @@ import os
 # Import testing helper modules
 from ..builders.build_tables import build_tables, tablefill
 from .._exception_classes import BadExtensionError, ExecCallError
-from .nostderrout import nostderrout
 
 # Define path to the builder for use in patching
 path = 'JMSLab.builders.build_tables'
@@ -88,7 +87,7 @@ class TestBuildTables(unittest.TestCase):
                   'input/tables_appendix.txt',
                   'input/tables_appendix_two.txt']
         target = 'build/tablefill_template_filled.lyx'
-        with self.assertRaises(ExecCallError), nostderrout():
+        with self.assertRaises(ExecCallError):
             build_tables(target, source, {})
 
     def test_target_extension(self):
@@ -102,7 +101,7 @@ class TestBuildTables(unittest.TestCase):
 
         # Calling build_tables() with a target argument whose file extension
         # is unexpected should raise a BadExtensionError.
-        with self.assertRaises(BadExtensionError), nostderrout():
+        with self.assertRaises(BadExtensionError):
             build_tables(target, source, {})
 
     @tablefill_patch
@@ -151,15 +150,22 @@ class TestBuildTables(unittest.TestCase):
 
     @tablefill_patch
     def test_input(self, mock_tablefill):
+        '''
+        Test that build_tables() correctly runs given actual input (no
+        mock runs; this is meant to give a successful run with existing
+        pre-formatted files).
+
+        This also checks that the data was correctly filled.
+        '''
+
         mock_tablefill.side_effect = self.table_fill_side_effect
         for ext in ['lyx', 'tex']:
-            with nostderrout():
-                source = [f'input/tablefill_template.{ext}',
-                          'input/tables_appendix.txt',
-                          'input/tables_appendix_two.txt']
-                target = f'build/tablefill_template_filled.{ext}'
-                build_tables(target, source, {})
-                message = self.mock_output
+            source = [f'input/tablefill_template.{ext}',
+                      'input/tables_appendix.txt',
+                      'input/tables_appendix_two.txt']
+            target = f'build/tablefill_template_filled.{ext}'
+            build_tables(target, source, {})
+            message = self.mock_output
 
             self.assertIn('filled successfully', message)
 
@@ -178,9 +184,13 @@ class TestBuildTables(unittest.TestCase):
 
     @tablefill_patch
     def test_breaks_rounding_string(self, mock_tablefill):
+        '''
+        Test that giving a bad tag gives an error, as expected.
+        '''
+
         mock_tablefill.side_effect = self.table_fill_side_effect
         for ext in ['lyx', 'tex']:
-            with self.assertRaises(ExecCallError), nostderrout():
+            with self.assertRaises(ExecCallError):
                 source = [f'input/tablefill_template_breaks.{ext}',
                           'input/tables_appendix.txt',
                           'input/tables_appendix_two.txt']
@@ -191,10 +201,14 @@ class TestBuildTables(unittest.TestCase):
 
     @tablefill_patch
     def test_illegal_syntax(self, mock_tablefill):
+        '''
+        Test that giving bad input gives an error.
+        '''
+
         mock_tablefill.side_effect = self.table_fill_side_effect
 
         for ext in ['lyx', 'tex']:
-            with self.assertRaises(ExecCallError), nostderrout():
+            with self.assertRaises(ExecCallError):
 
                 # non-existent input 1
                 source = [f'input/tablefill_template_breaks.{ext}',
@@ -216,30 +230,33 @@ class TestBuildTables(unittest.TestCase):
 
     @tablefill_patch
     def test_argument_order(self, mock_tablefill):
+        '''
+        Test that the  order of the input tables does not matter.
+        '''
+
         mock_tablefill.side_effect = self.table_fill_side_effect
         for ext in ['lyx', 'tex']:
-            with nostderrout():
-                source = [f'input/tablefill_template.{ext}',
-                          'input/tables_appendix.txt',
-                          'input/tables_appendix_two.txt']
-                target = f'build/tablefill_template_filled.{ext}'
-                build_tables(target, source, {})
-                message = self.mock_output
-                self.assertIn('filled successfully', message)
+            source = [f'input/tablefill_template.{ext}',
+                      'input/tables_appendix.txt',
+                      'input/tables_appendix_two.txt']
+            target = f'build/tablefill_template_filled.{ext}'
+            build_tables(target, source, {})
+            message = self.mock_output
+            self.assertIn('filled successfully', message)
 
-                with open(Path('build', f'tablefill_template_filled.{ext}'), 'r') as filled_file:
-                    filled_data_args1 = filled_file.readlines()
+            with open(Path('build', f'tablefill_template_filled.{ext}'), 'r') as filled_file:
+                filled_data_args1 = filled_file.readlines()
 
-                source = [f'input/tablefill_template.{ext}',
-                          'input/tables_appendix_two.txt',
-                          'input/tables_appendix.txt']
-                target = f'build/tablefill_template_filled.{ext}'
-                build_tables(target, source, {})
-                message = self.mock_output
-                self.assertIn('filled successfully', message)
+            source = [f'input/tablefill_template.{ext}',
+                      'input/tables_appendix_two.txt',
+                      'input/tables_appendix.txt']
+            target = f'build/tablefill_template_filled.{ext}'
+            build_tables(target, source, {})
+            message = self.mock_output
+            self.assertIn('filled successfully', message)
 
-                with open(Path('build', f'tablefill_template_filled.{ext}'), 'r') as filled_file:
-                    filled_data_args2 = filled_file.readlines()
+            with open(Path('build', f'tablefill_template_filled.{ext}'), 'r') as filled_file:
+                filled_data_args2 = filled_file.readlines()
 
             self.assertEqual(filled_data_args1, filled_data_args2)
 
@@ -272,6 +289,9 @@ class TestBuildTables(unittest.TestCase):
         mock_tablefill.reset_mock()
 
     def tag_compare_latex(self, tag_line, filled_line):
+        '''
+        Compare a tag line in latex with the fileld line.
+        '''
         tag_line    = tag_line.split('&')
         filled_line = filled_line.split('&')
         for col in range(len(tag_line)):
@@ -292,6 +312,9 @@ class TestBuildTables(unittest.TestCase):
                         self.assertEqual(integer_part[-4], ',')
 
     def tag_compare_lyx(self, tag_line, filled_line):
+        '''
+        Compare a tag line in LyX with the fileld line.
+        '''
         if re.match(r'^.*#\d+#', tag_line) or re.match(r'^.*#\d+,#', tag_line):
             entry_tag = re.split('#', tag_line)[1]
             decimal_places = int(entry_tag.replace(',', ''))

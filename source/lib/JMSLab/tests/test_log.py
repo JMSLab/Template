@@ -51,7 +51,6 @@ class TestLog(unittest.TestCase):
         message_match = r'^\*\*\* New build: \{[0-9\s\-:]+\} \*\*\*\n%s$' % test
         self.assertTrue(re.search(message_match, log_contents.strip()))
 
-    @helpers.platform_patch('darwin', '%s.misc' % path)
     @mock.patch('%s.os.popen' % path)
     @mock.patch('%s.open' % path)
     def test_start_log_popen_on_unix(self, mock_open, mock_popen):
@@ -59,10 +58,11 @@ class TestLog(unittest.TestCase):
         Test that start_log() uses popen() to initialise its log
         on Unix machines.
         '''
-        log.start_log(mode = 'develop')
-        mock_popen.assert_called_with('tee -a sconstruct.log', 'w')
-        log.start_log(mode = 'develop', log = 'test_log.txt')
-        mock_popen.assert_called_with('tee -a test_log.txt', 'w')
+        if log.misc.is_unix():
+            log.start_log(mode = 'develop')
+            mock_popen.assert_called_with('tee -a sconstruct.log', 'w')
+            log.start_log(mode = 'develop', log = 'test_log.txt')
+            mock_popen.assert_called_with('tee -a test_log.txt', 'w')
 
     # Set the platform to Windows
     @helpers.platform_patch('win32', '%s.misc' % path)
