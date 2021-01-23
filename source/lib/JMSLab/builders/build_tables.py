@@ -42,7 +42,7 @@ class TableBuilder(JMSLabBuilder):
         super(TableBuilder, self).__init__(target, source, env, name = name,
                                            valid_extensions = valid_extensions,
                                            exec_opts = exec_opts)
-        self.input_string = ' '.join([str(os.path.normpath(i)) for i in source[1:]])
+        self.input_string = ' '.join([os.path.normpath(str(i)) for i in source[1:]])
         self.target_file  = os.path.normpath(self.target[0])
 
     def add_call_args(self):
