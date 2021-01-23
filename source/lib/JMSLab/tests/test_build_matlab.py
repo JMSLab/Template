@@ -12,11 +12,11 @@ import re
 from . import _test_helpers as helpers
 from . import _side_effects as fx
 
-from ..builders.executables import get_default_executables
+from ..builders.executables import get_executable
 from ..builders.build_matlab import build_matlab
 from .._exception_classes import ExecCallError, PrerequisiteError
 
-MATLAB = get_default_executables()['matlab']
+MATLAB = get_executable('matlab')
 
 # Define main test patch
 path  = 'JMSLab.builders.build_matlab'
