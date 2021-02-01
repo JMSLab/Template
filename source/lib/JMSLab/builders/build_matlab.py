@@ -64,8 +64,21 @@ class MatlabBuilder(JMSLabBuilder):
         source_exec = f'source_{source_hash}'
         out_log     = os.path.normpath(self.log_file)
 
-        self.call_args = f'{source_exec} > {out_log}'
         self.exec_file = source_exec + '.m'
+        self.call_args = f'''"
+            diary('{out_log}');
+            addpath('{os.path.dirname(self.source_file)}');
+            try,
+                run('{self.exec_file}'),
+            catch me,
+                fprintf('%s: %s\\n', me.identifier, me.message),
+                delete('{self.exec_file}'),
+                exit(1),
+            end,
+            delete('{self.exec_file}');
+            exit(0);
+        "'''.replace('\n', ' ').replace('\r', ' ')
+
         shutil.copy(self.source_file, self.exec_file)
 
         return None
@@ -75,5 +88,8 @@ class MatlabBuilder(JMSLabBuilder):
         '''
         os.environ['CL_ARG'] = self.cl_arg
         super(MatlabBuilder, self).execute_system_call()
-        os.remove(self.exec_file)
+        try:
+            os.remove(self.exec_file)
+        except FileNotFoundError:
+            pass
         return None
