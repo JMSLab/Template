@@ -56,7 +56,7 @@ In addition, each project may use other specialized tools. For the working examp
     pip install -r source/lib/requirements.txt
     ```
 
-    Requirements for other languages, should there be any, will be found in `source/lib/requirements.{ext}` with `{ext}` equal to `do` (Stata), `r` (R), `m` (Matlab), and so on.
+    (If using `conda`, run `conda install --file source/lib/requirements.txt`.)  Requirements for other languages, should there be any, will be found in `source/lib/requirements.{ext}` with `{ext}` equal to `do` (Stata), `r` (R), `m` (Matlab), and so on.
 
 4. Make sure that all the required program executables are in your system's path.
 
