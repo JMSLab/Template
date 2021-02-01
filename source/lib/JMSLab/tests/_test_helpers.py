@@ -1,15 +1,13 @@
+import importlib
 import tempfile
 # import sys
-import imp
 import os
 import re
 
 from unittest import mock
 from .. import misc
-from ..builders.executables import get_executables
+from ..builders.executables import get_executable
 from .._exception_classes import BadExtensionError
-
-EXE = get_executables()
 
 
 def platform_patch(platform, path):
@@ -24,7 +22,7 @@ def platform_patch(platform, path):
     try:
         misc_path = '%s.misc.sys.platform' % path
         # Check whether misc_path is a valid module
-        imp.find_module(misc_path)
+        importlib.util.find_spec(misc_path)
         misc_patch  = mock.patch(misc_path, platform)
         total_patch = lambda f: misc_patch(main_patch(f))
     except ImportError:
@@ -39,7 +37,7 @@ def command_match(command, language, which = None):
     '''Parse Python, R, and Stata system calls as re.match objects'''
     if language in ['python', 'py']:
         # e.g. "python script.py cl_arg > script.log"
-        default = re.escape(EXE['python'])
+        default = re.escape(get_executable('python'))
         match = re.match(r'\s*'
                          rf'(?P<executable>python|{default})'
                          r'\s*'
@@ -52,7 +50,7 @@ def command_match(command, language, which = None):
 
     elif language in ['r', 'R']:
         # e.g. "Rscript --no-save --no-restore --verbose script.R input.txt > script.log 2>&1"
-        default = re.escape(EXE['r'])
+        default = re.escape(get_executable('r'))
         match = re.match(r'\s*'
                          rf'(?P<executable>Rscript|{default})'
                          r'\s+'
@@ -73,7 +71,7 @@ def command_match(command, language, which = None):
 
     elif language in ['stata', 'do']:
         # e.g. "stata-mp -e do script.do cl_arg"
-        default = re.escape(EXE['stata'])
+        default = re.escape(get_executable('stata'))
         match = re.match(r'\s*'
                          rf'(?P<executable>\S+|{default})'
                          r'\s+'
@@ -87,7 +85,7 @@ def command_match(command, language, which = None):
                          command)
     elif language == 'lyx':
         # e.g. "lyx -E pdf2 target_file file.lyx > sconscript.log"
-        default = re.escape(EXE['lyx'])
+        default = re.escape(get_executable('lyx'))
         match = re.match(r'\s*'
                          rf'(?P<executable>\w+|{default})'
                          r'\s+'
@@ -102,7 +100,7 @@ def command_match(command, language, which = None):
 
     elif language in ['latex', 'pdflatex']:
         # e.g. "pdflatex -interaction nonstopmode -jobname target_file file.tex > sconscript.log"
-        default = re.escape(EXE['latex'])
+        default = re.escape(get_executable('latex'))
         match = re.match(r'\s*'
                          rf'(?P<executable>\w+|{default})'
                          r'\s+'

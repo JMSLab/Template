@@ -25,33 +25,31 @@ class TestLog(unittest.TestCase):
     def setUp(self):
         (TESTDIR / 'sconstruct.log').unlink(missing_ok = True)
 
-    # Mock a Unix platform (sys.platform = 'darwin' on  Mac machines).
-    @helpers.platform_patch('darwin', '%s.misc' % path)
     def test_start_log_stdout_on_unix(self):
         '''
         Test that start_log() leads stdout to be captured in
         a log file on Unix machines.
         '''
-        # Save the initial standard output
-        initial_stdout = sys.stdout
-        test = "Test message"
-        # Call start_log(), which redirects standard output to a log
-        log.start_log(mode = 'develop')
-        print(test)
-        sys.stdout.close()
+        if log.misc.is_unix():
+            # Save the initial standard output
+            initial_stdout = sys.stdout
+            test = "Test message"
+            # Call start_log(), which redirects standard output to a log
+            log.start_log(mode = 'develop')
+            print(test)
+            sys.stdout.close()
 
-        # Restore the initial standard output
-        sys.stdout = initial_stdout
+            # Restore the initial standard output
+            sys.stdout = initial_stdout
 
-        # Ensure that start_log() actually redirected standard output
-        # to a log at the expected path.
-        with open('sconstruct.log', 'r') as f:
-            log_contents = f.read()
+            # Ensure that start_log() actually redirected standard output
+            # to a log at the expected path.
+            with open('sconstruct.log', 'r') as f:
+                log_contents = f.read()
 
-        message_match = r'^\*\*\* New build: \{[0-9\s\-:]+\} \*\*\*\n%s$' % test
-        self.assertTrue(re.search(message_match, log_contents.strip()))
+                message_match = r'^\*\*\* New build: \{[0-9\s\-:]+\} \*\*\*\n%s$' % test
+                self.assertTrue(re.search(message_match, log_contents.strip()))
 
-    @helpers.platform_patch('darwin', '%s.misc' % path)
     @mock.patch('%s.os.popen' % path)
     @mock.patch('%s.open' % path)
     def test_start_log_popen_on_unix(self, mock_open, mock_popen):
@@ -59,10 +57,11 @@ class TestLog(unittest.TestCase):
         Test that start_log() uses popen() to initialise its log
         on Unix machines.
         '''
-        log.start_log(mode = 'develop')
-        mock_popen.assert_called_with('tee -a sconstruct.log', 'w')
-        log.start_log(mode = 'develop', log = 'test_log.txt')
-        mock_popen.assert_called_with('tee -a test_log.txt', 'w')
+        if log.misc.is_unix():
+            log.start_log(mode = 'develop')
+            mock_popen.assert_called_with('tee -a sconstruct.log', 'w')
+            log.start_log(mode = 'develop', log = 'test_log.txt')
+            mock_popen.assert_called_with('tee -a test_log.txt', 'w')
 
     # Set the platform to Windows
     @helpers.platform_patch('win32', '%s.misc' % path)

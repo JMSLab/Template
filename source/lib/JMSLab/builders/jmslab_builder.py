@@ -4,6 +4,7 @@ import subprocess
 
 from .. import misc
 from .._exception_classes import ExecCallError, TargetNonexistenceError, BadExtensionError
+from .executables import get_executable
 
 
 class JMSLabBuilder(object):
@@ -50,7 +51,7 @@ class JMSLabBuilder(object):
         if 'executable_names' not in env:
             env['executable_names'] = {}
 
-        self.executable       = misc.get_executable(name, env['executable_names'])
+        self.executable       = get_executable(name, env['executable_names'])
         self.env              = env
 
         self.add_command_line_arg()
@@ -130,8 +131,10 @@ class JMSLabBuilder(object):
         extensions = misc.make_list_if_string(self.valid_extensions)
         if extensions == []:
             return None
+
         matches = [True for extension in extensions
                    if self.source_file.lower().endswith("%s" % extension)]
+
         if not matches:
             message = 'First argument, %s, must be a file of type %s.' % (self.source_file, extensions)
             raise BadExtensionError(message)

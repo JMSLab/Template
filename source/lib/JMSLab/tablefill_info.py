@@ -1,47 +1,49 @@
 '''
 #################################################################
-#  tablefill_readme.txt - Help/Documentation for tablefill.py
+#  tablefill_info.py - Help/Documentation for tablefill.py
 #################################################################
 
 Description:
-tablefill.py is a Python module designed to fill LyX/Tex tables with output 
+tablefill.py is a Python module designed to fill LyX/Tex tables with output
 from text files (usually output from Stata or Matlab).
 
+This version of tablefill was ported into Python 3 from gslab_fill.tablefill;
+the documentation is copied near verbatim.
+
 Usage:
-Tablefill takes as input a LyX (or Tex) file containing empty tables (the template 
-file) and text files containing data to be copied to  these tables (the 
-input  files), and produces a LyX (or Tex) file with filled tables (the output file). 
+Tablefill takes as input a LyX (or Tex) file containing empty tables (the template
+file) and text files containing data to be copied to these tables (the
+input files), and produces a LyX (or Tex) file with filled tables (the output file).
 For brevity, LyX will be used to denote LyX or Tex files throughout.
 
-Tablefill must first be imported to make.py.  This is typically achieved 
-by including the following lines:
+Tablefill must first be imported; e.g.
 
 ```
-from gslab_fill.tablefill import tablefill
+from JMSLab.tablefill import tablefill
 ```
 
-Once the module has been imported, the syntax used to call tablefill is 
+Once the module has been imported, the syntax used to call tablefill is
 as follows:
 
 ```
-tablefill(input = 'input_file(s)', template = 'template_file', 
+tablefill(input = 'input_file(s)', template = 'template_file',
           output = 'output_file')
 ```
 
-The argument 'template' is the user written LyX file which contains the 
-tables to be filled in. The argument 'input' is a list of the text files 
-containing the output to be copied to the LyX tables. If there are multiple 
-input text files, they are listed as: input = 'input_file_1 input_file_2'. 
-The argument 'output' is the name of the filled LyX file to be produced.  
-Note that this file is created by tablefill.py and should not be edited 
+The argument 'template' is the user written LyX file which contains the
+tables to be filled in. The argument 'input' is a list of the text files
+containing the output to be copied to the LyX tables. If there are multiple
+input text files, they are listed as: input = 'input_file_1 input_file_2'.
+The argument 'output' is the name of the filled LyX file to be produced.
+Note that this file is created by tablefill.py and should not be edited
 manually by the user.
 
 ###########################
 Input File Format:
 ###########################
 
-The data needs to be tab-delimited rows of numbers (or characters), 
-preceeded by  `<label>`.  The < and > are mandatory. The numbers can be 
+The data needs to be tab-delimited rows of numbers (or characters),
+preceeded by  `<label>`.  The < and > are mandatory. The numbers can be
 arbitrarily long, can be negative, and can also be in scientific notation.
 
 Examples:
@@ -64,7 +66,7 @@ Examples:
 (The rows do not need to be of equal length.)
 
 Completely blank (no tab) lines are ignored.
-If a "cell" is merely "." or "[space]", then it is treated as completely 
+If a "cell" is merely "." or "[space]", then it is treated as completely
 missing. That is, in the program:
 
 ```
@@ -82,7 +84,7 @@ is equivalent to:
 3   1   2
 ```
 
-This feature is useful as Stata outputs missing values in numerical 
+This feature is useful as Stata outputs missing values in numerical
 variables as ".", and missing values in string variables as "[space]".
 
 ................................
@@ -104,32 +106,32 @@ Template LyX Format:
 
 The LyX template file determines where the numbers from the input files are placed.
 
-Every table in the template file (if it is to be filled) must appear within a float. 
-There must  be one, and only one, table object inside the float, and the table name 
-must include a label  object that corresponds to the label of the required table in 
+Every table in the template file (if it is to be filled) must appear within a float.
+There must be one, and only one, table object inside the float, and the table name
+must include a label object that corresponds to the label of the required table in
 the input file.
 
-Note that table names cannot be duplicated.  For a single template file, each table 
-to be filled must have a unique label, and there must be one, and only one, table with 
+Note that table names cannot be duplicated. For a single template file, each table
+to be filled must have a unique label, and there must be one, and only one, table with
 that same label in the text files used as input. Having multiple tables with the
-same name in the input files or in the template file will cause errors.  
+same name in the input files or in the template file will cause errors.
 
 Note also that labels are NOT case-sensitive. That is, <TAB:Table1> is considered
- the same as `<tab:table1>`.
+the same as `<tab:table1>`.
 
-In the LyX tables, "cells" to be filled with entries from the input text files are 
-indicated by the following tags: 
+In the LyX tables, "cells" to be filled with entries from the input text files are
+indicated by the following tags:
 
 `"###"  (no quotes)`
-or 
+or
 `"#[number][,]#"  (no quotes)`
 
-The first case will result in a literal substitution.  I.e. whatever is in the text 
-tables for that  cell will be copied over. The second case will convert the data 
-table's number (if in scientific notation) and will truncate this converted number 
-to [number] decimal places.  It will automatically round while doing so.
+The first case will result in a literal substitution. I.e. whatever is in the text
+tables for that cell will be copied over. The second case will convert the data
+table's number (if in scientific notation) and will truncate this converted number
+to [number] decimal places. It will automatically round while doing so.
 
-If a comma appears after the number (within #[number]#), then it will add commas 
+If a comma appears after the number (within #[number]#), then it will add commas
 to the digits to the left of the decimal place.
 
 Examples:
@@ -151,7 +153,7 @@ Examples:
 -2.23e+10  + #7,# = -22300000000 + #7,# = -22,300,000,000.000000
 ```
 
-Furthermore, only ###/#num# will be replaced, allowing you to put things around 
+Furthermore, only ###/#num# will be replaced, allowing you to put things around
 ###/#num# to alter the final output:
 
 Examples:
@@ -183,7 +185,7 @@ Examples:
 ```
 
 ######################
-# Example Combinations 
+# Example Combinations
 #   Of input + template
 ######################
 
@@ -230,7 +232,7 @@ NA  -1  2   3
 ===================
 ====Important======
 ===================
-By design, missings in input table and "missings" in template do not have to 
+By design, missings in input table and "missings" in template do not have to
 line up.
 
 Example 3 (LyX)
@@ -241,7 +243,7 @@ Input: <tab:Test>
 2e-5    .   3.023
 .   -1  2
 
-Template: <tab:Test> 
+Template: <tab:Test>
 ### ### abc
 abc #2# #3#
 NA  ### ###
@@ -257,7 +259,7 @@ Recall that to the program, the above input table is no different from:
 -1  2
 ```
 
-It doesn't "know" where the numbers should be placed within a row, only what 
+It doesn't "know" where the numbers should be placed within a row, only what
 the next number to place should be.
 
 Similarly:
@@ -270,7 +272,7 @@ Input: <tab:Test>
 1   1   3
 2   -1  2
 
-Template: <tab:Test>  
+Template: <tab:Test>
 ### ### ###
 abc abc abc
 ### #2# #3#
@@ -283,7 +285,7 @@ abc abc abc
 2   -1  2
 ```
 
-If a row in the template has no substitutions, then it's not really a row from 
+If a row in the template has no substitutions, then it's not really a row from
 the program's point of view.
 
 
@@ -291,18 +293,15 @@ the program's point of view.
 # Error Logging
 ######################
 
-If an error occurs during the call to tablefill, it will be displayed in the 
-command window.  When make.py finishes, the user will be able to scroll up 
-through the output and examine any  error messages.  Error messages, which 
-include a description of the error type and a traceback to the line of code 
-where the error occured, can also be retuned as a string object using the 
+If an error occurs during the call to tablefill, it will be displayed in the
+command window. When make.py finishes, the user will be able to scroll up
+through the output and examine any error messages. Error messages, which
+include a description of the error type and a traceback to the line of code
+where the error occured, can also be retuned as a string object using the
 following syntax:
 
-exitmessage = tablefill( input = 'input_file(s)', template = 'template_file', 
-                         output = 'output_file' )
-
-Lines can then be added to make.py to output this string to a log file using 
-standard Python and built in gslab_make commands.
+exitmessage = tablefill(input = 'input_file(s)', template = 'template_file',
+                        output = 'output_file')
 
 
 ######################
@@ -311,16 +310,16 @@ standard Python and built in gslab_make commands.
 
 Common mistakes which can lead to errors include:
 
-- Mismatch between the length of the LyX table and the corresponding text table.  
+- Mismatch between the length of the LyX table and the corresponding text table.
 If the LyX table has more entries to be filled than the text table has entries to
 fill from, this will cause an error and the table will not be filled.
 
-- Use of numerical tags (e.g. #1#) to fill non-numerical data.  This will cause 
-an error. Non-numerical data can only be filled using "###", as it does not make 
+- Use of numerical tags (e.g. #1#) to fill non-numerical data. This will cause
+an error. Non-numerical data can only be filled using "###", as it does not make
 sense to round or truncate this data.
 
-- Multiple table objects in the same float.  Each table float in the template LyX 
-file can only contain one table object.  If a float contains a second table object, 
+- Multiple table objects in the same float. Each table float in the template LyX
+file can only contain one table object. If a float contains a second table object,
 this table will not be filled.
 
 
@@ -328,7 +327,7 @@ this table will not be filled.
 # Boldfacing entries
 ######################
 
-It is straightforward to develop functions that conditionally write entries of 
-tables in boldface; functions may do so by inserting '\series bold' in the lines
+It is straightforward to develop functions that conditionally write entries of
+tables in boldface; functions may do so by inserting '\\series bold' in the lines
 of the filled LyX file immeadiately before phrases that the user wishes to make bold.
 '''
