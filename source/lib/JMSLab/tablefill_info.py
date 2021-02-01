@@ -12,8 +12,8 @@ the documentation is copied near verbatim.
 
 Usage:
 Tablefill takes as input a LyX (or Tex) file containing empty tables (the template
-file) and text files containing data to be copied to  these tables (the
-input  files), and produces a LyX (or Tex) file with filled tables (the output file).
+file) and text files containing data to be copied to these tables (the
+input files), and produces a LyX (or Tex) file with filled tables (the output file).
 For brevity, LyX will be used to denote LyX or Tex files throughout.
 
 Tablefill must first be imported; e.g.
@@ -107,17 +107,17 @@ Template LyX Format:
 The LyX template file determines where the numbers from the input files are placed.
 
 Every table in the template file (if it is to be filled) must appear within a float.
-There must  be one, and only one, table object inside the float, and the table name
-must include a label  object that corresponds to the label of the required table in
+There must be one, and only one, table object inside the float, and the table name
+must include a label object that corresponds to the label of the required table in
 the input file.
 
-Note that table names cannot be duplicated.  For a single template file, each table
+Note that table names cannot be duplicated. For a single template file, each table
 to be filled must have a unique label, and there must be one, and only one, table with
 that same label in the text files used as input. Having multiple tables with the
 same name in the input files or in the template file will cause errors.
 
 Note also that labels are NOT case-sensitive. That is, <TAB:Table1> is considered
- the same as `<tab:table1>`.
+the same as `<tab:table1>`.
 
 In the LyX tables, "cells" to be filled with entries from the input text files are
 indicated by the following tags:
@@ -126,10 +126,10 @@ indicated by the following tags:
 or
 `"#[number][,]#"  (no quotes)`
 
-The first case will result in a literal substitution.  I.e. whatever is in the text
-tables for that  cell will be copied over. The second case will convert the data
+The first case will result in a literal substitution. I.e. whatever is in the text
+tables for that cell will be copied over. The second case will convert the data
 table's number (if in scientific notation) and will truncate this converted number
-to [number] decimal places.  It will automatically round while doing so.
+to [number] decimal places. It will automatically round while doing so.
 
 If a comma appears after the number (within #[number]#), then it will add commas
 to the digits to the left of the decimal place.
@@ -294,8 +294,8 @@ the program's point of view.
 ######################
 
 If an error occurs during the call to tablefill, it will be displayed in the
-command window.  When make.py finishes, the user will be able to scroll up
-through the output and examine any  error messages.  Error messages, which
+command window. When make.py finishes, the user will be able to scroll up
+through the output and examine any error messages. Error messages, which
 include a description of the error type and a traceback to the line of code
 where the error occured, can also be retuned as a string object using the
 following syntax:
@@ -314,12 +314,12 @@ Common mistakes which can lead to errors include:
 If the LyX table has more entries to be filled than the text table has entries to
 fill from, this will cause an error and the table will not be filled.
 
-- Use of numerical tags (e.g. #1#) to fill non-numerical data.  This will cause
+- Use of numerical tags (e.g. #1#) to fill non-numerical data. This will cause
 an error. Non-numerical data can only be filled using "###", as it does not make
 sense to round or truncate this data.
 
-- Multiple table objects in the same float.  Each table float in the template LyX
-file can only contain one table object.  If a float contains a second table object,
+- Multiple table objects in the same float. Each table float in the template LyX
+file can only contain one table object. If a float contains a second table object,
 this table will not be filled.
 
 
