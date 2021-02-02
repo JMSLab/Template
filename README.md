@@ -19,7 +19,7 @@ In addition, each project may use other specialized tools. For the working examp
 
 ### Repository Structure
 
-- `source/` contains source scripts and (small) raw data. All of the data cleaning and analysis, and much of the data gathering, takes place here.
+- `source/` contains source scripts and (small) raw data.
 
 - `output/` and `drive/` should mimic the folder structure in `source/`.
 
@@ -31,7 +31,7 @@ In addition, each project may use other specialized tools. For the working examp
 
 - `temp/` is not under version control and may be used by scripts to store temporary or intermediate files.
 
-- _Issue folders_: When working on issue branches, you may create an issue folder at the top of the directory under version control (e.g. `./issue1_task_name`). 
+- _Issue folders_: When working on issue branches, you may create an issue folder at the top of the directory under version control (e.g. `./issue1_short_task_name`). 
 
     - Code and (small) deliverables related to the issue are organized inside the issue folder.
 
