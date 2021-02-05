@@ -3,6 +3,7 @@ import hashlib
 import shutil
 import sys
 import os
+import re
 
 from .. import misc
 from .jmslab_builder import JMSLabBuilder
@@ -65,7 +66,7 @@ class MatlabBuilder(JMSLabBuilder):
         out_log     = os.path.normpath(self.log_file)
 
         self.exec_file = source_exec + '.m'
-        self.call_args = f'''"
+        self.call_args = re.sub(r'\s+', ' ', f'''"
             diary('{out_log}');
             addpath('{os.path.dirname(self.source_file)}');
             try,
@@ -76,8 +77,9 @@ class MatlabBuilder(JMSLabBuilder):
                 exit(1),
             end,
             delete('{self.exec_file}');
+            diary off;
             exit(0);
-        "'''.replace('\n', ' ').replace('\r', ' ')
+        "''', flags = re.MULTILINE)
 
         shutil.copy(self.source_file, self.exec_file)
 
