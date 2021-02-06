@@ -33,7 +33,7 @@ In addition, each project may use other specialized tools. For the working examp
 
 - _Issue folders_: When working on issue branches, you may create an issue folder at the top of the directory under version control (e.g. `./issue1_short_task_name`). 
 
-    - Code and (small) deliverables related to the issue are organized inside the issue folder. See [this example](https://github.com/JMSLab/Template/blob/78d5a82ece80c6970c1ba55f4a73276cc9c69802/issue10_readme). (Note the summary in the issue folder uses relative links because, within a commit, the relative link looks for files in that same commit.)
+    - Code and (small) deliverables related to the issue are organized inside the issue folder. See [this example](https://github.com/JMSLab/Template/blob/4b8219865376fd0e153ce6ba91e9eed882de01b5/issue10_readme). (Note the summary in the issue folder uses relative links because, within a commit, the relative link looks for files in that same commit.)
 
     - The issue folder should be deleted after the issue is resolved and is not merged into the main branch.
 
