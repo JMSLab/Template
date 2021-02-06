@@ -75,9 +75,9 @@ class MatlabBuilder(JMSLabBuilder):
             catch me,
                 fprintf('%s: %s\\n', me.identifier, me.message),
                 delete('{self.exec_file}'),
+                delete('{self.exec_log}'),
                 exit(1),
             end,
-            delete('{self.exec_file}');
             diary off;
             exit(0);
         " > {self.exec_log}''', flags = re.MULTILINE)
@@ -95,5 +95,5 @@ class MatlabBuilder(JMSLabBuilder):
             try:
                 os.remove(delete_file)
             except FileNotFoundError:
-                pass
+                continue
         return None
