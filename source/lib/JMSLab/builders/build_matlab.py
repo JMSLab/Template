@@ -79,7 +79,7 @@ class MatlabBuilder(JMSLabBuilder):
             delete('{self.exec_file}');
             diary off;
             exit(0);
-        "''', flags = re.MULTILINE)
+        " > /dev/null''', flags = re.MULTILINE)
 
         shutil.copy(self.source_file, self.exec_file)
 
