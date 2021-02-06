@@ -32,6 +32,7 @@ You can also toggle the visibility figures/tables in case they clutter the docum
 
 <p>
 
+GDP vs Educ       | GDP vs Educ (Fit)
 :----------------:|:----------------------:
 ![](gdp_educ.png) | ![](gdp_educ_fit.png) |
 
