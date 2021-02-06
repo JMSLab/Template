@@ -152,6 +152,7 @@ class JMSLabBuilder(object):
             traceback = ex.output
             raise_system_call_exception = True
 
+        self.cleanup()
         if raise_system_call_exception:
             self.raise_system_call_exception(traceback = traceback)
         return None
@@ -207,3 +208,6 @@ class JMSLabBuilder(object):
         with open(self.log_file, mode = 'w') as f:
             f.write(builder_log_msg)
         return None
+
+    def cleanup(self):
+        pass

@@ -74,8 +74,6 @@ class MatlabBuilder(JMSLabBuilder):
                 run('{self.exec_file}'),
             catch me,
                 fprintf('%s: %s\\n', me.identifier, me.message),
-                delete('{self.exec_file}'),
-                delete('{self.exec_log}'),
                 exit(1),
             end,
             diary off;
@@ -91,9 +89,12 @@ class MatlabBuilder(JMSLabBuilder):
         '''
         os.environ['CL_ARG'] = self.cl_arg
         super(MatlabBuilder, self).execute_system_call()
+        return None
+
+    def cleanup(self):
+        super(MatlabBuilder, self).cleanup()
         for delete_file in [self.exec_file, self.exec_log]:
             try:
                 os.remove(delete_file)
             except FileNotFoundError:
                 continue
-        return None
