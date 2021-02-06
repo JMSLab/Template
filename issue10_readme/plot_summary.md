@@ -13,13 +13,11 @@ High-level summary: For this example, we added a linear fit to the education vs 
 
 ### Details
 
-Details explaining what you did.
+Details explaining what you did.  For this example, we added a linear fit via OLS to the education vs expenditures plot.
 
 - The document should aim to be self-contained but concise.
 
 - However, you can link to comments on issue threads of necessary. See [here](https://github.com/JMSLab/Template/pull/20#issuecomment-774052883) for the original instructions to make this document.
-
-For this example, we added a linear fit via OLS to the education vs expenditures plot.
 
 ### Education vs GDP Fit
 
@@ -40,4 +38,4 @@ If you want to group figures in a sections you can toggle their visibility like 
 
 ### Section Name
 
-Any other setions you requie.
+Any other setions you require.
