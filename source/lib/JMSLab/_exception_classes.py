@@ -1,6 +1,5 @@
 class ExecCallError(Exception):
-    def __init__(self, message=''):
-        print('Error: ' + message)
+    pass
 
 
 class BadExtensionError(Exception):

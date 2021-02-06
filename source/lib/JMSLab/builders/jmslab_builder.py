@@ -156,7 +156,6 @@ class JMSLabBuilder(object):
             self.raise_system_call_exception(traceback = traceback)
         return None
 
-
     def raise_system_call_exception(self, command = '', traceback = ''):
         '''
         Create and raise an informative error message from failed system call.
