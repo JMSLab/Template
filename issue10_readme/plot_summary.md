@@ -25,14 +25,14 @@ Add figures/tables as needed. If there are several sets of figures/tables you ca
 
 ![](gdp_educ_fit.png)
 
-If you want to group figures in a sections you can toggle their visibility like so:
+You can also toggle the visibility figures/tables in case they clutter the document.
 
 <details>
-<summary> Explain the figure here. In this example, this is the figure without the linear fit. </summary>
+<summary> Short summary: In this example, we compare the figure with and without the linear fit side by side. </summary>
 
 <p>
 
-![](gdp_educ.png)
+![](gdp_educ_fit.png) ![](gdp_educ.png)
 </p>
 </details>
 
