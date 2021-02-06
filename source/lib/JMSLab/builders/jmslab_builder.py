@@ -144,11 +144,18 @@ class JMSLabBuilder(object):
         Acutally execute the system call attribute.
         Raise an informative exception on error.
         '''
+        traceback = ''
+        raise_system_call_exception = False
         try:
             subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
         except subprocess.CalledProcessError as ex:
-            self.raise_system_call_exception(traceback = ex.output)
+            traceback = ex.output
+            raise_system_call_exception = True
+
+        if raise_system_call_exception:
+            self.raise_system_call_exception(traceback = traceback)
         return None
+
 
     def raise_system_call_exception(self, command = '', traceback = ''):
         '''
