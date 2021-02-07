@@ -19,6 +19,12 @@ Details explaining what you did.  For this example, we added a linear fit via OL
 
 - However, you can link to comments on issue threads of necessary. See [here](https://github.com/JMSLab/Template/pull/20#issuecomment-774052883) for the original instructions to make this document.
 
+### Code
+
+[plot_fit.m](./plot_fit.m)
+
+Relative paths are fine and will point to a stable revision of the file if the user points to a stable revision of the markdown.
+
 ### Education vs GDP Fit
 
 Add figures/tables as needed. If there are several sets of figures/tables you can make different sections  for different sets.
@@ -35,8 +41,6 @@ You can also toggle the visibility figures/tables in case they clutter the docum
 GDP vs Educ       | GDP vs Educ (Fit)
 :----------------:|:----------------------:
 ![](gdp_educ.png) | ![](gdp_educ_fit.png) |
-
- Note: While relative links to the figures are used above (see the raw markdown), as long you use a permanent link to get to this document github will automatically link the figures using a permanent link as well.
 
 </p>
 </details>
