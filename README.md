@@ -29,11 +29,11 @@ In addition, each project may use other specialized tools. For the working examp
 
     - With the exception of large raw files, every file in these folders is produced by `source/`.
 
-- `temp/` is not under version control and may be used by scripts to store temporary or intermediate files.
+- If required, create a `temp/` folder, not under version control, for scripts to store temporary or intermediate files.
 
-- _Issue folders_: When working on issue branches, you may create an issue folder at the top of the directory under version control (e.g. `./issue1_short_task_name`). 
+- _Issue folders_: When working on issue branches, you may create an issue folder at the top of the directory under version control (e.g. `./issue1_short_task_name`).
 
-    - Code and (small) deliverables related to the issue are organized inside the issue folder. See [this example](https://github.com/JMSLab/Template/blob/4b8219865376fd0e153ce6ba91e9eed882de01b5/issue10_readme). (Note the summary in the issue folder uses relative links because, within a commit, the relative link looks for files in that same commit.)
+    - Code and (small) deliverables related to the issue are organized inside the issue folder. See [this example](https://github.com/JMSLab/Template/blob/4b8219865376fd0e153ce6ba91e9eed882de01b5/issue10_readme).
 
     - The issue folder should be deleted after the issue is resolved and is not merged into the main branch.
 

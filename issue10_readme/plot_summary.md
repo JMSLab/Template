@@ -36,6 +36,8 @@ GDP vs Educ       | GDP vs Educ (Fit)
 :----------------:|:----------------------:
 ![](gdp_educ.png) | ![](gdp_educ_fit.png) |
 
+ Note: While relative links to the figures are used above (see the raw markdown), as long you use a permanent link to get to this document github will automatically link the figures using a permanent link as well.
+
 </p>
 </details>
 
