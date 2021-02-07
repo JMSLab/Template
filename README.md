@@ -29,7 +29,7 @@ In addition, each project may use other specialized tools. For the working examp
 
     - With the exception of large raw files, every file in these folders is produced by `source/`.
 
-- If required, create a `temp/` folder, not under version control, for scripts to store temporary or intermediate files.
+- `temp/` is not under version control; create the folder after cloning the repository.  `temp/` may used by scripts to store temporary or intermediate files.
 
 - _Issue folders_: When working on issue branches, you may create an issue folder at the top of the directory under version control (e.g. `./issue1_short_task_name`).
 
