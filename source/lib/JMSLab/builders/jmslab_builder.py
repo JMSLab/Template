@@ -116,11 +116,10 @@ class JMSLabBuilder(object):
         Check that expected targets exist after execution.
         '''
         self.check_code_extension()
-        start_time = misc.current_time()
+        self.start_time = misc.current_time()
         self.do_call()
         self.check_targets()
-        end_time = misc.current_time()
-        self.timestamp_log(start_time, end_time)
+        self.timestamp_log(misc.current_time())
         return None
 
     def check_code_extension(self):
@@ -145,10 +144,17 @@ class JMSLabBuilder(object):
         Acutally execute the system call attribute.
         Raise an informative exception on error.
         '''
+        traceback = ''
+        raise_system_call_exception = False
         try:
             subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
         except subprocess.CalledProcessError as ex:
-            self.raise_system_call_exception(traceback = ex.output)
+            traceback = ex.output
+            raise_system_call_exception = True
+
+        self.cleanup()
+        if raise_system_call_exception:
+            self.raise_system_call_exception(traceback = traceback)
         return None
 
     def raise_system_call_exception(self, command = '', traceback = ''):
@@ -173,6 +179,8 @@ class JMSLabBuilder(object):
                   'Please check that the executable, source, and target files are correctly specified. ' \
                   'Check %s and sconstruct.log for errors. ' \
                   '\nCommand tried: %s%s' % (self.name, self.log_file, command, traceback)
+
+        self.timestamp_log(misc.current_time(), message + '\n\n')
         raise ExecCallError(message)
         return None
 
@@ -187,16 +195,19 @@ class JMSLabBuilder(object):
             raise TargetNonexistenceError(message)
         return None
 
-    def timestamp_log(self, start_time, end_time):
+    def timestamp_log(self, end_time, content = ''):
         '''
         Adds beginning and ending times to a log file made for system call.
         '''
         with open(self.log_file, mode = 'r') as f:
-            content = f.read()
+            content += f.read()
             f.seek(0, 0)
             builder_log_msg = '*** Builder log created: {%s}\n' \
                               '*** Builder log completed: {%s}\n%s' \
-                              % (start_time, end_time, content)
+                              % (self.start_time, end_time, content)
         with open(self.log_file, mode = 'w') as f:
             f.write(builder_log_msg)
         return None
+
+    def cleanup(self):
+        pass

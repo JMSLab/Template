@@ -3,6 +3,7 @@ import hashlib
 import shutil
 import sys
 import os
+import re
 
 from .. import misc
 from .jmslab_builder import JMSLabBuilder
@@ -64,8 +65,21 @@ class MatlabBuilder(JMSLabBuilder):
         source_exec = f'source_{source_hash}'
         out_log     = os.path.normpath(self.log_file)
 
-        self.call_args = f'{source_exec} > {out_log}'
+        self.exec_log  = source_exec + '.log'
         self.exec_file = source_exec + '.m'
+        self.call_args = re.sub(r'\s+', ' ', f'''"
+            diary('{out_log}');
+            addpath('{os.path.dirname(self.source_file)}');
+            try,
+                run('{self.exec_file}'),
+            catch me,
+                fprintf('%s: %s\\n', me.identifier, me.message),
+                exit(1),
+            end,
+            diary off;
+            exit(0);
+        " > {self.exec_log}''', flags = re.MULTILINE)
+
         shutil.copy(self.source_file, self.exec_file)
 
         return None
@@ -75,5 +89,12 @@ class MatlabBuilder(JMSLabBuilder):
         '''
         os.environ['CL_ARG'] = self.cl_arg
         super(MatlabBuilder, self).execute_system_call()
-        os.remove(self.exec_file)
         return None
+
+    def cleanup(self):
+        super(MatlabBuilder, self).cleanup()
+        for delete_file in [self.exec_file, self.exec_log]:
+            try:
+                os.remove(delete_file)
+            except FileNotFoundError:
+                continue
