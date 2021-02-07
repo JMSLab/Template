@@ -17,6 +17,26 @@ In addition, each project may use other specialized tools. For the working examp
 - [Stata](https://www.stata.com/install-guide/)
 - [Matlab](https://www.mathworks.com/help/install/install-products.html)
 
+### Repository Structure
+
+- `source/` contains source scripts and (small) raw data.
+
+- `output/` and `drive/` should mimic the folder structure in `source/`.
+
+    - For instance, the code in `source/analysis/plots/` saves output to `output/analysis/plots/`.
+
+    - `drive/` is not under version control; a project's large files are stored here.
+
+    - With the exception of large raw files, every file in these folders is produced by `source/`.
+
+- `temp/` is not under version control; create the folder after cloning the repository.  `temp/` may used by scripts to store temporary or intermediate files (though some projects may not need it).
+
+- _Issue folders_: When working on issue branches, you may create an issue folder at the top of the directory under version control (e.g. `./issue1_short_task_name`).
+
+    - Code and (small) deliverables related to the issue are organized inside the issue folder. See [this example](https://github.com/JMSLab/Template/blob/4b8219865376fd0e153ce6ba91e9eed882de01b5/issue10_readme).
+
+    - The issue folder should be deleted after the issue is resolved and is not merged into the main branch.
+
 ### Quick start
 
 1. Open the command-line and clone the repository. For example,
@@ -30,11 +50,13 @@ In addition, each project may use other specialized tools. For the working examp
 
     - Do _not_ link a "live" copy of the datastore (i.e. one that is synchronized to the internet). Work with a local, off-line copy before modifying the live copy;  otherwise the data may get unintentionally overwritten for everyone using the datastore.
 
-3. Install Python dependencies:
+3. Install dependencies:
 
     ```
     pip install -r source/lib/requirements.txt
     ```
+
+    (If using `conda`, run `conda install --file source/lib/requirements.txt`.)  Requirements for other languages, should there be any, will be found in `source/lib/requirements.{ext}` with `{ext}` equal to `do` (Stata), `r` (R), `m` (Matlab), and so on.
 
 4. Make sure that all the required program executables are in your system's path.
 
@@ -44,31 +66,7 @@ In addition, each project may use other specialized tools. For the working examp
 
 5. To compile the project, open the command-line and run `scons` from the project's root folder.
 
-    - To run a given script or create a given file, run `scons path/to/script_or_file`; this will recursively run all the dependencies required to run the script or create the file.
-
-### Repository Structure
-
-- `source/` contains source scripts and (small) raw data. All of the data cleaning and analysis, and much of the data gathering, takes place here.
-
-    - Do not create any new top-level folders inside of source;  new tasks should be sorted into one of the existing sub-folders.
-
-    - Each folder in source has an analogous output folder in `output/` and/or `drive/`. For instance, the code in `source/analysis/plots/` saves output to `output/analysis/plots/`.
-
-- `output/` and `drive/` should mimic the folder structure in `source/`.
-
-    - `drive/` is not under version control; a project's large files are stored here.
-
-    - With the exception of large raw files, every file in these folders is produced by `source/`, and their folders correspond to an analogous source folder in `source/`.
-
-- `temp/` may be used by scripts to store temporary or intermediate files.
-
-- _Issue folders_: When working on issues, you may create a temporary issue folder at the top of the directory (e.g. `./issue1_task_name`).
-
-    - Code and deliverables related to the issue are organized inside the issue folder.
-
-    - However, anything that is meant to be integrated into the project should be sorted into a sub-folder in `source/`.
-
-    - Further, the issue folder must be deleted before merging the issue branch.
+    - To run a given script or create a given file, run `scons path/to/script_or_file`; this will recursively run all the dependencies required to run the script or create the file.  e.g.  `scons output/derived/wb_clean/gdp_education.csv`.
 
 ### SConscript files
 
@@ -83,6 +81,6 @@ env.Stata(target, source)
 
 - `target` is a list with all of the files produced by the script.
 
-- `source` is a list with the script's name and all of the files used as input; the script must be the first element of the list.
+- `source` is a list with the script's name and all of the files used as input; the script _must_ be the first element of the list.
 
 - `env.Stata` is the Stata builder provided in `source/lib/JMSLab/builders`; this is imported and saved as part of the `env` object in the `SConstruct` file at the root of the project.
