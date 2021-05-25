@@ -7,7 +7,8 @@ def Main():
     out_dir = "output/derived/wb_clean"
 
     df = PrepareData(raw_dir)
-    df.to_csv(os.path.join(out_dir, "gdp_education.csv"), index = False)
+    df.to_csv(os.path.join(out_dir, "gdp_education.csv"),
+              index = False, float_format = '%.9f')
 
 
 def PrepareData(infolder):
