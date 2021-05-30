@@ -1,16 +1,16 @@
-*** Builder log created: {2020-12-19 22:58:08}
-*** Builder log completed: {2020-12-19 22:58:10}
+*** Builder log created: {2021-05-30 10:42:31}
+*** Builder log completed: {2021-05-30 10:42:32}
 running
-  'C:\PROGRA~1\R\R-40~1.2\bin\x64\Rterm.exe --no-echo --no-restore --no-save --no-restore --file=source\analysis\top_gdp\top_gdp_table.R'
+  '/usr/lib/R/bin/R --no-echo --no-restore --no-save --no-restore --file=source/analysis/top_gdp/top_gdp_table.R'
 
 
-Attaching package: 'dplyr'
+Attaching package: ‘dplyr’
 
-The following objects are masked from 'package:stats':
+The following objects are masked from ‘package:stats’:
 
     filter, lag
 
-The following objects are masked from 'package:base':
+The following objects are masked from ‘package:base’:
 
     intersect, setdiff, setequal, union
 
