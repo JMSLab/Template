@@ -1,14 +1,80 @@
-*** Builder log created: {2021-05-25 13:31:54}
-*** Builder log completed: {2021-05-25 13:31:55}
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/Arch Linux) (preloaded format=pdflatex)
- restricted \write18 enabled.
+*** Builder log created: {2021-05-30 10:08:49}
+*** Builder log completed: {2021-05-30 10:09:19}
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2)
+
 entering extended mode
-(./Template.tex
-LaTeX2e <2020-10-01> patch level 2
-L3 programming layer <2020-12-03> xparse <2020-03-03>
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/Arch Linux) (preloaded format=pdflatex)
- restricted \write18 enabled.
+
+(Template.tex
+
+LaTeX2e <2020-10-01> patch level 4
+
+L3 programming layer <2021-02-18>
+
+
+
+======================================================================
+
+starting package maintenance...
+
+installation directory: C:\Users\user\AppData\Roaming\MiKTeX\2.9
+
+package repository: https://mirrors.nxthost.com/ctan/systems/win32/miktex/tm/packages/
+
+visiting repository https://mirrors.nxthost.com/ctan/systems/win32/miktex/tm/packages/...
+
+repository type: remote package repository
+
+loading package repository manifest...
+
+downloading https://mirrors.nxthost.com/ctan/systems/win32/miktex/tm/packages/miktex-zzdb1-2.9.tar.lzma...
+
+0.21 MB, 1.81 Mbit/s
+
+package repository digest: 6a09c6351f6672b81bc1f7da3147c789
+
+going to download 89063 bytes
+
+going to install 119 file(s) (1 package(s))
+
+downloading https://mirrors.nxthost.com/ctan/systems/win32/miktex/tm/packages/ae.tar.lzma...
+
+0.09 MB, 2.07 Mbit/s
+
+extracting files from ae.tar.lzma...
+
+======================================================================
+
+Trying to make PK font tcrm0700 at 600 DPI...
+
+The METFAONT mode is: ljfour
+
+Creating tcrm0700.pk...
+
+Running miktex-mf.exe...
+
+Running miktex-gftopk.exe...
+
+Installing C:\Users\user\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm0700.pk...
+
+Trying to make PK font tcrm1000 at 600 DPI...
+
+The METFAONT mode is: ljfour
+
+Creating tcrm1000.pk...
+
+Running miktex-mf.exe...
+
+Running miktex-gftopk.exe...
+
+Installing C:\Users\user\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1000.pk...
+
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2)
+
 entering extended mode
-(./Template.tex
-LaTeX2e <2020-10-01> patch level 2
-L3 programming layer <2020-12-03> xparse <2020-03-03>
+
+(Template.tex
+
+LaTeX2e <2020-10-01> patch level 4
+
+L3 programming layer <2021-02-18>
+
