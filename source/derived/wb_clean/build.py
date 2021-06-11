@@ -3,7 +3,7 @@ import pandas as pd
 
 
 def Main():
-    raw_dir = "drive/raw/world_bank/orig"
+    raw_dir = "datastore/raw/world_bank/orig"
     out_dir = "output/derived/wb_clean"
 
     df = PrepareData(raw_dir)

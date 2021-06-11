@@ -21,11 +21,11 @@ In addition, each project may use other specialized tools. For the working examp
 
 - `source/` contains source scripts and (small) raw data.
 
-- `output/` and `drive/` should mimic the folder structure in `source/`.
+- `output/` and `datastore/` should mimic the folder structure in `source/`.
 
     - For instance, the code in `source/analysis/plots/` saves output to `output/analysis/plots/`.
 
-    - `drive/` is not under version control; a project's large files are stored here.
+    - `datastore/` is not under version control; a project's large files are stored here.
 
     - With the exception of large raw files, every file in these folders is produced by `source/`.
 
@@ -46,7 +46,7 @@ In addition, each project may use other specialized tools. For the working examp
     cd ProjectName
     ```
 
-2. Create a symbolic link called `drive` to _a local copy_ the project's datastore, if one exists for the project (e.g. a Dropbox or Google Drive folder).
+2. Create a symbolic link called `datastore` to _a local copy_ the project's datastore, if one exists for the project (e.g. a Dropbox or Google Drive folder).
 
     - Do _not_ link a "live" copy of the datastore (i.e. one that is synchronized to the internet). Work with a local, off-line copy before modifying the live copy;  otherwise the data may get unintentionally overwritten for everyone using the datastore.
 
