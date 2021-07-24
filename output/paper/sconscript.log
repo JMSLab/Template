@@ -1,14 +1,22 @@
-*** Builder log created: {2021-05-25 13:31:54}
-*** Builder log completed: {2021-05-25 13:31:55}
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/Arch Linux) (preloaded format=pdflatex)
- restricted \write18 enabled.
+*** Builder log created: {2021-07-24 23:18:56}
+*** Builder log completed: {2021-07-24 23:19:09}
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2)
+
 entering extended mode
-(./Template.tex
-LaTeX2e <2020-10-01> patch level 2
-L3 programming layer <2020-12-03> xparse <2020-03-03>
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/Arch Linux) (preloaded format=pdflatex)
- restricted \write18 enabled.
+
+(Template.tex
+
+LaTeX2e <2020-10-01> patch level 4
+
+L3 programming layer <2021-02-18>
+
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2)
+
 entering extended mode
-(./Template.tex
-LaTeX2e <2020-10-01> patch level 2
-L3 programming layer <2020-12-03> xparse <2020-03-03>
+
+(Template.tex
+
+LaTeX2e <2020-10-01> patch level 4
+
+L3 programming layer <2021-02-18>
+
