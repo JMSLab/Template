@@ -85,6 +85,8 @@ env.Stata(target, source)
 
 - `env.Stata` is the Stata builder provided in `source/lib/JMSLab/builders`; this is imported and saved as part of the `env` object in the `SConstruct` file at the root of the project.
 
+- For tips on batch-specifying targets and sources, see [./docs/batch_specifying.md](./docs/batch_specifying.md).
+
 ### Citations and Expectations for Usage
 
 This template is based on [gslab-econ/Template/v4.1.3](https://github.com/gslab-econ/template/releases/tag/4.1.3) and [gslab-python/v4.1.4](https://github.com/gslab-econ/gslab_python/releases/tag/v4.1.4).
