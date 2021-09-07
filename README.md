@@ -85,7 +85,7 @@ env.Stata(target, source)
 
 - `env.Stata` is the Stata builder provided in `source/lib/JMSLab/builders`; this is imported and saved as part of the `env` object in the `SConstruct` file at the root of the project.
 
-- For tips on batch-specifying targets and sources, see [this markdown](https://github.com/JMSLab/Template/blob/41b2b03bab675d855c8d5106cb816d2115c1c072/issue37/batch_specifying_targets_sources.md).
+- For tips on batch-specifying targets and sources, see `source/lib/docs/batch_specifying_targets_sources.md`.
 
 ### Citations and Expectations for Usage
 
