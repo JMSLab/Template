@@ -6,8 +6,9 @@ source = ['#source/analysis/top_gdp/top_gdp_table.R',
           '#output/derived/wb_clean/gdp_education.csv']
 env.R(target, source)
 
-target = ['#output/analysis/plots/sconscript.log',          
-          Glob('#output/analysis/plots/gdp_educ.*')]
+target = ['#output/analysis/plots/sconscript.log',
+          '#output/analysis/plots/gdp_educ.eps',
+          '#output/analysis/plots/gdp_educ.png']
 source = ['#source/analysis/plots/plot.m',
           '#output/derived/wb_clean/gdp_education_logs.csv']
 env.Matlab(target, source)
