@@ -74,11 +74,11 @@ def make_matlab_side_effect(recognized = True):
         found = find_executable(command, get_executable('matlab'), 'matlab')
         if found and not recognized:
             raise subprocess.CalledProcessError(1, command)
-
-        log_match = re.search(r'> (?P<log>[-\.\w\/]+)', command)
-
+        
+        log_match = re.search('(?<=diary\(\').*(?=.log\'\))', command)
+        
         if log_match:
-            log_path = log_match.group('log')
+            log_path = log_match.group(0) + '.log'
             with open(log_path, 'wb') as log_file:
                 log_file.write(b'Test log')
             with open('test_output.txt', 'wb') as target:

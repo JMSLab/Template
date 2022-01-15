@@ -50,6 +50,7 @@ class TestBuildMatlab(unittest.TestCase):
         mock_system should be the mock of os.system in build_matlab().
         '''
         # Extract the system command
+        print(mock_check_output.call_args)
         command = mock_check_output.call_args[0][0]
         # Look for the expected executable and options
         self.assertTrue(command.rfind(MATLAB) == 0 or re.search('^matlab', command))
@@ -78,7 +79,7 @@ class TestBuildMatlab(unittest.TestCase):
         mock_check_output.side_effect = fx.make_matlab_side_effect(True)
         with self.assertRaises(PrerequisiteError):
             build_matlab(target = 'build/test.mat',
-                         source = 'input/matlab_test_script.m',
+                         source = 'test_script.m',
                          env    = {})
 
     @subprocess_patch
@@ -104,8 +105,8 @@ class TestBuildMatlab(unittest.TestCase):
             fx.make_matlab_side_effect(recognized = False)
 
         with self.assertRaises(ExecCallError):
-            build_matlab(target = 'build/test.mat',
-                         source = 'input/matlab_test_script.m',
+            build_matlab(target = 'test.mat',
+                         source = 'test_script.m',
                          env    = {})
 
     def tearDown(self):
