@@ -103,19 +103,16 @@ def make_stata_side_effect(recognized = True):
     def stata_side_effect(*args, **kwargs):
         command = args[0]
         match   = helpers.command_match(command, 'stata')
+        
+        script_name = match.group('source')
+        stata_log   = os.path.basename(script_name).replace('.do', '.log')            
+        
+        with open(stata_log, 'wb') as logfile:
+            logfile.write(b'Test Stata log.\n')
+        with open('test_output.txt', 'wb') as target:
+            target.write(b'Test target')
 
-        if match.group('executable') == recognized:
-            # Find the Stata script's name
-            script_name = match.group('source')
-            stata_log   = os.path.basename(script_name).replace('.do', '.log')
-
-            # Write a log
-            with open(stata_log, 'wb') as logfile:
-                logfile.write(b'Test Stata log.\n')
-            with open('test_output.txt', 'wb') as target:
-                target.write(b'Test target')
-
-        else:
+        if match.group('executable') != recognized:
             # Raise an error if the executable is not recognised.
             raise subprocess.CalledProcessError(1, command)
 
