@@ -61,9 +61,9 @@ class MatlabBuilder(JMSLabBuilder):
         '''
         source_hash = hashlib.sha1(self.source_file.encode()).hexdigest()
         source_exec = 'source_%s' % source_hash
-        self.base_exec_file   = source_exec + '.m'
-        shutil.copy(self.source_file, self.base_exec_file)
-        self.exec_file = os.path.normpath(self.base_exec_file)
+        exec_file   = source_exec + '.m'
+        shutil.copy(self.source_file, exec_file)
+        self.exec_file = os.path.normpath(exec_file)
 
         file_rstrip_pattern(self.exec_file, 'exit(\(\d*\))?\s*[,;]?')
 
@@ -106,7 +106,7 @@ class MatlabBuilder(JMSLabBuilder):
 
     def cleanup(self):
         super(MatlabBuilder, self).cleanup()
-        for delete_file in [self.exec_file, self.base_exec_file]:
+        for delete_file in [self.exec_file]:
             try:
                 os.remove(delete_file)
             except FileNotFoundError:
