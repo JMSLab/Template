@@ -136,6 +136,7 @@ class JMSLabBuilder(object):
 
         if not matches:
             message = 'First argument, %s, must be a file of type %s.' % (self.source_file, extensions)
+            self.cleanup()
             raise BadExtensionError(message)
         return None
 
@@ -144,6 +145,7 @@ class JMSLabBuilder(object):
         Acutally execute the system call attribute.
         Raise an informative exception on error.
         '''
+        
         traceback = ''
         raise_system_call_exception = False
         try:

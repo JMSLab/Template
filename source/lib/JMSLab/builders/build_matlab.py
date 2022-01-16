@@ -61,9 +61,9 @@ class MatlabBuilder(JMSLabBuilder):
         '''
         source_hash = hashlib.sha1(self.source_file.encode()).hexdigest()
         source_exec = 'source_%s' % source_hash
-        exec_file   = source_exec + '.m'
-        shutil.copy(self.source_file, exec_file)
-        self.exec_file = os.path.normpath(exec_file)
+        self.base_exec_file   = source_exec + '.m'
+        shutil.copy(self.source_file, self.base_exec_file)
+        self.exec_file = os.path.normpath(self.base_exec_file)
 
         file_rstrip_pattern(self.exec_file, 'exit(\(\d*\))?\s*[,;]?')
 
@@ -88,7 +88,7 @@ class MatlabBuilder(JMSLabBuilder):
                 fprintf(fileID, '{2} run successfully'),
             end,
             fclose(fileID);
-
+            
             id = feature('getpid');
             if ispc,
                  cmd = sprintf('taskkill /pid %d /f',id),
@@ -98,19 +98,27 @@ class MatlabBuilder(JMSLabBuilder):
                 error('unknown operating system'),
             end,
             system(cmd);
-
+            
             exit(0);
         "'''.format(norm_log, norm_base, self.exec_file, source_exec), flags = re.MULTILINE)
 
         return None
+
+    def cleanup(self):
+        super(MatlabBuilder, self).cleanup()
+        for delete_file in [self.exec_file, self.base_exec_file]:
+            try:
+                os.remove(delete_file)
+            except FileNotFoundError:
+                continue
 
     def execute_system_call(self):
         '''
         '''
         os.environ['CL_ARG'] = self.cl_arg
         super(MatlabBuilder, self).execute_system_call()
-        os.remove(self.exec_file)
         return None
+        
 
     def do_call(self):
         '''
@@ -122,9 +130,10 @@ class MatlabBuilder(JMSLabBuilder):
             matlab_msg = self.exec_file + ' run successfully'
             with open(self.exec_file, 'r') as matlab_exit:
                 matlab_killed = (matlab_exit.read() == matlab_msg)
-
+            
             if not matlab_killed:
                 self.raise_system_call_exception(traceback = ex.output)
+        self.cleanup()        
         return None
 
 def file_rstrip_pattern(file_path, pattern):
