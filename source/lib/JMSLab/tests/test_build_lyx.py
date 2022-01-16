@@ -39,7 +39,8 @@ class TestBuildLyX(unittest.TestCase):
         target = 'build/lyx.pdf'
         helpers.standard_test(self, build_lyx, 'lyx',
                               system_mock = mock_check_output,
-                              target = target)
+                              target = target,
+                              source = ['test_script.lyx'])
         self.assertTrue(os.path.isfile(target))
 
     @subprocess_patch
