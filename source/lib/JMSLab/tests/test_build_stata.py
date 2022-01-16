@@ -110,9 +110,10 @@ class TestBuildStata(unittest.TestCase):
         helpers.test_cl_args(self, build_stata,
                              mock_check_output, 'do',
                              env = env)
-
-    def test_bad_stata_executable(self):
-        env = {'executable_names': {'stata': 'bad_stata_executable'}}
+    @subprocess_patch
+    def test_bad_stata_executable(self, mock_check_output):
+        mock_check_output.side_effect = fx.make_stata_side_effect(recognized = True)
+        env = {'executable_names': {'stata': 'bad_executable'}}
         with self.assertRaises(ExecCallError):
             build_stata(target = 'test_output.txt',
                         source = 'test_script.do',
@@ -151,7 +152,7 @@ class TestBuildStata(unittest.TestCase):
         env = {'executable_names': {'stata': 'stata-se'}}
         with self.assertRaises(ExecCallError):
             build_stata(target = 'build/stata.dta',
-                        source = 'input/stata_test_script.do',
+                        source = 'input/test_script.do',
                         env    = env)
 
     @subprocess_patch
