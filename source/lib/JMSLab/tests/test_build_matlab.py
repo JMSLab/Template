@@ -79,7 +79,7 @@ class TestBuildMatlab(unittest.TestCase):
         mock_check_output.side_effect = fx.make_matlab_side_effect(True)
         with self.assertRaises(PrerequisiteError):
             build_matlab(target = 'build/test.mat',
-                         source = 'test_script.m',
+                         source = 'input/test_script.m',
                          env    = {})
 
     @subprocess_patch
@@ -106,7 +106,7 @@ class TestBuildMatlab(unittest.TestCase):
 
         with self.assertRaises(ExecCallError):
             build_matlab(target = 'test.mat',
-                         source = 'test_script.m',
+                         source = 'input/test_script.m',
                          env    = {})
 
     def tearDown(self):
