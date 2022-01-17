@@ -117,6 +117,7 @@ class MatlabBuilder(JMSLabBuilder):
         '''
         os.environ['CL_ARG'] = self.cl_arg
         super(MatlabBuilder, self).execute_system_call()
+        self.cleanup()
         return None
         
 
@@ -130,10 +131,9 @@ class MatlabBuilder(JMSLabBuilder):
             matlab_msg = self.exec_file + ' run successfully'
             with open(self.exec_file, 'r') as matlab_exit:
                 matlab_killed = (matlab_exit.read() == matlab_msg)
-            
+            self.cleanup()        
             if not matlab_killed:
                 self.raise_system_call_exception(traceback = ex.output)
-        self.cleanup()        
         return None
 
 def file_rstrip_pattern(file_path, pattern):
