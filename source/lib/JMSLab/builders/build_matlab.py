@@ -30,6 +30,7 @@ def build_matlab(target, source, env):
     builder.execute_system_call()
     return None
 
+
 class MatlabBuilder(JMSLabBuilder):
     '''
     '''
@@ -40,7 +41,6 @@ class MatlabBuilder(JMSLabBuilder):
         super(MatlabBuilder, self).__init__(target, source, env, name = name,
                                             exec_opts = exec_opts,
                                             valid_extensions = valid_extensions)
-
 
     def add_executable_options(self):
         '''
@@ -58,6 +58,9 @@ class MatlabBuilder(JMSLabBuilder):
 
     def add_call_args(self):
         '''
+        Matlab automagically changes the working directory to the directory
+        of the script it is executing. Hence we copy the source script to the
+        current working directory.
         '''
         source_hash = hashlib.sha1(self.source_file.encode()).hexdigest()
         source_exec = 'source_%s' % source_hash
@@ -120,7 +123,6 @@ class MatlabBuilder(JMSLabBuilder):
         self.cleanup()
         return None
         
-
     def do_call(self):
         '''
         Special handling for Matlab since we kill it forcefully
@@ -160,5 +162,3 @@ def file_rstrip_pattern(file_path, pattern):
     with open(file_path, "w") as fh:
         fh.writelines(reversed(exec_lines))
         
-        
-
