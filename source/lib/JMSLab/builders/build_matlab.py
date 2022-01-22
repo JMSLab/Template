@@ -68,7 +68,7 @@ class MatlabBuilder(JMSLabBuilder):
         shutil.copy(self.source_file, exec_file)
         self.exec_file = os.path.normpath(exec_file)
 
-        file_rstrip_pattern(self.exec_file, 'exit(\(\d*\))?\s*[,;]?')
+        file_rstrip_pattern(self.exec_file, r'exit(\(\d*\))?\s*[,;]?')
 
         norm_log  = os.path.normpath(self.log_file)
         norm_base = os.path.dirname(os.path.normpath(self.source_file))

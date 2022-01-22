@@ -75,9 +75,9 @@ def make_matlab_side_effect(recognized = True):
         except KeyError:
             command = args[0]
 
-        log_match = re.search('(?<=diary\(\').*(?=.log\'\))', command)
+        log_match = re.search(r'(?<=diary\(\').*\.log(?=\'\))', command)
         if log_match:
-            log_path = log_match.group(0) + '.log'
+            log_path = log_match.group(0)
             with open(log_path, 'wb') as log_file:
                 log_file.write(b'Test log')
         
