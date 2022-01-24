@@ -39,6 +39,7 @@ class TestBuildLateX(unittest.TestCase):
         target = 'build/latex.pdf'
         helpers.standard_test(self, build_latex, 'tex',
                               system_mock = mock_check_output,
+                              source = ['test_script.tex'],
                               target = target)
         self.assertTrue(os.path.isfile(target))
 

@@ -20,9 +20,7 @@ def make_r_side_effect(recognized = True):
         '''
         # Get and parse the command passed to os.system()
         command = args[0]
-        if re.search('R', command, flags = re.I) and not recognized:
-            raise subprocess.CalledProcessError(1, command)
-
+        
         match   = helpers.command_match(command, 'R')
 
         executable = match.group('executable')
@@ -34,11 +32,17 @@ def make_r_side_effect(recognized = True):
             # R script's path after replacing .R (if present) with .log.
             source = match.group('source')
             log    = '%s.log' % re.sub(r'\.R', '', source)
-
+        
         found = find_executable(command, get_executable('r'), 'Rscript')
+        
         if executable == 'Rscript' or found and log and append == '2>&1':
             with open(log.replace('>', '').strip(), 'wb') as log_file:
                 log_file.write(b'Test log\n')
+        
+        if re.search('R', command, flags = re.I) and not recognized:
+            raise subprocess.CalledProcessError(1, command)
+
+        if executable == 'Rscript' or found and log and append == '2>&1':
             with open('test_output.txt', 'wb') as target:
                 target.write(b'Test target')
 
@@ -71,16 +75,17 @@ def make_matlab_side_effect(recognized = True):
         except KeyError:
             command = args[0]
 
+        log_match = re.search(r'(?<=diary\(\').*\.log(?=\'\))', command)
+        if log_match:
+            log_path = log_match.group(0)
+            with open(log_path, 'wb') as log_file:
+                log_file.write(b'Test log')
+        
         found = find_executable(command, get_executable('matlab'), 'matlab')
         if found and not recognized:
             raise subprocess.CalledProcessError(1, command)
-
-        log_match = re.search(r'> (?P<log>[-\.\w\/]+)', command)
-
+        
         if log_match:
-            log_path = log_match.group('log')
-            with open(log_path, 'wb') as log_file:
-                log_file.write(b'Test log')
             with open('test_output.txt', 'wb') as target:
                 target.write(b'Test target')
 
@@ -98,19 +103,16 @@ def make_stata_side_effect(recognized = True):
     def stata_side_effect(*args, **kwargs):
         command = args[0]
         match   = helpers.command_match(command, 'stata')
+        
+        script_name = match.group('source')
+        stata_log   = os.path.basename(script_name).replace('.do', '.log')            
+        
+        with open(stata_log, 'wb') as logfile:
+            logfile.write(b'Test Stata log.\n')
+        with open('test_output.txt', 'wb') as target:
+            target.write(b'Test target')
 
-        if match.group('executable') == recognized:
-            # Find the Stata script's name
-            script_name = match.group('source')
-            stata_log   = os.path.basename(script_name).replace('.do', '.log')
-
-            # Write a log
-            with open(stata_log, 'wb') as logfile:
-                logfile.write(b'Test Stata log.\n')
-            with open('test_output.txt', 'wb') as target:
-                target.write(b'Test target')
-
-        else:
+        if match.group('executable') != recognized:
             # Raise an error if the executable is not recognised.
             raise subprocess.CalledProcessError(1, command)
 

@@ -165,7 +165,7 @@ def standard_test(test_object, builder,
                   env         = {}):
     '''Test that builders run without errors and create logs properly.'''
     if not source:
-        source = 'test_script.%s' % extension
+        source = 'input/test_script.%s' % extension
 
     builder(source = source, target = target, env = env)
 
