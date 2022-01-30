@@ -19,3 +19,6 @@
 *.out
 *.svn
 *.m~
+
+output/analysis/plots/gdp_educ.png
+output/paper/Template.pdf
