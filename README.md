@@ -28,6 +28,8 @@ In addition, each project may use other specialized tools. For the working examp
     - `datastore/` is not under version control; a project's large files are stored here.
 
     - With the exception of large raw files, every file in these folders is produced by `source/`.
+	
+	- Files tracked by git-lfs are ignored in `output/` because [git-lfs files are not permitted in a template repository](https://github.community/t/lfs-support-for-template-repos/122449).
 
 - `temp/` is not under version control; create the folder after cloning the repository.  `temp/` may used by scripts to store temporary or intermediate files (though some projects may not need it).
 
