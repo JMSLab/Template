@@ -20,5 +20,6 @@
 *.svn
 *.m~
 
+# git-lfs files cannot be included in a template repository
 output/analysis/plots/gdp_educ.png
 output/paper/Template.pdf
