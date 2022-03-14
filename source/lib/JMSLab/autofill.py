@@ -18,9 +18,9 @@ def Autofill(var, format = "{}", namespace = None):
     
     return newcommand.format(commandname, content)
 
-def GenerateAutofillMacros(list, outfile):
+def GenerateAutofillMacros(list, outfile, format):
     autofill_file = open(outfile, 'w')
-    output_macros = ''.join(Autofill(var) for var in list)
+    output_macros = ''.join(Autofill(var, format) for var in list)
     autofill_file.write(output_macros)
     autofill_file.close()
 
