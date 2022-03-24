@@ -2,7 +2,6 @@ import sys
 
 sys.path.append('./source/lib')
 
-from JMSLab.autofill import Autofill
 from JMSLab.autofill import GenerateAutofillMacros
 
 Q_94 = 5.86
@@ -22,12 +21,14 @@ VariableProfitCF = Q_94 * (P_94 / P_94) \
 
 DeltaVariableProfit = VariableProfit - VariableProfitCF
 
-with open(r"issue50\test0_calcs.tex","w") as file:
-    file.write(''.join(Autofill(s, "\\textnormal{{{:.2f}}}") for s in ["VariableProfit", 
-                                                                       "VariableProfitCF", 
-                                                                       "DeltaVariableProfit"]))
-    file.write(''.join(Autofill(s, "{:.2f}") for s in ["Epsilon", "MarginalCost", "SurplusGain"]))
-
 GenerateAutofillMacros(["Epsilon", "MarginalCost", "SurplusGain", 
-                        "VariableProfit", "VariableProfitCF", "DeltaVariableProfit"], r"issue50\test1_calcs.tex", "{:.2f}")
+                        "VariableProfit", "VariableProfitCF", "DeltaVariableProfit"], 
+                        "{:.2f}",
+                       r"issue50\test0_calcs.tex")
+
+
+GenerateAutofillMacros([["Epsilon", "MarginalCost", "SurplusGain"], 
+                        ["VariableProfit", "VariableProfitCF", "DeltaVariableProfit"]], 
+                       ["{:.2f}", "\\textnormal{{{:.2f}}}"],
+                       r"issue50\test1_calcs.tex")
 
