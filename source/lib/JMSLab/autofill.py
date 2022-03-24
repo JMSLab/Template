@@ -32,15 +32,15 @@ def GenerateAutofillMacros(autofill_lists,  autofill_formats, autofill_outfile):
     .tex file
 
     """
-    file = open(autofill_outfile, 'w')
+    autofill_file = open(autofill_outfile, 'w')
     
     if type(autofill_formats) == str:
-        output_macros = ''.join(Autofill(var, autofill_formats) for var in autofill_lists)
+        output_macros = ''.join(Autofill(autofill_var, autofill_formats) for autofill_var in autofill_lists)
     else:
-        macros = []
+        autofill_macros = []
         for autofill_list, autofill_format in zip(autofill_lists, autofill_formats):
-            macros.append(''.join(Autofill(var, autofill_format) for var in autofill_list))
-        output_macros = ''.join(macros)
+            autofill_macros.append(''.join(Autofill(autofill_var, autofill_format) for autofill_var in autofill_list))
+        output_macros = ''.join(autofill_macros)
         
-    file.write(output_macros)
-    file.close()
+    autofill_file.write(output_macros)
+    autofill_file.close()
