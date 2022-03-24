@@ -14,7 +14,7 @@ class Test(TestCase):
         P_94 = 16.22
         Epsilon = - 1.19
         MarginalCost = (1 + 1 / Epsilon) * P_94
-        autofill_outfile = r"temp\output_macros.tex"
+        autofill_outfile = r"output_macros.tex"
         
         GenerateAutofillMacros(["Epsilon", "MarginalCost"], "{:.2f}", autofill_outfile)
         self.assertTrue(exists(autofill_outfile))
