@@ -18,9 +18,29 @@ def Autofill(var, format = "{}", namespace = None):
     
     return newcommand.format(commandname, content)
 
-def GenerateAutofillMacros(list, outfile, format):
-    autofill_file = open(outfile, 'w')
-    output_macros = ''.join(Autofill(var, format) for var in list)
-    autofill_file.write(output_macros)
-    autofill_file.close()
+def GenerateAutofillMacros(autofill_lists,  autofill_formats, autofill_outfile):
+    """
+    
+    Parameters
+    ----------
+    autofill_lists : TYPE - list
+    autofill_formats : TYPE - str or list
+    autofill_outfile : TYPE - str
 
+    Returns
+    -------
+    .tex file
+
+    """
+    file = open(autofill_outfile, 'w')
+    
+    if type(autofill_formats) == str:
+        output_macros = ''.join(Autofill(var, autofill_formats) for var in autofill_lists)
+    else:
+        macros = []
+        for autofill_list, autofill_format in zip(autofill_lists, autofill_formats):
+            macros.append(''.join(Autofill(var, autofill_format) for var in autofill_list))
+        output_macros = ''.join(macros)
+        
+    file.write(output_macros)
+    file.close()
