@@ -25,7 +25,7 @@ In addition, each project may use other specialized tools. For the working examp
 
     - For instance, the code in `source/analysis/plots/` saves output to `output/analysis/plots/`.
 
-    - `datastore/` is not under version control; a project's large files are stored here.
+    - `datastore/` is not under version control; a project's large files are stored here. See [here](https://drive.google.com/drive/folders/1b3UeaAYbtOk67qyniBGLLqkVIHE4xSvy?usp=sharing) for an example designed to work with this template.
 
     - With the exception of large raw files, every file in these folders is produced by `source/`.
 	
@@ -93,4 +93,4 @@ env.Stata(target, source)
 
 This template is based on [gslab-econ/Template/v4.1.3](https://github.com/gslab-econ/template/releases/tag/4.1.3) and [gslab-python/v4.1.4](https://github.com/gslab-econ/gslab_python/releases/tag/v4.1.4).
 
-It was designed for use in JMSLab. You are welcome to use it in your own research, as long as you (i) let @jmshapir know by e-mail that you plan to do this and (ii) agree to help maintain the template in the future.
+It was designed for use in JMSLab. You are welcome to use it in your own research, as long as you (i) [let us know](https://github.com/JMSLab/Template/issues/53) that you plan to do this and (ii) agree to help maintain the template in the future.
