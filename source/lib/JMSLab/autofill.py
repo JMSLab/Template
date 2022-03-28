@@ -32,6 +32,15 @@ def GenerateAutofillMacros(autofill_lists,  autofill_outfile, autofill_formats =
     .tex file
 
     """
+    if type(autofill_lists) != list:
+            raise Exception("Argument 'autofill_lists' must be list")
+            
+    nested_list = any(isinstance(i, list) for i in autofill_lists)
+    
+    if (nested_list == True and type(autofill_formats) == str) or (nested_list == False 
+                                                                   and type(autofill_formats) == list):
+        raise Exception("Arguments 'autofill_lists' and 'autofill_formats' are incompatible")
+            
     autofill_file = open(autofill_outfile, 'w')
     
     if type(autofill_formats) == str:
