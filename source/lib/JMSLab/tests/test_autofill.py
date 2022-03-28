@@ -17,7 +17,7 @@ class Test(TestCase):
         MarginalCost = (1 + 1 / Epsilon) * P_94
         autofill_outfile = r"output_macros.tex"
         
-        GenerateAutofillMacros(["Epsilon", "MarginalCost"], "{:.2f}", autofill_outfile)
+        GenerateAutofillMacros(["Epsilon", "MarginalCost"], autofill_outfile)
         self.assertTrue(exists(autofill_outfile))
         return
     
@@ -25,7 +25,7 @@ class Test(TestCase):
         
         autofill_outfile = r"output_macros.tex"
         with self.assertRaises(Exception) as context:
-            GenerateAutofillMacros(["Epsilon"], "{:.2f}", autofill_outfile)
+            GenerateAutofillMacros(["Epsilon"], autofill_outfile)
 
         self.assertTrue("Autofill: Variable 'Epsilon' not found" in str(context.exception))
         return
