@@ -10,7 +10,7 @@ def Autofill(var, format = "{}", namespace = None):
             parent = parent.f_back
         
         if var not in parent.f_locals.keys() or parent is None:
-            raise Warning(f"Autofill: Variable '{var}' not found")
+            raise Exception(f"Autofill: Variable '{var}' not found")
         
         namespace = parent.f_locals
     
