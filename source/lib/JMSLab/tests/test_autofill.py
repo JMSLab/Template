@@ -41,7 +41,7 @@ class Test(TestCase):
             tex_file = open(autofill_outfile, 'r')
             content = tex_file.read()
             self.assertEqual(content, "\\newcommand{\\Epsilon}{-1.19}\n")
-        
+        return
 
 if __name__ == '__main__':
     main()
