@@ -42,7 +42,30 @@ class Test(TestCase):
             content = tex_file.read()
             self.assertEqual(content, "\\newcommand{\\Epsilon}{-1.19}\n")
         return
+    
+    def test_list_format(self):
+        Epsilon = - 1.19
+        MarginalCost = (1 + 1 / Epsilon) * 16.22
+        with tempfile.TemporaryDirectory() as tempdir:
+     
+            autofill_outfile = tempdir + r"output_macros.tex"
+            
+            with self.assertRaises(Exception) as context:
+                GenerateAutofillMacros("Epsilon", autofill_outfile)
 
+            self.assertTrue("Argument 'autofill_lists' must be list" in str(context.exception))
+            
+            with self.assertRaises(Exception) as context:
+                GenerateAutofillMacros(["Epsilon"], autofill_outfile, ["{:.2f}", "\\textnormal{{{:.2f}}}"])
+
+            self.assertTrue("Arguments 'autofill_lists' and 'autofill_formats' are incompatible" in str(context.exception))
+            
+            with self.assertRaises(Exception) as context:
+                GenerateAutofillMacros([["Epsilon"], ["Marginal Cost"]], autofill_outfile)
+
+            self.assertTrue("Arguments 'autofill_lists' and 'autofill_formats' are incompatible" in str(context.exception))
+            return
+        
 if __name__ == '__main__':
     main()
 
