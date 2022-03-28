@@ -9,6 +9,7 @@ from os.path import exists
 
 
 class Test(TestCase):
+    
     def test_file_exists(self):
         
         P_94 = 16.22
@@ -18,6 +19,15 @@ class Test(TestCase):
         
         GenerateAutofillMacros(["Epsilon", "MarginalCost"], "{:.2f}", autofill_outfile)
         self.assertTrue(exists(autofill_outfile))
+        return
+    
+    def test_exception(self):
+        
+        autofill_outfile = r"output_macros.tex"
+        with self.assertRaises(Exception) as context:
+            GenerateAutofillMacros(["Epsilon"], "{:.2f}", autofill_outfile)
+
+        self.assertTrue("Autofill: Variable 'Epsilon' not found" in str(context.exception))
         return
 
 if __name__ == '__main__':
