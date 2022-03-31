@@ -1,5 +1,5 @@
-*** Builder log created: {2022-03-31 11:37:53}
-*** Builder log completed: {2022-03-31 11:37:55}
+*** Builder log created: {2022-03-31 11:32:00}
+*** Builder log completed: {2022-03-31 11:32:02}
 This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex)
  restricted \write18 enabled.
 entering extended mode
@@ -45,7 +45,7 @@ For additional information on amsmath, use the `?' option.
 (/usr/local/texlive/2021/texmf-dist/tex/latex/fmtcount/fcnumparser.sty)))
 (/usr/local/texlive/2021/texmf-dist/tex/latex/datetime/datetime-defaults.sty))
 (/usr/local/texlive/2021/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def)
-(./output/paper/TemplateTex.aux)
+(./source/paper/TemplateTex.aux)
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -100,8 +100,8 @@ Overfull \hbox (5.02565pt too wide) in paragraph at lines 14--15
 
 Overfull \hbox (5.02565pt too wide) in paragraph at lines 15--16
  []|\T1/aer/m/n/12 104965.3061| 
-) (./source/figures/gdp_educ.tex) (./output/paper/TemplateTex.bbl) [2] [3 <./ou
-tput/analysis/plots/gdp_educ.pdf>] (./output/paper/TemplateTex.aux)
+) (./source/figures/gdp_educ.tex) (./source/paper/TemplateTex.bbl) [2] [3 <./ou
+tput/analysis/plots/gdp_educ.pdf>] (./source/paper/TemplateTex.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
@@ -115,5 +115,5 @@ t/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2021/texmf-dist/
 fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2021/texmf-dist/f
 onts/type1/public/cm-super/sfrm0700.pfb></usr/local/texlive/2021/texmf-dist/fon
 ts/type1/public/cm-super/sfrm1000.pfb>
-Output written on output/paper/TemplateTex.pdf (3 pages, 106217 bytes).
-Transcript written on output/paper/TemplateTex.log.
+Output written on source/paper/TemplateTex.pdf (3 pages, 106217 bytes).
+Transcript written on source/paper/TemplateTex.log.
