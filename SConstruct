@@ -14,7 +14,8 @@ env = Environment(ENV = {'PATH' : os.environ['PATH']},
                               'Stata'     : Builder(action = jms.build_stata),
                               'Matlab'    : Builder(action = jms.build_matlab),
                               'Python'    : Builder(action = jms.build_python),
-                              'Lyx'       : Builder(action = jms.build_lyx)})
+                              'Lyx'       : Builder(action = jms.build_lyx),
+                              'Latex'     : Builder(action = jms.build_latex)})
 env.Decider('MD5-timestamp') # Only computes hash if time-stamp changed
 Export('env')
 
@@ -24,3 +25,5 @@ SConscript('source/derived/SConscript')
 SConscript('source/analysis/SConscript')
 SConscript('source/tables/SConscript')
 SConscript('source/paper/SConscript')
+SConscript('issue42/SConscript')
+
