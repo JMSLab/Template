@@ -228,7 +228,19 @@ Some Section
 \end_layout
 
 \begin_layout Standard
-Some text
+Some text.
+\end_layout
+
+\begin_layout Standard
+Some claim by 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "gentzkow2010drives"
+literal "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -283,65 +295,15 @@ filename "../../output/tables/top_gdp.lyx"
 
 \begin_layout Section*
 \start_of_appendix
-References
-\end_layout
-
-\begin_layout Standard
-\align block
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-leftskip=2em 
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-parindent=-2em
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-onehalfspacing
-\end_layout
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+btprint "btPrintCited"
+bibfiles "References"
+options "apalike"
 
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-noindent
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Author.
- YYYY.
- Title.
- 
-\shape italic
-Journal
-\shape default
- Vol: pages.
 \end_layout
 
 \end_body
