@@ -28,7 +28,7 @@ def build_latex(target, source, env):
         'exec_opts': '-interaction nonstopmode -jobname'
     }
     builder = LatexBuilder(target, source, env, **builder_attributes)
-    builder.add_bib_name(source)
+    builder.add_bib_name(target)
     builder.execute_system_call()
     return None
 
@@ -47,13 +47,13 @@ class LatexBuilder(JMSLabBuilder):
         self.call_args = args
         return None
      
-    def add_bib_name(self, source):
-        if bool(source):
-            sources = misc.make_list_if_string(source)
-            source_file = str(sources[0]).split(".")[0]
+    def add_bib_name(self, target):
+        if bool(target):
+            target = misc.make_list_if_string(target)
+            target_file = str(target[0]).split(".")[0]
         else:
-            source_file = ''
-        self.bib_file = source_file
+            target_file = ''
+        self.bib_file = target_file
         return None
     
     def do_call(self):
