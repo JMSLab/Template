@@ -4,7 +4,6 @@ from .. import misc
 
 from .jmslab_builder import JMSLabBuilder
 
-
 def build_latex(target, source, env):
     '''
     Compile a pdf from a LaTeX file
@@ -29,6 +28,7 @@ def build_latex(target, source, env):
     }
     builder = LatexBuilder(target, source, env, **builder_attributes)
     builder.add_bib_name(target)
+    builder.check_bib(source)
     builder.execute_system_call()
     return None
 
@@ -52,31 +52,64 @@ class LatexBuilder(JMSLabBuilder):
             target_file = os.path.splitext(str(target[0]))[0]
         else:
             target_file = ''
-        self.bib_file = target_file
+        self.bib_name = target_file
         return None
+        
+    def check_bib(self, source):
+    
+        bibext = '.bib'
+        bib_file = ''
+        
+        if bool(source):
+            sources = misc.make_list_if_string(source)
+            for i in range(len(source)):
+                source_file = str(source[i])
+                if bibext in source_file:
+                    bib_file = source_file
+        else:
+            bib_file = ''  
+        self.check_bib = bib_file
+        return None
+
     
     def do_call(self):
         '''
         Acutally execute the system call attribute.
         Raise an informative exception on error.
         '''
-        self.bibtex_executable  = 'bibtex'
-        self.bibtex_system_call = '%s %s' % (self.bibtex_executable, self.bib_file)
         
-        traceback = ''
-        raise_system_call_exception = False
-        try:
-            subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
-            subprocess.check_output(self.bibtex_system_call, shell = True, stderr = subprocess.STDOUT)
-            subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
-            subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
-        except subprocess.CalledProcessError as ex:
-            traceback = ex.output
-            raise_system_call_exception = True
+        if bool(self.check_bib):
+                      
+            self.bibtex_executable  = 'bibtex'
+            self.bibtex_system_call = '%s %s' % (self.bibtex_executable, self.bib_name)
+                    
+            traceback = ''
+            raise_system_call_exception = False
+            try:
+                subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
+                subprocess.check_output(self.bibtex_system_call, shell = True, stderr = subprocess.STDOUT)
+                subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
+                subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
+            except subprocess.CalledProcessError as ex:
+                traceback = ex.output
+                raise_system_call_exception = True
 
-        self.cleanup()
-        if raise_system_call_exception:
-            self.raise_system_call_exception(traceback = traceback)
+            self.cleanup()
+            if raise_system_call_exception:
+                self.raise_system_call_exception(traceback = traceback)
+        else:
+            traceback = ''
+            raise_system_call_exception = False
+            try:
+                subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
+                subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
+            except subprocess.CalledProcessError as ex:
+                traceback = ex.output
+                raise_system_call_exception = True
+            self.cleanup()
+            if raise_system_call_exception:
+                self.raise_system_call_exception(traceback = traceback)
+     
         return None
         
     
