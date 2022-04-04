@@ -1,9 +1,5 @@
-*** Builder log created: {2022-03-30 13:49:44}
-*** Builder log completed: {2022-03-30 13:50:05}
-[Warning: Function plot has the same name as a MATLAB builtin. We suggest you rename the
-function to avoid a potential name conflict.] 
-[> In path (line 109)
-In addpath (line 86)] 
+*** Builder log created: {2022-04-04 09:50:38}
+*** Builder log completed: {2022-04-04 09:50:50}
 
 rc =
 

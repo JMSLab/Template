@@ -9,7 +9,7 @@ env.R(target, source)
 target = ['#output/analysis/plots/sconscript.log',
           '#output/analysis/plots/gdp_educ.eps',
           '#output/analysis/plots/gdp_educ.png']
-source = ['#source/analysis/plots/plot.m',
+source = ['#source/analysis/plots/makeplot.m',
           '#output/derived/wb_clean/gdp_education_logs.csv']
 env.Matlab(target, source)
 
