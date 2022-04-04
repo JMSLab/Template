@@ -11,6 +11,7 @@ env.Lyx(target, source)
 target = ['#output/paper/TemplateTex.pdf']
 source = ['#source/paper/Template.tex',
           '#output/tables/top_gdp.tex',
-          '#source/figures/gdp_educ.tex']
+          '#source/figures/gdp_educ.tex',
+          '#source/paper/References.bib']
 
 env.Latex(target, source)
