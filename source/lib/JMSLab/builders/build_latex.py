@@ -49,8 +49,7 @@ class LatexBuilder(JMSLabBuilder):
      
     def add_bib_name(self, target):
         if bool(target):
-            target = misc.make_list_if_string(target)
-            target_file = str(target[0]).split(".")[0]
+            target_file = os.path.splitext(str(target[0]))[0]
         else:
             target_file = ''
         self.bib_file = target_file
