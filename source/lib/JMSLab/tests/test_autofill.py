@@ -1,22 +1,24 @@
 from unittest import main, TestCase
-from ..autofill import GenerateAutofillMacros
-from os.path import exists
 import tempfile, shutil 
+from os.path import exists
+
+from ..autofill import GenerateAutofillMacros
 
 class Test(TestCase):
     
     def setUp(self):
         self.tempdir = tempfile.mkdtemp() 
         self.outfile = self.tempdir + r"output_macros.tex"
+        return
     
     def tearDown(self):
         shutil.rmtree(self.tempdir)
+        return
     
     def test_file_exists(self):
-        Epsilon = - 1.19
-        MarginalCost = (1 + 1 / Epsilon) * 16.22
+        Epsilon = -1.19
         
-        GenerateAutofillMacros(["Epsilon", "MarginalCost"], self.outfile)
+        GenerateAutofillMacros(["Epsilon"], self.outfile)
         self.assertTrue(exists(self.outfile))
         return
     
@@ -39,7 +41,7 @@ class Test(TestCase):
     
     def test_list_format(self):
         Epsilon = - 1.19
-        MarginalCost = (1 + 1 / Epsilon) * 16.22
+        MarginalCost = 2.59
             
         with self.assertRaises(Exception) as context:
             GenerateAutofillMacros("Epsilon", self.outfile)
