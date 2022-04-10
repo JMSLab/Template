@@ -34,6 +34,7 @@ class Test(TestCase):
         tex_file = open(self.outfile, 'r')
         content = tex_file.read()
         self.assertEqual(content, "\\newcommand{\\Epsilon}{-1.19}\n")
+        tex_file.close()
         return
     
     def test_list_format(self):
