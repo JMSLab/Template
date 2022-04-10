@@ -1,13 +1,7 @@
-import sys
-
-sys.path.append('./source/lib')
-
 from unittest import main, TestCase
-from JMSLab.autofill import GenerateAutofillMacros
+from ..autofill import GenerateAutofillMacros
 from os.path import exists
 import tempfile
-
-
 
 class Test(TestCase):
     
