@@ -27,7 +27,7 @@ def build_latex(target, source, env):
         'exec_opts': '-interaction nonstopmode -jobname'
     }
     builder = LatexBuilder(target, source, env, **builder_attributes)
-    builder.execute_system_call(source, target)
+    builder.execute_system_call(target, source)
     return None
 
 
@@ -70,7 +70,7 @@ class LatexBuilder(JMSLabBuilder):
         self.check_bib = bool(bib_file)
         return None
 
-    def do_call(self, source, target):
+    def do_call(self, target, source):
         '''
         Acutally execute the system call attribute.
         Raise an informative exception on error.
@@ -116,7 +116,7 @@ class LatexBuilder(JMSLabBuilder):
      
         return None
         
-    def execute_system_call(self, source, target):
+    def execute_system_call(self, target, source):
         '''
         Execute the system call attribute.
         Log the execution.
@@ -124,7 +124,7 @@ class LatexBuilder(JMSLabBuilder):
         '''
         self.check_code_extension()
         self.start_time = misc.current_time()
-        self.do_call(source, target)
+        self.do_call(target, source)
         self.check_targets()
         self.timestamp_log(misc.current_time())
         return None
