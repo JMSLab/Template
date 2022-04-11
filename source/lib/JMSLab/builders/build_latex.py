@@ -27,9 +27,7 @@ def build_latex(target, source, env):
         'exec_opts': '-interaction nonstopmode -jobname'
     }
     builder = LatexBuilder(target, source, env, **builder_attributes)
-    builder.add_bib_name(target)
-    builder.check_bib(source)
-    builder.execute_system_call()
+    builder.execute_system_call(source, target)
     return None
 
 
@@ -49,9 +47,10 @@ class LatexBuilder(JMSLabBuilder):
      
     def add_bib_name(self, target):
         if bool(target):
+            target        = misc.make_list_if_string(target)
             target_file = os.path.splitext(str(target[0]))[0]
         else:
-            target_file = ''
+            target_file   = ''
         self.bib_name = target_file
         return None
         
@@ -62,25 +61,29 @@ class LatexBuilder(JMSLabBuilder):
         
         if bool(source):
             sources = misc.make_list_if_string(source)
-            for i in range(len(source)):
-                source_file = str(source[i])
-                if bibext in source_file:
+            for source_file in sources:
+                source_file = str(source_file)
+                if source_file.lower().endswith(bibext):
                     bib_file = source_file
         else:
             bib_file = ''  
-        self.check_bib = bib_file
+        self.check_bib = bool(bib_file)
         return None
 
-    
-    def do_call(self):
+    def do_call(self, source, target):
         '''
         Acutally execute the system call attribute.
         Raise an informative exception on error.
         '''
         
-        if bool(self.check_bib):
-                      
+        self.check_bib(source)
+        
+        if self.check_bib:
+        
+            self.add_bib_name(target)
+
             self.bibtex_executable  = 'bibtex'
+            
             self.bibtex_system_call = '%s %s' % (self.bibtex_executable, self.bib_name)
                     
             traceback = ''
@@ -103,6 +106,7 @@ class LatexBuilder(JMSLabBuilder):
             try:
                 subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
                 subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
+                subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
             except subprocess.CalledProcessError as ex:
                 traceback = ex.output
                 raise_system_call_exception = True
@@ -112,6 +116,17 @@ class LatexBuilder(JMSLabBuilder):
      
         return None
         
-    
+    def execute_system_call(self, source, target):
+        '''
+        Execute the system call attribute.
+        Log the execution.
+        Check that expected targets exist after execution.
+        '''
+        self.check_code_extension()
+        self.start_time = misc.current_time()
+        self.do_call(source, target)
+        self.check_targets()
+        self.timestamp_log(misc.current_time())
+        return None
     
      
