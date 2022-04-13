@@ -1,6 +1,8 @@
 import subprocess
 import os
+
 from .. import misc
+from .executables import get_executable
 
 from .jmslab_builder import JMSLabBuilder
 
@@ -91,7 +93,7 @@ class LatexBuilder(JMSLabBuilder):
 
         if self.check_bib:
 
-            self.bibtex_executable  = 'bibtex'
+            self.bibtex_executable  = get_executable('bibtex', manual_executables = {})
             
             self.bibtex_system_call = '%s %s' % (self.bibtex_executable, self.out_name)
                     
