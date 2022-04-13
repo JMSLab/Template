@@ -45,13 +45,13 @@ class LatexBuilder(JMSLabBuilder):
         self.call_args = args
         return None
      
-    def add_bib_name(self, target):
+    def add_out_name(self, target):
         if bool(target):
             target        = misc.make_list_if_string(target)
             target_file = os.path.splitext(str(target[0]))[0]
         else:
             target_file   = ''
-        self.bib_name = target_file
+        self.out_name = target_file
         return None
         
     def check_bib(self, source):
@@ -70,6 +70,18 @@ class LatexBuilder(JMSLabBuilder):
         self.check_bib = bool(bib_file)
         return None
 
+    def cleanup(self):
+        aux_file = self.out_name + '.aux'
+        bbl_file = self.out_name + '.bbl'
+
+        delete_file = [aux_file, bbl_file]
+
+        for file in delete_file:
+            try:
+                os.remove(file)
+            except FileNotFoundError:
+                continue
+            
     def do_call(self, target, source):
         '''
         Acutally execute the system call attribute.
@@ -77,14 +89,13 @@ class LatexBuilder(JMSLabBuilder):
         '''
         
         self.check_bib(source)
-        
+        self.add_out_name(target)
+
         if self.check_bib:
-        
-            self.add_bib_name(target)
 
             self.bibtex_executable  = 'bibtex'
             
-            self.bibtex_system_call = '%s %s' % (self.bibtex_executable, self.bib_name)
+            self.bibtex_system_call = '%s %s' % (self.bibtex_executable, self.out_name)
                     
             traceback = ''
             raise_system_call_exception = False
