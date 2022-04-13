@@ -71,14 +71,11 @@ class LatexBuilder(JMSLabBuilder):
         return None
 
     def cleanup(self):
-        aux_file = self.out_name + '.aux'
-        bbl_file = self.out_name + '.bbl'
+        delete_ext = ['.aux', '.bbl']
 
-        delete_file = [aux_file, bbl_file]
-
-        for file in delete_file:
+        for ext in delete_ext:
             try:
-                os.remove(file)
+                os.remove(self.out_name+ext)
             except FileNotFoundError:
                 continue
             
