@@ -97,6 +97,7 @@ class LatexBuilder(JMSLabBuilder):
             
             self.bibtex_system_call = '%s %s' % (self.bibtex_executable, self.out_name)
                     
+            self.cleanup()
             traceback = ''
             raise_system_call_exception = False
             try:
@@ -112,6 +113,7 @@ class LatexBuilder(JMSLabBuilder):
             if raise_system_call_exception:
                 self.raise_system_call_exception(traceback = traceback)
         else:
+            self.cleanup()
             traceback = ''
             raise_system_call_exception = False
             try:
