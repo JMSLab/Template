@@ -2,7 +2,7 @@ import inspect
 
 def Autofill(var, format = "{}", namespace = None):
     newcommand = f"\\newcommand{{{{\\{{}}}}}}{{{{{format}}}}}\n"
-    
+
     # Look for var in parent frames
     if namespace is None:
         parent = inspect.currentframe().f_back
@@ -13,14 +13,14 @@ def Autofill(var, format = "{}", namespace = None):
             raise Exception(f"Autofill: Variable '{var}' not found")
         
         namespace = parent.f_locals
-    
+
     commandname, content = var, namespace[var]
-    
+
     return newcommand.format(commandname, content)
 
 def GenerateAutofillMacros(autofill_lists,  autofill_outfile, autofill_formats = "{:.2f}"):
     """
-    
+
     Parameters
     ----------
     autofill_lists : TYPE - list
@@ -36,13 +36,13 @@ def GenerateAutofillMacros(autofill_lists,  autofill_outfile, autofill_formats =
             raise Exception("Argument 'autofill_lists' must be list")
             
     nested_list = any(isinstance(i, list) for i in autofill_lists)
-    
+
     if (nested_list == True and type(autofill_formats) == str) or (nested_list == False 
-                                                                   and type(autofill_formats) == list):
+                                                                    and type(autofill_formats) == list):
         raise Exception("Arguments 'autofill_lists' and 'autofill_formats' are incompatible")
-            
+
     autofill_file = open(autofill_outfile, 'w')
-    
+
     if type(autofill_formats) == str:
         output_macros = ''.join(Autofill(autofill_var, autofill_formats) for autofill_var in autofill_lists)
     else:
