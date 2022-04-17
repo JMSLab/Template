@@ -39,6 +39,8 @@ In addition, each project may use other specialized tools. For the working examp
 
     - The issue folder should be deleted after the issue is resolved and is not merged into the main branch.
 
+- `/.github` defines workflows for [github actions](https://docs.github.com/en/actions). We recommend disabling these by default when creating a private repository.
+
 ### Quick start
 
 1. Open the command-line and clone the repository. For example,
