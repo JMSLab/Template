@@ -9,7 +9,7 @@ class Test(TestCase):
     def setUp(self):
         self.tempdir = tempfile.mkdtemp() 
         self.outfile = self.tempdir + r"output_macros.tex"
-        return
+        return None
 
     def tearDown(self):
         shutil.rmtree(self.tempdir)
