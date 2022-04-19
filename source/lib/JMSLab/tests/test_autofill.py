@@ -1,6 +1,7 @@
 from unittest import main, TestCase
-import tempfile, shutil 
 from os.path import exists
+
+import tempfile, shutil 
 
 from ..autofill import GenerateAutofillMacros
 
