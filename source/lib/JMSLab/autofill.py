@@ -37,8 +37,8 @@ def GenerateAutofillMacros(autofill_lists, autofill_formats = "{:.2f}", autofill
             
     nested_list = any(isinstance(i, list) for i in autofill_lists)
 
-    if (nested_list == True and type(autofill_formats) == str) or (nested_list == False 
-                                                                    and type(autofill_formats) == list):
+    if ((nested_list and type(autofill_formats) is str) 
+        or (nested_list and type(autofill_formats) is list)):
         raise Exception("Arguments 'autofill_lists' and 'autofill_formats' are incompatible")
 
     autofill_file = open(autofill_outfile, 'w')
