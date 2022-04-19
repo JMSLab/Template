@@ -18,13 +18,13 @@ class Test(TestCase):
     def test_file_exists(self):
         Epsilon = -1.19
         
-        GenerateAutofillMacros(["Epsilon"], self.outfile)
+        GenerateAutofillMacros(["Epsilon"], autofill_outfile = self.outfile)
         self.assertTrue(exists(self.outfile))
         return
 
     def test_exception(self):
         with self.assertRaises(Exception) as context:
-            GenerateAutofillMacros(["Epsilon"], self.outfile)
+            GenerateAutofillMacros(["Epsilon"], autofill_outfile =  self.outfile)
 
         self.assertTrue("Autofill: Variable 'Epsilon' not found" in str(context.exception))
         return
@@ -32,7 +32,7 @@ class Test(TestCase):
     def test_output(self):
         Epsilon = - 1.19
         
-        GenerateAutofillMacros(["Epsilon"], self.outfile)
+        GenerateAutofillMacros(["Epsilon"], autofill_outfile = self.outfile)
         tex_file = open(self.outfile, 'r')
         content = tex_file.read()
         self.assertEqual(content, "\\newcommand{\\Epsilon}{-1.19}\n")
@@ -44,17 +44,18 @@ class Test(TestCase):
         MarginalCost = 2.59
 
         with self.assertRaises(Exception) as context:
-            GenerateAutofillMacros("Epsilon", self.outfile)
+            GenerateAutofillMacros("Epsilon", autofill_outfile = self.outfile)
 
         self.assertTrue("Argument 'autofill_lists' must be list" in str(context.exception))
 
         with self.assertRaises(Exception) as context:
-            GenerateAutofillMacros(["Epsilon"], self.outfile, ["{:.2f}", "\\textnormal{{{:.2f}}}"])
+            GenerateAutofillMacros(["Epsilon"], autofill_formats = ["{:.2f}", "\\textnormal{{{:.2f}}}"], 
+                                   autofill_outfile = self.outfile)
 
         self.assertTrue("Arguments 'autofill_lists' and 'autofill_formats' are incompatible" in str(context.exception))
 
         with self.assertRaises(Exception) as context:
-            GenerateAutofillMacros([["Epsilon"], ["Marginal Cost"]], self.outfile)
+            GenerateAutofillMacros([["Epsilon"], ["Marginal Cost"]], autofill_outfile = self.outfile)
 
         self.assertTrue("Arguments 'autofill_lists' and 'autofill_formats' are incompatible" in str(context.exception))
         return
