@@ -18,7 +18,7 @@ def Autofill(var, format = "{}", namespace = None):
 
     return newcommand.format(commandname, content)
 
-def GenerateAutofillMacros(autofill_lists,  autofill_outfile, autofill_formats = "{:.2f}"):
+def GenerateAutofillMacros(autofill_lists, autofill_formats = "{:.2f}", autofill_outfile = "autofill.tex"):
     """
 
     Parameters
