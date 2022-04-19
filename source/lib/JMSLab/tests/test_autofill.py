@@ -59,7 +59,7 @@ class Test(TestCase):
         self.assertTrue("Arguments 'autofill_lists' and 'autofill_formats' are incompatible" in str(context.exception))
 
         with self.assertRaises(Exception) as context:
-            GenerateAutofillMacros([["Epsilon"], ["Marginal Cost"]], autofill_outfile = self.outfile)
+            GenerateAutofillMacros([["Epsilon"], ["MarginalCost"]], autofill_outfile = self.outfile)
 
         self.assertTrue("Arguments 'autofill_lists' and 'autofill_formats' are incompatible" in str(context.exception))
         return None
