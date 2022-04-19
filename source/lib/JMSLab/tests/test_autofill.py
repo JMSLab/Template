@@ -32,11 +32,14 @@ class Test(TestCase):
 
     def test_output(self):
         Epsilon = - 1.19
+        MarginalCost = 2.59
         
-        GenerateAutofillMacros(["Epsilon"], autofill_outfile = self.outfile)
+        GenerateAutofillMacros([["Epsilon"], ["MarginalCost"]], 
+                               autofill_formats = ["{:.2f}", "\\textnormal{{{:.2f}}}"], 
+                               autofill_outfile = self.outfile)
         tex_file = open(self.outfile, 'r')
         content = tex_file.read()
-        self.assertEqual(content, "\\newcommand{\\Epsilon}{-1.19}\n")
+        self.assertEqual(content, "\\newcommand{\\Epsilon}{-1.19}\n\\newcommand{\\MarginalCost}{\\textnormal{2.59}}\n")
         tex_file.close()
         return None
 
