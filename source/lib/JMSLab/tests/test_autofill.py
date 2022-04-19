@@ -20,14 +20,14 @@ class Test(TestCase):
         
         GenerateAutofillMacros(["Epsilon"], autofill_outfile = self.outfile)
         self.assertTrue(exists(self.outfile))
-        return
+        return None
 
     def test_exception(self):
         with self.assertRaises(Exception) as context:
             GenerateAutofillMacros(["Epsilon"], autofill_outfile =  self.outfile)
 
         self.assertTrue("Autofill: Variable 'Epsilon' not found" in str(context.exception))
-        return
+        return None
 
     def test_output(self):
         Epsilon = - 1.19
@@ -37,7 +37,7 @@ class Test(TestCase):
         content = tex_file.read()
         self.assertEqual(content, "\\newcommand{\\Epsilon}{-1.19}\n")
         tex_file.close()
-        return
+        return None
 
     def test_list_format(self):
         Epsilon = - 1.19
@@ -58,7 +58,7 @@ class Test(TestCase):
             GenerateAutofillMacros([["Epsilon"], ["Marginal Cost"]], autofill_outfile = self.outfile)
 
         self.assertTrue("Arguments 'autofill_lists' and 'autofill_formats' are incompatible" in str(context.exception))
-        return
+        return None
         
 if __name__ == '__main__':
     main()
