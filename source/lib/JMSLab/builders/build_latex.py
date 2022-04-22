@@ -29,6 +29,7 @@ def build_latex(target, source, env):
         'exec_opts': '-interaction nonstopmode -jobname'
     }
     builder = LatexBuilder(target, source, env, **builder_attributes)
+    builder.add_out_name(target)
     builder.execute_system_call(target, source)
     return None
 
@@ -89,7 +90,6 @@ class LatexBuilder(JMSLabBuilder):
         '''
         
         self.check_bib(source)
-        self.add_out_name(target)
 
         if self.check_bib:
 
