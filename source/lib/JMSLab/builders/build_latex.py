@@ -93,7 +93,7 @@ class LatexBuilder(JMSLabBuilder):
 
         if self.check_bib:
 
-            self.bibtex_executable  = get_executable('bibtex', manual_executables = {})
+            self.bibtex_executable  = get_executable('bibtex')
             
             self.bibtex_system_call = '%s %s' % (self.bibtex_executable, self.out_name)
                     

@@ -222,6 +222,12 @@ def latex_side_effect(*args, **kwargs):
         with open('%s.log' % target_file, 'wb') as out_file:
             out_file.write(b'Mock .log output')
 
+def bibtex_side_effect(*args, **kwargs):
+    '''    
+    Mock subprocess.check_output for testing build_latex()
+    When .bib file is used.
+    '''
+    pass
 
 def find_executable(command, default, exe):
     return command.strip().rfind(default) == 0 or re.search(rf'^{exe}', command, flags = re.I)
