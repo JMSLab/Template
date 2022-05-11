@@ -113,6 +113,17 @@ def command_match(command, language, which = None):
                          r'(?P<log_redirect>\>\s*[\.\/\\\w]+\.\w+)?',
                          command)
 
+    elif language in ['bibtex',]:
+        # e.g. "bibtex target_file > sconscript.log"
+        default = re.escape(get_executable('bibtex'))
+        match = re.match(r'\s*'
+                         rf'(?P<executable>\w+|{default})'
+                         r'\s+'
+                         r'(?P<target>-\w+\s+\S+)?'
+                         r'\s*'
+                         r'(?P<log_redirect>\>\s*[\.\/\\\w]+\.\w+)?',
+                         command)
+
     if which:
         return match.group(which)
     else:

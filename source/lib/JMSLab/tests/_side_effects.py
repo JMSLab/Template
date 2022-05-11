@@ -136,6 +136,14 @@ def lyx_side_effect(*args, **kwargs):
     and can export .lyx files to .pdf files only using
     the "-e pdf2" option.
     '''
+    
+    bibmatch = helpers.command_match(command, 'bibtex')
+    if bibmatch:
+        bibtex_side_effect(*args, **kwargs)
+        return
+
+    match = helpers.command_match(command, 'pdflatex')
+
     # Get and parse the command passed to os.system()
     command = args[0]
     match = helpers.command_match(command, 'lyx')
