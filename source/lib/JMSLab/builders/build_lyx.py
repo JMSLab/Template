@@ -29,8 +29,7 @@ def build_lyx(target, source, env):
         'exec_opts': '-E pdf2'
     }
     builder = LyxBuilder(target, source, env, **builder_attributes)
-    builder.create_handout()
-    builder.execute_system_call()
+    builder.execute_system_call(target)
     return None
 
 
@@ -47,13 +46,13 @@ class LyxBuilder(JMSLabBuilder):
         self.call_args = args
         return None
 
-    def check_handout(self):
+    def check_handout(self, target):
         
         handout_ext  = '_handout.pdf'
         handout_file = ''
         
-        if bool(self.target):
-            targets = misc.make_list_if_string(self.target)
+        if bool(target):
+            targets = misc.make_list_if_string(target)
             for file in targets:
                 file = str(file)
                 if file.lower().endswith(handout_ext):
@@ -65,12 +64,12 @@ class LyxBuilder(JMSLabBuilder):
         self.check_handout = bool(handout_file)
         return None
 
-    def create_handout(self):
+    def create_handout(self, target):
         '''
         Converts notes to greyedout for export to handout
         '''
         
-        self.check_handout()
+        self.check_handout(target)
 
         if self.check_handout:
             source_name = os.path.splitext(self.handout_file)[0]
@@ -94,28 +93,57 @@ class LyxBuilder(JMSLabBuilder):
             self.handout_args = args
 
             self.handout_call = '%s %s %s' % (self.executable, self.exec_opts, self.handout_args)
-            subprocess.check_output(self.handout_call, shell = True, stderr = subprocess.STDOUT)
         else:
             pass
 
         return None
 
 
-def do_call(self):
-    '''
-    Acutally execute the system call attribute.
-    Raise an informative exception on error.
-    '''
-    
-    traceback = ''
-    raise_system_call_exception = False
-    try:
-        subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
-    except subprocess.CalledProcessError as ex:
-        traceback = ex.output
-        raise_system_call_exception = True
+    def do_call(self, target):
+        '''
+        Acutally execute the system call attribute.
+        Raise an informative exception on error.
+        '''
 
-    self.cleanup()
-    if raise_system_call_exception:
-        self.raise_system_call_exception(traceback = traceback)
-    return None
+        self.create_handout(target)
+
+        if self.check_handout:
+            traceback = ''
+            raise_system_call_exception = False
+            try:
+                subprocess.check_output(self.handout_call, shell = True, stderr = subprocess.STDOUT)
+            except subprocess.CalledProcessError as ex:
+                traceback = ex.output
+                raise_system_call_exception = True
+
+            self.cleanup()
+            if raise_system_call_exception:
+                self.raise_system_call_exception(traceback = traceback)
+        else:
+            pass
+
+        traceback = ''
+        raise_system_call_exception = False
+        try:
+            subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
+        except subprocess.CalledProcessError as ex:
+            traceback = ex.output
+            raise_system_call_exception = True
+
+        self.cleanup()
+        if raise_system_call_exception:
+            self.raise_system_call_exception(traceback = traceback)
+        return None
+    
+    def execute_system_call(self, target):
+        '''
+        Execute the system call attribute.
+        Log the execution.
+        Check that expected targets exist after execution.
+        '''
+        self.check_code_extension()
+        self.start_time = misc.current_time()
+        self.do_call(target)
+        self.check_targets()
+        self.timestamp_log(misc.current_time())
+        return None
