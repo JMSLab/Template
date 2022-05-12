@@ -74,6 +74,8 @@ class LyxBuilder(JMSLabBuilder):
         if self.check_handout:
             source_name = os.path.splitext(self.handout_file)[0]
             handout_doc_input  = source_name + '.lyx'
+            self.handout_doc_input = handout_doc_input
+
             handout_doc_output = self.handout_file 
 
             shutil.copy2(self.source_file, handout_doc_input)
@@ -90,6 +92,7 @@ class LyxBuilder(JMSLabBuilder):
                                     self.cl_arg,
                                     os.path.normpath(self.log_file))
             
+            
             self.handout_args = args
 
             self.handout_call = '%s %s %s' % (self.executable, self.exec_opts, self.handout_args)
@@ -98,6 +101,8 @@ class LyxBuilder(JMSLabBuilder):
 
         return None
 
+    def cleanup_handout(self):
+        os.remove(self.handout_doc_input)
 
     def do_call(self, target):
         '''
@@ -116,7 +121,7 @@ class LyxBuilder(JMSLabBuilder):
                 traceback = ex.output
                 raise_system_call_exception = True
 
-            self.cleanup()
+            self.cleanup_handout()
             if raise_system_call_exception:
                 self.raise_system_call_exception(traceback = traceback)
         else:
