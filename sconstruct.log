@@ -1,4 +1,4 @@
-*** New build: {2022-05-12 12:44:48} ***
+*** New build: {2022-05-12 12:56:45} ***
 scons: done reading SConscript files.
 scons: Building targets ...
 build_lyx(["output/talk/talk_slides.pdf", "output/talk/talk_slides_handout.pdf"], ["source/talk/talk_slides.lyx"])
