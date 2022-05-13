@@ -7,7 +7,7 @@ from .. import misc
 from .jmslab_builder import JMSLabBuilder
 
 
-def build_lyx(target, source, env):
+def build_lyx(target, source, env, handout = None):
     '''Compile a pdf from a LyX file
 
     This function is a SCons builder that compiles a .lyx file
@@ -28,7 +28,9 @@ def build_lyx(target, source, env):
         'valid_extensions': ['.lyx'],
         'exec_opts': '-E pdf2'
     }
+
     builder = LyxBuilder(target, source, env, **builder_attributes)
+    builder.check_handout(handout)
     builder.execute_system_call(target)
     return None
 
@@ -36,6 +38,7 @@ def build_lyx(target, source, env):
 class LyxBuilder(JMSLabBuilder):
     '''
     '''
+
     def add_call_args(self):
         '''
         '''
@@ -46,37 +49,37 @@ class LyxBuilder(JMSLabBuilder):
         self.call_args = args
         return None
 
-    def check_handout(self, target):
-        
-        handout_ext  = '_handout.pdf'
-        handout_file = ''
-        
-        if bool(target):
-            targets = misc.make_list_if_string(target)
-            for file in targets:
-                file = str(file)
-                if file.lower().endswith(handout_ext):
-                    handout_file = file
-        else:
-            handout_file = ''
+    def check_handout(self, handout):
+        self.check_handout = handout
+        return self.check_handout
 
-        self.handout_file = handout_file
-        self.check_handout = bool(handout_file)
+    def get_target_name(self, target):
+
+        target_name = ''
+
+        if bool(target):
+            target      = misc.make_list_if_string(target)
+            target_file = os.path.split(str(target[0]))[1]
+            target_name = os.path.splitext(target_file)[0]
+        else:
+            target_name   = ''
+        self.target_name = target_name
         return None
 
     def create_handout(self, target):
         '''
         Converts notes to greyedout for export to handout
         '''
-        
-        self.check_handout(target)
-
         if self.check_handout:
-            source_name = os.path.splitext(self.handout_file)[0]
-            handout_doc_input  = source_name + '.lyx'
-            self.handout_doc_input = handout_doc_input
 
-            handout_doc_output = self.handout_file 
+            self.get_target_name(target)
+            
+            handout_dir  = 'temp/'
+            handout_ext  = '_handout'
+
+            handout_doc_input  = handout_dir + self.target_name + handout_ext +'.lyx'
+            self.handout_doc_input = handout_doc_input
+            handout_doc_output = handout_dir + self.target_name + handout_ext +'.pdf'
 
             shutil.copy2(self.source_file, handout_doc_input)
             beamer = False
@@ -96,6 +99,7 @@ class LyxBuilder(JMSLabBuilder):
             self.handout_args = args
 
             self.handout_call = '%s %s %s' % (self.executable, self.exec_opts, self.handout_args)
+
         else:
             pass
 
@@ -103,16 +107,16 @@ class LyxBuilder(JMSLabBuilder):
 
     def cleanup_handout(self):
         os.remove(self.handout_doc_input)
+        return None
 
     def do_call(self, target):
         '''
         Acutally execute the system call attribute.
         Raise an informative exception on error.
         '''
-
-        self.create_handout(target)
-
         if self.check_handout:
+            self.create_handout(target)
+
             traceback = ''
             raise_system_call_exception = False
             try:
