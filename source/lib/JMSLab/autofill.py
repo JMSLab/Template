@@ -53,3 +53,4 @@ def GenerateAutofillMacros(autofill_lists, autofill_formats = "{:.2f}", autofill
         
     autofill_file.write(output_macros)
     autofill_file.close()
+
