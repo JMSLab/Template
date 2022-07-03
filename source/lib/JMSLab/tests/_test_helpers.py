@@ -119,7 +119,7 @@ def command_match(command, language, which = None):
         match = re.match(r'\s*'
                          rf'(?P<executable>\w+|{default})'
                          r'\s+'
-                         r'(?P<target>-\w+\s+\S+)?'
+                         r'(?P<target>[\.\/\\\w]+)?'
                          r'\s*'
                          r'(?P<log_redirect>\>\s*[\.\/\\\w]+\.\w+)?',
                          command)
