@@ -3,4 +3,4 @@ Import('*')
 target = ['#output/talk/talk_slides.pdf']
 source = ['#source/talk/talk_slides.lyx']
 
-env.Lyx(target, source)
+env.Lyx(target, source, HANDOUT_BOOL = 'False')
