@@ -145,7 +145,7 @@ class LyxBuilder(JMSLabBuilder):
         Raise an informative exception on error.
         '''        
         
-        if env['HANDOUT_BOOL'] == 'True':
+        if bool(env['HANDOUT_BOOL']):
             self.create_handout2(target, env)
             traceback = ''
             raise_system_call_exception = False
