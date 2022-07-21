@@ -45,59 +45,74 @@ class LyxBuilder(JMSLabBuilder):
                                   os.path.normpath(self.log_file))
         self.call_args = args
         return None
-    
 
     def cleanup_handout(self):
         os.remove(self.handout_doc_input)
         
-
-    def create_handout(self, target, env):
-        
-        target_name = ''
-
-        if bool(target):
-            target      = misc.make_list_if_string(target)
-            target_file = os.path.split(str(target[0]))[1]
-            target_name = os.path.splitext(target_file)[0]
-        else:
-            target_name   = ''
-        self.target_name = target_name
-
-        handout_dir  = 'temp/'
+    def check_handout(self, target, env):
         handout_ext  = '_handout'
-        
-        handout_doc_input  = handout_dir + self.target_name + handout_ext +'.lyx'
-        self.handout_doc_input = handout_doc_input
-        handout_doc_output = handout_dir + self.target_name + handout_ext +'.pdf'
+        handout_file = ''
+        if bool(target):
+            file = str((misc.make_list_if_string(target))[0])
+            handout_file = file[:-4] + '_handout' + file[-4:]
+        else:
+            handout_file = ''
 
-        shutil.copy2(self.source_file, handout_doc_input)
-        beamer = False
-        for line in fileinput.input(handout_doc_input, inplace = True):
-            if r'\textclass beamer' in line:
-                beamer = True
-            elif r'\begin_inset Note Note' in line and beamer:
-                line = line.replace('Note Note', 'Note Greyedout')
-            print(line)
-        
-        args = '%s %s %s > %s' % (handout_doc_output,
-                                handout_doc_input,
-                                self.cl_arg,
-                                os.path.normpath(self.log_file))
-        
-        self.handout_args = args
-        self.handout_call = '%s %s %s' % (self.executable, self.exec_opts, self.handout_args)
-    
+        self.handout_file = handout_file
+        self.check_handout = bool(env['HANDOUT_BOOL'])
         return None
 
+    def create_handout(self, target, env):
+        '''
+        Converts notes to greyedout for export to handout
+        '''
+        
+        self.check_handout(target, env)
+
+        if self.check_handout:
+            source_name = os.path.splitext(self.handout_file)[0]
+            handout_doc_input  = source_name + '.lyx'
+            self.handout_doc_input = handout_doc_input
+
+            handout_doc_output = self.handout_file 
+
+            shutil.copy2(self.source_file, handout_doc_input)
+            beamer = False
+            for line in fileinput.input(handout_doc_input, inplace = True):
+                if r'\textclass beamer' in line:
+                    beamer = True
+                elif r'\begin_inset Note Note' in line and beamer:
+                    line = line.replace('Note Note', 'Note Greyedout')
+                print(line)
+            
+            args = '%s %s %s > %s' % (handout_doc_output,
+                                    handout_doc_input,
+                                    self.cl_arg,
+                                    os.path.normpath(self.log_file))
+            
+            
+            self.handout_args = args
+
+            self.handout_call = '%s %s %s' % (self.executable, self.exec_opts, self.handout_args)
+        else:
+            pass
+
+        return None
+
+    def cleanup_handout(self):
+        handout_dir = 'temp/'
+        os.remove(self.handout_doc_input)
+        shutil.move(self.handout_file, handout_dir + os.path.split(self.handout_file)[1])
 
     def do_call(self, target, env):
         '''
         Acutally execute the system call attribute.
         Raise an informative exception on error.
-        '''        
-        
-        if bool(env['HANDOUT_BOOL']):
-            self.create_handout(target, env)
+        '''
+
+        self.create_handout(target, env)
+
+        if self.check_handout:
             traceback = ''
             raise_system_call_exception = False
             try:
@@ -111,7 +126,7 @@ class LyxBuilder(JMSLabBuilder):
                 self.raise_system_call_exception(traceback = traceback)
         else:
             pass
-        
+
         traceback = ''
         raise_system_call_exception = False
         try:
