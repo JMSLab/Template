@@ -8,7 +8,7 @@ sys.path.append('config')
 sys.dont_write_bytecode = True # Don't write .pyc files
 
 vars = Variables()
-vars.Add('HANDOUT_BOOL', 'Set to 1 for handout functionality', 0)
+vars.Add(BoolVariable('HANDOUT_BOOL', 'Set to 1 for handout functionality', 0))
 env = Environment(variables = vars,
                   ENV = {'PATH' : os.environ['PATH']},
                   IMPLICIT_COMMAND_DEPENDENCIES = 0,
