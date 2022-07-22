@@ -48,10 +48,9 @@ class LyxBuilder(JMSLabBuilder):
         '''
         Converts notes to greyedout for export to handout
         '''
-        file_root, file_ext = os.path.splitext(str(self.pdf_target))
         
-        self.handout_doc_output =  file_root + env['HANDOUT_SFIX'] + file_ext
-        self.handout_doc_input  = file_root + env['HANDOUT_SFIX'] + '.lyx'
+        self.handout_doc_output = str(self.pdf_target)
+        self.handout_doc_input  = os.path.splitext(str(self.pdf_target))[0] + '.lyx'
 
         shutil.copy2(self.source_file, self.handout_doc_input)
         beamer = False
@@ -75,11 +74,9 @@ class LyxBuilder(JMSLabBuilder):
 
     def cleanup_handout(self):
         
-        handout_target_dest = [x for x in self.handout_target if self.handout_doc_output != str(x)]
-        for x in handout_target_dest:
+        for x in self.handout_target_list:
             shutil.copy2(self.handout_doc_output, str(x))
-        if set(self.handout_target) == set(handout_target_dest):
-            os.remove(self.handout_doc_output)
+        os.remove(self.handout_doc_output)
         os.remove(self.handout_doc_input)
         return None
 
@@ -89,39 +86,47 @@ class LyxBuilder(JMSLabBuilder):
         Acutally execute the system call attribute.
         Raise an informative exception on error.
         '''
-        #'''
-        if bool(env['HANDOUT_SFIX']):
+        #'''        
+        if target[0] in target[1:]:
+            raise Exception('bad!')
             
-            pdf_target = misc.make_list_if_string(target)[0]
-            pdf_target_tail = os.path.split(str(pdf_target))[1]
-            pdf_target_tail_root, pdf_target_tail_ext = os.path.splitext(pdf_target_tail)
-            handout_target_check = pdf_target_tail_root + env['HANDOUT_SFIX'] + pdf_target_tail_ext
-            
-            handout_target = [x for x in misc.make_list_if_string(target) 
-                              if os.path.split(str(x))[1] == handout_target_check]
-            
-            if bool(handout_target):
-                self.pdf_target, self.handout_target = pdf_target, handout_target
-                self.create_handout(target, env)
-                
-                traceback = ''
-                raise_system_call_exception = False
-                try:
-                    subprocess.check_output(self.handout_call, shell = True, stderr = subprocess.STDOUT)
-                except subprocess.CalledProcessError as ex:
-                    traceback = ex.output
-                    raise_system_call_exception = True
-                    
-                self.cleanup_handout()
-                if raise_system_call_exception:
-                    self.raise_system_call_exception(traceback = traceback)
-                
+        if len(target) == 1:
+             if bool(env['HANDOUT_SFIX']):
+                 raise Exception('error')
+             else:
+                 pass
+        
+        elif len(target) > 1:
+            if bool(env['HANDOUT_SFIX']):
+                handout_target_list = [x for x in misc.make_list_if_string(target)[1:] 
+                                  if str(x).endswith(env['HANDOUT_SFIX'] + '.pdf')]
+                if bool(handout_target_list):
+                    pass
+                else:
+                    raise Exception('error')
             else:
-                raise Exception('The handout_target is empty')
+                handout_target_list = [misc.make_list_if_string(target)[1]]
             
+            self.pdf_target = misc.make_list_if_string(target)[0]
+            self.handout_target_list = handout_target_list
+            self.create_handout(target, env)
+            
+            traceback = ''
+            raise_system_call_exception = False
+            try:
+                subprocess.check_output(self.handout_call, shell = True, stderr = subprocess.STDOUT)
+            except subprocess.CalledProcessError as ex:
+                traceback = ex.output
+                raise_system_call_exception = True
+                
+            self.cleanup_handout()
+            if raise_system_call_exception:
+                self.raise_system_call_exception(traceback = traceback)
+        
         else:
-            pass
-
+            raise Exception('error')
+        
+    
         traceback = ''
         raise_system_call_exception = False
         try:
