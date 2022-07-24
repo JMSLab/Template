@@ -112,7 +112,7 @@ class LyxBuilder(JMSLabBuilder):
 
             handout_flag = env['HANDOUT_SFIX'] + '.pdf'
             handout_target_list = [x for x in target_list[1:]
-                                   if str(x).endswith(handout_flag)]
+                                   if str(x).lower().endswith(handout_flag.lower())]
                 
             if not bool(handout_target_list):
                 raise ValueError('Error: no valid targets for handout.')
