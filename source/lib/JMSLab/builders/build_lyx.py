@@ -44,77 +44,89 @@ class LyxBuilder(JMSLabBuilder):
         return None
 
 
-    def create_handout(self, target, env):
+    def create_handout(self):
         '''
-        Converts notes to greyedout for export to handout
+        If beamer document class, convert Lyx notes to greyedout.
         '''
         
-        self.handout_doc_output = str(self.pdf_target)
-        self.handout_doc_input  = os.path.splitext(str(self.pdf_target))[0] + '.lyx'
+        self.handout_out = str(self.main_target)
+        self.handout_in  = os.path.splitext(self.handout_out)[0] + '.lyx'
 
-        shutil.copy2(self.source_file, self.handout_doc_input)
+        shutil.copy2(self.source_file, self.handout_in)
         beamer = False
-        for line in fileinput.input(self.handout_doc_input, inplace = True):
+        for line in fileinput.input(self.handout_in, inplace = True):
             if r'\textclass beamer' in line:
                 beamer = True
             elif r'\begin_inset Note Note' in line and beamer:
                 line = line.replace('Note Note', 'Note Greyedout')
-            print(line)
+            print(line, end='')
         
-        args = '%s %s %s > %s' % (self.handout_doc_output,
-                                self.handout_doc_input,
+        args = '%s %s %s > %s' % (self.handout_out,
+                                self.handout_in,
                                 self.cl_arg,
                                 os.path.normpath(self.log_file))
         
         self.handout_args = args
-        self.handout_call = '%s %s %s' % (self.executable, self.exec_opts, self.handout_args)
+        self.handout_call = '%s %s %s' % (self.executable, 
+                                          self.exec_opts, 
+                                          self.handout_args)
 
         return None
 
 
     def cleanup_handout(self):
-        
+        '''
+        Copy handout pdf to desired locations.
+        Remove intermediate files.
+        '''
         for x in self.handout_target_list:
-            shutil.copy2(self.handout_doc_output, str(x))
-        os.remove(self.handout_doc_output)
-        os.remove(self.handout_doc_input)
+            shutil.copy2(self.handout_out, str(x))
+        os.remove(self.handout_out)
+        os.remove(self.handout_in)
         return None
 
 
     def do_call(self, target, env):
         '''
-        Acutally execute the system call attribute.
-        Raise an informative exception on error.
-        '''
-        #'''        
-        if target[0] in target[1:]:
-            raise Exception('bad!')
-            
-        if len(target) == 1:
-             if bool(env['HANDOUT_SFIX']):
-                 raise Exception('error')
-             else:
-                 pass
+        Generate handout pdf if handout path exists in target and handout path
+        has the correct suffix and/or extension. Raise value error if intended 
+        behavior implied by target list contradicts behavior implied by 
+        HANDOUT_SFIX.
         
-        elif len(target) > 1:
-            if bool(env['HANDOUT_SFIX']):
-                handout_target_list = [x for x in misc.make_list_if_string(target)[1:] 
-                                  if str(x).endswith(env['HANDOUT_SFIX'] + '.pdf')]
-                if bool(handout_target_list):
-                    pass
-                else:
-                    raise Exception('error')
-            else:
-                handout_target_list = [misc.make_list_if_string(target)[1]]
+        Always generate main pdf.        
+        '''
+        
+        target_list = misc.make_list_if_string(target)      
+        
+        if target_list[0] in target_list[1:]:
+            raise ValueError(
+                'Error: main pdf path cannot be the same as handout pdf path')
             
-            self.pdf_target = misc.make_list_if_string(target)[0]
+            
+        if len(target_list) == 1:
+             if bool(env['HANDOUT_SFIX']):
+                 raise ValueError(
+                     'Error: HANDOUT_SFIX non-empty but no handout pdf path')
+        
+        elif len(target_list) > 1:
+
+            handout_flag = env['HANDOUT_SFIX'] + '.pdf'
+            handout_target_list = [x for x in target_list[1:]
+                                   if str(x).endswith(handout_flag)]
+                
+            if not bool(handout_target_list):
+                raise ValueError('Error: no valid targets for handout.')
+            
+            self.main_target = target_list[0]
             self.handout_target_list = handout_target_list
-            self.create_handout(target, env)
-            
+            self.create_handout()
+
             traceback = ''
             raise_system_call_exception = False
             try:
-                subprocess.check_output(self.handout_call, shell = True, stderr = subprocess.STDOUT)
+                subprocess.check_output(self.handout_call, 
+                                        shell = True, 
+                                        stderr = subprocess.STDOUT)
             except subprocess.CalledProcessError as ex:
                 traceback = ex.output
                 raise_system_call_exception = True
@@ -122,15 +134,16 @@ class LyxBuilder(JMSLabBuilder):
             self.cleanup_handout()
             if raise_system_call_exception:
                 self.raise_system_call_exception(traceback = traceback)
-        
         else:
-            raise Exception('error')
+            pass
         
-    
+
         traceback = ''
         raise_system_call_exception = False
         try:
-            subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
+            subprocess.check_output(self.system_call, 
+                                    shell = True, 
+                                    stderr = subprocess.STDOUT)
         except subprocess.CalledProcessError as ex:
             traceback = ex.output
             raise_system_call_exception = True
