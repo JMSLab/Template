@@ -166,5 +166,5 @@ class LyxBuilder(JMSLabBuilder):
         self.do_call(target, env)
         self.check_targets()
         self.timestamp_log(misc.current_time())
-        return None
-    
+        return None    
+
