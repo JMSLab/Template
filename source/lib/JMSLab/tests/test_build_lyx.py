@@ -139,7 +139,7 @@ class TestBuildLyX(unittest.TestCase):
                       'build/path_to_handout__.pdf']
             source = ['input/lyx_test_file.lyx']
             
-            helpers.standard_test(self, build_lyx, 'lyx',
+            helpers.lyx_standard_test(self, build_lyx, 'lyx',
                                   system_mock = mock_check_output,
                                   target = target,
                                   source = source,

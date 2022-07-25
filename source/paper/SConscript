@@ -1,8 +1,8 @@
 Import('*')
 
-target = ['#output/paper/Template.pdf', "#temp/Template_.pdf"]
+target = ['#output/paper/Template.pdf']
 source = ['#source/paper/Template.lyx',
           '#output/tables/top_gdp.lyx',
           '#source/figures/gdp_educ.lyx']
 
-env.Lyx(target, source, HANDOUT_SFIX='_')
+env.Lyx(target, source)
