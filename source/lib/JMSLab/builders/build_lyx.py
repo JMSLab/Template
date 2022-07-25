@@ -167,3 +167,4 @@ class LyxBuilder(JMSLabBuilder):
         self.check_targets()
         self.timestamp_log(misc.current_time())
         return None
+    
