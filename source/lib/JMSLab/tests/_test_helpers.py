@@ -181,7 +181,7 @@ def standard_test(test_object, builder,
         system_mock.assert_called_once()
         system_mock.reset_mock()
         
-def lyx_standard_test(test_object, builder,
+def handout_standard_test(test_object, builder,
                   extension   = None,
                   system_mock = None,
                   source      = None,
@@ -202,6 +202,7 @@ def lyx_standard_test(test_object, builder,
     check_log(test_object, log_path)
 
     if system_mock:
+        assert system_mock.call_count == 2
         system_mock.reset_mock()
 
 

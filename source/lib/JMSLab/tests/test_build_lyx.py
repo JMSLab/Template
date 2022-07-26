@@ -128,7 +128,7 @@ class TestBuildLyX(unittest.TestCase):
                       
     
     @subprocess_patch
-    def test_handout(self, mock_check_output):
+    def test_handout_option(self, mock_check_output):
                 
         with shutil_patch as mock_shutil:
             mock_shutil.side_effect = fx.shutil_copy2_effect
@@ -139,7 +139,7 @@ class TestBuildLyX(unittest.TestCase):
                       'build/path_to_handout__.pdf']
             source = ['input/lyx_test_file.lyx']
             
-            helpers.lyx_standard_test(self, build_lyx, 'lyx',
+            helpers.handout_standard_test(self, build_lyx, 'lyx',
                                   system_mock = mock_check_output,
                                   target = target,
                                   source = source,
@@ -147,6 +147,24 @@ class TestBuildLyX(unittest.TestCase):
             self.assertTrue(os.path.isfile(target[0]))
             self.assertTrue(os.path.isfile(target[1]))
             self.assertTrue(os.path.isfile(target[2]))
+            
+    @subprocess_patch
+    def test_handout_default(self, mock_check_output):
+                
+        with shutil_patch as mock_shutil:
+            mock_shutil.side_effect = fx.shutil_copy2_effect
+            mock_check_output.side_effect = fx.lyx_side_effect
+            
+            target = ['build/path_to_clean.pdf', 
+                      'build/path_to_handout_.pdf']
+            source = ['input/lyx_test_file.lyx']
+            
+            helpers.handout_standard_test(self, build_lyx, 'lyx',
+                                  system_mock = mock_check_output,
+                                  target = target,
+                                  source = source)
+            self.assertTrue(os.path.isfile(target[0]))
+            self.assertTrue(os.path.isfile(target[1]))
             
             
     def tearDown(self):
