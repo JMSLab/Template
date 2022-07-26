@@ -7,10 +7,7 @@ import source.lib.JMSLab as jms
 sys.path.append('config')
 sys.dont_write_bytecode = True # Don't write .pyc files
 
-vars = Variables()
-vars.Add('HANDOUT_SFIX', 'Set to string to create handout', '')
-env = Environment(variables = vars,
-                  ENV = {'PATH' : os.environ['PATH']},
+env = Environment(ENV = {'PATH' : os.environ['PATH']},
                   IMPLICIT_COMMAND_DEPENDENCIES = 0,
                   BUILDERS = {'R'         : Builder(action = jms.build_r),
                               'Tablefill' : Builder(action = jms.build_tables),

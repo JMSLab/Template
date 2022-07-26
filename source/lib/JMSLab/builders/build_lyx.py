@@ -96,7 +96,8 @@ class LyxBuilder(JMSLabBuilder):
         Always generate main pdf.        
         '''
         
-        target_list = misc.make_list_if_string(target)      
+        target_list = misc.make_list_if_string(target)
+        handout_sfix = '' if 'HANDOUT_SFIX' not in env else env['HANDOUT_SFIX']
         
         if target_list[0] in target_list[1:]:
             raise ValueError(
@@ -104,13 +105,13 @@ class LyxBuilder(JMSLabBuilder):
             
             
         if len(target_list) == 1:
-             if bool(env['HANDOUT_SFIX']):
+             if bool(handout_sfix):
                  raise ValueError(
                      'Error: HANDOUT_SFIX non-empty but no handout pdf path')
         
         elif len(target_list) > 1:
 
-            handout_flag = env['HANDOUT_SFIX'] + '.pdf'
+            handout_flag = handout_sfix + '.pdf'
             handout_target_list = [x for x in target_list[1:]
                                    if str(x).lower().endswith(handout_flag.lower())]
                 
