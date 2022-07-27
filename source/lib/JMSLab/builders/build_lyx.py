@@ -101,7 +101,7 @@ class LyxBuilder(JMSLabBuilder):
         
         if target_list[0] in target_list[1:]:
             raise ValueError(
-                'Error: main pdf path cannot be the same as handout pdf path')
+                'Error: Duplicate targets')
             
             
         if len(target_list) == 1:
