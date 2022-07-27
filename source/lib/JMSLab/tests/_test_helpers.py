@@ -180,30 +180,6 @@ def standard_test(test_object, builder,
     if system_mock:
         system_mock.assert_called_once()
         system_mock.reset_mock()
-        
-def handout_standard_test(test_object, builder,
-                  extension   = None,
-                  system_mock = None,
-                  source      = None,
-                  target      = 'test_output.txt',
-                  env         = {}):
-    '''Test that builders run without errors and create logs properly.'''
-    if not source:
-        source = 'input/test_script.%s' % extension
-
-    builder(source = source, target = target, env = env)
-
-    if isinstance(target, str):
-        log_directory = misc.get_directory(target)
-    else:
-        log_directory = misc.get_directory(target[0])
-
-    log_path = os.path.join(log_directory, 'sconscript.log')
-    check_log(test_object, log_path)
-
-    if system_mock:
-        assert system_mock.call_count == 2
-        system_mock.reset_mock()
 
 
 def input_check(test_object, builder, extension,
