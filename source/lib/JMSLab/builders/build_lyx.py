@@ -107,7 +107,7 @@ class LyxBuilder(JMSLabBuilder):
         if len(target_list) == 1:
              if bool(handout_sfix):
                  raise ValueError(
-                     'Error: HANDOUT_SFIX non-empty but no handout pdf path')
+                     'Error: HANDOUT_SFIX non-empty but only one target specified.')
         
         elif len(target_list) > 1:
 
