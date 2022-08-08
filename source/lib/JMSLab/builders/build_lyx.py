@@ -116,7 +116,7 @@ class LyxBuilder(JMSLabBuilder):
                                    if str(x).lower().endswith(handout_flag.lower())]
                 
             if not bool(handout_target_list):
-                raise ValueError('Error: no valid targets for handout.')
+                raise ValueError('Error: No valid targets contain handout suffix.')
             
             self.main_target = target_list[0]
             self.handout_target_list = handout_target_list
