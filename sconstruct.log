@@ -1,5 +1,6 @@
-*** New build: {2021-06-11 13:09:24} ***
+*** New build: {2022-05-13 14:11:12} ***
 scons: done reading SConscript files.
 scons: Building targets ...
-build_python(["output/derived/wb_clean/gdp_education.csv"], ["source/derived/wb_clean/build.py", "datastore/raw/world_bank/orig/API_NY.GDP.PCAP.CD_DS2_en_csv_v2_1740213.csv", "datastore/raw/world_bank/orig/API_SE.XPD.TOTL.GD.ZS_DS2_en_csv_v2_1740282.csv"])
+build_lyx(["output/paper/Template.pdf"], ["source/paper/Template.lyx", "output/tables/top_gdp.lyx", "source/figures/gdp_educ.lyx"])
+build_lyx(["output/talk/talk_slides.pdf"], ["source/talk/talk_slides.lyx"])
 scons: done building targets.
