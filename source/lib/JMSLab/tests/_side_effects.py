@@ -166,16 +166,26 @@ def lyx_side_effect(*args, **kwargs):
     # Mock a list of the files that LyX sees as existing
     # source_exists should be True only if the source script
     # specified in the system command belongs to existing_files.
-    existing_files = ['test_script.lyx', 'input/lyx_test_file.lyx']
+    existing_files = ['test_script.lyx', 'input/lyx_test_file.lyx', 'build/path_to_clean.lyx']
     source_exists  = os.path.abspath(source) in \
         map(os.path.abspath, existing_files)
 
     if is_lyx and option_type == '-E' and option_setting == 'pdf2' \
             and source_exists:
-
+                
         with open(target_file, 'wb') as out_file:
             out_file.write(b'Mock .pdf output')
-
+            
+            
+def shutil_copy2_effect(*args, **kwargs):
+    
+    existing_files = ['input/lyx_test_file.lyx', 'build/path_to_clean.pdf']
+    source_exists  = os.path.abspath(args[0]) in \
+        map(os.path.abspath, existing_files)
+    
+    if source_exists:
+        with open(args[1], 'wb') as out_file:
+            out_file.write(b'Mock copy')
 
 def latex_side_effect(*args, **kwargs):
     '''

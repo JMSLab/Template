@@ -1,6 +1,6 @@
-*** New build: {2022-04-13 14:02:27} ***
+*** New build: {2022-05-13 14:11:12} ***
 scons: done reading SConscript files.
 scons: Building targets ...
-build_lyx(["output/paper/TemplateLyx.pdf"], ["source/paper/Template.lyx", "output/tables/top_gdp.lyx", "source/figures/gdp_educ.lyx", "source/paper/References.bib"])
-build_latex(["output/paper/TemplateTex.pdf"], ["source/paper/Template.tex", "output/tables/top_gdp.tex", "source/figures/gdp_educ.tex", "source/paper/References.bib"])
+build_lyx(["output/paper/Template.pdf"], ["source/paper/Template.lyx", "output/tables/top_gdp.lyx", "source/figures/gdp_educ.lyx"])
+build_lyx(["output/talk/talk_slides.pdf"], ["source/talk/talk_slides.lyx"])
 scons: done building targets.
