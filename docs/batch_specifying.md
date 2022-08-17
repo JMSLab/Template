@@ -37,7 +37,7 @@ for country in ['FR', 'DE', 'TR']:
         ]
 ```
 
-2. list_files.py
+2. `list_files.py`
 
 Alternatively, you can use `source/lib/list_files.py`.
 
