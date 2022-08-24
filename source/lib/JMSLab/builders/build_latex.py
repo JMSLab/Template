@@ -70,7 +70,7 @@ class LatexBuilder(JMSLabBuilder):
                     bib_file = source_file
         else:
             bib_file = ''  
-        self.check_bib = bool(bib_file)
+        self.checked_bib = bool(bib_file)
         return None
 
     def cleanup(self):
@@ -91,7 +91,7 @@ class LatexBuilder(JMSLabBuilder):
         
         self.check_bib(source)
 
-        if self.check_bib:
+        if self.checked_bib:
 
             self.bibtex_executable  = get_executable('bibtex')
             

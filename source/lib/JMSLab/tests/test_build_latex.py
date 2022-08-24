@@ -11,7 +11,7 @@ import os
 from . import _test_helpers as helpers
 from . import _side_effects as fx
 
-from ..builders.build_latex import build_latex
+from ..builders.build_latex import build_latex, LatexBuilder
 from .._exception_classes import ExecCallError
 
 # Define path to the builder for use in patching
@@ -39,8 +39,10 @@ class TestBuildLateX(unittest.TestCase):
         target = 'build/latex.pdf'
         helpers.standard_test(self, build_latex, 'tex',
                               system_mock = mock_check_output,
-                              source = ['test_script.tex'],
-                              target = target)
+                              source      = ['test_script.tex'],
+                              target      = target,
+                              nsyscalls   = 3)
+
         self.assertTrue(os.path.isfile(target))
 
     @subprocess_patch
@@ -53,9 +55,35 @@ class TestBuildLateX(unittest.TestCase):
         target = ['build/latex.pdf']
         helpers.standard_test(self, build_latex, 'tex',
                               system_mock = mock_check_output,
-                              source = ['test_script.tex'],
-                              target = target)
+                              source      = ['test_script.tex'],
+                              target      = target,
+                              nsyscalls   = 3)
         self.assertTrue(os.path.isfile(target[0]))
+
+    @subprocess_patch
+    def test_bibtex_basic(self, mock_check_output):
+        '''
+        Check that build_latex() works when its source and target
+        arguments are lists that include a .bib file and output
+        '''
+        mock_check_output.side_effect = fx.latex_side_effect
+        target = ['build/latex.pdf', 'build/latex.log', 'build/latex.blg']
+        source = ['test_script.tex', 'test_ref.bib']
+
+        # Make sure check_bib works as expected
+        builder_attributes = {'name': 'LaTeX', 'valid_extensions': ['.tex']}
+        test_check_bib = LatexBuilder(target, source, {}, **builder_attributes)
+        test_check_bib.check_bib(source)
+        self.assertTrue(test_check_bib.checked_bib)
+
+        helpers.standard_test(self, build_latex, 'tex',
+                              system_mock = mock_check_output,
+                              source      = source,
+                              target      = target,
+                              nsyscalls   = 4)
+
+        for file in target:
+            self.assertTrue(os.path.isfile(file))
 
     def test_bad_extension(self):
         '''Test that build_latex() recognises an improper file extension'''

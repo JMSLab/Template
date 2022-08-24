@@ -20,7 +20,7 @@ def make_r_side_effect(recognized = True):
         '''
         # Get and parse the command passed to os.system()
         command = args[0]
-        
+
         match   = helpers.command_match(command, 'R')
 
         executable = match.group('executable')
@@ -32,13 +32,13 @@ def make_r_side_effect(recognized = True):
             # R script's path after replacing .R (if present) with .log.
             source = match.group('source')
             log    = '%s.log' % re.sub(r'\.R', '', source)
-        
+
         found = find_executable(command, get_executable('r'), 'Rscript')
-        
+
         if executable == 'Rscript' or found and log and append == '2>&1':
             with open(log.replace('>', '').strip(), 'wb') as log_file:
                 log_file.write(b'Test log\n')
-        
+
         if re.search('R', command, flags = re.I) and not recognized:
             raise subprocess.CalledProcessError(1, command)
 
@@ -80,11 +80,11 @@ def make_matlab_side_effect(recognized = True):
             log_path = log_match.group(0)
             with open(log_path, 'wb') as log_file:
                 log_file.write(b'Test log')
-        
+
         found = find_executable(command, get_executable('matlab'), 'matlab')
         if found and not recognized:
             raise subprocess.CalledProcessError(1, command)
-        
+
         if log_match:
             with open('test_output.txt', 'wb') as target:
                 target.write(b'Test target')
@@ -103,10 +103,10 @@ def make_stata_side_effect(recognized = True):
     def stata_side_effect(*args, **kwargs):
         command = args[0]
         match   = helpers.command_match(command, 'stata')
-        
+
         script_name = match.group('source')
-        stata_log   = os.path.basename(script_name).replace('.do', '.log')            
-        
+        stata_log   = os.path.basename(script_name).replace('.do', '.log')
+
         with open(stata_log, 'wb') as logfile:
             logfile.write(b'Test Stata log.\n')
         with open('test_output.txt', 'wb') as target:
@@ -172,17 +172,17 @@ def lyx_side_effect(*args, **kwargs):
 
     if is_lyx and option_type == '-E' and option_setting == 'pdf2' \
             and source_exists:
-                
+
         with open(target_file, 'wb') as out_file:
             out_file.write(b'Mock .pdf output')
-            
-            
+
+
 def shutil_copy2_effect(*args, **kwargs):
-    
+
     existing_files = ['input/lyx_test_file.lyx', 'build/path_to_clean.pdf']
     source_exists  = os.path.abspath(args[0]) in \
         map(os.path.abspath, existing_files)
-    
+
     if source_exists:
         with open(args[1], 'wb') as out_file:
             out_file.write(b'Mock copy')
@@ -193,11 +193,11 @@ def latex_side_effect(*args, **kwargs):
     The mocked machine has pdflatex set up as a command-line executable
     and can export .tex files to .pdf files only using the "-jobname" option.
     '''
-    
+
     # Get and parse the command passed to os.system()
-    command = args[0]
-    
+    command  = args[0]
     bibmatch = helpers.command_match(command, 'bibtex')
+
     if bibmatch:
         bibtex_side_effect(*args, **kwargs)
         return
@@ -241,11 +241,28 @@ def latex_side_effect(*args, **kwargs):
             out_file.write(b'Mock .log output')
 
 def bibtex_side_effect(*args, **kwargs):
-    '''    
+    '''
     Mock subprocess.check_output for testing build_latex()
     When .bib file is used.
     '''
-    pass
+
+    command      = args[0]
+    match        = helpers.command_match(command, 'bibtex')
+    executable   = match.group('executable')
+    target       = match.group('target')
+    log_redirect = match.group('log_redirect')
+    found        = find_executable(command, get_executable('bibtex'), 'bibtex')
+    is_bibtex    = found or bool(re.search('^bibtex$', executable, flags=re.I))
+
+    # As long as output is redirected, create a log
+    if log_redirect:
+        log_path = re.sub(r'\>\s*', '', log_redirect)
+        with open(log_path, 'wb') as log_file:
+            log_file.write(b'Test log\n')
+
+    if is_bibtex:
+        with open('%s.blg' % target, 'wb') as out_file:
+            out_file.write(b'Mock .blg output')
 
 def find_executable(command, default, exe):
-    return command.strip().rfind(default) == 0 or re.search(rf'^{exe}', command, flags = re.I)
+    return command.strip().rfind(default) == 0 or re.search(rf'^{exe}', command, flags=re.I)
