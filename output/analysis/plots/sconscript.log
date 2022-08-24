@@ -1,8 +1,74 @@
-*** Builder log created: {2022-05-12 12:55:01}
-*** Builder log completed: {2022-05-12 12:55:24}
-[Warning: Function plot has the same name as a MATLAB builtin. We suggest you rename the function to avoid a potential name conflict.] 
-[> In path (line 109)
-In addpath (line 86)] 
+*** Builder log created: {2022-08-24 12:24:43}
+*** Builder log completed: {2022-08-24 12:25:07}
+[Warning: The following error was caught while executing 'onCleanup' class
+destructor:
+Error using rmappdata
+Value must be a handle.
+
+Error in matlab.graphics.internal.export.firePrintBehavior
+
+Error in onCleanup/delete (line 23)
+            obj.task();
+
+Error in matlab.graphics.internal.export.firePrintBehavior
+
+Error in fireprintbehavior (line 6)
+    matlab.graphics.internal.export.firePrintBehavior(pj, callbackName);
+
+Error in printjobContentChanges
+
+Error in alternatePrintPath
+
+Error in alternatePrintPath
+
+Error in alternatePrintPath
+
+Error in onCleanup/delete (line 23)
+            obj.task();
+
+Error in alternatePrintPath
+
+Error in print (line 83)
+pj = alternatePrintPath(pj);
+
+Error in source_22e781654456e44e4444292cbbc9af76c49d99f1 (line 12)
+print('-dpng','-painters', [outstub '.png']);] 
+[> In matlab.graphics.internal.export.firePrintBehavior
+In fireprintbehavior (line 6)
+In printjobContentChanges
+In alternatePrintPath
+In alternatePrintPath
+In alternatePrintPath
+In onCleanup/delete (line 23)
+In alternatePrintPath
+In print (line 83)
+In source_22e781654456e44e4444292cbbc9af76c49d99f1 (line 12)] 
+[Warning: The following error was caught while executing 'onCleanup' class
+destructor:
+Error using matlab.ui.Figure/get
+Invalid or deleted object.
+
+Error in matlab.graphics.internal.mlprintjob.usesJava
+
+Error in matlab.graphics.internal.mlprintjob/setPaintDisabled
+
+Error in alternatePrintPath
+
+Error in alternatePrintPath
+
+Error in onCleanup/delete (line 23)
+            obj.task();
+
+Error in alternatePrintPath
+
+Error in print (line 83)
+pj = alternatePrintPath(pj);
+
+Error in source_22e781654456e44e4444292cbbc9af76c49d99f1 (line 12)
+print('-dpng','-painters', [outstub '.png']);] 
+[> In alternatePrintPath
+In print (line 83)
+In source_22e781654456e44e4444292cbbc9af76c49d99f1 (line 12)] 
 
 rc =
 

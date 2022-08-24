@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2022.2.4)  13 APR 2022 14:02
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2022.2.4)  24 AUG 2022 12:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -171,10 +171,11 @@ File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
 \Gin@req@height=\dimen158
 \Gin@req@width=\dimen159
 )
-(/usr/local/texlive/2021/texmf-dist/tex/latex/setspace/setspace.sty
-Package: setspace 2011/12/19 v6.7a set line spacing
-)
-(/usr/local/texlive/2021/texmf-dist/tex/latex/natbib/natbib.sty
+(/Users/rcalvo/Library/texmf/tex/latex/setspace.sty
+Package: setspace 2000/12/01 6.7 Contributed and Supported LaTeX2e package
+
+Package: `setspace' 6.7 <2000/12/01>
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/natbib/natbib.sty
 Package: natbib 2010/09/13 8.31b (PWD, AO)
 \bibhang=\skip57
 \bibsep=\skip58
@@ -370,8 +371,8 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
  ) 
 Here is how much of TeX's memory you used:
  4446 strings out of 478994
- 61411 string characters out of 5858185
- 375659 words of memory out of 5000000
+ 61363 string characters out of 5858185
+ 375739 words of memory out of 5000000
  21816 multiletter control sequences out of 15000+600000
  439300 words of font info for 90 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -384,7 +385,7 @@ sr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr
 ocal/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/lo
 cal/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb></usr/loca
 l/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on output/paper/TemplateTex.pdf (3 pages, 106215 bytes).
+Output written on output/paper/TemplateTex.pdf (3 pages, 106211 bytes).
 PDF statistics:
  48 PDF objects out of 1000 (max. 8388607)
  33 compressed objects within 1 object stream

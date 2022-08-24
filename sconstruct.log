@@ -1,6 +1,5 @@
-*** New build: {2022-05-13 14:11:12} ***
+*** New build: {2022-08-24 12:27:48} ***
 scons: done reading SConscript files.
 scons: Building targets ...
-build_lyx(["output/paper/Template.pdf"], ["source/paper/Template.lyx", "output/tables/top_gdp.lyx", "source/figures/gdp_educ.lyx"])
-build_lyx(["output/talk/talk_slides.pdf"], ["source/talk/talk_slides.lyx"])
+scons: `.' is up to date.
 scons: done building targets.
