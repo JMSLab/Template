@@ -1,8 +1,0 @@
-Import('*')
-
-target = ['#issue42/TemplateTest.pdf']
-source = ['#issue42/TemplateTest.tex',
-          '#output/tables/top_gdp.tex',
-          '#source/figures/gdp_educ.tex']
-
-env.Latex(target, source)
