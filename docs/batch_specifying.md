@@ -12,7 +12,7 @@ output files have the form `countrycode_year.png` and `countrycode_year.eps`.
 
 ### Batch-specifying sources
 
-For source files, we suggest using Glob(), as in:
+For source files, we suggest using `Glob()`, as in:
 
 ```
 source = ['#source/analysis/plots/inflation_plots.R',          
@@ -37,7 +37,7 @@ for country in ['FR', 'DE', 'TR']:
         ]
 ```
 
-2. list_files.py
+2. `list_files.py`
 
 Alternatively, you can use `source/lib/list_files.py`.
 
