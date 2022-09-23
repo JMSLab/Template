@@ -19,10 +19,13 @@
 *.out
 *.svn
 *.m~
+*.bbl
+*.blg
 
 # git-lfs files cannot be included in a template repository
 output/analysis/plots/gdp_educ.png
-output/paper/Template.pdf
+output/paper/TemplateLyx.pdf
+output/paper/TemplateTex.pdf
 output/talk/TemplateSlides.pdf
 
 

@@ -113,6 +113,17 @@ def command_match(command, language, which = None):
                          r'(?P<log_redirect>\>\s*[\.\/\\\w]+\.\w+)?',
                          command)
 
+    elif language in ['bibtex']:
+        # e.g. "bibtex target_file > sconscript.log"
+        default = re.escape(get_executable('bibtex'))
+        match = re.match(r'\s*'
+                         rf'(?P<executable>\w+|{default})'
+                         r'\s+'
+                         r'(?P<target>[\.\/\\\w]+)?'
+                         r'\s*'
+                         r'(?P<log_redirect>\>\s*[\.\/\\\w]+\.\w+)?',
+                         command)
+
     if which:
         return match.group(which)
     else:
@@ -162,7 +173,8 @@ def standard_test(test_object, builder,
                   system_mock = None,
                   source      = None,
                   target      = 'test_output.txt',
-                  env         = {}):
+                  env         = {},
+                  nsyscalls   = 1):
     '''Test that builders run without errors and create logs properly.'''
     if not source:
         source = 'input/test_script.%s' % extension
@@ -178,8 +190,8 @@ def standard_test(test_object, builder,
     check_log(test_object, log_path)
 
     if system_mock:
-        system_mock.assert_called_once()
-        system_mock.reset_mock()
+        test_object.assertEqual(system_mock.call_count, nsyscalls)
+        system_mock.reset_mock() 
 
 
 def input_check(test_object, builder, extension,

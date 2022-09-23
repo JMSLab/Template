@@ -1,4 +1,5 @@
 latex:     pdflatex
+bibtex:    bibtex
 lyx:       lyx
 python:    python
 r:         Rscript
