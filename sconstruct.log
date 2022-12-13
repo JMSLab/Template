@@ -1,5 +1,5 @@
-*** New build: {2022-12-10 22:33:44} ***
+*** New build: {2022-12-13 10:29:29} ***
 scons: done reading SConscript files.
 scons: Building targets ...
-build_lyx(["output/talk/TemplateSlides.pdf", "temp/TemplateHandout.pdf"], ["source/talk/TemplateSlides.lyx"])
+build_lyx(["output/talk/TemplateSlides.pdf", "temp/Template.handout.pdf"], ["source/talk/TemplateSlides.lyx"])
 scons: done building targets.

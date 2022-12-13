@@ -50,7 +50,7 @@ class LyxBuilder(JMSLabBuilder):
         '''
         
         self.handout_out = str(self.source_file)
-        self.handout_in  = os.path.splitext(self.handout_out)[0] + '_temp.lyx'
+        self.handout_in  = os.path.splitext(self.handout_out)[0] + '.handout.lyx'
 
         shutil.copy2(self.source_file, self.handout_in)
         beamer = False
