@@ -49,8 +49,8 @@ class LyxBuilder(JMSLabBuilder):
         If beamer document class, convert Lyx notes to greyedout.
         '''
         
-        self.handout_out = str(self.source_file)
-        self.handout_in  = os.path.splitext(self.handout_out)[0] + '.handout.lyx'
+        self.handout_out = str(self.main_target)
+        self.handout_in  = os.path.splitext(self.source_file)[0] + '.handout.lyx' 
 
         shutil.copy2(self.source_file, self.handout_in)
         beamer = False
@@ -81,7 +81,6 @@ class LyxBuilder(JMSLabBuilder):
         '''
         for x in self.handout_target_list:
             shutil.copy2(self.handout_out, str(x))
-        os.remove(self.handout_out)
         os.remove(self.handout_in)
         return None
 
