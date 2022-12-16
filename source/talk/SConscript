@@ -1,6 +1,6 @@
 Import('*')
 
-target = ['#output/talk/TemplateSlides.pdf', '#temp/TemplateHandout.pdf']
+target = ['#output/talk/TemplateSlides.pdf', '#temp/Template.handout.pdf']
 source = ['#source/talk/TemplateSlides.lyx']
 
 env.Lyx(target, source)
