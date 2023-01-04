@@ -3,9 +3,9 @@ Import('*')
 target = ['#source/figures/gdp_educ.lyx']
 source = ['#output/analysis/plots/gdp_educ.eps']
 
-env.Lyx(target, source)
+env.Dependency(target, source)
 
 target = ['#source/figures/gdp_educ.tex']
 source = ['#output/analysis/plots/gdp_educ.eps']
 
-env.Latex(target, source)
+env.Dependency(target, source)
