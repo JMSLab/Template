@@ -1,13 +1,11 @@
-import os
-
-env = Environment(ENV = {'PATH' : os.environ['PATH']})
+Import('*')
 
 target = ['#source/figures/gdp_educ.lyx']
 source = ['#output/analysis/plots/gdp_educ.eps']
 
-env.Dependency(target, source)
+env.Depends(target = target, dependency = source)
 
 target = ['#source/figures/gdp_educ.tex']
 source = ['#output/analysis/plots/gdp_educ.eps']
 
-env.Dependency(target, source)
+env.Depends(target = target, dependency = source)
