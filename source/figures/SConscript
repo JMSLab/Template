@@ -1,4 +1,6 @@
-Import('*')
+import os
+
+env = Environment(ENV = {'PATH' : os.environ['PATH']})
 
 target = ['#source/figures/gdp_educ.lyx']
 source = ['#output/analysis/plots/gdp_educ.eps']
