@@ -6,13 +6,7 @@ source = ['#source/derived/wb_clean/build.py',
           '#datastore/raw/world_bank/orig/API_SE.XPD.TOTL.GD.ZS_DS2_en_csv_v2_1740282.csv']
 env.Python(target, source)
 
-# Second target to waste time
-target = ['#output/derived/wb_clean/wasteful_data.csv']
-source = ['#source/derived/wb_clean/timewaster.py']
-env.Python(target, source)
-
 target = ['#output/derived/wb_clean/gdp_education_logs.csv']
 source = ['#source/derived/wb_clean/takelogs.do',
-          '#output/derived/wb_clean/gdp_education.csv',
-          '#output/derived/wb_clean/wasteful_data.csv']         # A waste of space
+          '#output/derived/wb_clean/gdp_education.csv']
 env.Stata(target, source)

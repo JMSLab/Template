@@ -1,11 +1,8 @@
 import os
 import pandas as pd
-from time import sleep # To waste time
+
 
 def Main():
-    # Go to sleep for 30 seconds
-    sleep(30)
-    
     raw_dir = "datastore/raw/world_bank/orig"
     out_dir = "output/derived/wb_clean"
 
@@ -33,8 +30,6 @@ def PrepareData(infolder):
 
     return gdp_and_educ
 
-def waste_time():
-    pass
 
 if __name__ == "__main__":
     Main()
