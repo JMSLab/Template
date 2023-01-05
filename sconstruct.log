@@ -1,5 +1,145 @@
-*** New build: {2022-12-14 16:43:47} ***
+*** New build: {2023-01-03 16:13:52} ***
 scons: done reading SConscript files.
 scons: Building targets ...
+build_python(["output/derived/wb_clean/gdp_education.csv"], ["source/derived/wb_clean/build.py", "datastore/raw/world_bank/orig/API_NY.GDP.PCAP.CD_DS2_en_csv_v2_1740213.csv", "datastore/raw/world_bank/orig/API_SE.XPD.TOTL.GD.ZS_DS2_en_csv_v2_1740282.csv"])
+build_python(["output/derived/wb_clean/wasteful_data.csv"], ["source/derived/wb_clean/timewaster.py"])
+build_stata(["output/derived/wb_clean/gdp_education_logs.csv"], ["source/derived/wb_clean/takelogs.do", "output/derived/wb_clean/gdp_education.csv", "output/derived/wb_clean/wasteful_data.csv"])
+build_matlab(["output/analysis/plots/sconscript.log", "output/analysis/plots/gdp_educ.eps", "output/analysis/plots/gdp_educ.png"], ["source/analysis/plots/makeplot.m", "output/derived/wb_clean/gdp_education_logs.csv"])
+build_r(["output/analysis/top_gdp/sconscript.log", "output/analysis/top_gdp/top_gdp.txt"], ["source/analysis/top_gdp/top_gdp_table.R", "output/derived/wb_clean/gdp_education.csv"])
+build_tables(["output/tables/top_gdp.lyx"], ["source/tables/top_gdp.lyx", "output/analysis/top_gdp/top_gdp.txt"])
+source/tables/top_gdp.lyx filled successfully by tablefill
+build_lyx(["output/paper/TemplateLyx.pdf"], ["source/paper/Template.lyx", "output/tables/top_gdp.lyx", "source/figures/gdp_educ.lyx", "source/paper/References.bib"])
+build_latex(["output/paper/TemplateTex.pdf"], ["source/paper/Template.tex", "output/tables/top_gdp.tex", "source/figures/gdp_educ.tex", "source/paper/References.bib"])
 build_lyx(["output/talk/TemplateSlides.pdf", "temp/Template.handout.pdf"], ["source/talk/TemplateSlides.lyx"])
+└─┬.
+  ├─SConstruct
+  ├─┬datastore
+  │ └─┬datastore/raw
+  │   └─┬datastore/raw/world_bank
+  │     └─┬datastore/raw/world_bank/orig
+  │       ├─datastore/raw/world_bank/orig/API_NY.GDP.PCAP.CD_DS2_en_csv_v2_1740213.csv
+  │       └─datastore/raw/world_bank/orig/API_SE.XPD.TOTL.GD.ZS_DS2_en_csv_v2_1740282.csv
+  ├─┬output
+  │ ├─┬output/analysis
+  │ │ ├─┬output/analysis/plots
+  │ │ │ ├─┬output/analysis/plots/gdp_educ.eps
+  │ │ │ │ ├─source/analysis/plots/makeplot.m
+  │ │ │ │ └─┬output/derived/wb_clean/gdp_education_logs.csv
+  │ │ │ │   ├─source/derived/wb_clean/takelogs.do
+  │ │ │ │   ├─┬output/derived/wb_clean/gdp_education.csv
+  │ │ │ │   │ ├─source/derived/wb_clean/build.py
+  │ │ │ │   │ ├─datastore/raw/world_bank/orig/API_NY.GDP.PCAP.CD_DS2_en_csv_v2_1740213.csv
+  │ │ │ │   │ └─datastore/raw/world_bank/orig/API_SE.XPD.TOTL.GD.ZS_DS2_en_csv_v2_1740282.csv
+  │ │ │ │   └─┬output/derived/wb_clean/wasteful_data.csv
+  │ │ │ │     └─source/derived/wb_clean/timewaster.py
+  │ │ │ ├─┬output/analysis/plots/gdp_educ.png
+  │ │ │ │ ├─source/analysis/plots/makeplot.m
+  │ │ │ │ └─┬output/derived/wb_clean/gdp_education_logs.csv
+  │ │ │ │   ├─source/derived/wb_clean/takelogs.do
+  │ │ │ │   ├─┬output/derived/wb_clean/gdp_education.csv
+  │ │ │ │   │ ├─source/derived/wb_clean/build.py
+  │ │ │ │   │ ├─datastore/raw/world_bank/orig/API_NY.GDP.PCAP.CD_DS2_en_csv_v2_1740213.csv
+  │ │ │ │   │ └─datastore/raw/world_bank/orig/API_SE.XPD.TOTL.GD.ZS_DS2_en_csv_v2_1740282.csv
+  │ │ │ │   └─┬output/derived/wb_clean/wasteful_data.csv
+  │ │ │ │     └─source/derived/wb_clean/timewaster.py
+  │ │ │ └─┬output/analysis/plots/sconscript.log
+  │ │ │   ├─source/analysis/plots/makeplot.m
+  │ │ │   └─┬output/derived/wb_clean/gdp_education_logs.csv
+  │ │ │     ├─source/derived/wb_clean/takelogs.do
+  │ │ │     ├─┬output/derived/wb_clean/gdp_education.csv
+  │ │ │     │ ├─source/derived/wb_clean/build.py
+  │ │ │     │ ├─datastore/raw/world_bank/orig/API_NY.GDP.PCAP.CD_DS2_en_csv_v2_1740213.csv
+  │ │ │     │ └─datastore/raw/world_bank/orig/API_SE.XPD.TOTL.GD.ZS_DS2_en_csv_v2_1740282.csv
+  │ │ │     └─┬output/derived/wb_clean/wasteful_data.csv
+  │ │ │       └─source/derived/wb_clean/timewaster.py
+  │ │ └─┬output/analysis/top_gdp
+  │ │   ├─┬output/analysis/top_gdp/sconscript.log
+  │ │   │ ├─source/analysis/top_gdp/top_gdp_table.R
+  │ │   │ └─┬output/derived/wb_clean/gdp_education.csv
+  │ │   │   ├─source/derived/wb_clean/build.py
+  │ │   │   ├─datastore/raw/world_bank/orig/API_NY.GDP.PCAP.CD_DS2_en_csv_v2_1740213.csv
+  │ │   │   └─datastore/raw/world_bank/orig/API_SE.XPD.TOTL.GD.ZS_DS2_en_csv_v2_1740282.csv
+  │ │   └─┬output/analysis/top_gdp/top_gdp.txt
+  │ │     ├─source/analysis/top_gdp/top_gdp_table.R
+  │ │     └─┬output/derived/wb_clean/gdp_education.csv
+  │ │       ├─source/derived/wb_clean/build.py
+  │ │       ├─datastore/raw/world_bank/orig/API_NY.GDP.PCAP.CD_DS2_en_csv_v2_1740213.csv
+  │ │       └─datastore/raw/world_bank/orig/API_SE.XPD.TOTL.GD.ZS_DS2_en_csv_v2_1740282.csv
+  │ ├─┬output/derived
+  │ │ └─┬output/derived/wb_clean
+  │ │   ├─┬output/derived/wb_clean/gdp_education.csv
+  │ │   │ ├─source/derived/wb_clean/build.py
+  │ │   │ ├─datastore/raw/world_bank/orig/API_NY.GDP.PCAP.CD_DS2_en_csv_v2_1740213.csv
+  │ │   │ └─datastore/raw/world_bank/orig/API_SE.XPD.TOTL.GD.ZS_DS2_en_csv_v2_1740282.csv
+  │ │   ├─┬output/derived/wb_clean/gdp_education_logs.csv
+  │ │   │ ├─source/derived/wb_clean/takelogs.do
+  │ │   │ ├─┬output/derived/wb_clean/gdp_education.csv
+  │ │   │ │ ├─source/derived/wb_clean/build.py
+  │ │   │ │ ├─datastore/raw/world_bank/orig/API_NY.GDP.PCAP.CD_DS2_en_csv_v2_1740213.csv
+  │ │   │ │ └─datastore/raw/world_bank/orig/API_SE.XPD.TOTL.GD.ZS_DS2_en_csv_v2_1740282.csv
+  │ │   │ └─┬output/derived/wb_clean/wasteful_data.csv
+  │ │   │   └─source/derived/wb_clean/timewaster.py
+  │ │   └─┬output/derived/wb_clean/wasteful_data.csv
+  │ │     └─source/derived/wb_clean/timewaster.py
+  │ ├─┬output/paper
+  │ │ ├─┬output/paper/TemplateLyx.pdf
+  │ │ │ ├─source/paper/Template.lyx
+  │ │ │ ├─┬output/tables/top_gdp.lyx
+  │ │ │ │ ├─source/tables/top_gdp.lyx
+  │ │ │ │ └─┬output/analysis/top_gdp/top_gdp.txt
+  │ │ │ │   ├─source/analysis/top_gdp/top_gdp_table.R
+  │ │ │ │   └─┬output/derived/wb_clean/gdp_education.csv
+  │ │ │ │     ├─source/derived/wb_clean/build.py
+  │ │ │ │     ├─datastore/raw/world_bank/orig/API_NY.GDP.PCAP.CD_DS2_en_csv_v2_1740213.csv
+  │ │ │ │     └─datastore/raw/world_bank/orig/API_SE.XPD.TOTL.GD.ZS_DS2_en_csv_v2_1740282.csv
+  │ │ │ ├─source/figures/gdp_educ.lyx
+  │ │ │ └─source/paper/References.bib
+  │ │ └─┬output/paper/TemplateTex.pdf
+  │ │   ├─source/paper/Template.tex
+  │ │   ├─output/tables/top_gdp.tex
+  │ │   ├─source/figures/gdp_educ.tex
+  │ │   └─source/paper/References.bib
+  │ ├─┬output/tables
+  │ │ ├─┬output/tables/top_gdp.lyx
+  │ │ │ ├─source/tables/top_gdp.lyx
+  │ │ │ └─┬output/analysis/top_gdp/top_gdp.txt
+  │ │ │   ├─source/analysis/top_gdp/top_gdp_table.R
+  │ │ │   └─┬output/derived/wb_clean/gdp_education.csv
+  │ │ │     ├─source/derived/wb_clean/build.py
+  │ │ │     ├─datastore/raw/world_bank/orig/API_NY.GDP.PCAP.CD_DS2_en_csv_v2_1740213.csv
+  │ │ │     └─datastore/raw/world_bank/orig/API_SE.XPD.TOTL.GD.ZS_DS2_en_csv_v2_1740282.csv
+  │ │ └─output/tables/top_gdp.tex
+  │ └─┬output/talk
+  │   └─┬output/talk/TemplateSlides.pdf
+  │     └─source/talk/TemplateSlides.lyx
+  ├─┬source
+  │ ├─┬source/analysis
+  │ │ ├─source/analysis/SConscript
+  │ │ ├─┬source/analysis/plots
+  │ │ │ └─source/analysis/plots/makeplot.m
+  │ │ └─┬source/analysis/top_gdp
+  │ │   └─source/analysis/top_gdp/top_gdp_table.R
+  │ ├─┬source/derived
+  │ │ ├─source/derived/SConscript
+  │ │ └─┬source/derived/wb_clean
+  │ │   ├─source/derived/wb_clean/build.py
+  │ │   ├─source/derived/wb_clean/takelogs.do
+  │ │   └─source/derived/wb_clean/timewaster.py
+  │ ├─┬source/figures
+  │ │ ├─source/figures/gdp_educ.lyx
+  │ │ └─source/figures/gdp_educ.tex
+  │ ├─┬source/paper
+  │ │ ├─source/paper/References.bib
+  │ │ ├─source/paper/SConscript
+  │ │ ├─source/paper/Template.lyx
+  │ │ └─source/paper/Template.tex
+  │ ├─┬source/tables
+  │ │ ├─source/tables/SConscript
+  │ │ └─source/tables/top_gdp.lyx
+  │ └─┬source/talk
+  │   ├─source/talk/SConscript
+  │   └─source/talk/TemplateSlides.lyx
+  └─┬temp
+    └─┬temp/Template.handout.pdf
+      └─source/talk/TemplateSlides.lyx
 scons: done building targets.

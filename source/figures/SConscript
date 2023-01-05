@@ -1,0 +1,11 @@
+Import('*')
+
+target = ['#source/figures/gdp_educ.lyx']
+source = ['#output/analysis/plots/gdp_educ.eps']
+
+env.Depends(target = target, dependency = source)
+
+target = ['#source/figures/gdp_educ.tex']
+source = ['#output/analysis/plots/gdp_educ.eps']
+
+env.Depends(target = target, dependency = source)
