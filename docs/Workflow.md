@@ -1,4 +1,4 @@
-Our workflow is based on [Github flow](https://docs.github.com/en/get-started/quickstart/github-flow) and assumes you are familiar with the concepts described there.
+We suggest the following adaptation of [Github flow](https://docs.github.com/en/get-started/quickstart/github-flow).
 * **Open** an _issue_.
   * **Summarize** the goals in the _title_.
   * **Describe** the _deliverables_ in the _issue description_.
