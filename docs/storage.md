@@ -11,9 +11,10 @@
 
 ### File types and sizes
 
-* Store small (<=1MB) ASCII files (e.g. scripts) in git
-* Store small (<=1MB) binary files (e.g. bitmap graphics) in git-lfs
-* Store large (>1MB) files in the `datastore`
+* Store small ($\le$ 1MB) ASCII files (e.g. scripts) in git
+* Store small ($\le$ 1MB) binary files (e.g. bitmap graphics) in git-lfs
+* Store large ($>$ 1MB) files in the `datastore`
+* Keep the git repository as small as possible, and no larger than 1GB (including version history and lfs)
 * Export graphics in two formats:
   * EPS (or PDF if EPS is not available)
   * PNG (or SVG if PNG is not available)
