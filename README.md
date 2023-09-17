@@ -17,7 +17,7 @@ In addition, each project may use other specialized tools. For the working examp
 - [Stata](https://www.stata.com/install-guide/)
 - [Matlab](https://www.mathworks.com/help/install/install-products.html)
 
-### Repository Structure
+### Repository structure
 
 - `source/` contains source scripts and (small) raw data.
 
@@ -91,8 +91,12 @@ env.Stata(target, source)
 
 - For tips on batch-specifying targets and sources, see [./docs/batch_specifying.md](./docs/batch_specifying.md).
 
-### Citations and Expectations for Usage
+### Citations and expectations for usage
 
 This template is based on [gslab-econ/Template/v4.1.3](https://github.com/gslab-econ/template/releases/tag/4.1.3) and [gslab-python/v4.1.4](https://github.com/gslab-econ/gslab_python/releases/tag/v4.1.4).
 
 It was designed for use in JMSLab. You are welcome to use it in your own research, as long as you (i) [let us know](https://github.com/JMSLab/Template/issues/53) that you plan to do this and (ii) agree to help maintain the template in the future.
+
+### Use in reproducible research
+
+A research repository based on this template was used successfully in a first-try replication by a third party contracted to the American Economic Association in June 2022.
