@@ -293,7 +293,7 @@ filename "../../output/tables/top_gdp.lyx"
 
 \end_layout
 
-\begin_layout Section*
+\begin_layout Standard
 \start_of_appendix
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
