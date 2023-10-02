@@ -1,5 +1,5 @@
-*** Builder log created: {2022-08-24 14:08:11}
-*** Builder log completed: {2022-08-24 14:08:12}
+*** Builder log created: {2023-10-01 22:30:23}
+*** Builder log completed: {2023-10-01 22:30:30}
 
   ___  ____  ____  ____  ____ ®
  /__    /   ____/   /   ____/      17.0
@@ -12,7 +12,7 @@ ___/   /   /___/   /   /___/       MP—Parallel Edition
                                    800-STATA-PC        https://www.stata.com
                                    979-696-4600        stata@stata.com
 
-Stata license: Unlimited-user 4-core network, expiring 17 Nov 2022
+Stata license: Unlimited-user 4-core , expiring 17 Nov 2023
 Serial number: 501709306977
   Licensed to: hbsuser
                Harvard Business School
@@ -23,7 +23,7 @@ Notes:
       3. More than 2 billion observations are allowed; see help obs_advice.
       4. Maximum number of variables is set to 5,000; see help set_maxvar.
 
-. do "source/derived/wb_clean/takelogs.do" 
+. do source\derived\wb_clean\takelogs.do 
 
 . version 14
 
