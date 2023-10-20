@@ -100,11 +100,9 @@ class LatexBuilder(JMSLabBuilder):
             self.cleanup()
             traceback = ''
             raise_system_call_exception = False
+            call = "&&".join([self.system_call, self.bibtex_system_call, self.system_call, self.system_call])
             try:
-                subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
-                subprocess.check_output(self.bibtex_system_call, shell = True, stderr = subprocess.STDOUT)
-                subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
-                subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
+                subprocess.check_output(call, shell = True, stderr = subprocess.STDOUT)
             except subprocess.CalledProcessError as ex:
                 traceback = ex.output
                 raise_system_call_exception = True
@@ -116,10 +114,9 @@ class LatexBuilder(JMSLabBuilder):
             self.cleanup()
             traceback = ''
             raise_system_call_exception = False
+            call = "&&".join([self.system_call, self.bibtex_system_call, self.system_call, self.system_call])
             try:
-                subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
-                subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
-                subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
+                subprocess.check_output(call, shell = True, stderr = subprocess.STDOUT)
             except subprocess.CalledProcessError as ex:
                 traceback = ex.output
                 raise_system_call_exception = True
