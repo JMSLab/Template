@@ -13,6 +13,8 @@
 \usepackage[authoryear]{natbib}
 \usepackage{datetime}
 
+\newcommand*{\dir}{../..}
+\renewcommand{\dir}{.}
 
 \onehalfspacing
 
@@ -41,15 +43,15 @@ Other claim \cite{gentzkow2010drives}.
 
 \newpage{}
 
-\input{output/tables/top_gdp}
+\input{\dir/output/tables/top_gdp}
 
 \newpage{}
 
-\input{source/figures/gdp_educ}
+\input{\dir/source/figures/gdp_educ}
 
 \newpage{}
 \appendix
 \bibliographystyle{apalike}
-\bibliography{source/paper/References}
+\bibliography{\dir/source/paper/References}
 
 \end{document}
