@@ -14,8 +14,8 @@
 
 \makeatletter
 \providecommand*{\input@path}{}
-\g@addto@macro\input@path{{./output/tables/}{./source/figures/}{./output/analysis/plots/}}%uncomment below to enable local compile
-\g@addto@macro\input@path{{./../../output/tables/}{./../../source/figures/}{./../../output/analysis/plots/}}
+\g@addto@macro\input@path{{./}}%uncomment below to enable local compile
+\g@addto@macro\input@path{{./../../}}
 \makeatother
 
 \usepackage{graphicx}
@@ -45,11 +45,11 @@ Other claim \cite{gentzkow2010drives}.
 
 \newpage{}
 
-\input{top_gdp}
+\input{output/tables/top_gdp}
 
 \newpage{}
 
-\input{gdp_educ}
+\input{source/figures/gdp_educ}
 
 \newpage{}
 \appendix
