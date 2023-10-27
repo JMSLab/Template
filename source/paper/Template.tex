@@ -13,12 +13,14 @@
 \usepackage[authoryear]{natbib}
 \usepackage{datetime}
 
-\newcommand*{\dir}{../..}
-\renewcommand*{\dir}{.}
+\makeatletter
+\providecommand*{\input@path}{}
+\g@addto@macro\input@path{{./output/tables/}{./../../output/tables/}{./source/figures/}{./../../source/figures/}}
+\makeatother
+
+\graphicspath{{./output/analysis/plots/}{./../../output/analysis/plots/}}
 
 \onehalfspacing
-
-
 
 \begin{document}
 \title{Template}
@@ -43,15 +45,15 @@ Other claim \cite{gentzkow2010drives}.
 
 \newpage{}
 
-\input{\dir/output/tables/top_gdp}
+\input{top_gdp}
 
 \newpage{}
 
-\input{\dir/source/figures/gdp_educ}
+\input{gdp_educ}
 
 \newpage{}
 \appendix
 \bibliographystyle{apalike}
-\bibliography{\dir/source/paper/References}
+\bibliography{References}
 
 \end{document}
