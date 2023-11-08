@@ -8,17 +8,18 @@
 \usepackage{array}
 \usepackage{amsmath}
 \usepackage{amsthm}
+\usepackage{graphicx}
 \usepackage{setspace}
 \usepackage[authoryear]{natbib}
 \usepackage{datetime}
 
 \makeatletter
 \providecommand*{\input@path}{}
-\g@addto@macro\input@path{{./output/tables/}{./source/figures/}{./output/analysis/plots/}}%uncomment below to enable local compile
-\g@addto@macro\input@path{{./../../output/tables/}{./../../source/figures/}{./../../output/analysis/plots/}}
+\g@addto@macro\input@path{{./output/tables/}{./source/figures/}}%uncomment below to enable local compile
+\g@addto@macro\input@path{{./../../output/tables/}{./../../source/figures/}}
 \makeatother
 
-\usepackage{graphicx}
+\graphicspath{{./output/analysis/plots/}{./../../output/analysis/plots/}}
 
 \onehalfspacing
 
