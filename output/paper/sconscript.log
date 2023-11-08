@@ -1,5 +1,5 @@
-*** Builder log created: {2023-10-01 22:36:07}
-*** Builder log completed: {2023-10-01 22:36:12}
+*** Builder log created: {2023-11-08 09:46:15}
+*** Builder log completed: {2023-11-08 09:46:20}
 This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex.fmt)
  restricted \write18 enabled.
 entering extended mode
@@ -100,10 +100,18 @@ f)
 
 LaTeX Font Warning: Font shape `TS1/aer/m/n' undefined
 (Font)              using `TS1/cmr/m/n' instead
-(Font)              for symbol `textasteriskcentered' on input line 27.
+(Font)              for symbol `textasteriskcentered' on input line 32.
+
+
+Package natbib Warning: Citation `gentzkow2011ideological' on page 1 undefined 
+on input line 42.
+
+
+Package natbib Warning: Citation `gentzkow2010drives' on page 1 undefined on in
+put line 43.
 
 [1{C:/Users/emwang/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
-(output/tables/top_gdp.tex
+(output/tables//top_gdp.tex
 Overfull \hbox (5.02565pt too wide) in paragraph at lines 13--14
  []|\T1/aer/m/n/12 150725.1941| 
 
@@ -112,8 +120,16 @@ Overfull \hbox (5.02565pt too wide) in paragraph at lines 14--15
 
 Overfull \hbox (5.02565pt too wide) in paragraph at lines 15--16
  []|\T1/aer/m/n/12 104965.3061| 
-) (source/figures/gdp_educ.tex) (output\paper\TemplateTex.bbl) [2] [3 <./output
-/analysis/plots/gdp_educ.png (PNG copy)>] (output\paper\TemplateTex.aux)
+) (source/figures//gdp_educ.tex) (output\paper\TemplateTex.bbl
+
+Package natbib Warning: Empty `thebibliography' environment on input line 3.
+
+)
+
+Package natbib Warning: There were undefined citations.
+
+[2] [3 <./output/analysis/plots//gdp_educ.png (PNG copy)>]
+(output\paper\TemplateTex.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
@@ -127,5 +143,5 @@ Users/emwang/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10
 /cm/cmr12.pfb><C:/Users/emwang/AppData/Local/Programs/MiKTeX/fonts/type1/public
 /amsfonts/cm/cmr17.pfb><C:/Users/emwang/AppData/Local/Programs/MiKTeX/fonts/typ
 e1/public/amsfonts/cm/cmti12.pfb>
-Output written on output\paper\TemplateTex.pdf (3 pages, 150469 bytes).
+Output written on output\paper\TemplateTex.pdf (3 pages, 145502 bytes).
 Transcript written on output\paper\TemplateTex.log.
