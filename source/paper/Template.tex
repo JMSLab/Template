@@ -12,12 +12,18 @@
 \usepackage{setspace}
 \usepackage[authoryear]{natbib}
 \usepackage{datetime}
+\usepackage[abspath]{currfile}
+\usepackage{ifthen, pdftexcmds}
 
-\newcommand*{\dir}{../..}
-\renewcommand*{\dir}{.}
+\newcommand*{\dir}{.}
 
 \onehalfspacing
 
+\makeatletter
+\ifnum\pdf@strcmp{\currfilepath}{Template.tex}=0
+	\renewcommand*{\dir}{./../..}
+\fi
+\makeatother
 
 
 \begin{document}
