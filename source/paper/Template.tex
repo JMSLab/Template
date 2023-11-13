@@ -12,10 +12,18 @@
 \usepackage{setspace}
 \usepackage[authoryear]{natbib}
 \usepackage{datetime}
+\usepackage[abspath]{currfile}
+\usepackage{ifthen, pdftexcmds}
 
+\newcommand*{\dir}{.}
 
 \onehalfspacing
 
+\makeatletter
+\ifnum\pdf@strcmp{\currfilepath}{Template.tex}=0
+	\renewcommand*{\dir}{./../..}
+\fi
+\makeatother
 
 
 \begin{document}
@@ -41,15 +49,15 @@ Other claim \cite{gentzkow2010drives}.
 
 \newpage{}
 
-\input{output/tables/top_gdp}
+\input{\dir/output/tables/top_gdp}
 
 \newpage{}
 
-\input{source/figures/gdp_educ}
+\input{\dir/source/figures/gdp_educ}
 
 \newpage{}
 \appendix
 \bibliographystyle{apalike}
-\bibliography{source/paper/References}
+\bibliography{\dir/source/paper/References}
 
 \end{document}

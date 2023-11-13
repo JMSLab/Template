@@ -1,26 +1,14 @@
-*** Builder log created: {2023-10-01 22:36:12}
-*** Builder log completed: {2023-10-01 22:36:33}
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex.fmt)
-
+*** Builder log created: {2023-11-13 14:41:14}
+*** Builder log completed: {2023-11-13 14:41:24}
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex)
  restricted \write18 enabled.
-
 entering extended mode
-
-(TemplateSlides.tex
-
-LaTeX2e <2021-11-15> patch level 1
-
-L3 programming layer <2022-02-24>
-
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex.fmt)
-
+(./TemplateSlides.tex
+LaTeX2e <2020-10-01> patch level 4
+L3 programming layer <2021-02-18>
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex)
  restricted \write18 enabled.
-
 entering extended mode
-
-(TemplateSlides.tex
-
-LaTeX2e <2021-11-15> patch level 1
-
-L3 programming layer <2022-02-24>
-
+(./TemplateSlides.tex
+LaTeX2e <2020-10-01> patch level 4
+L3 programming layer <2021-02-18>
