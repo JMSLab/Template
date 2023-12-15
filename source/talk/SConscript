@@ -4,3 +4,8 @@ target = ['#output/talk/TemplateSlides.pdf', '#temp/Template.handout.pdf']
 source = ['#source/talk/TemplateSlides.lyx']
 
 env.Lyx(target, source)
+
+target = ['#output/talk/TemplateSlidesLatex.pdf', '#temp/TemplateLatex.handout.pdf']
+source = ['#source/talk/TemplateSlides.tex']
+
+env.Latex(target, source)

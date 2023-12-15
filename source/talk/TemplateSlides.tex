@@ -1,0 +1,44 @@
+\documentclass{beamer}
+
+%\usepackage[]{todonotes}
+%\presetkeys{todonotes}{inline}{}
+\setbeameroption{hide notes}
+
+\title{Presentation title}
+\author{Author}
+\institute{Affiliation}
+\date{\today}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}
+\frametitle{Research question}
+\begin{itemize}
+	\item Point One 
+	%\todo{Notes on Main point}
+	\begin{itemize}
+		\item Sub Point
+		\item Sub Point  
+		%\todo{Notes on subpoint}
+	\end{itemize}
+ 	\item Point Two
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Research question}
+\begin{itemize}
+	\item Point One 
+	\note{Notes on Main point}
+	\begin{itemize}
+		\item Sub Point
+		\item Sub Point  
+		\note{Notes on subpoint}
+	\end{itemize}
+ 	\item Point Two
+\end{itemize}
+\end{frame}
+
+\end{document}
