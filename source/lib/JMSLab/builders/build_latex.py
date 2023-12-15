@@ -99,8 +99,8 @@ class LatexBuilder(JMSLabBuilder):
         for line in fileinput.input(self.handout_in, inplace = True):
             if bool(re.search(r'\\documentclass.*{beamer}', line)):
                 beamer = True
-            elif bool(re.search(r'\\usepackage.*disable.*{todonotes}', line)) and beamer:
-                line = line.replace('disable', '')
+            elif bool(re.search(r'\\setbeameroption.*{hide notes}', line)) and beamer:
+                line = line.replace('hide notes', 'show notes')
             print(line, end='')
         
         args = '%s %s %s > %s' % (self.handout_out,
