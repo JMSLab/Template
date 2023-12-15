@@ -1,6 +1,7 @@
 \documentclass{beamer}
 
-\setbeameroption{hide notes}
+\usepackage[disable, bordercolor=white, backgroundcolor=white, textsize=tiny]{todonotes}
+\presetkeys{todonotes}{inline}{}
 
 \title{Presentation title}
 \author{Author}
@@ -15,11 +16,11 @@
 \frametitle{Research question}
 \begin{itemize}
 	\item Point One 
-	\note{Notes on Main point}
+	\todo{Notes on Main point}
 	\begin{itemize}
 		\item Sub Point
 		\item Sub Point  
-		\note{Notes on subpoint}
+		\todo{Notes on subpoint}
 	\end{itemize}
  	\item Point Two
 \end{itemize}
