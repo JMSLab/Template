@@ -229,4 +229,3 @@ class LatexBuilder(JMSLabBuilder):
         self.timestamp_log(misc.current_time())
         return None
 
-        
