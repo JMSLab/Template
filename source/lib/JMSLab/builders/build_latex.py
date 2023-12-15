@@ -154,7 +154,7 @@ class LatexBuilder(JMSLabBuilder):
 
     def cleanup(self):
         delete_ext = ['.aux', '.lof', '.lot', '.fls', '.out',
-                      '.log', '.toc', '.bbl','.nav','.vrb','.snm']
+                      '.toc', '.bbl','.nav','.vrb','.snm']
 
         for ext in delete_ext:
             try:
