@@ -67,7 +67,7 @@ class TestBuildLateX(unittest.TestCase):
         arguments are lists that include a .bib file and output
         '''
         mock_check_output.side_effect = fx.latex_side_effect
-        target = ['build/latex.pdf', 'build/latex.log', 'build/latex.blg']
+        target = ['build/latex.pdf']
         source = ['test_script.tex', 'test_ref.bib']
 
         # Make sure check_bib works as expected
