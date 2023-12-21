@@ -1,7 +1,8 @@
-*** New build: {2023-11-13 14:41:06} ***
+*** New build: {2023-12-21 14:02:56} ***
 scons: done reading SConscript files.
 scons: Building targets ...
-build_lyx(["output/paper/TemplateLyx.pdf"], ["source/paper/Template.lyx", "output/tables/top_gdp.lyx", "source/figures/gdp_educ.lyx", "source/paper/References.bib"])
-build_latex(["output/paper/TemplateTex.pdf"], ["source/paper/Template.tex", "output/tables/top_gdp.tex", "source/figures/gdp_educ.tex", "source/paper/References.bib"])
-build_lyx(["output/talk/TemplateSlides.pdf", "temp/Template.handout.pdf"], ["source/talk/TemplateSlides.lyx"])
+build_matlab(["output\analysis\plots\sconscript.log", "output\analysis\plots\gdp_educ.eps", "output\analysis\plots\gdp_educ.png"], ["source\analysis\plots\makeplot.m", "output\derived\wb_clean\gdp_education_logs.csv"])
+build_latex(["output\paper\TemplateTex.pdf"], ["source\paper\Template.tex", "output\tables\top_gdp.tex", "source\figures\gdp_educ.tex", "source\paper\References.bib"])
+build_lyx(["output\talk\TemplateSlides.pdf", "temp\Template.handout.pdf"], ["source\talk\TemplateSlides.lyx"])
+build_latex(["output\talk\TemplateSlidesLatex.pdf", "temp\TemplateLatex.handout.pdf"], ["source\talk\TemplateSlides.tex"])
 scons: done building targets.

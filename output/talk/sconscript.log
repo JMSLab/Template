@@ -1,14 +1,303 @@
-*** Builder log created: {2023-11-13 14:41:14}
-*** Builder log completed: {2023-11-13 14:41:24}
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex)
+*** Builder log created: {2023-12-21 14:07:36}
+*** Builder log completed: {2023-12-21 14:07:50}
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex.fmt)
  restricted \write18 enabled.
 entering extended mode
-(./TemplateSlides.tex
-LaTeX2e <2020-10-01> patch level 4
-L3 programming layer <2021-02-18>
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex)
- restricted \write18 enabled.
-entering extended mode
-(./TemplateSlides.tex
-LaTeX2e <2020-10-01> patch level 4
-L3 programming layer <2021-02-18>
+(source/talk/TemplateSlides.tex
+LaTeX2e <2021-11-15> patch level 1
+L3 programming layer <2022-02-24>
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamer.cls
+Document Class: beamer 2022/05/17 v3.67 A class for typesetting presentations
+
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasemodes
+.sty
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty)
+
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasedecod
+e.sty))
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbaseoptio
+ns.sty
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty))
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.sty
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifvtex.sty)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.cfg)
+) (C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/pgf/math\pgfmath.sty
+
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/pgf/utilities\pgfrcs.s
+ty
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfuti
+l-common.tex
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfuti
+l-common-lists.tex))
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfuti
+l-latex.def)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfrcs
+.code.tex
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf\pgf.revision.tex
+)))
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/pgf/utilities\pgfkeys.
+sty
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfkey
+s.code.tex
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfkey
+sfiltered.code.tex)))
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmath.cod
+e.tex
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathcalc
+.code.tex
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathutil
+.code.tex)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathpars
+er.code.tex)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunc
+tions.code.tex
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunc
+tions.basic.code.tex)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunc
+tions.trigonometric.code.tex)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunc
+tions.random.code.tex)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunc
+tions.comparison.code.tex)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunc
+tions.base.code.tex)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunc
+tions.round.code.tex)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunc
+tions.misc.code.tex)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunc
+tions.integerarithmetics.code.tex)))
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfloa
+t.code.tex)))
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/base\size11.clo)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/pgf/basiclayer\pgfcore
+.sty
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphicx.sty
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphics.sty
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/graphics\trig.sty)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\graphics.
+cfg)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.de
+f)))
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/pgf/systemlayer\pgfsys
+.sty
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfs
+ys.code.tex
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfkey
+s.code.tex)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgf.
+cfg)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfs
+ys-pdftex.def
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfs
+ys-common-pdf.def)))
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfs
+yssoftpath.code.tex)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfs
+ysprotocol.code.tex))
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/xcolor\xcolor.sty
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\color.cfg
+))
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfco
+re.code.tex
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmath.cod
+e.tex)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfint.code
+.tex)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfco
+repoints.code.tex)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfco
+repathconstruct.code.tex)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfco
+repathusage.code.tex)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfco
+rescopes.code.tex)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfco
+regraphicstate.code.tex)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfco
+retransformations.code.tex)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfco
+requick.code.tex)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfco
+reobjects.code.tex)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfco
+repathprocessing.code.tex)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfco
+rearrows.code.tex)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfco
+reshade.code.tex)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfco
+reimage.code.tex
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfco
+reexternal.code.tex))
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfco
+relayers.code.tex)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfco
+retransparency.code.tex)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfco
+repatterns.code.tex)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfco
+rerdf.code.tex)))
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/pgf/utilities\xxcolor.
+sty)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/base\atbegshi-ltx.sty)
+ (C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref.sty
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty)
+
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pdftexcmds\pdftexcmd
+s.sty
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/infwarerr\infwarerr.
+sty))
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/kvsetkeys\kvsetkeys.
+sty)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/kvdefinekeys\kvdefin
+ekeys.sty)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/pdfescape\pdfescape.
+sty)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/hycolor\hycolor.sty)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/letltxmacro\letltxmacr
+o.sty)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/auxhook\auxhook.sty)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.st
+y) (C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\pd1enc.def
+)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/intcalc\intcalc.sty)
+
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/etexcmds\etexcmds.st
+y) (C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\puenc.def)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/url\url.sty)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/bitset\bitset.sty
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/bigintcalc\bigintcal
+c.sty))
+
+Package hyperref Message: Stopped early.
+
+) (C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hpdftex.def
+
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/base\atveryend-ltx.sty
+)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/rerunfilecheck\rerunfi
+lecheck.sty
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/uniquecounter\unique
+counter.sty)))
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbaserequi
+res.sty
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasecompa
+tibility.sty)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasefont.
+sty
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amssymb.sty
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amsfonts.sty)
+)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/sansmathaccent\sansmat
+haccent.sty
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/koma-script\scrlfile.s
+ty
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/koma-script\scrlfile-h
+ook.sty
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/koma-script\scrlogo.st
+y)))))
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasetrans
+lator.sty
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/translator\translator.
+sty))
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasemisc.
+sty)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasetwosc
+reens.sty)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbaseoverl
+ay.sty)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasetitle
+.sty)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasesecti
+on.sty)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbaseframe
+.sty)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbaseverba
+tim.sty)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbaseframe
+size.sty)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbaseframe
+components.sty)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasecolor
+.sty)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasenotes
+.sty)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasetoc.s
+ty)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasetempl
+ates.sty
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbaseauxte
+mplates.sty
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbaseboxes
+.sty)))
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbaselocal
+structure.sty
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/tools\enumerate.sty))
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasenavig
+ation.sty)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasetheor
+ems.sty
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsmath.sty
+For additional information on amsmath, use the `?' option.
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amstext.sty
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsgen.sty))
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsbsy.sty)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsopn.sty))
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/amscls\amsthm.sty))
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasetheme
+s.sty))
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerthemedefa
+ult.sty
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerfonttheme
+default.sty)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamercolorthem
+edefault.sty)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerinnerthem
+edefault.sty)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerouterthem
+edefault.sty)))
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pd
+ftex.def) (output\talk\TemplateSlidesLatex.aux)
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.m
+kii
+[Loading MPS to PDF converter (version 2006.09.02).]
+)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-
+base.sty
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.
+cfg))
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/refcount\refcount.sty)
+
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/generic/gettitlestring\getti
+tlestring.sty)) (output\talk\TemplateSlidesLatex.out)
+(output\talk\TemplateSlidesLatex.out)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/translator\translator-
+basic-dictionary-English.dict)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/translator\translator-
+bibliography-dictionary-English.dict)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/translator\translator-
+environment-dictionary-English.dict)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/translator\translator-
+months-dictionary-English.dict)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/translator\translator-
+numbers-dictionary-English.dict)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/translator\translator-
+theorem-dictionary-English.dict) (output\talk\TemplateSlidesLatex.nav) [1{C:/Us
+ers/emwang/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] [2]
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd)
+(C:\Users\emwang\AppData\Local\Programs\MiKTeX\tex/latex/sansmathaccent\ot1math
+kerncmss.fd) [3] (output\talk\TemplateSlidesLatex.aux) )<C:/Users/emwang/AppDat
+a/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss10.pfb><C:/Users/emw
+ang/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss12.pfb><C:
+/Users/emwang/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss
+8.pfb><C:/Users/emwang/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfont
+s/symbols/msam10.pfb>
+Output written on output\talk\TemplateSlidesLatex.pdf (3 pages, 58250 bytes).
+Transcript written on output\talk\TemplateSlidesLatex.log.

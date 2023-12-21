@@ -2,6 +2,14 @@
 
 \setbeameroption{hide notes}
 
+\AtBeginSection[]{
+\begin{frame}
+	\begin{beamercolorbox}[center]{title}
+	\usebeamerfont{title}\insertsectionhead
+	\end{beamercolorbox}
+\end{frame}
+}
+
 \title{Presentation title}
 \author{Author}
 \institute{Affiliation}
@@ -10,6 +18,8 @@
 \begin{document}
 
 \frame{\titlepage}
+
+\section{Section}
 
 \begin{frame}
 \frametitle{Research question}
