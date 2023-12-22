@@ -13,17 +13,19 @@ from . import _side_effects as fx
 
 from ..builders.build_latex import build_latex, LatexBuilder
 from .._exception_classes import ExecCallError
+from .. import misc
 
 # Define path to the builder for use in patching
 path = 'JMSLab.builders.build_latex'
 subprocess_patch = mock.patch('%s.subprocess.check_output' % path)
 system_patch = mock.patch('%s.os.system' % path)
+shutil_patch = mock.patch('%s.shutil.copy2' % path)
 
 # Run tests from test folder
 TESTDIR = Path(__file__).resolve().parent
 os.chdir(TESTDIR)
 
-
+        
 class TestBuildLateX(unittest.TestCase):
 
     def setUp(self):
@@ -129,10 +131,31 @@ class TestBuildLateX(unittest.TestCase):
         with self.assertRaises(TypeError):
             build_latex('nonexistent_directory/latex.pdf',
                         ['input/latex_test_file.tex'], env = True)
-
+            
+    def test_handout_nonunique_target(self):
+        with self.assertRaises(ValueError):
+            build_latex(target = ['path_to_clean.pdf', 'path_to_clean.pdf'], 
+                        source = ['input/lyx_test_file.tex'],
+                        env = {'HANDOUT_SFIX': '_clean'})
+            
+    
+    def test_handout_suffix_mismatch(self):
+        with self.assertRaises(ValueError):
+            build_latex(target = ['path_to_clean.pdf', 'path_to_handout.pdf'], 
+                        source = ['input/lyx_test_file.tex'],
+                        env = {'HANDOUT_SFIX': '_'})
+            
+    
+    def test_handout_missing_target(self):
+        with self.assertRaises(ValueError):
+            build_latex(target = ['path_to_clean.pdf'],
+                        source = ['input/lyx_test_file.tex'],
+                        env = {'HANDOUT_SFIX': '_'}) 
+                      
+            
     def tearDown(self):
         shutil.rmtree(TESTDIR / 'build')
-
+        
 
 if __name__ == '__main__':
     unittest.main()
