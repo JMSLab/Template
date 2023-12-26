@@ -2,24 +2,23 @@
 
 Production encompasses the steps we take before we circulate or submit a paper draft. By default everything we say below about _the paper_ applies similarly to the online appendix and any other document that we plan to circulate.
 
-* We will initiate production by assigning someone to an issue called "Supervise production". This _supervisor_ will:
+* We will initiate production by assigning someone (the _supervisor_) to an issue called "Supervise production". The supervisor will:
   * Open a _main production branch_ linked to the "Supervise production" issue. We will refer to this as the _main production branch_.
   * Create and assign one github issue corresponding to each production task, with one assignee serving as _task lead_ on each task.
   * Keep in touch with everyone involved in production to help align timing and clear roadblocks.
   * Keep in mind that we expect production to take about one workweek with 3-4 people helping. 
-  * When production is completed, compile the main production branch, create a PDF diff, and open a pull request with PI(s) assigned as reviewers.
+  * When production is completed, compile the main production branch, create a PDF diff, and open a pull request with PI assigned as reviewer.
 
 *  When working on individual production tasks, to keep things moving and minimize scope for branch conflict:
-   * Note the default time estimate. If you expect a much longer time to completion, consult the PI(s).
+   * Note the default time estimate. If you expect a much longer time to completion, consult the PI.
    * Do not create an issue branch until you are ready to make edits.
    * When creating an issue branch, branch off of the main production branch.
    * Avoid compiling on issue branches unless necessary.
    * When merging an issue branch, merge back to the main production branch.
-   * Skip review of pulls for tasks where work has already been reviewed by multiple RAs.
-   * Avoid compiling on production issueWhen it can be avoided, we recommend not fully compiling production issue branches before merging back to the main production branch, so as to minimize scope for merge conflicts.
+   * Skip review of pulls for tasks where work has already been reviewed by multiple RAs, except where PI review is requested below.
 
 * When producing task deliverables:
-   * Post them in the relevant issue branch and @ references the PI(s).
+   * Post them in the relevant issue branch and tag the PI.
    * Make them clear and readable but don't worry about making them pretty.
    * If possible, ask the task lead to consolidate different sets of comments into a single list or PDF.
 
@@ -27,18 +26,29 @@ Production encompasses the steps we take before we circulate or submit a paper d
  
    * Check with PIs whether this is needed
 
-## Task [DUA]: Check DUAs for review requirements
+## Task [SOURCE]: Check acknowledgment of sources and review requirements
 
 ### Work allocation
-
+   
   | Expected Hours | 50% Confidence Interval | # of RAs |
   | -------------- | ----------------------- | -------- |
-  | 1              | (0 - 3)                 | 1        | 
+  | 1              | (0.5 - 5)               | 1        |
 
-  * Check DUAs. If any require notification in advance of posting/journal submission, flag for PIs.
-  * May be efficient to combine with [[SOURCE]](https://github.com/gslab-econ/ra-manual/wiki/Production#task-source-check-acknowledgment-of-sources).
+### Goals 
 
-## Task [PRELIM]: Things to double-check in code & analysis
+  *  Data sources are acknowledged in a manner consistent with our agreement with the data provider.
+  *  Data providers are provided with advanced notice when required by DUAs.
+
+### Deliverables 
+
+  *  A single pdf document with proposed changes to acknowledgments clearly marked using Adobe Acrobat’s commenting tools. Comments should identify acknowledgments that need to be added along with proposed wording, as well as proposed revisions to existing acknowledgments. Comments should identify the source in the repository of the relevant user agreement.
+
+  *  Data sources and user agreements should be clearly indicated in the readme and /docs of the raw data directories used by the project. The raw data directories should be updated if this is not the case.
+
+  *  A list for PIs of any DUAs that require that we notify someone in advance of posting/submission, and the language giving the details of whom/how/when to notify.
+
+
+## Task [NUMERICAL]: Check accuracy of numerical procedures
 
 ### Work allocation
 
@@ -46,17 +56,19 @@ Production encompasses the steps we take before we circulate or submit a paper d
   | -------------- | ----------------------- | -------- |
   | 2              | (0.5 - 4)               | 1        | 
 
+### Goals 
 
-### Steps
-  *  Bootstraps and simulations run with sufficiently high number of draws
+  *  Calculations have sufficient accuracy.
 
-  *  Quadrature accuracy set sufficiently high
+### Deliverables
 
-  *  Tolerances on solvers satisfactory
+  * Check the below and notify the PI of any suggested changes.
+     *  Bootstraps and simulations run with sufficiently high number of draws
+     *  Quadrature accuracy set sufficiently high
+     *  Tolerances on solvers satisfactory
+     *  Exit flags for solvers indicate convergence
 
-  *  Exit flags for solvers indicate convergence
-
-## Task [EXT]: Audit external calls
+## Task [COMPILE]: Paper is reproducible
 
 ### Work allocation
 
@@ -66,15 +78,11 @@ Production encompasses the steps we take before we circulate or submit a paper d
 
 ### Goals
 
-  *  Confirm that results reported in paper would be unchanged if all externals calls to Google Drive, Dropbox, etc. are pointed to the most recent version.
-
-  *  Confirm that scons run is up to date and sources/targets are defined appropriately.
+  *  Paper would be unchanged if recompiled from scratch.
 
 ### Deliverables 
 
-  * A list of any external calls that are out of date and would impact the results.
-
-  * A list of any source/targets specified incorrectly and any directories that need to be re-run via scons.
+  * A list of any source/targets specified incorrectly and any directories that need to be recompiled.
 
 ## Task [REF]: Check/update references
 
@@ -86,25 +94,25 @@ Production encompasses the steps we take before we circulate or submit a paper d
 
 ### Goals  
 
-  *  All citations in the text match references in the bibliography. (Online appendix references should include only those citations not present in the main document.)
-
+  *  All citations in the text match references in the bibliography.
+ 
   *  All references in the bibliography are cited somewhere in the text.
 
-  *  Author names and years in text citations are correct and in-text citations follow the formatting guidance in the [paper style guide](https://github.com/gslab-econ/ra-manual/wiki/Papers) including punctuation.
+  *  Online appendix references include only those citations not present in the main document.
 
-  *  If we are citing working papers, these have not in fact been published. If they have we should update the reference accordingly.
+  *  Citations and bibliography use a consistent style. (It is not important which style guide we follow, just that we are consistent.)
 
-  *  The references list is correct and uses a consistent style. (It is not important which style guide we follow, just that we are consistent.)
+  *  Working papers cited have not been published and are not listed as forthcoming on the authors' homepages.
 
-  *  URLs in the references list are [saved in the internet archive](https://help.archive.org/help/save-pages-in-the-wayback-machine/#:~:text=Browser%20extensions%20and%20add%2Dons,give%20you%20a%20permanent%20URL.) if possible. (References list can still use the original URL rather than the archive URL.)
+  *  Access dates are given for all URLs.
+
+  *  URLs in the references list are stable or are saved in the [internet archive](https://web.archive.org/). (References list can still use the original URL rather than the archive URL, but in these cases it is good to include a hidden comment with a link to the internet archive version.)
 
 ### Deliverables 
 
-  *  An updated `draft.lyx/online.lyx` file with corrected in-text citations and references.
+  *  Revised paper and bibliography file. (Edits can be made directly.)
 
-  *  A single pdf document that highlights (using Acrobat commenting tools) any changes that are substantive enough to require review by PIs.
-
-  *  A list of URLs newly saved to the internet archive.
+  *  Open a pull request assigned to PI and include a link to a PDF diff.
 
 ## Task [PROOF]: Proofread spelling, grammar, table references, math, etc. 
 
@@ -181,24 +189,6 @@ Production encompasses the steps we take before we circulate or submit a paper d
 ### Deliverables 
 
   *  A list of any inconsistencies between text and code
-
-## Task [SOURCE]: Check Acknowledgment of Sources 
-
-### Work allocation
-   
-  | Expected Hours | 50% Confidence Interval | # of RAs |
-  | -------------- | ----------------------- | -------- |
-  | 1              | (0.5 - 2)               | 1        |
-
-### Goals 
-
-  *  Data sources are acknowledged in a manner consistent with our agreement with the data provider.
-
-### Deliverables 
-
-  *  A single pdf document with proposed changes to acknowledgments clearly marked using Adobe Acrobat’s commenting tools. Comments should identify acknowledgments that need to be added along with proposed wording, as well as proposed revisions to existing acknowledgments. Comments should identify the source in the repository of the relevant user agreement.
-
-  *  Data sources and user agreements should be clearly indicated in the readme and /docs of the raw data directories used by the project. The raw data directories should be updated if this is not the case.
 
 ## Task [THANK]: Check acknowledgment of comments and funding
 
