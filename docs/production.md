@@ -163,7 +163,7 @@ Production encompasses the steps we take before we circulate or submit a paper d
   *  All citations in the text match references in the bibliography.
   *  All references in the bibliography are cited somewhere in the text.
   *  Online appendix references include only those citations not present in the main document.
-  *  Citations and bibliography use a consistent style. (It is not important which style guide we follow, just that we are consistent.)
+  *  Citations and bibliography use a consistent style. (It is typically not important which style guide we follow, just that we are consistent.)
   *  Working papers cited have not been published and are not listed as forthcoming on the authors' homepages.
   *  Access dates are given for all URLs.
   *  URLs in the references list are stable or are saved in the [internet archive](https://web.archive.org/). (References list can still use the original URL rather than the archive URL, but in these cases it is good to include a hidden comment with a link to the internet archive version.)
