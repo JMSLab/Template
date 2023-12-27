@@ -218,85 +218,89 @@ Production encompasses the steps we take before we circulate or submit a paper d
 
   *  A single pdf document that marks all unsupported claims and unreferenced content in the online appendix.
 
-## Task [PLOT]: Check printing of plots in black and white 
+### Task [PLOT]: Check printing of plots in black and white 
 
-### Work allocation
+#### Work allocation
 
   | Expected Hours | 50% Confidence Interval | # of RAs |
   | -------------- | ----------------------- | -------- |
   | 6              | (4 - 12)                | 1        |
 
-### Goals 
+#### Goals 
 
   *  Color plots print well in black and white; markers are sufficiently distinct
-  *  Plots follow [our guidelines](https://github.com/gslab-econ/ra-manual/wiki/Papers-&-Slides#plots)
 
-### Deliverables 
+  *  Plots adhere to [Schwabish (2014)](https://www.jstor.org/stable/43193723) principles.
 
-  *  A list of plots for which you think there are contrast issues in black and white, along with suggested fixes. (If it is easy to modify the plots, the ideal format for suggestions is graphics files attached to the relevant issue illustrating the proposed alternative coloring.)
+#### Deliverables 
 
+  *  A list of plots for which you think there are contrast issues in black and white, along with suggested fixes.
+      * If it is easy to modify the plots, the ideal format for suggestions is a side-by-side showing original and proposed modified plots.
 
-## Task [MATH]: Check theoretical claims in the paper
+### Task [MATH]: Check theoretical claims in the paper
 
-### Work allocation
+#### Work allocation
 
   | Expected Hours | 50% Confidence Interval | # of RAs |
   | -------------- | ----------------------- | -------- |
   | 8              | (2 - 16)                | 2        |
 
-### Goals 
+#### Goals 
 
   *  All nontrivial mathematical claims in the paper are documented.
+     * Check with PI whether it is necessary to check statements within proofs.
 
-  *  By default, this does not include checking statements within proofs. However, PIs should be consulted at the beginning of this task to confirm the desired scope.
+#### Deliverables 
 
-### Deliverables 
+  *  A list of all theoretical claims that are made in the text of the paper that are not supported by proofs in the paper, appendices, or claims.pdf.
+      * For example, we may say, "It is easy to show that equations A, B, and C together imply equation D."
+      * You should not include claims that are completely obvious. We’re looking for things where if somebody came back and said, "I don’t believe this is true" we would need to go back and do at least a couple of lines of algebra to confirm that we’re right.
+   
+## Journals
 
-  *  A list of all theoretical claims that are made in the text of the paper that are not supported by proofs in the paper, appendices, or claims.pdf. For example, we may say, "It is easy to show that equations A, B, and C together imply equation D." You should not include claims that are completely obvious. We’re looking for things where if somebody came back and said, "I don’t believe this is true" we would need to go back and do at least a couple of lines of algebra to confirm that we’re right.
+### Task [REPLY]: Check claims in responses to editor and referees
 
-  *  A version of claims.pdf with comments noting, for each claim, either (i) a place it is referenced in the paper or online appendix, or (ii) that the claim does not appear to be referenced.
-
-## Task [REPLY]: Check claims in responses to editor and referees [R&Rs only]
-
-### Work allocation
+#### Work allocation
 
   | Expected Hours | 50% Confidence Interval | # of RAs |
   | -------------- | ----------------------- | -------- |
   | 8              | (4 - 12)                | 2        |
 
-### Goals
+#### Goals
 
   *  Every question or comment by an editor or referee is addressed directly in the corresponding response letter.
 
   *  Every statement made in a cover letter to the editor or a reply to a referee is correct. If the statement refers to a change to the paper, the paper has changed as indicated since the previous submission. If the statement is a table or figure referenced but not shown in the paper, the table or figure presented to the editor/referee matches a supporting document.
 
-  *  Conduct [PROOF](https://github.com/gslab-econ/ra-manual/wiki/Paper-Production#task-proof-proofread-spelling-grammar-table-references-math-etc) on the cover letter and replies, with a focus on clear errors or issues that would cause confusion. Consistency in style is not that key in replies since they will not be published and are intrinsically transient. 
+  *  Proofread the cover letter and replies, with a focus on clear errors or issues that would cause confusion, rather than on things like consistency in style.
 
-### Deliverables
+#### Deliverables
 
   *  A single pdf document combining the editor’s letter and all referee reports, with all unaddressed comments/questions clearly marked using Adobe Acrobat’s commenting tools.
 
   *  A single pdf document combining all responses to the editor/referees, with all unsupported/incorrect claims and the results from the PROOF clearly marked using Adobe Acrobat’s commenting tools. Please also note the specific table/figure/section number in which claims made in the responses are documented, unless these are already referenced by number.
 
+### Task [GALLEY]: Checking page proofs 
 
-## Task [GALLEY]: Checking galley proofs 
+#### Work allocation
 
-### Work allocation
+  | Expected Hours | 50% Confidence Interval | # of RAs |
+  | -------------- | ----------------------- | -------- |
+  | 8              | (4 - 12)                | 2        |
 
-   *  Consult PIs. 
-
-### Goals 
+#### Goals 
 
   *  We have flagged all errors in translating our submitted manuscript into the journal’s typeset format.
 
+     * The goal here is not to proofread the paper (i.e., not to perform the above-listed production steps), but rather to flag errors introduced in the typesetting process itself.
+
   *  We have a response to all Author Queries (AQs) raised by the journal's production team.
 
-  *  Note in particular that the goal here is not to proofread the paper (i.e., not to perform the above-listed production steps). We presume we will have done that as of the last submission, so the only possible remaining errors are those from typesetting.
 
-### Deliverables 
+#### Deliverables 
 
-  *  A single pdf document that lists all discrepancies between our original typeset manuscript as of the last submission to the journal and the galley proofs using Adobe Acrobat’s commenting tools. Pay special attention to the formatting of tables, figures, and equations, as these are where most discrepancies tend to arise. The pdf comments should be formatted in a manner suitable for direct transmission to the publisher.
-
-  *  In the same pdf document, also comment on anything else that looks like a typo or error that you happen to come across. Note that you should be looking only for discrepancies with respect to the last submission, not doing any other form of proofreading. But if you do notice a probable error along the way it is best to flag it as it may still be possible to correct it.
-
+  *  A single pdf document that lists all discrepancies between our original typeset manuscript as of the last submission to the journal and the page proofs.
+     * Pay special attention to the formatting of tables, figures, and equations, as these are where most discrepancies tend to arise.
+     * The pdf comments should be formatted in a manner suitable for direct transmission to the publisher.
+     * If you happen to notice any typos or errors not introduced during typesetting, you can note these here too.
   *  A list of proposed replies to the AQs formatted in a manner suitable for direct transmission to the publisher. This can be included in the same pdf as above.
