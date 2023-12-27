@@ -1,6 +1,10 @@
 ## Table of Contents
 
 - [Overview](#overview)
+- [Front Matter](#front-matter)
+- [Code and Data](#code-and-data)
+- [Paper](#paper)
+- [Journal](#journal)
 
 ## Overview
 
@@ -234,7 +238,7 @@ Production encompasses the steps we take before we circulate or submit a paper d
       * For example, we may say, "It is easy to show that equations A, B, and C together imply equation D."
       * You should not include claims that are completely obvious. We’re looking for things where if somebody came back and said, "I don’t believe this is true" we would need to go back and do at least a couple of lines of algebra to confirm that we’re right.
    
-## Journals
+## Journal
 
 ### Task [REPLY]: Check claims in responses to editor and referees
 
