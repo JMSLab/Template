@@ -251,6 +251,32 @@ Production encompasses the steps we take before we circulate or submit a paper d
   *  A single pdf document combining the editor’s letter and all referee reports, with all unaddressed comments/questions clearly marked using Adobe Acrobat’s commenting tools.
   *  A single pdf document combining all responses to the editor/referees, with all unsupported/incorrect claims and the results from the PROOF clearly marked using Adobe Acrobat’s commenting tools. Please also note the specific table/figure/section number in which claims made in the responses are documented, unless these are already referenced by number.
 
+### Task [TYPESETTING]: Preparing a paper for typesetting
+
+#### Work allocation
+
+  | Expected Hours | 50% Confidence Interval | # of RAs |
+  | -------------- | ----------------------- | -------- |
+  | 8              | (4 - 12)                | 2        |
+
+#### Goals
+
+* We transmit typesetting files to the journal in a suitable format.
+
+#### Deliverables
+
+* Revised production files (LyX or TeX) for the paper draft that conform to journal style requirements.
+  * If something seems prohibitively difficult to implement, note it for the PI and move on.
+* Outputted ZIP archive suitable for transmission to the journal. How we want to do this will depend on the journal but here is a default approach.
+  * `/source/typesetting` contains `typesetting.py` which outputs to `/output/typesetting/typesetting.zip`
+  * `typesetting.zip` contains
+    * `/source/` with LyX or TeX files
+    * `/refs/` with BIB files or other bibliography files
+    * `/graphics/` with graphics files (EPS or PDF)
+    * `/output/` with compiled paper and appendix (PDF)
+  * It's ideal (but not essential) if files in `/source` can be directly compiled to files in `/output`. For this it may be necessary to add `../graphics` to the [`graphicspath`](http://latexref.xyz/_005cgraphicspath.html) of files in `/source`.
+
+
 ### Task [GALLEY]: Checking page proofs 
 
 #### Work allocation
