@@ -101,7 +101,7 @@ Production encompasses the steps we take before we circulate or submit a paper d
      *  Tolerances on solvers satisfactory
      *  Exit flags for solvers indicate convergence
 
-### Task [COMPILE]: Paper is reproducible
+### Task [COMPILE]: Check reproducibility of paper
 
 #### Work allocation
 
