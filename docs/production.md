@@ -1,3 +1,7 @@
+## Table of Contents
+
+- [Overview](#overview)
+
 ## Overview
 
 Production encompasses the steps we take before we circulate or submit a paper draft. By default everything we say below about _the paper_ applies similarly to the online appendix and any other document that we plan to circulate.
