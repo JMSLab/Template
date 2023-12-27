@@ -20,6 +20,7 @@ Production encompasses the steps we take before we circulate or submit a paper d
 * When producing task deliverables:
    * Post them in the relevant issue branch and tag the PI.
    * Make them clear and readable but don't worry about making them pretty.
+   * Use Adobe Acrobat commenting tools when commenting on a PDF.
    * If possible, ask the task lead to consolidate different sets of comments into a single list or PDF.
 
 ## Task [PRESS]: Notify university communications office
@@ -37,15 +38,18 @@ Production encompasses the steps we take before we circulate or submit a paper d
 ### Goals 
 
   *  Data sources are acknowledged in a manner consistent with our agreement with the data provider.
+  
   *  Data providers are provided with advanced notice when required by DUAs.
+
+  *  Data sources and user agreements are clearly indicated in the readme and /docs of the raw data directories.
 
 ### Deliverables 
 
-  *  A single pdf document with proposed changes to acknowledgments clearly marked using Adobe Acrobat’s commenting tools. Comments should identify acknowledgments that need to be added along with proposed wording, as well as proposed revisions to existing acknowledgments. Comments should identify the source in the repository of the relevant user agreement.
+  *  A single pdf document with proposed changes to acknowledgments, including information on the location of the relevant DUA in the repository.
 
-  *  Data sources and user agreements should be clearly indicated in the readme and /docs of the raw data directories used by the project. The raw data directories should be updated if this is not the case.
+  *  A list for PI of updates to raw data documentation.
 
-  *  A list for PIs of any DUAs that require that we notify someone in advance of posting/submission, and the language giving the details of whom/how/when to notify.
+  *  A list for PI of any DUAs that require that we notify someone in advance of posting/submission, and the language giving the details of whom/how/when to notify.
 
 
 ## Task [NUMERICAL]: Check accuracy of numerical procedures
@@ -114,7 +118,7 @@ Production encompasses the steps we take before we circulate or submit a paper d
 
   *  Open a pull request assigned to PI and include a link to a PDF diff.
 
-## Task [PROOF]: Proofread spelling, grammar, table references, math, etc. 
+## Task [PROOF]: Proofread
 
 ### Work allocation
 
@@ -124,23 +128,23 @@ Production encompasses the steps we take before we circulate or submit a paper d
 
 ### Goals 
 
-  *  Typos, spelling/grammar errors, unclear wording, etc. corrected (don’t forget to include table notes, figure notes, footnotes, axis labels, appendices, etc.)
+  *  There are no typos, spelling or grammatical errors, unclear wording, including in table notes, figure notes, footnotes, axis labels, appendices, etc.
 
-  *  Follow rules outlined in [paper style guide](https://github.com/gslab-econ/ra-manual/wiki/Papers)
+     * We use a "conversational" rule to decide where to put commas. There is no need to flag commas to be added or subtracted unless there is a clear typo or a significant issue of clarity or ambiguity.
 
-  *  References to any sections of the paper or tables or figures check out, in the sense that the referenced object exists and seems to have the information promised by the reference
+  *  Capitalization and other style choices are internally consistent. If not, please indicate which is the most common convention.
 
-  *  Titles of sections, tables, figures, etc. are clear, descriptive
+  *  Cross-references (e.g. to sections, tables, figures, etc.) check out, in the sense that the referenced object exists and seems to have the information promised by the reference.
+
+  *  Titles of sections, tables, figures, etc. are clear and descriptive.
 
   *  Variable names, notation, and other concepts are used consistently; the same notation is never used to refer to two different things
 
-  *  This task does not extend to (if extant) the cover letter and referee replies.  
-
 ### Deliverables
 
-  *  If you notice a recurring issue, let PIs know immediately via comment thread, and provide examples in the thread. PIs will weigh in with instructions to (i) address the issue throughout; (ii) ignore; (iii) do not change but flag all instances in the final deliverable. MG/JMS will also instruct on whether the  [paper style guide](https://github.com/gslab-econ/ra-manual/wiki/Papers) should be updated to clarify the issue.
+  *  If you notice a recurring issue, let PI know immediately via comment thread, and provide examples in the thread. If it is an internal inconsistency, please indicate which style choice is most common.
 
-  *  A single pdf document with all changes/comments clearly marked using Adobe Acrobat’s commenting tools. Recurring issues are flagged individually only if requested by PIs per the preceding.
+  *  A single pdf document with all suggested changes / comments. Recurring issues are flagged individually only if requested by PI per the preceding.
 
 ## Task [FACT]: Check all factual claims made in the paper 
 
@@ -152,11 +156,9 @@ Production encompasses the steps we take before we circulate or submit a paper d
 
 ### Goals 
 
-  *  Every quantitative/factual claim made in the paper is either [autofilled](https://github.com/gslab-econ/ra-manual/wiki/Autofilling-Values) or is supported by (i) a citation, (ii) an entry in a table, (iii) a figure, or (iv) a result shown in a supporting pdf document within the drafts directory (e.g., text.pdf). Log files external to the drafts do not qualify as supporting documents.
-
-  *  If a fact is supported by a citation, it is not necessary to check the paper or book we are citing to verify that it contains the fact.
-
-  *  All tables/figures in text.pdf (or its analogues) are referenced at least once in the paper or online appendix. (If a table reports many numbers or a figure has many panels, it is sufficient that at least one number or one panel is referenced somewhere in the paper or online appendix.)
+  *  Every quantitative/factual claim made in the paper is either autofilled or is supported by a citation or cross-reference within the paper.
+      * Log files or other files external to the paper do not qualify.
+      * If a fact is supported by a citation, it is not necessary to check the paper or book we are citing to verify that it contains the fact.
 
   *  All content (tables/figures/discussion) in the online appendix or main appendix is referenced at least once in the paper.
 
@@ -164,13 +166,7 @@ Production encompasses the steps we take before we circulate or submit a paper d
 
 ### Deliverables
 
-  *  A single pdf document with all unsupported claims clearly marked using Adobe Acrobat’s commenting tools and all claims supported externally (e.g. in text.pdf or online.pdf) highlighted with a note stating where they are supported (e.g. “supported in online appendix table 6.”)
-
-  *  A version of text.pdf with comments noting, for each table and figure, either (i) a place it is referenced in the paper or online appendix, or (ii) that the table or figure does not appear to be referenced.
-
-  *  A version of the online appendix with comments noting, for each table and figure, either (i) a place it is referenced in the paper or online appendix, or (ii) that the table or figure does not appear to be referenced, as well as whether the object is in the correct position.
- 
-  * Versions of the preceding files labeled "for attention" that include only flags for items that need review.
+  *  A single pdf document that marks all unsupported claims and unreferenced content in the online appendix.w.
 
 ## Task [DEF]: Check sample and variable definitions 
 
