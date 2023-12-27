@@ -23,19 +23,21 @@ Production encompasses the steps we take before we circulate or submit a paper d
    * Use Adobe Acrobat commenting tools when commenting on a PDF.
    * If possible, ask the task lead to consolidate different sets of comments into a single list or PDF.
 
-## Task [PRESS]: Notify university communications office
+## Front Matter
+
+### Task [PRESS]: Notify university communications office
  
    * Check with PIs whether this is needed
 
-## Task [SOURCE]: Check acknowledgment of sources and review requirements
+### Task [SOURCE]: Check acknowledgment of sources and review requirements
 
-### Work allocation
+#### Work allocation
    
   | Expected Hours | 50% Confidence Interval | # of RAs |
   | -------------- | ----------------------- | -------- |
   | 1              | (0.5 - 5)               | 1        |
 
-### Goals 
+#### Goals 
 
   *  Data sources are acknowledged in a manner consistent with our agreement with the data provider.
   
@@ -43,7 +45,7 @@ Production encompasses the steps we take before we circulate or submit a paper d
 
   *  Data sources and user agreements are clearly indicated in the readme and /docs of the raw data directories.
 
-### Deliverables 
+#### Deliverables 
 
   *  A single pdf document with proposed changes to acknowledgments, including information on the location of the relevant DUA in the repository.
 
@@ -51,20 +53,47 @@ Production encompasses the steps we take before we circulate or submit a paper d
 
   *  A list for PI of any DUAs that require that we notify someone in advance of posting/submission, and the language giving the details of whom/how/when to notify.
 
+### Task [THANK]: Check acknowledgment of comments and funding
 
-## Task [NUMERICAL]: Check accuracy of numerical procedures
+#### Work allocation
 
-### Work allocation
+  | Expected Hours | 50% Confidence Interval | # of RAs |
+  | -------------- | ----------------------- | -------- |
+  | 1              | (0.5 - 2)               | 1        |
+
+#### Goals 
+
+  *  Funding sources are acknowledged.
+
+  *  Seminar participants and those who provided comments are acknowledged.
+
+  *  Research assistants acknowledged.
+
+      * Default language: "We thank our dedicated research assistants for their contributions to this project."
+
+#### Deliverables
+
+  *  A list of unacknowledged sources of funding and comments.
+    
+     *  To catch unacknowledged comments, check the project wiki.
+       
+     *  To catch unacknowledged funding sources, make a list of the funding sources acknowledged in each author's recent papers, excluding those already thanked here, and show each author this list to see if one or more of the sources should be thanked.
+
+## Code and Data
+
+### Task [NUMERICAL]: Check accuracy of numerical procedures
+
+#### Work allocation
 
   | Expected Hours | 50% Confidence Interval | # of RAs |
   | -------------- | ----------------------- | -------- |
   | 2              | (0.5 - 4)               | 1        | 
 
-### Goals 
+#### Goals 
 
   *  Calculations have sufficient accuracy.
 
-### Deliverables
+#### Deliverables
 
   * Check the below and notify the PI of any suggested changes.
      *  Bootstraps and simulations run with sufficiently high number of draws
@@ -72,31 +101,80 @@ Production encompasses the steps we take before we circulate or submit a paper d
      *  Tolerances on solvers satisfactory
      *  Exit flags for solvers indicate convergence
 
-## Task [COMPILE]: Paper is reproducible
+### Task [COMPILE]: Paper is reproducible
 
-### Work allocation
+#### Work allocation
 
   | Expected Hours | 50% Confidence Interval | # of RAs |
   | -------------- | ----------------------- | -------- |
   | 4              | (2 - 6)                 | 1        |
 
-### Goals
+#### Goals
 
   *  Paper would be unchanged if recompiled from scratch.
 
-### Deliverables 
+#### Deliverables 
 
   * A list of any source/targets specified incorrectly and any directories that need to be recompiled.
 
-## Task [REF]: Check/update references
+### Task [DEF]: Check sample and variable definitions 
 
-### Work allocation
+#### Work allocation
+
+  | Expected Hours | 50% Confidence Interval | # of RAs |
+  | -------------- | ----------------------- | -------- |
+  | 6              | (4 - 8)                 | 1        |
+
+#### Goals
+
+  *  Main statements made in paper about definitions of samples and variables are consistent with code.
+
+  *  Checking every variable and sample definition can for some projects take a large amount of time. By default, this task should be limited to a single person-day of work. Unless specifically directed otherwise, you should focus on checking the definition of the main sample(s) in the paper and variables in the core specification(s), and either ignore or just spot-check robustness analyses, supplemental analyses in appendices, etc.
+
+#### Deliverables 
+
+  *  A list of any inconsistencies between text and code
+
+## Paper
+
+### Task [PROOF]: Proofread
+
+#### Work allocation
+
+  | Expected Hours | 50% Confidence Interval | # of RAs |
+  | -------------- | ----------------------- | -------- |
+  | 16             | (8 - 24)                | 2        |
+
+#### Goals 
+
+  *  There are no typos, spelling or grammatical errors, unclear wording, including in table notes, figure notes, footnotes, axis labels, appendices, etc.
+
+     * We use a "conversational" rule to decide where to put commas. There is no need to flag commas to be added or subtracted unless there is a clear typo or a significant issue of clarity or ambiguity.
+
+  *  Capitalization and other style choices are internally consistent. If not, please indicate which is the most common convention.
+
+  *  Cross-references (e.g. to sections, tables, figures, etc.) check out, in the sense that the referenced object exists and seems to have the information promised by the reference.
+
+  *  Titles of sections, tables, figures, etc. are clear and descriptive.
+
+  *  Variable names, notation, and other concepts are used consistently; the same notation is never used to refer to two different things
+
+#### Deliverables
+
+  *  If you notice a recurring issue, let PI know immediately via comment thread, and provide examples in the thread. If it is an internal inconsistency, please indicate which style choice is most common.
+
+  *  A single pdf document with all suggested changes / comments. Recurring issues are flagged individually only if requested by PI per the preceding.
+
+
+### Task [REF]: Check/update references
+
+#### Work allocation
 
   | Expected Hours | 50% Confidence Interval | # of RAs |
   | -------------- | ----------------------- | -------- |
   | 4              | (2 - 6)                 | 1        |
 
-### Goals  
+#### Goals  
 
   *  All citations in the text match references in the bibliography.
  
@@ -112,49 +190,21 @@ Production encompasses the steps we take before we circulate or submit a paper d
 
   *  URLs in the references list are stable or are saved in the [internet archive](https://web.archive.org/). (References list can still use the original URL rather than the archive URL, but in these cases it is good to include a hidden comment with a link to the internet archive version.)
 
-### Deliverables 
+#### Deliverables 
 
   *  Revised paper and bibliography file. (Edits can be made directly.)
 
   *  Open a pull request assigned to PI and include a link to a PDF diff.
 
-## Task [PROOF]: Proofread
+### Task [FACT]: Check all factual claims made in the paper 
 
-### Work allocation
-
-  | Expected Hours | 50% Confidence Interval | # of RAs |
-  | -------------- | ----------------------- | -------- |
-  | 16             | (8 - 24)                | 2        |
-
-### Goals 
-
-  *  There are no typos, spelling or grammatical errors, unclear wording, including in table notes, figure notes, footnotes, axis labels, appendices, etc.
-
-     * We use a "conversational" rule to decide where to put commas. There is no need to flag commas to be added or subtracted unless there is a clear typo or a significant issue of clarity or ambiguity.
-
-  *  Capitalization and other style choices are internally consistent. If not, please indicate which is the most common convention.
-
-  *  Cross-references (e.g. to sections, tables, figures, etc.) check out, in the sense that the referenced object exists and seems to have the information promised by the reference.
-
-  *  Titles of sections, tables, figures, etc. are clear and descriptive.
-
-  *  Variable names, notation, and other concepts are used consistently; the same notation is never used to refer to two different things
-
-### Deliverables
-
-  *  If you notice a recurring issue, let PI know immediately via comment thread, and provide examples in the thread. If it is an internal inconsistency, please indicate which style choice is most common.
-
-  *  A single pdf document with all suggested changes / comments. Recurring issues are flagged individually only if requested by PI per the preceding.
-
-## Task [FACT]: Check all factual claims made in the paper 
-
-### Work allocation
+#### Work allocation
 
   | Expected Hours | 50% Confidence Interval | # of RAs |
   | -------------- | ----------------------- | -------- |
   | 6              | (4 - 8)                 | 2        |
 
-### Goals 
+#### Goals 
 
   *  Every quantitative/factual claim made in the paper is either autofilled or is supported by a citation or cross-reference within the paper.
       * Log files or other files external to the paper do not qualify.
@@ -164,54 +214,9 @@ Production encompasses the steps we take before we circulate or submit a paper d
 
   *  Within each section (tables/figures/discussion) of the online appendix, content appears in the order in which it is referenced in the paper.
 
-### Deliverables
+#### Deliverables
 
-  *  A single pdf document that marks all unsupported claims and unreferenced content in the online appendix.w.
-
-## Task [DEF]: Check sample and variable definitions 
-
-### Work allocation
-
-  | Expected Hours | 50% Confidence Interval | # of RAs |
-  | -------------- | ----------------------- | -------- |
-  | 6              | (4 - 8)                 | 1        |
-
-### Goals
-
-  *  Main statements made in paper about definitions of samples and variables are consistent with code.
-
-  *  Checking every variable and sample definition can for some projects take a large amount of time. By default, this task should be limited to a single person-day of work. Unless specifically directed otherwise, you should focus on checking the definition of the main sample(s) in the paper and variables in the core specification(s), and either ignore or just spot-check robustness analyses, supplemental analyses in appendices, etc.
-
-### Deliverables 
-
-  *  A list of any inconsistencies between text and code
-
-## Task [THANK]: Check acknowledgment of comments and funding
-
-### Work allocation
-
-  | Expected Hours | 50% Confidence Interval | # of RAs |
-  | -------------- | ----------------------- | -------- |
-  | 1              | (0.5 - 2)               | 1        |
-
-### Goals 
-
-  *  Funding sources are acknowledged.
-
-  *  Seminar participants and those who provided comments are acknowledged.
-
-  *  RAs / predocs are acknowledged (default language: "We thank our dedicated research assistants for their contributions to this project.")
-
-
-### Deliverables
-
-  *  A list of unacknowledged sources of funding and comments.
-
-  *  Notes:
-
-     *  To catch unacknowledged comments, check the project wiki.
-
-     *  To catch unacknowledged funding sources, make a list of the funding sources acknowledged in each author's recent papers, excluding those already thanked here, and show each author this list to see if one or more of the sources should be thanked.
+  *  A single pdf document that marks all unsupported claims and unreferenced content in the online appendix.
 
 ## Task [PLOT]: Check printing of plots in black and white 
 
