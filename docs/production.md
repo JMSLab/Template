@@ -40,17 +40,13 @@ Production encompasses the steps we take before we circulate or submit a paper d
 #### Goals 
 
   *  Data sources are acknowledged in a manner consistent with our agreement with the data provider.
-  
   *  Data providers are provided with advanced notice when required by DUAs.
-
   *  Data sources and user agreements are clearly indicated in the readme and /docs of the raw data directories.
 
 #### Deliverables 
 
   *  A single pdf document with proposed changes to acknowledgments, including information on the location of the relevant DUA in the repository.
-
   *  A list for PI of updates to raw data documentation.
-
   *  A list for PI of any DUAs that require that we notify someone in advance of posting/submission, and the language giving the details of whom/how/when to notify.
 
 ### Task [THANK]: Check acknowledgment of comments and funding
@@ -64,19 +60,14 @@ Production encompasses the steps we take before we circulate or submit a paper d
 #### Goals 
 
   *  Funding sources are acknowledged.
-
   *  Seminar participants and those who provided comments are acknowledged.
-
   *  Research assistants acknowledged.
-
       * Default language: "We thank our dedicated research assistants for their contributions to this project."
 
 #### Deliverables
 
   *  A list of unacknowledged sources of funding and comments.
-    
      *  To catch unacknowledged comments, check the project wiki.
-       
      *  To catch unacknowledged funding sources, make a list of the funding sources acknowledged in each author's recent papers, excluding those already thanked here, and show each author this list to see if one or more of the sources should be thanked.
 
 ## Code and Data
@@ -128,7 +119,6 @@ Production encompasses the steps we take before we circulate or submit a paper d
 #### Goals
 
   *  Main statements made in paper about definitions of samples and variables are consistent with code.
-
   *  Checking every variable and sample definition can for some projects take a large amount of time. By default, this task should be limited to a single person-day of work. Unless PI notes otherwise, you should focus on checking the definition of the main sample(s) in the paper and variables in the core specification(s), and either ignore or just spot-check robustness analyses, supplemental analyses in appendices, etc.
 
 #### Deliverables 
@@ -148,21 +138,15 @@ Production encompasses the steps we take before we circulate or submit a paper d
 #### Goals 
 
   *  There are no typos, spelling or grammatical errors, unclear wording, including in table notes, figure notes, footnotes, axis labels, appendices, etc.
-
      * We use a "conversational" rule to decide where to put commas. There is no need to flag commas to be added or subtracted unless there is a clear typo or a significant issue of clarity or ambiguity.
-
   *  Capitalization and other style choices are internally consistent. If not, please indicate which is the most common convention.
-
   *  Cross-references (e.g. to sections, tables, figures, etc.) check out, in the sense that the referenced object exists and seems to have the information promised by the reference.
-
   *  Titles of sections, tables, figures, etc. are clear and descriptive.
-
   *  Variable names, notation, and other concepts are used consistently; the same notation is never used to refer to two different things
 
 #### Deliverables
 
   *  If you notice a recurring issue, let PI know immediately via comment thread, and provide examples in the thread. If it is an internal inconsistency, please indicate which style choice is most common.
-
   *  A single pdf document with all suggested changes / comments. Recurring issues are flagged individually only if requested by PI per the preceding.
 
 
@@ -177,23 +161,16 @@ Production encompasses the steps we take before we circulate or submit a paper d
 #### Goals  
 
   *  All citations in the text match references in the bibliography.
- 
   *  All references in the bibliography are cited somewhere in the text.
-
   *  Online appendix references include only those citations not present in the main document.
-
   *  Citations and bibliography use a consistent style. (It is not important which style guide we follow, just that we are consistent.)
-
   *  Working papers cited have not been published and are not listed as forthcoming on the authors' homepages.
-
   *  Access dates are given for all URLs.
-
   *  URLs in the references list are stable or are saved in the [internet archive](https://web.archive.org/). (References list can still use the original URL rather than the archive URL, but in these cases it is good to include a hidden comment with a link to the internet archive version.)
 
 #### Deliverables 
 
   *  Revised paper and bibliography file. (Edits can be made directly.)
-
   *  Open a pull request assigned to PI and include a link to a PDF diff.
 
 ### Task [FACT]: Check all factual claims made in the paper 
@@ -209,9 +186,7 @@ Production encompasses the steps we take before we circulate or submit a paper d
   *  Every quantitative/factual claim made in the paper is either autofilled or is supported by a citation or cross-reference within the paper.
       * Log files or other files external to the paper do not qualify.
       * If a fact is supported by a citation, it is not necessary to check the paper or book we are citing to verify that it contains the fact.
-
   *  All content (tables/figures/discussion) in the online appendix or main appendix is referenced at least once in the paper.
-
   *  Within each section (tables/figures/discussion) of the online appendix, content appears in the order in which it is referenced in the paper.
 
 #### Deliverables
@@ -229,7 +204,6 @@ Production encompasses the steps we take before we circulate or submit a paper d
 #### Goals 
 
   *  Color plots print well in black and white; markers are sufficiently distinct
-
   *  Plots adhere to [Schwabish (2014)](https://www.jstor.org/stable/43193723) principles.
 
 #### Deliverables 
@@ -269,15 +243,12 @@ Production encompasses the steps we take before we circulate or submit a paper d
 #### Goals
 
   *  Every question or comment by an editor or referee is addressed directly in the corresponding response letter.
-
   *  Every statement made in a cover letter to the editor or a reply to a referee is correct. If the statement refers to a change to the paper, the paper has changed as indicated since the previous submission. If the statement is a table or figure referenced but not shown in the paper, the table or figure presented to the editor/referee matches a supporting document.
-
   *  Proofread the cover letter and replies, with a focus on clear errors or issues that would cause confusion, rather than on things like consistency in style.
 
 #### Deliverables
 
   *  A single pdf document combining the editor’s letter and all referee reports, with all unaddressed comments/questions clearly marked using Adobe Acrobat’s commenting tools.
-
   *  A single pdf document combining all responses to the editor/referees, with all unsupported/incorrect claims and the results from the PROOF clearly marked using Adobe Acrobat’s commenting tools. Please also note the specific table/figure/section number in which claims made in the responses are documented, unless these are already referenced by number.
 
 ### Task [GALLEY]: Checking page proofs 
@@ -291,11 +262,8 @@ Production encompasses the steps we take before we circulate or submit a paper d
 #### Goals 
 
   *  We have flagged all errors in translating our submitted manuscript into the journal’s typeset format.
-
      * The goal here is not to proofread the paper (i.e., not to perform the above-listed production steps), but rather to flag errors introduced in the typesetting process itself.
-
   *  We have a response to all Author Queries (AQs) raised by the journal's production team.
-
 
 #### Deliverables 
 
