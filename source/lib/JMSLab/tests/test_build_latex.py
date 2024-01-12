@@ -13,7 +13,6 @@ from . import _side_effects as fx
 
 from ..builders.build_latex import build_latex, LatexBuilder
 from .._exception_classes import ExecCallError
-from .. import misc
 
 # Define path to the builder for use in patching
 path = 'JMSLab.builders.build_latex'
