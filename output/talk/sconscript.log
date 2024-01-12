@@ -1,5 +1,5 @@
-*** Builder log created: {2023-12-22 12:12:15}
-*** Builder log completed: {2023-12-22 12:12:41}
+*** Builder log created: {2024-01-12 15:09:04}
+*** Builder log completed: {2024-01-12 15:09:13}
 This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex)
  restricted \write18 enabled.
 entering extended mode
@@ -182,7 +182,18 @@ y)
 (/usr/local/texlive/2021/texmf-dist/tex/latex/beamer/beamerinnerthemedefault.st
 y)
 (/usr/local/texlive/2021/texmf-dist/tex/latex/beamer/beamerouterthemedefault.st
-y)))
+y))) (/usr/local/texlive/2021/texmf-dist/tex/latex/currfile/currfile.sty
+(/usr/local/texlive/2021/texmf-dist/tex/latex/filehook/filehook.sty
+(/usr/local/texlive/2021/texmf-dist/tex/latex/filehook/filehook-2020.sty))
+(/usr/local/texlive/2021/texmf-dist/tex/latex/currfile/currfile-abspath.sty)
+
+Package currfile-abspath Warning: The required recorder file (.fls) was not fou
+nd.
+(currfile-abspath)                Please compile with the '-recorder' option.
+(currfile-abspath)                Note that MikTeX requires two compiler runs.
+(currfile-abspath)                Occurred on input line 292.
+
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/base/ifthen.sty)
 (/usr/local/texlive/2021/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def)
 (./output/talk/TemplateSlidesLatex.aux)
 *geometry* driver: auto-detecting
@@ -212,10 +223,11 @@ live/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
 (/usr/local/texlive/2021/texmf-dist/tex/latex/amsfonts/umsa.fd)
 (/usr/local/texlive/2021/texmf-dist/tex/latex/amsfonts/umsb.fd)
 (/usr/local/texlive/2021/texmf-dist/tex/latex/sansmathaccent/ot1mathkerncmss.fd
-) [3] (./output/talk/TemplateSlidesLatex.aux) )</usr/local/texlive/2021/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/2021/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/local/texlive/2021/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/texlive/2021/texmf-dist/
-fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on output/talk/TemplateSlidesLatex.pdf (3 pages, 40536 bytes).
+) [3] [4 <./output/analysis/plots/gdp_educ.png (PNG copy)>]
+(./output/talk/TemplateSlidesLatex.aux) )</usr/local/texlive/2021/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/2021/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmss12.pfb></usr/local/texlive/2021/texmf-dist/font
+s/type1/public/amsfonts/cm/cmss8.pfb></usr/local/texlive/2021/texmf-dist/fonts/
+type1/public/amsfonts/symbols/msam10.pfb>
+Output written on output/talk/TemplateSlidesLatex.pdf (4 pages, 128269 bytes).
 Transcript written on output/talk/TemplateSlidesLatex.log.
