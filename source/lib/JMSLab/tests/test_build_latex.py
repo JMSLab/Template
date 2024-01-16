@@ -24,7 +24,7 @@ shutil_patch = mock.patch('%s.shutil.copy2' % path)
 TESTDIR = Path(__file__).resolve().parent
 os.chdir(TESTDIR)
 
-        
+   
 class TestBuildLateX(unittest.TestCase):
 
     def setUp(self):
@@ -149,8 +149,56 @@ class TestBuildLateX(unittest.TestCase):
         with self.assertRaises(ValueError):
             build_latex(target = ['path_to_clean.pdf'],
                         source = ['input/lyx_test_file.tex'],
-                        env = {'HANDOUT_SFIX': '_'}) 
-                      
+                        env = {'HANDOUT_SFIX': '_'})
+            
+    @subprocess_patch
+    def test_handout_option(self, mock_check_output):
+        '''
+        Test that build_latex() behaves correctly when provided with
+        standard inputs.
+        '''
+        with shutil_patch as mock_shutil:
+            mock_shutil.side_effect = fx.shutil_copy2_effect
+            mock_check_output.side_effect = fx.latex_side_effect
+            
+            source = ['input/latex_test_file.tex']
+            target = ['build/path_to_clean.pdf', 
+                      'build/path_to_handout_.pdf',
+                      'build/path_to_handout__.pdf']
+            
+            helpers.standard_test(self, build_latex, 'tex',
+                                  system_mock = mock_check_output,
+                                  source      = source,
+                                  target      = target,
+                                  env         = {'HANDOUT_SFIX': '_'},
+                                  nsyscalls   = 6)
+    
+            self.assertTrue(os.path.isfile(target[0]))
+            self.assertTrue(os.path.isfile(target[1]))
+            self.assertTrue(os.path.isfile(target[2]))
+         
+    @subprocess_patch
+    def test_handout_default(self, mock_check_output):
+        
+        with shutil_patch as mock_shutil:
+            mock_shutil.side_effect = fx.shutil_copy2_effect
+            mock_check_output.side_effect = fx.latex_side_effect
+    
+            target = ['build/path_to_clean.pdf', 
+                      'build/path_to_handout_.pdf',
+                      'build/path_to_handout__.pdf']
+            source = ['input/latex_test_file.tex']
+        
+            helpers.standard_test(self, build_latex, 'latex',
+                                  system_mock = mock_check_output,
+                                  target = target,
+                                  source = source, 
+                                  nsyscalls = 6)
+        
+            self.assertTrue(os.path.isfile(target[0]))
+            self.assertTrue(os.path.isfile(target[1]))
+            self.assertTrue(os.path.isfile(target[2]))
+            
             
     def tearDown(self):
         shutil.rmtree(TESTDIR / 'build')

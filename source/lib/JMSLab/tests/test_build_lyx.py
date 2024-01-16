@@ -6,7 +6,6 @@ from pathlib import Path
 import unittest
 import shutil
 import os
-from .. import misc
 
 # Import testing helper modules
 from . import _test_helpers as helpers
@@ -26,31 +25,6 @@ shutil_patch = mock.patch('%s.shutil.copy2' % path)
 TESTDIR = Path(__file__).resolve().parent
 os.chdir(TESTDIR)
 
-
-def handout_standard_test(test_object, builder,
-                  extension   = None,
-                  system_mock = None,
-                  source      = None,
-                  target      = 'test_output.txt',
-                  env         = {}):
-    '''Test that builders run without errors and create logs properly.'''
-    if not source:
-        source = 'input/test_script.%s' % extension
-
-    builder(source = source, target = target, env = env)
-
-    if isinstance(target, str):
-        log_directory = misc.get_directory(target)
-    else:
-        log_directory = misc.get_directory(target[0])
-
-    log_path = os.path.join(log_directory, 'sconscript.log')
-    helpers.check_log(test_object, log_path)
-
-    if system_mock:
-        assert system_mock.call_count == 2
-        system_mock.reset_mock()
-        
 
 class TestBuildLyX(unittest.TestCase):
 
@@ -166,11 +140,13 @@ class TestBuildLyX(unittest.TestCase):
                       'build/path_to_handout__.pdf']
             source = ['input/lyx_test_file.lyx']
             
-            handout_standard_test(self, build_lyx, 'lyx',
+            helpers.standard_test(self, build_lyx, 'lyx',
                                   system_mock = mock_check_output,
                                   target = target,
                                   source = source,
-                                  env = {'HANDOUT_SFIX': '_'})
+                                  env = {'HANDOUT_SFIX': '_'}, 
+                                  nsyscalls = 2)
+            
             self.assertTrue(os.path.isfile(target[0]))
             self.assertTrue(os.path.isfile(target[1]))
             self.assertTrue(os.path.isfile(target[2]))
@@ -187,10 +163,12 @@ class TestBuildLyX(unittest.TestCase):
                       'build/path_to_handout__.pdf']
             source = ['input/lyx_test_file.lyx']
             
-            handout_standard_test(self, build_lyx, 'lyx',
+            helpers.standard_test(self, build_lyx, 'lyx',
                                   system_mock = mock_check_output,
                                   target = target,
-                                  source = source)
+                                  source = source, 
+                                  nsyscalls = 2)
+            
             self.assertTrue(os.path.isfile(target[0]))
             self.assertTrue(os.path.isfile(target[1]))
             self.assertTrue(os.path.isfile(target[2]))

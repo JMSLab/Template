@@ -179,7 +179,7 @@ def lyx_side_effect(*args, **kwargs):
 
 def shutil_copy2_effect(*args, **kwargs):
 
-    existing_files = ['input/lyx_test_file.lyx', 'build/path_to_clean.pdf']
+    existing_files = ['input/lyx_test_file.lyx', 'input/latex_test_file.tex', 'build/path_to_clean.pdf']
     source_exists  = os.path.abspath(args[0]) in \
         map(os.path.abspath, existing_files)
 
