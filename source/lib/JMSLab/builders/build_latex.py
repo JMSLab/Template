@@ -1,5 +1,8 @@
 import subprocess
 import os
+import re
+import shutil
+import fileinput
 
 from .. import misc
 from .executables import get_executable
@@ -30,7 +33,7 @@ def build_latex(target, source, env):
     }
     builder = LatexBuilder(target, source, env, **builder_attributes)
     builder.add_out_name(target)
-    builder.execute_system_call(target, source)
+    builder.execute_system_call(target, source, env)
     return None
 
 
@@ -47,7 +50,83 @@ class LatexBuilder(JMSLabBuilder):
                                   os.path.normpath(self.log_file))
         self.call_args = args
         return None
-     
+    
+    
+    def check_handout(self, target, env):
+        
+        self.checked_handout = False
+        target_list = misc.make_list_if_string(target)
+        handout_sfix = '' if 'HANDOUT_SFIX' not in env else env['HANDOUT_SFIX']
+        
+        if target_list[0] in target_list[1:]:
+            raise ValueError(
+                'Error: Duplicate targets')
+            
+        if len(target_list) == 1:
+             if bool(handout_sfix):
+                 raise ValueError(
+                     'Error: HANDOUT_SFIX non-empty but only one target specified.')
+        
+        elif len(target_list) > 1:
+            handout_flag = handout_sfix + '.pdf'
+            handout_target_list = [x for x in target_list[1:]
+                                   if str(x).lower().endswith(handout_flag.lower())]
+                
+            if not bool(handout_target_list):
+                raise ValueError('Error: No valid targets contain handout suffix.')
+            
+            self.main_target = target_list[0]
+            self.handout_target_list = handout_target_list
+            self.create_handout()
+            
+            self.checked_handout = True
+          
+        else:
+            pass      
+        
+        return None
+
+    def create_handout(self):
+        '''
+        If beamer document class, show notes.
+        '''   
+        
+        self.handout_out = os.path.splitext(str(self.main_target))[0]
+        self.handout_in  = os.path.splitext(self.source_file)[0] + '.handout.tex' 
+
+        shutil.copy2(self.source_file, self.handout_in)
+        beamer = False
+        for line in fileinput.input(self.handout_in, inplace = True):
+            if bool(re.search(r'\\documentclass.*{beamer}', line)):
+                beamer = True
+            elif bool(re.search(r'\\setbeameroption.*{hide notes}', line)) and beamer:
+                line = line.replace('hide notes', 'show notes')
+            print(line, end='')
+        
+        args = '%s %s %s > %s' % (self.handout_out,
+                                self.handout_in,
+                                self.cl_arg,
+                                os.path.normpath(self.log_file))
+        
+        self.handout_args = args
+        self.handout_call = '%s %s %s' % (self.executable, 
+                                          self.exec_opts, 
+                                          self.handout_args)
+
+        return None
+
+
+    def cleanup_handout(self):
+        '''
+        Copy handout pdf to desired locations.
+        Remove intermediate files.
+        '''
+        for x in self.handout_target_list:
+            shutil.copy2(str(self.handout_out) + '.pdf', str(x))
+        os.remove(self.handout_in)
+        return None
+    
+    
     def add_out_name(self, target):
         if bool(target):
             target        = misc.make_list_if_string(target)
@@ -83,53 +162,61 @@ class LatexBuilder(JMSLabBuilder):
             except FileNotFoundError:
                 continue
             
-    def do_call(self, target, source):
+    def do_call(self, target, source, env):
         '''
         Acutally execute the system call attribute.
         Raise an informative exception on error.
         '''
         
-        self.check_bib(source)
-
-        if self.checked_bib:
-
-            self.bibtex_executable  = get_executable('bibtex')
-            
-            self.bibtex_system_call = '%s %s' % (self.bibtex_executable, self.out_name)
-                    
-            self.cleanup()
-            traceback = ''
-            raise_system_call_exception = False
-            try:
-                subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
-                subprocess.check_output(self.bibtex_system_call, shell = True, stderr = subprocess.STDOUT)
-                subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
-                subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
-            except subprocess.CalledProcessError as ex:
-                traceback = ex.output
-                raise_system_call_exception = True
-
-            self.cleanup()
-            if raise_system_call_exception:
-                self.raise_system_call_exception(traceback = traceback)
-        else:
-            self.cleanup()
-            traceback = ''
-            raise_system_call_exception = False
-            try:
-                subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
-                subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
-                subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
-            except subprocess.CalledProcessError as ex:
-                traceback = ex.output
-                raise_system_call_exception = True
-            self.cleanup()
-            if raise_system_call_exception:
-                self.raise_system_call_exception(traceback = traceback)
-     
-        return None
+        self.check_bib(source) 
+        self.check_handout(target, env)
         
-    def execute_system_call(self, target, source):
+        if self.checked_handout:
+               
+            self.cleanup()
+            traceback = ''
+            raise_system_call_exception = False
+            try:
+                subprocess.check_output(self.handout_call, shell = True, stderr = subprocess.STDOUT)
+                if self.checked_bib:
+                    self.bibtex_executable  = get_executable('bibtex')
+                    self.bibtex_system_call = '%s %s' % (self.bibtex_executable, self.out_name)
+                    subprocess.check_output(self.bibtex_system_call, shell = True, stderr = subprocess.STDOUT)
+                subprocess.check_output(self.handout_call, shell = True, stderr = subprocess.STDOUT)
+                subprocess.check_output(self.handout_call, shell = True, stderr = subprocess.STDOUT)
+            except subprocess.CalledProcessError as ex:
+                traceback = ex.output
+                raise_system_call_exception = True
+            
+            self.cleanup_handout()
+            self.cleanup()
+            if raise_system_call_exception:
+                self.raise_system_call_exception(traceback = traceback)
+                
+          
+        self.cleanup()
+        traceback = ''
+        raise_system_call_exception = False
+        try:
+            subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
+            if self.checked_bib:
+                self.bibtex_executable  = get_executable('bibtex')
+                self.bibtex_system_call = '%s %s' % (self.bibtex_executable, self.out_name)  
+                subprocess.check_output(self.bibtex_system_call, shell = True, stderr = subprocess.STDOUT)
+            subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
+            subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
+        except subprocess.CalledProcessError as ex:
+            traceback = ex.output
+            raise_system_call_exception = True
+
+        self.cleanup()
+        if raise_system_call_exception:
+            self.raise_system_call_exception(traceback = traceback)
+
+        return None
+
+        
+    def execute_system_call(self, target, source, env):
         '''
         Execute the system call attribute.
         Log the execution.
@@ -137,9 +224,8 @@ class LatexBuilder(JMSLabBuilder):
         '''
         self.check_code_extension()
         self.start_time = misc.current_time()
-        self.do_call(target, source)
+        self.do_call(target, source, env)
         self.check_targets()
         self.timestamp_log(misc.current_time())
         return None
-    
-     
+

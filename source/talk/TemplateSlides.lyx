@@ -643,6 +643,13 @@ Estimation
 \begin_deeper
 \begin_layout Standard
 \align center
+\begin_inset Graphics
+	filename ../../output/analysis/plots/gdp_educ.eps
+	scale 50
+
+\end_inset
+
+
 \begin_inset VSpace bigskip
 \end_inset
 
