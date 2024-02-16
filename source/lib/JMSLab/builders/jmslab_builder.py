@@ -201,12 +201,21 @@ class JMSLabBuilder(object):
         '''
         Adds beginning and ending times to a log file made for system call.
         '''
-        with open(self.log_file, mode = 'r') as f:
-            content += f.read()
-            f.seek(0, 0)
-            builder_log_msg = '*** Builder log created: {%s}\n' \
-                              '*** Builder log completed: {%s}\n%s' \
-                              % (self.start_time, end_time, content)
+        try:
+            with open(self.log_file, mode = 'r') as f:
+                content += f.read()
+                f.seek(0, 0)
+                builder_log_msg = '*** Builder log created: {%s}\n' \
+                                '*** Builder log completed: {%s}\n%s' \
+                                % (self.start_time, end_time, content)
+        except:
+            with open(self.log_file, encoding ='latin1', mode = 'r') as f:
+                content += f.read()
+                f.seek(0, 0)
+                builder_log_msg = '*** Builder log created: {%s}\n' \
+                                '*** Builder log completed: {%s}\n%s' \
+                                % (self.start_time, end_time, content)
+                
         with open(self.log_file, mode = 'w') as f:
             f.write(builder_log_msg)
         return None
