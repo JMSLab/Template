@@ -43,7 +43,7 @@ Input File Format:
 ###########################
 
 The data needs to be tab-delimited rows of numbers (or characters),
-preceeded by  `<label>`.  The < and > are mandatory. The numbers can be
+preceded by  `<label>`.  The < and > are mandatory. The numbers can be
 arbitrarily long, can be negative, and can also be in scientific notation.
 
 Examples:
@@ -90,7 +90,7 @@ variables as ".", and missing values in string variables as "[space]".
 ................................
  Scientific Notation Notes:
 ................................
-The scientific notation ihas to be of the form:
+The scientific notation must be of the form:
 [numbers].[numbers]e(+/-)[numbers]
 
 Examples:
@@ -297,7 +297,7 @@ If an error occurs during the call to tablefill, it will be displayed in the
 command window. When make.py finishes, the user will be able to scroll up
 through the output and examine any error messages. Error messages, which
 include a description of the error type and a traceback to the line of code
-where the error occured, can also be retuned as a string object using the
+where the error occurred, can also be returned as a string object using the
 following syntax:
 
 exitmessage = tablefill(input = 'input_file(s)', template = 'template_file',
@@ -329,5 +329,5 @@ this table will not be filled.
 
 It is straightforward to develop functions that conditionally write entries of
 tables in boldface; functions may do so by inserting '\\series bold' in the lines
-of the filled LyX file immeadiately before phrases that the user wishes to make bold.
+of the filled LyX file immediately before phrases that the user wishes to make bold.
 '''
