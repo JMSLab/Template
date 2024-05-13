@@ -29,7 +29,7 @@ We suggest the following adaptation of [Github flow](https://docs.github.com/en/
       * the issue subfolder (ephemeral deliverables)
       * the latest version of the issue branch prior to merging (all deliverables).
     * **Link** to the summary comment in the pull request.
-    * **Update** open branches from Main.
-      * **Coordinate** with issue assignees to resolve merge conflicts should they arise.
+    * **Update** all open branches from `main`.
+      * If you encounter merge conflicts you cannot resolve, check with the _assignee(s)_ of the corresponding issue(s).
 * **Prioritize** work in the order older pull requests > newer pull requests > older issues > newer issues.
   * Age is defined by github numbering.
