@@ -142,7 +142,7 @@ class JMSLabBuilder(object):
 
     def do_call(self):
         '''
-        Acutally execute the system call attribute.
+        Actually execute the system call attribute.
         Raise an informative exception on error.
         '''
         
