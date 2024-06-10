@@ -8,7 +8,7 @@ platforms.
 
 This package was based on gslab_scons and updated to Python 3. Please
 consult the docstrings of the builders belonging to this module for
-additonal information on their functionalities.
+additional information on their functionalities.
 '''
 import os
 from . import misc
