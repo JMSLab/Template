@@ -201,7 +201,7 @@ Production encompasses the steps we take before we circulate or submit a paper d
 
   *  A single pdf document that marks all unsupported claims and unreferenced content in the online appendix.
 
-### Task [PLOT]: Check printing of plots in black and white 
+### Task [PLOT]: Check visual clarity of plots
 
 #### Work allocation
 
@@ -212,12 +212,13 @@ Production encompasses the steps we take before we circulate or submit a paper d
 #### Goals 
 
   *  Color plots print well in black and white; markers are sufficiently distinct
+  *  Labels, legends, and axis titles are clearly readable and interpretable
   *  Plots adhere to [Schwabish (2014)](https://www.jstor.org/stable/43193723) principles.
 
 #### Deliverables 
 
-  *  A list of plots for which you think there are contrast issues in black and white, along with suggested fixes.
-      * If it is easy to modify the plots, the ideal format for suggestions is a side-by-side showing original and proposed modified plots.
+  *  An annotated PDF of the draft with suggested changes.
+  *  (If it is easy to modify the plots) A side-by-side showing original and proposed modified plots.
 
 ### Task [MATH]: Check theoretical claims in the paper
 
@@ -236,7 +237,7 @@ Production encompasses the steps we take before we circulate or submit a paper d
 
   *  A list of all theoretical claims that are made in the text of the paper that are not supported by proofs in the paper, appendices, or claims.pdf.
       * For example, we may say, "It is easy to show that equations A, B, and C together imply equation D."
-      * You should not include claims that are completely obvious. We’re looking for things where if somebody came back and said, "I don’t believe this is true" we would need to go back and do at least a couple of lines of algebra to confirm that we’re right.
+      * You can omit claims that are obvious. We are interested in those where, if somebody challenged the claim, we would need to do at least a few minutes of work (e.g., a few lines of algebra) to confirm that the claim is right.
    
 ## Journal
 
@@ -273,15 +274,15 @@ Production encompasses the steps we take before we circulate or submit a paper d
 
 #### Deliverables
 
-* Revised production files (LyX or TeX) for the paper draft that conform to journal style requirements.
+* Revised production files (e.g., `LyX` or `TeX`) for the paper draft that conform to journal style requirements.
   * If something seems prohibitively difficult to implement, note it for the PI and move on.
 * Outputted ZIP archive suitable for transmission to the journal. How we want to do this will depend on the journal but here is a default approach.
   * `/source/typesetting` contains `typesetting.py` which outputs to `/output/typesetting/typesetting.zip`
   * `typesetting.zip` contains
-    * `/source/` with LyX or TeX files
-    * `/refs/` with BIB files or other bibliography files
-    * `/graphics/` with graphics files (EPS or PDF)
-    * `/output/` with compiled paper and appendix (PDF)
+    * `/source/` with `LyX` or `TeX` files
+    * `/refs/` with `BIB` files or other bibliography files
+    * `/graphics/` with graphics files (`EPS` or `PDF`)
+    * `/output/` with compiled paper and appendix (`PDF`)
   * It's ideal (but not essential) if files in `/source` can be directly compiled to files in `/output`. For this it may be necessary to add `../graphics` to the [`graphicspath`](http://latexref.xyz/_005cgraphicspath.html) of files in `/source`.
 
 
