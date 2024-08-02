@@ -212,7 +212,7 @@ Production encompasses the steps we take before we circulate or submit a paper d
 #### Goals 
 
   *  Color plots print well in black and white; markers are sufficiently distinct
-  *  Labels, legends, and axid titles are clearly readable and interpretable
+  *  Labels, legends, and axis titles are clearly readable and interpretable
   *  Plots adhere to [Schwabish (2014)](https://www.jstor.org/stable/43193723) principles.
 
 #### Deliverables 
