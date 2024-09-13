@@ -121,10 +121,9 @@ class TestSaveData(unittest.TestCase):
         os.remove('df.csv')    
 
     def test_saves_with_path(self):  
-        indir = Path('data/data.csv')
-        outdir_csv = Path('data.csv')
-        outdir_log = Path('data.log')
-        df = pd.read_csv(indir)
+        outdir_csv = 'data.csv'
+        outdir_log = 'data.log'
+        df = pd.read_csv('data/data.csv')
         SaveData(df, ['id'], outdir_csv, outdir_log)
         exists = os.path.isfile(str(outdir_log))
         self.assertEqual(exists, True)
