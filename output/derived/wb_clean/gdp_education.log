@@ -1,0 +1,11 @@
+File: output/derived/wb_clean/gdp_education.csv
+
+MD5 hash: 783ec250dc8954235de6aa0ce31ca58e
+
+Keys: Country Name 
+
+                       type  count unique          mean           std         min          25%          50%           75%            max
+Country Name         object    264    264                                                                                               
+GDP_2010            float64    252         14626.469146  21914.825161  234.235647  1586.270363  5436.698331  16694.339366  150725.194124
+Education_Exp_2010  float64    164             4.539779      1.767931     1.11761      3.49226      4.48722       5.47338       12.83731
+

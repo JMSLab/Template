@@ -1,14 +1,20 @@
 import os
 import pandas as pd
-
+import sys
+sys.path.append('source/lib/JMSLab/')
+from SaveData import SaveData
 
 def Main():
     raw_dir = "datastore/raw/world_bank/orig"
     out_dir = "output/derived/wb_clean"
 
     df = PrepareData(raw_dir)
-    df.to_csv(os.path.join(out_dir, "gdp_education.csv"),
-              index = False, float_format = '%.8f')
+    SaveData(df = df, keys = ['Country Name'], 
+        out_file = os.path.join(out_dir, "gdp_education.csv"), 
+        log_file = os.path.join(out_dir, "gdp_education.log"), 
+        append = False, 
+        sortbykey = True)
+             
 
 
 def PrepareData(infolder):

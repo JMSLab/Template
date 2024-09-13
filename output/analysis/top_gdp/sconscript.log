@@ -1,19 +1,17 @@
-*** Builder log created: {2023-10-01 22:34:39}
-*** Builder log completed: {2023-10-01 22:34:52}
+*** Builder log created: {2024-09-13 11:05:42}
+*** Builder log completed: {2024-09-13 11:05:42}
 running
-  'C:\PROGRA~1\R\R-42~1.1\bin\x64\Rterm.exe --no-echo --no-restore --no-save --no-restore --file=source\analysis\top_gdp\top_gdp_table.R'
+  '/Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/bin/R --no-echo --no-restore --no-save --no-restore --file=source/analysis/top_gdp/top_gdp_table.R'
 
 
-Attaching package: 'dplyr'
+Attaching package: ‘dplyr’
 
-The following objects are masked from 'package:stats':
+The following objects are masked from ‘package:stats’:
 
     filter, lag
 
-The following objects are masked from 'package:base':
+The following objects are masked from ‘package:base’:
 
     intersect, setdiff, setequal, union
 
-Warning message:
-package 'dplyr' was built under R version 4.2.3 
 Selecting by GDP_2010
