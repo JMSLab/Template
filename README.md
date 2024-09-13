@@ -4,7 +4,7 @@ A template for research projects developed by JMSLab.
 
 ### Prerequisites
 
-- We recommend installing [Anaconda](https://www.anaconda.com/products/individual) 3.8 or above to get Python.
+- We recommend installing Python via [Anaconda](https://www.anaconda.com/products/individual).
     - We use Python to run [SCons](https://scons.org); custom SCons builders are also written in Python.
     - You will need to install the dependencies in `source/lib/requirements.txt` (including SCons). See [quick start](#quick-start) below.
 - [git](https://git-scm.com/downloads) for version control.
