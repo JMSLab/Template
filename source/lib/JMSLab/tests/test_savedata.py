@@ -15,7 +15,6 @@ os.chdir(TESTDIR)
 sys.path.append('../')
 from SaveData import SaveData
 
-#pd.set_option('future.no_silent_downcasting', True)
 
 class TestSaveData(unittest.TestCase):
     
