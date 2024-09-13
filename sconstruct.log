@@ -1,6 +1,5 @@
-*** New build: {2024-01-12 15:08:54} ***
+*** New build: {2024-09-13 11:06:36} ***
 scons: done reading SConscript files.
 scons: Building targets ...
-build_lyx(["output/talk/TemplateSlides.pdf", "temp/Template.handout.pdf"], ["source/talk/TemplateSlides.lyx"])
-build_latex(["output/talk/TemplateSlidesLatex.pdf", "temp/TemplateLatex.handout.pdf"], ["source/talk/TemplateSlides.tex", "output/analysis/plots/gdp_educ.eps"])
+scons: `.' is up to date.
 scons: done building targets.
