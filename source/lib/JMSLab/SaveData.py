@@ -5,6 +5,8 @@ import hashlib
 import re
 import pathlib
 
+pd.set_option('display.float_format', lambda x: '%.3f' % x)
+
 def SaveData(df, keys, out_file, log_file = '', append = False, sortbykey = True):
     extension = CheckExtension(out_file)
     CheckColumnsNotList(df)
@@ -68,7 +70,8 @@ def CheckKeys(df, keys):
 def GetSummaryStats(df):
     var_types = df.dtypes
     with pd.option_context("future.no_silent_downcasting", True):
-        var_stats = df.describe(include='all').apply(lambda s: s.apply(lambda x: format(x, 'g'))).transpose().fillna('').infer_objects(copy=False)
+        var_stats = df.describe(include='all', percentiles = [.5]).fillna('').transpose().infer_objects(copy=False)
+
 
     var_stats['count'] = df.notnull().sum()
     var_stats = var_stats.drop(columns=['top', 'freq'], errors='ignore')
@@ -76,6 +79,8 @@ def GetSummaryStats(df):
     summary_stats = pd.DataFrame({'type': var_types}).\
         merge(var_stats, how = 'left', left_index = True, right_index = True)
     summary_stats = summary_stats.round(4)
+    summary_stats = summary_stats.reset_index().rename({'index':'variable_name'}, axis = 1)
+    summary_stats.index = [i+1 for i in summary_stats.index]
     
     return summary_stats
 
