@@ -21,7 +21,7 @@ def SaveData(df, keys, out_file, log_file = '', append = False, sortbykey = True
 def CheckExtension(out_file):
     if type(out_file) == str:
         extension = re.findall(r'\.[a-z]+$', out_file)
-    elif type(out_file) == pathlib.PosixPath:
+    elif type(out_file) == pathlib.Path:
         extension = [out_file.suffix]
     else:
         raise ValueError('Output file format must either be string or pathlib.PosixPath')
