@@ -75,13 +75,18 @@ def GetSummaryStats(df):
 
     var_stats['count'] = df.notnull().sum()
     var_stats = var_stats.drop(columns=['top', 'freq'], errors='ignore')
-    
+
     summary_stats = pd.DataFrame({'type': var_types}).\
         merge(var_stats, how = 'left', left_index = True, right_index = True)
-    summary_stats = summary_stats.round(4)
     summary_stats = summary_stats.reset_index().rename({'index':'variable_name'}, axis = 1)
+    summary_stats = summary_stats.round(4)
     summary_stats.index = [i+1 for i in summary_stats.index]
-    
+
+    comma_sep_cols = [col for col in summary_stats.columns if col not in ['variable_name','type']]
+    for col in comma_sep_cols:
+        summary_stats[col] = summary_stats[col].apply(lambda x: '{:,}'.format(x) if isinstance(x, int) else x)
+        summary_stats[col] = summary_stats[col].apply(lambda x: '{:,.3f}'.format(x) if isinstance(x, float) else x)
+
     return summary_stats
 
 
