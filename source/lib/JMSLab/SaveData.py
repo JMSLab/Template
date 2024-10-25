@@ -66,9 +66,8 @@ def CheckKeys(df, keys):
 
 def GetSummaryStats(df):
     var_types = df.dtypes
-    with pd.option_context("future.no_silent_downcasting", True):
-        var_stats = df.describe(include='all', percentiles = [.5]).fillna('').transpose().infer_objects(copy=False)
 
+    var_stats = df.describe(include='all', percentiles = [.5]).fillna('').transpose().infer_objects(copy=False)
     var_stats['count'] = df.notnull().sum()
     var_stats = var_stats.drop(columns=['top', 'freq'], errors='ignore')
 
