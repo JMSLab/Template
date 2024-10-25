@@ -11,6 +11,7 @@ def SaveData(df, keys, out_file, log_file = '', append = False, sortbykey = True
     extension = CheckExtension(out_file)
     CheckColumnsNotList(df)
     CheckKeys(df, keys)
+    
     # reorder df so keys are on the left
     cols_reordered = keys + [col for col in df.columns if col not in keys]
     df = df[cols_reordered]

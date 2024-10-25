@@ -4,6 +4,7 @@ import sys
 import pandas as pd
 import os
 from pathlib import Path
+from source.lib.SaveData import SaveData
 
 # Define path to the builder for use in patching
 path = 'JMSLab.misc'
@@ -11,8 +12,6 @@ path = 'JMSLab.misc'
 # Run tests from test folder
 TESTDIR = Path(__file__).resolve().parent
 os.chdir(TESTDIR)
-sys.path.append('../')
-from SaveData import SaveData
 
 class TestSaveData(unittest.TestCase):
     
