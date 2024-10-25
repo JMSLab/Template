@@ -4,7 +4,6 @@ import sys
 import pandas as pd
 import os
 from pathlib import Path
-from .. import misc
 
 # Define path to the builder for use in patching
 path = 'JMSLab.misc'
@@ -14,8 +13,6 @@ TESTDIR = Path(__file__).resolve().parent
 os.chdir(TESTDIR)
 sys.path.append('../')
 from SaveData import SaveData
-
-pd.set_option('future.no_silent_downcasting', True)
 
 class TestSaveData(unittest.TestCase):
     

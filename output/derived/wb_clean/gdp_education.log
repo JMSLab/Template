@@ -4,8 +4,8 @@ MD5 hash: 783ec250dc8954235de6aa0ce31ca58e
 
 Keys: Country Name 
 
-        variable_name     type count unique        mean         std      min        50%          max
-1        Country Name   object   264    264                                                         
-2            GDP_2010  float64   252         14,626.469  21,914.825  234.236  5,436.698  150,725.194
-3  Education_Exp_2010  float64   164              4.540       1.768    1.118      4.487       12.837
+                       type count unique        mean         std      min        50%          max
+Country Name         object   264    264                                                         
+GDP_2010            float64   252         14,626.469  21,914.825  234.236  5,436.698  150,725.194
+Education_Exp_2010  float64   164              4.540       1.768    1.118      4.487       12.837
 

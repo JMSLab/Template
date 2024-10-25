@@ -26,7 +26,7 @@ def CheckExtension(out_file):
     elif type(out_file) == pathlib.PosixPath or type(out_file) == pathlib.WindowsPath:
         extension = [out_file.suffix]
     else:
-        raise ValueError('Output file format must either be string or pathlib.PosixPath')
+        raise ValueError('Output file format must be string or Path object')
     if not extension[0] in ['.csv', '.dta']:
         raise ValueError("File extension should be one of .csv or .dta.")
     return extension[0]
@@ -55,9 +55,6 @@ def CheckKeys(df, keys):
         missings_string = ', '.join(keys_with_missing)
         raise ValueError(f'The following keys are missing in some rows: {missings_string}.')
 
-    
-
-    
     type_list = any([any(df[keycol].apply(lambda x: type(x) == list)) for keycol in keys])
     if type_list:
         raise TypeError("No key can contain keys of type list")
@@ -69,18 +66,14 @@ def CheckKeys(df, keys):
 
 def GetSummaryStats(df):
     var_types = df.dtypes
-    with pd.option_context("future.no_silent_downcasting", True):
-        var_stats = df.describe(include='all', percentiles = [.5]).fillna('').transpose().infer_objects(copy=False)
 
-
+    var_stats = df.describe(include='all', percentiles = [.5]).fillna('').transpose().infer_objects(copy=False)
     var_stats['count'] = df.notnull().sum()
     var_stats = var_stats.drop(columns=['top', 'freq'], errors='ignore')
 
     summary_stats = pd.DataFrame({'type': var_types}).\
         merge(var_stats, how = 'left', left_index = True, right_index = True)
-    summary_stats = summary_stats.reset_index().rename({'index':'variable_name'}, axis = 1)
     summary_stats = summary_stats.round(4)
-    summary_stats.index = [i+1 for i in summary_stats.index]
 
     comma_sep_cols = [col for col in summary_stats.columns if col not in ['variable_name','type']]
     for col in comma_sep_cols:
