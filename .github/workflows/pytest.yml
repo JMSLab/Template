@@ -32,4 +32,4 @@ jobs:
         pip install -r source/lib/requirements.txt
     - name: Test with pytest
       run: |
-        pytest
+        py.test --envfile .env
