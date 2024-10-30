@@ -2,7 +2,9 @@ import unittest
 import pandas as pd
 import os
 from pathlib import Path
-from source.lib.SaveData import SaveData
+import sys
+sys.path.append("source/lib")
+from SaveData import SaveData
 # Define path to the builder for use in patching
 path = 'JMSLab.misc'
 
