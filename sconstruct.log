@@ -1,5 +1,5 @@
-*** New build: {2024-10-25 17:42:02} ***
+*** New build: {2024-10-30 08:44:04} ***
 scons: done reading SConscript files.
 scons: Building targets ...
-build_python(["output/derived/wb_clean/gdp_education.csv"], ["source/derived/wb_clean/build.py", "source/lib/SaveData.py", "datastore/raw/world_bank/orig/API_NY.GDP.PCAP.CD_DS2_en_csv_v2_1740213.csv", "datastore/raw/world_bank/orig/API_SE.XPD.TOTL.GD.ZS_DS2_en_csv_v2_1740282.csv"])
+scons: `.' is up to date.
 scons: done building targets.
