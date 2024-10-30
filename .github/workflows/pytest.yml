@@ -30,6 +30,8 @@ jobs:
         python -m pip install --upgrade pip
         pip install pytest pytest-dotenv
         pip install -r source/lib/requirements.txt
+        
     - name: Test with pytest
       run: |
-        py.test --envfile .env
+        echo "ENV=." >> "$GITHUB_ENV"
+        pytest
