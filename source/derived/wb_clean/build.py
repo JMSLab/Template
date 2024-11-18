@@ -1,8 +1,5 @@
-import os
 import pandas as pd
-import sys
-sys.path.append('source/lib/JMSLab/')
-from SaveData import SaveData
+from source.lib.SaveData import SaveData
 from pathlib import Path
 
 def Main():
