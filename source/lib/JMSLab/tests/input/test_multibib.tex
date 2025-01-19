@@ -1,0 +1,56 @@
+\documentclass[12pt]{article}
+\usepackage{ae,aecompl}
+\renewcommand{\familydefault}{\rmdefault}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=1.25in,bmargin=1.25in,lmargin=1.25in,rmargin=1.25in}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage[authoryear]{natbib}
+\usepackage{datetime}
+\usepackage[abspath]{currfile}
+\usepackage{ifthen, pdftexcmds}
+
+\newcommand*{\dir}{.}
+
+\onehalfspacing
+\usepackage[dot]{bibtopic}
+
+\makeatletter
+\ifnum\pdf@strcmp{\currfilepath}{test_multibib.tex}=0
+	\renewcommand*{\dir}{./..}
+\fi
+\makeatother
+
+\begin{document}
+\begin{btUnit}
+\begin{spacing}{1.32}
+\section{Some Section}
+
+Citing \cite{gentzkow2010drives}.
+
+\end{spacing}
+
+\section*{References}
+\begin{btSect}[chicago]{\dir/input/test_ref}
+\btPrintCited
+\end{btSect}
+\end{btUnit}
+
+\appendix
+
+\begin{btUnit}
+\section*{Appendix}
+Also citing \cite{gentzkow2011ideological}.
+
+\section*{Appendix References}
+\begin{btSect}[chicago]{\dir/input/test_ref}
+\btPrintCited
+\end{btSect}
+\end{btUnit}
+
+\end{document}
