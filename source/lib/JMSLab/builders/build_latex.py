@@ -50,47 +50,46 @@ class LatexBuilder(JMSLabBuilder):
                                   os.path.normpath(self.log_file))
         self.call_args = args
         return None
-    
-    
+
     def check_handout(self, target, env):
-        
+
         self.checked_handout = False
         target_list = misc.make_list_if_string(target)
         handout_sfix = '' if 'HANDOUT_SFIX' not in env else env['HANDOUT_SFIX']
-        
+
         if target_list[0] in target_list[1:]:
             raise ValueError(
                 'Error: Duplicate targets')
-            
+
         if len(target_list) == 1:
-             if bool(handout_sfix):
-                 raise ValueError(
+            if bool(handout_sfix):
+                raise ValueError(
                      'Error: HANDOUT_SFIX non-empty but only one target specified.')
-        
+
         elif len(target_list) > 1:
             handout_flag = handout_sfix + '.pdf'
             handout_target_list = [x for x in target_list[1:]
                                    if str(x).lower().endswith(handout_flag.lower())]
-                
+
             if not bool(handout_target_list):
                 raise ValueError('Error: No valid targets contain handout suffix.')
-            
+
             self.main_target = target_list[0]
             self.handout_target_list = handout_target_list
             self.create_handout()
-            
+
             self.checked_handout = True
-          
+
         else:
             pass      
-        
+
         return None
 
     def create_handout(self):
         '''
         If beamer document class, show notes.
         '''   
-        
+
         self.handout_out = os.path.splitext(str(self.main_target))[0]
         self.handout_in  = os.path.splitext(self.source_file)[0] + '.handout.tex' 
 
@@ -102,19 +101,18 @@ class LatexBuilder(JMSLabBuilder):
             elif bool(re.search(r'\\setbeameroption.*{hide notes}', line)) and beamer:
                 line = line.replace('hide notes', 'show notes')
             print(line, end='')
-        
+
         args = '%s %s %s > %s' % (self.handout_out,
                                 self.handout_in,
                                 self.cl_arg,
                                 os.path.normpath(self.log_file))
-        
+
         self.handout_args = args
         self.handout_call = '%s %s %s' % (self.executable, 
                                           self.exec_opts, 
                                           self.handout_args)
 
         return None
-
 
     def cleanup_handout(self):
         '''
@@ -125,8 +123,7 @@ class LatexBuilder(JMSLabBuilder):
             shutil.copy2(str(self.handout_out) + '.pdf', str(x))
         os.remove(self.handout_in)
         return None
-    
-    
+
     def add_out_name(self, target):
         if bool(target):
             target        = misc.make_list_if_string(target)
@@ -135,12 +132,12 @@ class LatexBuilder(JMSLabBuilder):
             target_file   = ''
         self.out_name = target_file
         return None
-        
+
     def check_bib(self, source):
-    
+
         bibext = '.bib'
         bib_file = ''
-        
+
         if bool(source):
             sources = misc.make_list_if_string(source)
             for source_file in sources:
@@ -152,57 +149,91 @@ class LatexBuilder(JMSLabBuilder):
         self.checked_bib = bool(bib_file)
         return None
 
-    def cleanup(self):
-        delete_ext = ['.aux', '.lof', '.lot', '.fls', '.out',
-                      '.toc', '.bbl','.nav','.vrb','.snm']
+    def check_number_of_bibliographies(self):
+        """
+        After a run with 'pdflatex', this function checks for multiple bibliographies.
+        Checks for files matching "[target_name] + '.\d+' + '.aux'" in the path of target file.
+        Adds all matching files to a list, using the full relative path and omitting the '.aux' extension.
+        """
+        aux_ext = ".aux"
+        target_name = os.path.basename(self.out_name)
+        target_path = os.path.normpath(os.path.dirname(self.out_name))
+        pattern = target_name + ".(\d+)" + aux_ext
+        aux_list = []
+        for f in os.listdir(target_path):
+            if bool(re.search(pattern, f)):
+                aux_to_add = os.path.join(target_path, os.path.splitext(f)[0])
+                aux_list.append(aux_to_add)
+        aux_list.sort()
+        self.aux_files = aux_list
+        self.checked_number_of_bibliographies = bool(aux_list)
+        return None
 
-        for ext in delete_ext:
-            try:
-                os.remove(self.out_name+ext)
-            except FileNotFoundError:
-                continue
-            
+    def cleanup(self):
+        out_dir = os.path.normpath(os.path.dirname(self.out_name))
+        out_basename = os.path.basename(self.out_name)
+        delete_ext = ['.aux', '.lof', '.lot', '.fls', '.out',
+                      '.toc', '.bbl', '.blg', '.nav','.vrb','.snm']
+        for f in os.listdir(out_dir):
+            for ext in delete_ext:
+                pattern = out_basename + '(\.\d+)?' + ext
+                if re.search(pattern, f):
+                    try:
+                        os.remove(os.path.join(out_dir,f))
+                    except FileNotFoundError:
+                        continue
+
     def do_call(self, target, source, env):
         '''
-        Acutally execute the system call attribute.
+        Actually execute the system call attribute.
         Raise an informative exception on error.
         '''
-        
+
         self.check_bib(source) 
         self.check_handout(target, env)
-        
+
         if self.checked_handout:
-               
+
             self.cleanup()
             traceback = ''
             raise_system_call_exception = False
             try:
                 subprocess.check_output(self.handout_call, shell = True, stderr = subprocess.STDOUT)
+                self.check_number_of_bibliographies()
                 if self.checked_bib:
                     self.bibtex_executable  = get_executable('bibtex')
-                    self.bibtex_system_call = '%s %s' % (self.bibtex_executable, self.out_name)
+                    if self.checked_number_of_bibliographies:
+                        for f in self.aux_files:
+                            self.bibtex_system_call = '%s %s' % (self.bibtex_executable, f)
+                    else:
+                        self.bibtex_system_call = '%s %s' % (self.bibtex_executable, self.out_name) 
                     subprocess.check_output(self.bibtex_system_call, shell = True, stderr = subprocess.STDOUT)
                 subprocess.check_output(self.handout_call, shell = True, stderr = subprocess.STDOUT)
                 subprocess.check_output(self.handout_call, shell = True, stderr = subprocess.STDOUT)
             except subprocess.CalledProcessError as ex:
                 traceback = ex.output
                 raise_system_call_exception = True
-            
+
             self.cleanup_handout()
             self.cleanup()
             if raise_system_call_exception:
                 self.raise_system_call_exception(traceback = traceback)
-                
-          
+
         self.cleanup()
         traceback = ''
         raise_system_call_exception = False
         try:
             subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
+            self.check_number_of_bibliographies()
             if self.checked_bib:
                 self.bibtex_executable  = get_executable('bibtex')
-                self.bibtex_system_call = '%s %s' % (self.bibtex_executable, self.out_name)  
-                subprocess.check_output(self.bibtex_system_call, shell = True, stderr = subprocess.STDOUT)
+                if self.checked_number_of_bibliographies:
+                    for f in self.aux_files:
+                        self.bibtex_system_call = '%s %s' % (self.bibtex_executable, f)
+                        subprocess.check_output(self.bibtex_system_call, shell = True, stderr = subprocess.STDOUT)
+                else:
+                    self.bibtex_system_call = '%s %s' % (self.bibtex_executable, self.out_name)  
+                    subprocess.check_output(self.bibtex_system_call, shell = True, stderr = subprocess.STDOUT)
             subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
             subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
         except subprocess.CalledProcessError as ex:
@@ -215,7 +246,6 @@ class LatexBuilder(JMSLabBuilder):
 
         return None
 
-        
     def execute_system_call(self, target, source, env):
         '''
         Execute the system call attribute.
@@ -228,4 +258,3 @@ class LatexBuilder(JMSLabBuilder):
         self.check_targets()
         self.timestamp_log(misc.current_time())
         return None
-
