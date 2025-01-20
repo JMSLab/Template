@@ -9,7 +9,7 @@ from .executables import get_executable
 
 from .jmslab_builder import JMSLabBuilder
 
-def build_latex(target, source, env):
+def build_latex(target, source, env, multibib = False):
     '''
     Compile a pdf from a LaTeX file
 
@@ -25,12 +25,18 @@ def build_latex(target, source, env):
         The source of the SCons command. This should
         be the .tex file that the function will compile as a PDF.
     env: SCons construction environment, see SCons user guide 7.2
+    multibib: logical
+        If True, then compiles target file assuming it contains
+        multiple bibliographies.
     '''
     builder_attributes = {
         'name': 'LaTeX',
         'valid_extensions': ['.tex'],
         'exec_opts': '-interaction nonstopmode -jobname'
     }
+    
+    env["multibib"]: multibib
+    
     builder = LatexBuilder(target, source, env, **builder_attributes)
     builder.add_out_name(target)
     builder.execute_system_call(target, source, env)
@@ -149,24 +155,28 @@ class LatexBuilder(JMSLabBuilder):
         self.checked_bib = bool(bib_file)
         return None
 
-    def check_number_of_bibliographies(self):
+    def check_multibib(self, env):
         """
-        After a run with 'pdflatex', this function checks for multiple bibliographies.
-        Checks for files matching "[target_name] + '.\d+' + '.aux'" in the path of target file.
-        Adds all matching files to a list, using the full relative path and omitting the '.aux' extension.
+        Check for multiple bibliographies when the option 'multibib' is 'True'.
+        After running 'pdflatex', check for files matching "[target_name] + '.\d+' + '.aux'" in the target directory.
+        Add all matching files to a list, using the full relative path and omitting the '.aux' extension.
         """
-        aux_ext = ".aux"
-        target_name = os.path.basename(self.out_name)
-        target_path = os.path.normpath(os.path.dirname(self.out_name))
-        pattern = target_name + ".(\d+)" + aux_ext
-        aux_list = []
-        for f in os.listdir(target_path):
-            if bool(re.search(pattern, f)):
-                aux_to_add = os.path.join(target_path, os.path.splitext(f)[0])
-                aux_list.append(aux_to_add)
-        aux_list.sort()
-        self.aux_files = aux_list
-        self.checked_number_of_bibliographies = bool(aux_list)
+        self.checked_multibib = False
+        if env['multibib'] == True:
+            aux_ext = ".aux"
+            target_name = os.path.basename(self.out_name)
+            target_path = os.path.normpath(os.path.dirname(self.out_name))
+            pattern = target_name + ".(\d+)" + aux_ext
+            aux_list = []
+            for f in os.listdir(target_path):
+                if bool(re.search(pattern, f)):
+                    aux_to_add = os.path.join(target_path, os.path.splitext(f)[0])
+                    aux_list.append(aux_to_add)
+            aux_list.sort()
+            self.aux_files = aux_list
+            self.checked_multibib = bool(aux_list)
+        else:
+            pass
         return None
 
     def cleanup(self):
@@ -199,10 +209,10 @@ class LatexBuilder(JMSLabBuilder):
             raise_system_call_exception = False
             try:
                 subprocess.check_output(self.handout_call, shell = True, stderr = subprocess.STDOUT)
-                self.check_number_of_bibliographies()
+                self.check_multibib(env)
                 if self.checked_bib:
                     self.bibtex_executable  = get_executable('bibtex')
-                    if self.checked_number_of_bibliographies:
+                    if self.checked_multibib:
                         for f in self.aux_files:
                             self.bibtex_system_call = '%s %s' % (self.bibtex_executable, f)
                     else:
@@ -224,10 +234,10 @@ class LatexBuilder(JMSLabBuilder):
         raise_system_call_exception = False
         try:
             subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
-            self.check_number_of_bibliographies()
+            self.check_multibib(env)
             if self.checked_bib:
                 self.bibtex_executable  = get_executable('bibtex')
-                if self.checked_number_of_bibliographies:
+                if self.checked_multibib:
                     for f in self.aux_files:
                         self.bibtex_system_call = '%s %s' % (self.bibtex_executable, f)
                         subprocess.check_output(self.bibtex_system_call, shell = True, stderr = subprocess.STDOUT)
