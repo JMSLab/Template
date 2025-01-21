@@ -53,7 +53,7 @@ Production encompasses the steps we take before we circulate or submit a paper d
 
 #### Deliverables 
 
-  *  A single pdf document with proposed changes to acknowledgments, including information on the location of the relevant DUA in the repository.
+  *  A single pdf document with proposed changes to acknowledgments, including information on the location of the relevant DUA in the corresponding raw data directory.
   *  A list for PI of updates to raw data documentation.
   *  A list for PI of any DUAs that require that we notify someone in advance of posting/submission, and the language giving the details of whom/how/when to notify.
 
