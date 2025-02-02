@@ -53,7 +53,7 @@ Production encompasses the steps we take before we circulate or submit a paper d
 
 #### Deliverables 
 
-  *  A single pdf document with proposed changes to acknowledgments, including information on the location of the relevant DUA in the repository.
+  *  A single pdf document with proposed changes to acknowledgments, including information on the location of the relevant DUA in the corresponding raw data directory.
   *  A list for PI of updates to raw data documentation.
   *  A list for PI of any DUAs that require that we notify someone in advance of posting/submission, and the language giving the details of whom/how/when to notify.
 
@@ -168,9 +168,8 @@ Production encompasses the steps we take before we circulate or submit a paper d
 
 #### Goals  
 
-  *  All citations in the text match references in the bibliography.
-  *  All references in the bibliography are cited somewhere in the text.
-  *  Online appendix references include only those citations not present in the main document.
+  *  All citations in the text of the paper match references in the bibliography.
+  *  All references in the bibliography are cited somewhere in the text of the paper.
   *  Citations and bibliography use a consistent style. (It is typically not important which style guide we follow, just that we are consistent.)
   *  Working papers cited have not been published and are not listed as forthcoming on the authors' homepages.
   *  Access dates are given for all URLs.
