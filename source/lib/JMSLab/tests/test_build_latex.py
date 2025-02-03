@@ -87,26 +87,26 @@ class TestBuildLateX(unittest.TestCase):
             self.assertTrue(os.path.isfile(file))
 
     @system_patch
-    def test_bibtex_multibib(self, mock_check_output):
+    def test_multibib(self, mock_check_output):
         """
         Check that build_latex() works correctly when
         the source '.tex' file contains multiple bibliographies.
         """
-        mock_check_output.side_effect = fx.latex_side_effect
+
         target = ['build/latex.pdf']
         source = ['input/test_multibib.tex', 'input/test_ref.bib']
+        env = {"multibib": True}
 
         # Make sure check_bib works as expected
         builder_attributes = {"name": "LaTeX", "valid_extensions": [".tex"]}
-        test_check_bib = LatexBuilder(target, source, {}, **builder_attributes)
+        test_check_bib = LatexBuilder(target, source, env, **builder_attributes)
         test_check_bib.check_bib(source)
         self.assertTrue(test_check_bib.checked_bib)
 
         helpers.standard_test(self, build_latex, 'tex',
-                              system_mock = mock_check_output,
-                              source      = source,
-                              target      = target,
-                              nsyscalls   = 4)
+                            source      = source,
+                            target      = target,
+                            env         = env)
 
         for file in target:
             self.assertTrue(os.path.isfile(file))

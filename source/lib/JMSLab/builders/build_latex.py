@@ -9,7 +9,7 @@ from .executables import get_executable
 
 from .jmslab_builder import JMSLabBuilder
 
-def build_latex(target, source, env, multibib = False):
+def build_latex(target, source, env):
     '''
     Compile a pdf from a LaTeX file
 
@@ -25,9 +25,6 @@ def build_latex(target, source, env, multibib = False):
         The source of the SCons command. This should
         be the .tex file that the function will compile as a PDF.
     env: SCons construction environment, see SCons user guide 7.2
-    multibib: logical
-        If True, then compiles target file assuming it contains
-        multiple bibliographies.
     '''
     builder_attributes = {
         'name': 'LaTeX',
@@ -35,7 +32,8 @@ def build_latex(target, source, env, multibib = False):
         'exec_opts': '-interaction nonstopmode -jobname'
     }
     
-    env["multibib"]: multibib
+    if not 'multibib' in env:
+        env['multibib'] = False
     
     builder = LatexBuilder(target, source, env, **builder_attributes)
     builder.add_out_name(target)
@@ -155,17 +153,18 @@ class LatexBuilder(JMSLabBuilder):
         self.checked_bib = bool(bib_file)
         return None
 
-    def check_multibib(self, env):
+    def check_multibib(self, target, env):
         """
-        Check for multiple bibliographies when the option 'multibib' is 'True'.
+        Check for multiple bibliographies when option 'multibib' is passed to 'env'.
         After running 'pdflatex', check for files matching "[target_name] + '.\d+' + '.aux'" in the target directory.
         Add all matching files to a list, using the full relative path and omitting the '.aux' extension.
         """
         self.checked_multibib = False
         if env['multibib'] == True:
             aux_ext = ".aux"
-            target_name = os.path.basename(self.out_name)
-            target_path = os.path.normpath(os.path.dirname(self.out_name))
+            target = misc.make_list_if_string(target)
+            target_name = os.path.basename(os.path.splitext(str(target[0]))[0])
+            target_path = os.path.normpath(os.path.dirname(str(target[0])))
             pattern = target_name + ".(\d+)" + aux_ext
             aux_list = []
             for f in os.listdir(target_path):
@@ -209,7 +208,7 @@ class LatexBuilder(JMSLabBuilder):
             raise_system_call_exception = False
             try:
                 subprocess.check_output(self.handout_call, shell = True, stderr = subprocess.STDOUT)
-                self.check_multibib(env)
+                self.check_multibib(target, env)
                 if self.checked_bib:
                     self.bibtex_executable  = get_executable('bibtex')
                     if self.checked_multibib:
@@ -234,7 +233,7 @@ class LatexBuilder(JMSLabBuilder):
         raise_system_call_exception = False
         try:
             subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
-            self.check_multibib(env)
+            self.check_multibib(target, env)
             if self.checked_bib:
                 self.bibtex_executable  = get_executable('bibtex')
                 if self.checked_multibib:
