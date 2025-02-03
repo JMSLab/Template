@@ -14,4 +14,4 @@ source = ['#source/paper/Template.tex',
           '#source/figures/gdp_educ.tex',
           '#source/paper/References.bib']
 
-env.Latex(target, source)
+env.Latex(target, source, multibib = True)

@@ -21,63 +21,36 @@
 \usepackage[dot]{bibtopic}
 
 \makeatletter
-\ifnum\pdf@strcmp{\currfilepath}{Template.tex}=0
-	\renewcommand*{\dir}{./../..}
+\ifnum\pdf@strcmp{\currfilepath}{test_multibib.tex}=0
+	\renewcommand*{\dir}{./..}
 \fi
 \makeatother
 
-
 \begin{document}
-\title{Template}
-\author{First Author, \emph{Institution}\\
-Second Author, \emph{Institution}\textbf{\thanks{We thank our dedicated research assistants for their contributions
-to this project. E-mail: author@institution.edu.}}}
-\date{\monthname\ \number\year}
-\maketitle
-\begin{abstract}
-\noindent Some abstract
-\end{abstract}
 \begin{btUnit}
-
 \begin{spacing}{1.32}
-
 \section{Some Section}
 
-Some text.
-
-Some claim by \citet{gentzkow2010drives}.
+Citing \cite{gentzkow2010drives}.
 
 \end{spacing}
 
-\newpage{}
-
-\input{\dir/output/tables/top_gdp}
-
-\newpage{}
-
-\input{\dir/source/figures/gdp_educ}
-
 \section*{References}
-
-\begin{btSect}[chicago]{\dir/source/paper/References}
+\begin{btSect}[chicago]{\dir/input/test_ref}
 \btPrintCited
 \end{btSect}
-
 \end{btUnit}
 
 \appendix
 
-\section*{Appendix}
-
 \begin{btUnit}
-
-Illustrating the use of a multipart bibliography by citing \citet{gentzkow2011ideological}.
+\section*{Appendix}
+Also citing \cite{gentzkow2011ideological}.
 
 \section*{Appendix References}
-
-\begin{btSect}[chicago]{\dir/source/paper/References}
+\begin{btSect}[chicago]{\dir/input/test_ref}
 \btPrintCited
 \end{btSect}
-
 \end{btUnit}
+
 \end{document}
