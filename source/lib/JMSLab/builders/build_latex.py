@@ -153,27 +153,39 @@ class LatexBuilder(JMSLabBuilder):
         self.checked_bib = bool(bib_file)
         return None
 
+    def count_bibsections(self, tex_file):
+        """Count the number of \\begin{btSect}...\\end{btSect} blocks."""
+        with open(tex_file, 'r', encoding='utf-8') as f:
+            content = f.read()
+
+        btsect_blocks = re.findall(r'\\begin\{btSect\}.*?\\end\{btSect\}', content, re.DOTALL)
+        return len(btsect_blocks)
+
+    def generate_aux_filenames(self, target, num_bibs):
+        """Generate the expected .aux filenames based on the target PDF path, starting at 1."""
+        aux_files = [f"{target}.{i}" for i in range(1, num_bibs + 1)]
+        return aux_files
+
     def check_multibib(self, target, env):
         """
-        Check for multiple bibliographies when option 'multibib' is passed to 'env'.
-        After running 'pdflatex', check for files matching "[target_name] + '.\d+' + '.aux'" in the target directory.
-        Add all matching files to a list, using the full relative path and omitting the '.aux' extension.
+        Checks for multiple bibliographies when option 'multibib' is passed to 'env'.
+        Parses source file and counts the number of bibliographies.
+        Creates list of 'bibtex' commands.
         """
         self.checked_multibib = False
+
+        target = misc.make_list_if_string(target)
+        target_path = os.path.normpath(os.path.dirname(str(target[0])))
+        target_name = os.path.basename(os.path.splitext(str(target[0]))[0])
+        target_file = os.path.join(target_path, target_name)
+
         if env['multibib'] == True:
-            aux_ext = ".aux"
-            target = misc.make_list_if_string(target)
-            target_name = os.path.basename(os.path.splitext(str(target[0]))[0])
-            target_path = os.path.normpath(os.path.dirname(str(target[0])))
-            pattern = target_name + ".(\d+)" + aux_ext
-            aux_list = []
-            for f in os.listdir(target_path):
-                if bool(re.search(pattern, f)):
-                    aux_to_add = os.path.join(target_path, os.path.splitext(f)[0])
-                    aux_list.append(aux_to_add)
-            aux_list.sort()
-            self.aux_files = aux_list
-            self.checked_multibib = bool(aux_list)
+            f = self.source_file
+            num_bibs = self.count_bibsections(f)
+            print(f"Detected {num_bibs} bibliographies in {self.source_file}.")
+            aux_files = self.generate_aux_filenames(target_file, num_bibs)
+            self.aux_files = aux_files
+            self.checked_multibib = bool(self.aux_files)
         else:
             pass
         return None
@@ -202,17 +214,18 @@ class LatexBuilder(JMSLabBuilder):
         self.check_handout(target, env)
 
         if self.checked_handout:
-
             self.cleanup()
             traceback = ''
             raise_system_call_exception = False
             try:
                 subprocess.check_output(self.handout_call, shell = True, stderr = subprocess.STDOUT)
-                self.check_multibib(target, env)
                 if self.checked_bib:
                     self.bibtex_executable  = get_executable('bibtex')
+                    self.check_multibib(target, env)
                     if self.checked_multibib:
                         for f in self.aux_files:
+                            time.sleep(3) # Wait a bit to make sure all .aux files have been created
+                            print('Run BibTeX for' + f + '.aux')
                             self.bibtex_system_call = '%s %s' % (self.bibtex_executable, f)
                     else:
                         self.bibtex_system_call = '%s %s' % (self.bibtex_executable, self.out_name) 
@@ -233,15 +246,15 @@ class LatexBuilder(JMSLabBuilder):
         raise_system_call_exception = False
         try:
             subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
-            self.check_multibib(target, env)
             if self.checked_bib:
                 self.bibtex_executable  = get_executable('bibtex')
+                self.check_multibib(target, env)
                 if self.checked_multibib:
                     for f in self.aux_files:
                         self.bibtex_system_call = '%s %s' % (self.bibtex_executable, f)
                         subprocess.check_output(self.bibtex_system_call, shell = True, stderr = subprocess.STDOUT)
                 else:
-                    self.bibtex_system_call = '%s %s' % (self.bibtex_executable, self.out_name)  
+                    self.bibtex_system_call = '%s %s' % (self.bibtex_executable, self.out_name)
                     subprocess.check_output(self.bibtex_system_call, shell = True, stderr = subprocess.STDOUT)
             subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
             subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
