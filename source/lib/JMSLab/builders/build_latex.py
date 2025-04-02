@@ -1,5 +1,6 @@
 import subprocess
 import os
+import time
 import re
 import shutil
 import fileinput
@@ -224,7 +225,8 @@ class LatexBuilder(JMSLabBuilder):
                     self.check_multibib(target, env)
                     if self.checked_multibib:
                         for f in self.aux_files:
-                            time.sleep(3) # Wait a bit to make sure all .aux files have been created
+                            if not os.path.isfile(f):
+                                time.sleep(3) # Wait a bit to make sure all .aux files have been created
                             print('Run BibTeX for' + f + '.aux')
                             self.bibtex_system_call = '%s %s' % (self.bibtex_executable, f)
                     else:
@@ -251,6 +253,9 @@ class LatexBuilder(JMSLabBuilder):
                 self.check_multibib(target, env)
                 if self.checked_multibib:
                     for f in self.aux_files:
+                        if not os.path.isfile(f):
+                            time.sleep(3) # Wait a bit to make sure all .aux files have been created
+                        print("Run BibTeX for" + f + ".aux")
                         self.bibtex_system_call = '%s %s' % (self.bibtex_executable, f)
                         subprocess.check_output(self.bibtex_system_call, shell = True, stderr = subprocess.STDOUT)
                 else:
