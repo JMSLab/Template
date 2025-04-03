@@ -230,7 +230,7 @@ def latex_side_effect(*args, **kwargs):
     # Mock a list of the files that pdflatex sees as existing
     # source_exists should be True only if the source script
     # specified in the system command belongs to existing_files.
-    existing_files = ['test_script.tex', 'input/latex_test_file.tex']
+    existing_files = ['test_script.tex', 'input/latex_test_file.tex', 'input/test_multibib.tex']
     source_exists  = os.path.abspath(source) in \
         map(os.path.abspath, existing_files)
 
