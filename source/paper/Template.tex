@@ -18,6 +18,7 @@
 \newcommand*{\dir}{.}
 
 \onehalfspacing
+\usepackage[dot]{bibtopic}
 
 \makeatletter
 \ifnum\pdf@strcmp{\currfilepath}{Template.tex}=0
@@ -29,21 +30,22 @@
 \begin{document}
 \title{Template}
 \author{First Author, \emph{Institution}\\
-Second Author, \emph{Institution}\textbf{}\thanks{We thank our dedicated research assistants for their contributions
-to this project. E-mail: author@institution.edu.}}
+Second Author, \emph{Institution}\textbf{\thanks{We thank our dedicated research assistants for their contributions
+to this project. E-mail: author@institution.edu.}}}
 \date{\monthname\ \number\year}
 \maketitle
-
 \begin{abstract}
-\noindent some abstract
+\noindent Some abstract
 \end{abstract}
+\begin{btUnit}
 
 \begin{spacing}{1.32}
+
 \section{Some Section}
 
-Some content.
-Some claim \cite{gentzkow2011ideological}.
-Other claim \cite{gentzkow2010drives}.
+Some text.
+
+Some claim by \citet{gentzkow2010drives}.
 
 \end{spacing}
 
@@ -55,9 +57,27 @@ Other claim \cite{gentzkow2010drives}.
 
 \input{\dir/source/figures/gdp_educ}
 
-\newpage{}
-\appendix
-\bibliographystyle{apalike}
-\bibliography{\dir/source/paper/References}
+\section*{References}
 
+\begin{btSect}[chicago]{\dir/source/paper/References}
+\btPrintCited
+\end{btSect}
+
+\end{btUnit}
+
+\appendix
+
+\section*{Appendix}
+
+\begin{btUnit}
+
+Illustrating the use of a multipart bibliography by citing \citet{gentzkow2011ideological}.
+
+\section*{Appendix References}
+
+\begin{btSect}[chicago]{\dir/source/paper/References}
+\btPrintCited
+\end{btSect}
+
+\end{btUnit}
 \end{document}
