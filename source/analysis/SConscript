@@ -7,10 +7,15 @@ source = ['#source/analysis/top_gdp/top_gdp_table.R',
 env.R(target, source)
 
 target = ['#output/analysis/plots/sconscript.log',
-          '#output/analysis/plots/gdp_educ.eps',
           '#output/analysis/plots/gdp_educ.png']
 source = ['#source/analysis/plots/makeplot.m',
           '#output/derived/wb_clean/gdp_education_logs.csv']
 env.Matlab(target, source)
+
+
+target = ['#output/analysis/plots/gdp_educ.eps']
+source = ['#source/analysis/plots/makeplot.py',
+          '#output/derived/wb_clean/gdp_education_logs.csv']
+env.Python(target, source)
 
 

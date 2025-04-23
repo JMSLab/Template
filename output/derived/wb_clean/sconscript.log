@@ -1,25 +1,28 @@
-*** Builder log created: {2025-04-02 14:52:30}
-*** Builder log completed: {2025-04-02 14:52:31}
+*** Builder log created: {2025-04-23 15:49:16}
+*** Builder log completed: {2025-04-23 15:49:19}
 
-  ___  ____  ____  ____  ____ (R)
- /__    /   ____/   /   ____/
-___/   /   /___/   /   /___/   16.1   Copyright 1985-2019 StataCorp LLC
-  Statistics/Data analysis            StataCorp
-                                      4905 Lakeway Drive
-     Special Edition                  College Station, Texas 77845 USA
-                                      800-STATA-PC        https://www.stata.com
-                                      979-696-4600        stata@stata.com
-                                      979-696-4601 (fax)
+  ___  ____  ____  ____  ____ ®
+ /__    /   ____/   /   ____/      StataNow 18.5
+___/   /   /___/   /   /___/       MP—Parallel Edition
 
-Stata license: Unlimited-user network, expiring 15 Apr 2025
-Serial number: 401809306396
-  Licensed to: Miika Päällysaho
-               Stockholm University
+ Statistics and Data Science       Copyright 1985-2023 StataCorp LLC
+                                   StataCorp
+                                   4905 Lakeway Drive
+                                   College Station, Texas 77845 USA
+                                   800-782-8272        https://www.stata.com
+                                   979-696-4600        service@stata.com
+
+Stata license: Unlimited-user 4-core network, expiring 17 Nov 2025
+Serial number: 501809301897
+  Licensed to: Liao, Chris
+               
 
 Notes:
       1. Stata is running in batch mode.
       2. Unicode is supported; see help unicode_advice.
-      3. Maximum number of variables is set to 5,000; see help set_maxvar.
+      3. More than 2 billion observations are allowed; see help obs_advice.
+      4. Maximum number of variables is set to 5,000 but can be increased;
+          see help set_maxvar.
 
 . do "source/derived/wb_clean/takelogs.do" 
 

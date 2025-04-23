@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.7.3)  13 SEP 2024 11:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.7.3)  23 APR 2025 16:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -945,7 +945,7 @@ Package rerunfilecheck Info: File `output/talk/TemplateSlidesLatex.out' has not
  ) 
 Here is how much of TeX's memory you used:
  21645 strings out of 474116
- 418258 string characters out of 5743683
+ 418250 string characters out of 5743683
  1933187 words of memory out of 5000000
  43541 multiletter control sequences out of 15000+600000
  568613 words of font info for 74 fonts, out of 8000000 for 9000
@@ -956,7 +956,7 @@ Here is how much of TeX's memory you used:
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></
 usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pf
 b>
-Output written on output/talk/TemplateSlidesLatex.pdf (4 pages, 134937 bytes).
+Output written on output/talk/TemplateSlidesLatex.pdf (4 pages, 134896 bytes).
 PDF statistics:
  148 PDF objects out of 1000 (max. 8388607)
  125 compressed objects within 2 object streams
