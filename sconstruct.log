@@ -1,10 +1,7 @@
-*** New build: {2025-04-23 16:03:49} ***
+*** New build: {2025-04-23 17:24:42} ***
 scons: done reading SConscript files.
 scons: Building targets ...
-scons: building `output/talk/TemplateSlides.pdf' because it doesn't exist
+build_python(["output/analysis/plots/gdp_educ_py.eps", "output/analysis/plots/gdp_educ_py.png"], ["source/analysis/plots/makeplot.py", "output/derived/wb_clean/gdp_education_logs.csv"])
 build_lyx(["output/talk/TemplateSlides.pdf", "temp/Template.handout.pdf"], ["source/talk/TemplateSlides.lyx", "output/analysis/plots/gdp_educ.eps"])
-scons: rebuilding `output/talk/TemplateSlidesLatex.pdf' because:
-           `source/talk/TemplateSlides.tex' changed
-           `output/analysis/plots/gdp_educ.eps' changed
 build_latex(["output/talk/TemplateSlidesLatex.pdf", "temp/TemplateLatex.handout.pdf"], ["source/talk/TemplateSlides.tex", "output/analysis/plots/gdp_educ.eps"])
 scons: done building targets.
