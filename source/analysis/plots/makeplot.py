@@ -16,7 +16,7 @@ def Main():
     plt.scatter(x, y)
     plt.xlabel('Log of Total Government Expenditure on Education in 2010 (% of GDP)', fontsize=10)
     plt.ylabel('Log of GDP per capita in 2010 (current US$)', fontsize=10)
-    plt.savefig(outdir / 'gdp_educ_py.png', format='eps')
+    plt.savefig(outdir / 'gdp_educ_py.png', format='png')
     plt.savefig(outdir / 'gdp_educ_py.eps', format='eps')
     remove_eps_info(outdir / 'gdp_educ_py.eps')
 
