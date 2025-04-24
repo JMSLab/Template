@@ -14,8 +14,8 @@ source = ['#source/analysis/plots/makeplot.m',
 env.Matlab(target, source)
 
 
-target = ['#output/analysis/plots/gdp_educ_py.eps',
-          '#output/analysis/plots/gdp_educ_py.png']
+target = ['#output/analysis/plots/educ_gdp.eps',
+          '#output/analysis/plots/educ_gdp.png']
 source = ['#source/analysis/plots/makeplot.py',
           '#output/derived/wb_clean/gdp_education_logs.csv']
 env.Python(target, source)
