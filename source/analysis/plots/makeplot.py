@@ -14,8 +14,8 @@ def Main():
     plt.rcParams['font.family'] = 'Times New Roman'
     plt.figure()
     plt.scatter(x, y)
-    plt.xlabel('Log of Total Government Expenditure on Education in 2010 (% of GDP)', fontsize=10)
-    plt.ylabel('Log of GDP per capita in 2010 (current US$)', fontsize=10)
+    plt.xlabel('Log of GDP per capita in 2010 (current US$)', fontsize=10)
+    plt.ylabel('Log of Total Government Expenditure on Education in 2010 (% of GDP)', fontsize=10)
     plt.savefig(outdir / 'educ_gdp.png', format='png')
     plt.savefig(outdir / 'educ_gdp.eps', format='eps')
     remove_eps_info(outdir / 'educ_gdp.eps')
