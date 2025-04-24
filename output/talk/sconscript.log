@@ -1,5 +1,5 @@
-*** Builder log created: {2024-09-13 11:06:07}
-*** Builder log completed: {2024-09-13 11:06:10}
+*** Builder log created: {2025-04-23 17:27:31}
+*** Builder log completed: {2025-04-23 17:27:36}
 This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex)
  restricted \write18 enabled.
 entering extended mode
@@ -228,5 +228,5 @@ nts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/2024/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmss12.pfb></usr/local/texlive/2024/texmf-dist/font
 s/type1/public/amsfonts/cm/cmss8.pfb></usr/local/texlive/2024/texmf-dist/fonts/
 type1/public/amsfonts/symbols/msam10.pfb>
-Output written on output/talk/TemplateSlidesLatex.pdf (4 pages, 134937 bytes).
+Output written on output/talk/TemplateSlidesLatex.pdf (4 pages, 134896 bytes).
 Transcript written on output/talk/TemplateSlidesLatex.log.
