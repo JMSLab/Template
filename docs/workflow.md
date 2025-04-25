@@ -34,5 +34,7 @@ We suggest the following adaptation of [Github flow](https://docs.github.com/en/
 * **Prioritize** work in the order older pull requests > newer pull requests > older issues > newer issues.
   * Age is defined by github numbering.
 
+------
+
 We sometimes use the following variations:
-* Replace issue with subissue, and replace `main` with the branch associated with the parent issue.
+* **Nesting issues**. Replace _issue_ with _subissue_, replace `main` with the branch associated with the parent issue, and replace "all open branches" with "all open branches associated with subissues that share the same parent."
