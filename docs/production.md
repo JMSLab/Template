@@ -26,7 +26,7 @@ Production encompasses the steps we take before we circulate or submit a paper d
    * Skip review of pulls for tasks where work has already been reviewed by multiple RAs, except where PI review is requested below.
 
 * When producing task deliverables:
-   * Post them in the relevant issue branch and tag the PI.
+   * Post them in a comment in the relevant subissue and tag the PI.
    * Make them clear and readable but don't worry about making them pretty.
    * Use Adobe Acrobat commenting tools when commenting on a PDF.
    * If possible, ask the task lead to consolidate different sets of comments into a single list or PDF.
