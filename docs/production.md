@@ -12,17 +12,17 @@ Production encompasses the steps we take before we circulate or submit a paper d
 
 * We will initiate production by assigning someone (the _supervisor_) to an issue called "Supervise production". The supervisor will:
   * Open a _main production branch_ linked to the "Supervise production" issue. We will refer to this as the _main production branch_.
-  * Create and assign one github issue corresponding to each production task, with one assignee serving as _task lead_ on each task.
+  * Create and assign one github subissue corresponding to each production task, with one assignee serving as _task lead_ on each task.
   * Keep in touch with everyone involved in production to help align timing and clear roadblocks.
   * Keep in mind that we expect production to take about one workweek with 3-4 people helping. 
   * When production is completed, compile the main production branch, create a PDF diff, and open a pull request with PI assigned as reviewer.
 
 *  When working on individual production tasks, to keep things moving and minimize scope for branch conflict:
    * Note the default time estimate. If you expect a much longer time to completion, consult the PI.
-   * Do not create an issue branch until you are ready to make edits.
-   * When creating an issue branch, branch off of the main production branch.
-   * Avoid compiling on issue branches unless necessary.
-   * When merging an issue branch, merge back to the main production branch.
+   * Do not create a subissue branch until you are ready to make edits.
+   * When creating a subissue branch, branch off of the main production branch.
+   * Avoid compiling on subissue branches unless necessary.
+   * When merging a subissue branch, merge back to the main production branch.
    * Skip review of pulls for tasks where work has already been reviewed by multiple RAs, except where PI review is requested below.
 
 * When producing task deliverables:
