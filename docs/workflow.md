@@ -33,3 +33,6 @@ We suggest the following adaptation of [Github flow](https://docs.github.com/en/
       * If you encounter merge conflicts you cannot resolve, check with the _assignee(s)_ of the corresponding issue(s).
 * **Prioritize** work in the order older pull requests > newer pull requests > older issues > newer issues.
   * Age is defined by github numbering.
+
+We sometimes use the following variations:
+* Replace issue with subissue, and replace `main` with the branch associated with the parent issue.
