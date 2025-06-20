@@ -22,6 +22,8 @@
 %\DeclareSymbolFont{epsilon}{OML}{ntxmi}{m}{it}
 %\DeclareMathSymbol{\epsilon}{\mathord}{epsilon}{"0F}
 
+\input{../../output/analysis/top_gdp/top_gdp}
+
 \DeclareMathOperator{\sgn}{sgn}
 \DeclareMathOperator{\Var}{Var}
 \DeclareMathOperator{\Corr}{Corr}
@@ -271,6 +273,30 @@ literal "false"
 \end_inset
 
 .
+ 
+\end_layout
+
+\begin_layout Standard
+The country with the highest GDP per capita in 2010,
+ measured in September 2020 U.S.
+ dollars and rounded to the nearest dollar,
+ had a GDP per capita of 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+$
+\backslash
+TopGDPValue
+\end_layout
+
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Standard
