@@ -3,6 +3,7 @@ Import('*')
 target = ['#output/paper/TemplateLyx.pdf']
 source = ['#source/paper/Template.lyx',
           '#output/tables/top_gdp.lyx',
+	  '#output/analysis/top_gdp/top_gdp.tex', 
           '#source/figures/gdp_educ.lyx',
           '#source/paper/References.bib']
 
@@ -10,7 +11,8 @@ env.Lyx(target, source)
 
 target = ['#output/paper/TemplateTex.pdf']
 source = ['#source/paper/Template.tex',
-          '#output/tables/top_gdp.tex',
+          '#output/tables/top_gdp.tex', 
+	  '#output/analysis/top_gdp/top_gdp.tex', 
           '#source/figures/gdp_educ.tex',
           '#source/paper/References.bib']
 

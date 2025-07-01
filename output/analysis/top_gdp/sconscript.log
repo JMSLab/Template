@@ -1,17 +1,2 @@
-*** Builder log created: {2025-04-23 17:27:15}
-*** Builder log completed: {2025-04-23 17:27:16}
-running
-  '/Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/bin/R --no-echo --no-restore --no-save --no-restore --file=source/analysis/top_gdp/top_gdp_table.R'
-
-
-Attaching package: ‘dplyr’
-
-The following objects are masked from ‘package:stats’:
-
-    filter, lag
-
-The following objects are masked from ‘package:base’:
-
-    intersect, setdiff, setequal, union
-
-Selecting by GDP_2010
+*** Builder log created: {2025-06-20 15:11:47}
+*** Builder log completed: {2025-06-20 15:11:48}

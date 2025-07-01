@@ -4,7 +4,12 @@ target = ['#output/analysis/top_gdp/sconscript.log',
           '#output/analysis/top_gdp/top_gdp.txt']
 source = ['#source/analysis/top_gdp/top_gdp_table.R',
           '#output/derived/wb_clean/gdp_education.csv']
-env.R(target, source)
+env.R(target, source) 
+
+target = ['#output/analysis/top_gdp/top_gdp.tex']
+source = ['#source/analysis/top_gdp/topgdp_value.py',
+          '#output/derived/wb_clean/gdp_education.csv']
+env.Python(target, source) 
 
 target = ['#output/analysis/plots/sconscript.log',
           '#output/analysis/plots/gdp_educ.eps',
