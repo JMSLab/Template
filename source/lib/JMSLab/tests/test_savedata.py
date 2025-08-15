@@ -124,6 +124,17 @@ class TestSaveData(unittest.TestCase):
         self.assertEqual(exists, True)
         os.remove(str(outdir_csv))
         os.remove(str(outdir_log))
+    
+    def test_log_filename_uses_slashes(self):    
+        df = pd.read_csv('data/data.csv')
+        SaveData(df, ['id'], 'df.csv', 'df.log')
+        with open('df.log', 'r') as log_file:
+            first_line = log_file.readline().strip()
+
+        self.assertEqual(first_line, 'File: df.log')
+        os.remove('df.csv')
+        os.remove('df.log')
+
         
 if __name__ == '__main__':
     unittest.main()

@@ -118,7 +118,7 @@ def SaveDf(df, keys, out_file, sortbykey, extension):
 
 
 def SaveLog(df_hash, keys, summary_stats, out_file, append, log_file):
-    out_file = pathlib.PosixPath(out_file)
+    out_file = pathlib.Path(out_file)
 
     if log_file:
         if append:
