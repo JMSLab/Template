@@ -131,7 +131,7 @@ class TestSaveData(unittest.TestCase):
         with open('df.log', 'r') as log_file:
             first_line = log_file.readline().strip()
 
-        self.assertEqual(first_line, 'File: df.log')
+        self.assertEqual(first_line, 'File: df.csv')
         os.remove('df.csv')
         os.remove('df.log')
 
