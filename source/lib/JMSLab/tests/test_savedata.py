@@ -3,6 +3,7 @@ import pandas as pd
 import os
 from pathlib import Path
 import sys
+import shutil
 sys.path.append("source/lib")
 from SaveData import SaveData
 # Define path to the builder for use in patching
@@ -127,13 +128,13 @@ class TestSaveData(unittest.TestCase):
     
     def test_log_filename_uses_slashes(self):    
         df = pd.read_csv('data/data.csv')
-        SaveData(df, ['id'], 'df.csv', 'df.log')
-        with open('df.log', 'r') as log_file:
+        os.mkdir('temp_save')
+        SaveData(df, ['id'], 'temp_save/df.csv', 'temp_save/df.log')
+        with open('temp_save/df.log', 'r') as log_file:
             first_line = log_file.readline().strip()
 
-        self.assertEqual(first_line, 'File: df.csv')
-        os.remove('df.csv')
-        os.remove('df.log')
+        self.assertEqual(first_line, 'File: temp_save/df.csv')
+        shutil.rmtree('temp_save')
 
         
 if __name__ == '__main__':
