@@ -124,7 +124,7 @@ def SaveLog(df_hash, keys, summary_stats, out_file, append, log_file):
         if append:
             with open(log_file, "a") as f:
                 f.write("\n\n")
-                f.write("File: %s\n\n" % (out_file))
+                f.write("File: %s\n\n" % out_file.as_posix())  
                 f.write("MD5 hash: %s\n\n" % (df_hash))
                 f.write("Keys: ")
                 for item in keys:
@@ -134,7 +134,7 @@ def SaveLog(df_hash, keys, summary_stats, out_file, append, log_file):
                 f.write("\n\n")
         else:
             with open(log_file, "w") as f:
-                f.write("File: %s\n\n" % (out_file))
+                f.write("File: %s\n\n" % out_file.as_posix())  
                 f.write("MD5 hash: %s\n\n" % (df_hash))
                 f.write("Keys: ")
                 for item in keys:
