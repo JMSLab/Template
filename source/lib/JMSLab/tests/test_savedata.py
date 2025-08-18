@@ -126,7 +126,7 @@ class TestSaveData(unittest.TestCase):
         os.remove(str(outdir_csv))
         os.remove(str(outdir_log))
     
-    def test_log_filename_uses_slashes(self):    
+    def test_logs_forward_slashes(self):    
         df = pd.read_csv('data/data.csv')
         os.mkdir('temp_save')
         SaveData(df, ['id'], 'temp_save/df.csv', 'temp_save/df.log')
