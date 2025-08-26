@@ -3,6 +3,7 @@ import pandas as pd
 import os
 from pathlib import Path
 import sys
+import shutil
 sys.path.append("source/lib")
 from SaveData import SaveData
 # Define path to the builder for use in patching
@@ -124,6 +125,17 @@ class TestSaveData(unittest.TestCase):
         self.assertEqual(exists, True)
         os.remove(str(outdir_csv))
         os.remove(str(outdir_log))
+    
+    def test_logs_forward_slashes(self):    
+        df = pd.read_csv('data/data.csv')
+        os.mkdir('temp_save')
+        SaveData(df, ['id'], 'temp_save/df.csv', 'temp_save/df.log')
+        with open('temp_save/df.log', 'r') as log_file:
+            first_line = log_file.readline().strip()
+
+        self.assertEqual(first_line, 'File: temp_save/df.csv')
+        shutil.rmtree('temp_save')
+
         
 if __name__ == '__main__':
     unittest.main()
