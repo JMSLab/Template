@@ -259,7 +259,7 @@ Production encompasses the steps we take before we circulate or submit a paper d
   *  A single pdf document combining the editor’s letter and all referee reports, with all unaddressed comments/questions clearly marked using Adobe Acrobat’s commenting tools.
   *  A single pdf document combining all responses to the editor/referees, with all unsupported/incorrect claims and the results from the PROOF clearly marked using Adobe Acrobat’s commenting tools. Please also note the specific table/figure/section number in which claims made in the responses are documented, unless these are already referenced by number.
 
-### Task [TYPESETTING]: Preparing a paper for typesetting
+### Task [TYPESETTING]: Prepare typesetting package
 
 #### Work allocation
 
@@ -284,8 +284,28 @@ Production encompasses the steps we take before we circulate or submit a paper d
     * `/output/` with compiled paper and appendix (`PDF`)
   * It's ideal (but not essential) if files in `/source` can be directly compiled to files in `/output`. For this it may be necessary to add `../graphics` to the [`graphicspath`](http://latexref.xyz/_005cgraphicspath.html) of files in `/source`.
 
+### Task [REPLICATION]: Prepare replication package
 
-### Task [GALLEY]: Checking page proofs 
+#### Work allocation
+
+  | Expected Hours | 50% Confidence Interval | # of RAs |
+  | -------------- | ----------------------- | -------- |
+  | 16             | (8 - 24)                | 2        |
+
+#### Goals
+
+* We transmit a replication archive to the journal in a suitable format.
+
+#### Deliverables
+
+* Readme for replicators suitable for transmission to the journal.
+* Outputted ZIP archive suitable for transmission to the journal. How we want to do this will depend on the journal but here is a default approach.
+  * `/source/replication` contains
+    * `replication.py` which outputs to `/datastore/output/replication/replication.zip`
+    * `readme_for_replication.md` which `replication.py` copies as `readme.md` into the root of `replication.zip`
+    * `exclude.txt` which lists files/folders/patterns we want to exclude from `replication.zip` (e.g. because we are not permitted to share them)
+
+### Task [GALLEY]: Check page proofs 
 
 #### Work allocation
 
