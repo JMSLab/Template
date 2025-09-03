@@ -301,7 +301,7 @@ Production encompasses the steps we take before we circulate or submit a paper d
 * Readme for replicators suitable for transmission to the journal.
 * Outputted ZIP archive suitable for transmission to the journal. How we want to do this will depend on the journal but here is a default approach.
   * `/source/replication` contains
-    * `replication.py` which outputs to `/datastore/replication/replication.zip`
+    * `replication.py` which outputs to `/datastore/output/replication/replication.zip`
     * `readme_for_replication.md` which `replication.py` copies as `readme.md` into the root of `replication.zip`
     * `exclude.txt` which lists files/folders/patterns we want to exclude from `replication.zip` (e.g. because we are not permitted to share them)
 
