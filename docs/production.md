@@ -284,7 +284,7 @@ Production encompasses the steps we take before we circulate or submit a paper d
     * `/output/` with compiled paper and appendix (`PDF`)
   * It's ideal (but not essential) if files in `/source` can be directly compiled to files in `/output`. For this it may be necessary to add `../graphics` to the [`graphicspath`](http://latexref.xyz/_005cgraphicspath.html) of files in `/source`.
 
-### Task [REPICATION]: Prepare replication package
+### Task [REPLICATION]: Prepare replication package
 
 #### Work allocation
 
@@ -300,15 +300,10 @@ Production encompasses the steps we take before we circulate or submit a paper d
 
 * Readme for replicators suitable for transmission to the journal.
 * Outputted ZIP archive suitable for transmission to the journal. How we want to do this will depend on the journal but here is a default approach.
-  * `/source/replication` contains `replication.py` which outputs to `/datastore/replication/replication.zip`
-  * `replication.zip` contains
-    * `readme.md`
-    * `/refs/` with `BIB` files or other bibliography files
-    * `/graphics/` with graphics files (`EPS` or `PDF`)
-    * `/output/` with compiled paper and appendix (`PDF`)
-  * It's ideal (but not essential) if files in `/source` can be directly compiled to files in `/output`. For this it may be necessary to add `../graphics` to the [`graphicspath`](http://latexref.xyz/_005cgraphicspath.html) of files in `/source`.
-
-
+  * `/source/replication` contains
+    * `replication.py` which outputs to `/datastore/replication/replication.zip`
+    * `readme_for_replication.md` which `replication.py` copies as `readme.md` into the root of `replication.zip`
+    * `exclude.txt` which lists files/folders/patterns we want to exclude from `replication.zip` (e.g. because we are not permitted to share them)
 
 ### Task [GALLEY]: Check page proofs 
 
