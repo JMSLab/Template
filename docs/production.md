@@ -95,6 +95,7 @@ Production encompasses the steps we take before we circulate or submit a paper d
 #### Deliverables
 
   * Check the below and notify the PI of any suggested changes.
+     *  Randomization is controlled (e.g. by fixed seeds)
      *  Bootstraps and simulations run with sufficiently high number of draws
      *  Quadrature accuracy set sufficiently high
      *  Tolerances on solvers satisfactory
