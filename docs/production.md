@@ -22,7 +22,7 @@ Production encompasses the steps we take before we circulate or submit a paper d
    * Do not create a subissue branch until you are ready to make edits.
    * When creating a subissue branch, branch off of the main production branch.
    * Avoid compiling on subissue branches unless necessary.
-   * When merging a subissue branch, merge back to the main production branch.
+   * When merging a subissue branch, merge back to the main production branch and update other open production branches.
    * Skip review of pulls for tasks where work has already been reviewed by multiple RAs, except where PI review is requested below.
 
 * When producing task deliverables:
