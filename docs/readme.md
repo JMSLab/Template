@@ -1,6 +1,6 @@
 ### Additional documentation
 
-* [Principles](https://scholar.harvard.edu/files/shapiro/files/codeanddata.pdf)
+* [Principles](https://shapiro.scholars.harvard.edu/sites/g/files/omnuum7731/files/shapiro/files/codeanddata.pdf)
 * [Workflow](workflow.md)
 * [Storage](storage.md)
 * [Production](production.md)
