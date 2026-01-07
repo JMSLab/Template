@@ -1,5 +1,4 @@
 import os
-import sys
 import datetime
 
 from pathlib import Path
@@ -20,8 +19,7 @@ def is_unix():
     This function return True if the user's platform is Unix and false
     otherwise.
     '''
-    unix = ['darwin', 'linux', 'linux2']
-    return sys.platform in unix
+    return os.name == 'posix'
 
 
 def is_64_windows():
