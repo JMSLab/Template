@@ -7,6 +7,7 @@ import unittest
 import shutil
 import os
 import re
+import sys
 
 # Import testing helper modules
 from . import _test_helpers as helpers
@@ -32,7 +33,7 @@ class TestBuildMatlab(unittest.TestCase):
     def setUp(self):
         (TESTDIR / 'build').mkdir(exist_ok = True)
 
-    @helpers.platform_patch('darwin', path)
+    @unittest.skipUnless(os.name == 'posix', 'Unix-like (POSIX) only test')
     @subprocess_patch
     def test_unix(self, mock_check_output):
         '''
@@ -57,7 +58,7 @@ class TestBuildMatlab(unittest.TestCase):
         for option in options:
             self.assertIn(option, command.split(' '))
 
-    @helpers.platform_patch('win32', path)
+    @unittest.skipUnless(sys.platform == 'win32', 'Windows-only test')
     @subprocess_patch
     def test_windows(self, mock_check_output):
         '''
@@ -69,7 +70,7 @@ class TestBuildMatlab(unittest.TestCase):
         helpers.standard_test(self, build_matlab, 'm')
         self.check_call(mock_check_output, ['-nosplash', '-minimize', '-wait'])
 
-    @helpers.platform_patch('riscos', path)
+    @unittest.skipUnless(sys.platform != 'win32' and os.name != 'posix', 'Non-Unix / non-Windows test')
     @subprocess_patch
     def test_other_os(self, mock_check_output):
         '''

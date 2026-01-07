@@ -10,27 +10,6 @@ from ..builders.executables import get_executable
 from .._exception_classes import BadExtensionError
 
 
-def platform_patch(platform, path):
-    '''
-    This script produces a mock.patch decorator that mocks sys.platform
-    as `platform` in both the module given by `path` and, if possible,
-    this module's imported misc module.
-    '''
-    main_patch  = mock.patch('%s.sys.platform' % path, platform)
-
-    # Try to also patch misc.sys.platform
-    try:
-        misc_path = '%s.misc.sys.platform' % path
-        # Check whether misc_path is a valid module
-        importlib.util.find_spec(misc_path)
-        misc_patch  = mock.patch(misc_path, platform)
-        total_patch = lambda f: misc_patch(main_patch(f))
-    except ImportError:
-        total_patch = main_patch
-
-    return total_patch
-
-
 def command_match(command, language, which = None):
     match = None
 
