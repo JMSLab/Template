@@ -63,7 +63,6 @@ class TestLog(unittest.TestCase):
             log.start_log(mode = 'develop', log = 'test_log.txt')
             mock_popen.assert_called_with('tee -a test_log.txt', 'w')
 
-    # Set the platform to Windows
     @unittest.skipUnless(sys.platform == 'win32', 'Windows-only test')
     def test_start_log_stdout_on_windows(self):
         '''
@@ -84,8 +83,7 @@ class TestLog(unittest.TestCase):
         message_match = r'^\*\*\* New build: \{[0-9\s\-:]+\} \*\*\*\n%s$' % test
         self.assertTrue(re.search(message_match, log_contents.strip()))
 
-        @unittest.skipUnless(sys.platform == 'win32', 'Windows-only test')
-
+    @unittest.skipUnless(sys.platform == 'win32', 'Windows-only test')
     @mock.patch('%s.os.popen' % path)
     @mock.patch('%s.open' % path)
     def test_start_log_open_on_windows(self, mock_open, mock_popen):
