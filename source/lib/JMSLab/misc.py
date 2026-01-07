@@ -1,4 +1,5 @@
 import os
+import sys
 import datetime
 import sys
 
@@ -20,7 +21,8 @@ def is_unix():
     This function return True if the user's platform is Unix and false
     otherwise.
     '''
-    return os.name == 'posix'
+    unix = ['darwin', 'linux', 'linux2']
+    return sys.platform in unix
 
 
 def is_64_windows():
