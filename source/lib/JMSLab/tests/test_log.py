@@ -63,8 +63,7 @@ class TestLog(unittest.TestCase):
             log.start_log(mode = 'develop', log = 'test_log.txt')
             mock_popen.assert_called_with('tee -a test_log.txt', 'w')
 
-    # Set the platform to Windows
-    @helpers.platform_patch('win32', '%s.misc' % path)
+    @unittest.skipUnless(sys.platform == 'win32', 'Windows-only test')
     def test_start_log_stdout_on_windows(self):
         '''
         Test that start_log() leads stdout to be captured in
@@ -84,7 +83,7 @@ class TestLog(unittest.TestCase):
         message_match = r'^\*\*\* New build: \{[0-9\s\-:]+\} \*\*\*\n%s$' % test
         self.assertTrue(re.search(message_match, log_contents.strip()))
 
-    @helpers.platform_patch('win32', '%s.misc' % path)
+    @unittest.skipUnless(sys.platform == 'win32', 'Windows-only test')
     @mock.patch('%s.os.popen' % path)
     @mock.patch('%s.open' % path)
     def test_start_log_open_on_windows(self, mock_open, mock_popen):
@@ -99,11 +98,11 @@ class TestLog(unittest.TestCase):
 
         mock_popen.assert_not_called()
 
-    @helpers.platform_patch('cygwin', '%s.misc' % path)
+    @unittest.skipUnless(sys.platform != 'win32' and os.name != 'posix', 'Non-Unix / non-Windows test')    
     def test_start_log_other_os(self):
         '''
         Test start_log()'s behaviour when run on a platform other
-        than Windows, Darwin, or Linux.
+        than Windows, or Unix
         (We don't expect it to change sys.stdout, but we expect it
         to set sys.stderr to sys.stdout.)
         '''
@@ -118,7 +117,7 @@ class TestLog(unittest.TestCase):
         log.start_log(mode = 'develop')
         self.assertEqual(sys.stderr, test_file)
 
-    @helpers.platform_patch('darwin', '%s.misc' % path)
+    @unittest.skipUnless(os.name == 'posix', 'Unix-like (POSIX) only test')
     def test_invalid_mode(self):
         '''Check behaviour when mode argument is invalid'''
         with self.assertRaises(Exception):
@@ -127,7 +126,7 @@ class TestLog(unittest.TestCase):
         with self.assertRaises(Exception):
             log.start_log(mode = None)
 
-    @helpers.platform_patch('darwin', '%s.misc' % path)
+    @unittest.skipUnless(os.name == 'posix', 'Unix-like (POSIX) only test')
     def test_start_log_nonstring_input(self):
         '''
         Test start_log()'s behaviour when its log argument is
