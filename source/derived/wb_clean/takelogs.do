@@ -4,6 +4,8 @@ preliminaries
 
 program main
 
+    display "Hello, world!"
+
     import delimited "output/derived/wb_clean/gdp_education.csv", clear
 
     gen log_gdp_2010 = log(gdp_2010)
