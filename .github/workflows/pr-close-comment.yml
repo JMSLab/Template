@@ -1,0 +1,36 @@
+# Post a comment when a PR is closed (merged or unmerged)
+
+name: PR Close Comment
+
+on:
+  pull_request:
+    types: [closed]
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+
+    - name: Install dependencies
+      run: pip install PyGithub
+
+    - name: Comment on PR close
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        REPO: ${{ github.repository }}
+        PR_NUMBER: ${{ github.event.pull_request.number }}
+        PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+        BRANCH_NAME: ${{ github.event.pull_request.head.ref }}
+        LAST_COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
+      run: python .github/scripts/pr_close_comment.py

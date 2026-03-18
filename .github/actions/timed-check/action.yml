@@ -1,0 +1,17 @@
+name: Timed Python Check
+inputs:
+  script:
+    required: true
+outputs:
+  time:
+    description: Elapsed time in seconds
+    value: ${{ steps.run.outputs.time }}
+runs:
+  using: composite
+  steps:
+    - id: run
+      shell: bash
+      run: |
+        s=$(date +%s%N); python ${{ inputs.script }} || e=$?
+        awk "BEGIN{printf \"time=%.3f\n\",($(date +%s%N)-$s)/1e9}" >> $GITHUB_OUTPUT
+        exit ${e:-0}
