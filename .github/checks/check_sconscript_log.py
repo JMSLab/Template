@@ -10,7 +10,7 @@ def Main():
         try:
             if TARGET in p.read_text(errors="replace"):
                 bad.append(p)
-        except:
+        except Exception:
             pass
 
     if not bad:

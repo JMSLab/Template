@@ -13,14 +13,14 @@ def GetTrackedFiles():
 def IsBinary(p):
     try:
         return b"\0" in p.read_bytes()[:4096]
-    except:
+    except Exception:
         return True
 
 def NeedsNewline(p):
     try:
         d = p.read_bytes()
         return len(d)==0 or not d.endswith(b"\n")
-    except:
+    except Exception:
         return False
 
 def ProcessFiles():

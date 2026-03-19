@@ -11,7 +11,7 @@ runs:
       run: |
         mkdir -p "$RUNNER_TEMP/check_results"
         s=$(date +%s%N)
-        python ${{ inputs.script }} && outcome=success || outcome=failure
+        python "${{ inputs.script }}" && outcome=success || outcome=failure
         time=$(awk "BEGIN{printf \"%.3f\",($(date +%s%N)-$s)/1e9}")
         printf '{"outcome":"%s","time":"%s"}' "$outcome" "$time" \
           > "$RUNNER_TEMP/check_results/${{ inputs.display }}.json"

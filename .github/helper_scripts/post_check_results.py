@@ -22,14 +22,16 @@ def Main():
     return 0
 
 def CollectResults():
-    checks      = json.load(open(CHECKS_JSON))
+    with open(CHECKS_JSON) as f:
+        checks = json.load(f)
     results_dir = os.path.join(os.environ["RUNNER_TEMP"], "check_results")
     rows, failed = [], []
     for check in checks:
         name        = check["name"]
         result_file = os.path.join(results_dir, f"{name}.json")
         if os.path.exists(result_file):
-            result  = json.load(open(result_file))
+            with open(result_file) as f:
+                result = json.load(f)
             outcome = result["outcome"]
             time    = result["time"]
             print(f"  {name}: {time}s")
