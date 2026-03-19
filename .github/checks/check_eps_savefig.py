@@ -34,15 +34,17 @@ def CheckEpsSavefig(file_path, content):
         r'\.savefig\([^)]*format\s*=\s*[\'"]eps[\'"][^)]*\)'  # matches format='eps' or format="eps"
     ]
     
-    has_remove_eps_info = 'remove_eps_info(' in content
-    
+    eps_lines = []
     for line_num, line in enumerate(lines, 1):
         for pattern in eps_savefig_patterns:
             if re.search(pattern, line, re.IGNORECASE):
-                if not has_remove_eps_info:
-                    problems.append(f"Line {line_num}: {line.strip()}")
+                eps_lines.append(f"Line {line_num}: {line.strip()}")
                 break
-    
+
+    remove_count = content.count('remove_eps_info(')
+    if len(eps_lines) != remove_count:
+        problems.extend(eps_lines)
+
     return problems
 
 def CollectEpsProblems(root, excluded):
