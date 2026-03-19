@@ -44,11 +44,9 @@ def CollectResults():
     return rows, failed
 
 def PostResults(repo, run_id, rows, failed):
-    checks  = json.load(open(CHECKS_JSON))
     run_url = f"https://github.com/{repo}/actions/runs/{run_id}"
     table   = "\n".join(["| Check | Result | Time |", "|-------|--------|------|", *rows])
-    commands = " · ".join(f"`{c['command']}`" for c in checks if "command" in c) + " · `/run-actions-all`"
-    body    = f"**Check Results** ([run details]({run_url}))\n\n{table}\n\nRun individually: {commands}"
+    body    = f"**Check Results** ([run details]({run_url}))\n\n{table}"
     pr_num  = os.environ["PR_NUMBER"]
     pr_sha  = os.environ["PR_SHA"]
     subprocess.run([
