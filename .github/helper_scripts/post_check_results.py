@@ -4,7 +4,7 @@ import os
 import subprocess
 import sys
 
-CHECKS_JSON = os.path.join(os.path.dirname(__file__), 'checks.json')
+CHECKS_JSON = os.path.join(os.path.dirname(__file__), '../checks/checks.json')
 
 def Main():
     repo   = os.environ["GITHUB_REPOSITORY"]
@@ -44,9 +44,11 @@ def CollectResults():
     return rows, failed
 
 def PostResults(repo, run_id, rows, failed):
+    checks  = json.load(open(CHECKS_JSON))
     run_url = f"https://github.com/{repo}/actions/runs/{run_id}"
     table   = "\n".join(["| Check | Result | Time |", "|-------|--------|------|", *rows])
-    body    = f"**Check Results** ([run details]({run_url}))\n\n{table}"
+    commands = " · ".join(f"`{c['command']}`" for c in checks if "command" in c) + " · `/run-actions-all`"
+    body    = f"**Check Results** ([run details]({run_url}))\n\n{table}\n\nRun individually: {commands}"
     pr_num  = os.environ["PR_NUMBER"]
     pr_sha  = os.environ["PR_SHA"]
     subprocess.run([

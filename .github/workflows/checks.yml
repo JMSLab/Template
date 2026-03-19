@@ -43,40 +43,46 @@ jobs:
         with:
           python-version: "3.x"
 
+      - id: parse_commands
+        env:
+          COMMENT_BODY: ${{ github.event.comment.body }}
+        run: echo "run=$(python .github/helper_scripts/parse_commands.py)" >> $GITHUB_OUTPUT
+        shell: bash
+
       - id: check_scons
         name: Check SCons DAG for missing dependencies
-        if: github.event_name == 'push' || contains(github.event.comment.body, '/run-actions-dag') || contains(github.event.comment.body, '/run-actions-all')
+        if: contains(fromJSON(steps.parse_commands.outputs.run), 'SCons DAG')
         continue-on-error: true
         uses: ./.github/actions/timed-check
         with:
-          script: .github/check_sconscripts.py
+          script: .github/checks/check_sconscripts.py
           display: SCons DAG
 
       - id: check_newlines
         name: Check missing newlines
-        if: github.event_name == 'push' || contains(github.event.comment.body, '/run-actions-newlines') || contains(github.event.comment.body, '/run-actions-all')
+        if: contains(fromJSON(steps.parse_commands.outputs.run), 'Newlines')
         continue-on-error: true
         uses: ./.github/actions/timed-check
         with:
-          script: .github/check_newlines.py
+          script: .github/checks/check_newlines.py
           display: Newlines
 
       - id: check_eps
         name: Check extraneous EPS data
-        if: github.event_name == 'push' || contains(github.event.comment.body, '/run-actions-eps') || contains(github.event.comment.body, '/run-actions-all')
+        if: contains(fromJSON(steps.parse_commands.outputs.run), 'EPS data')
         continue-on-error: true
         uses: ./.github/actions/timed-check
         with:
-          script: .github/check_eps_savefig.py
+          script: .github/checks/check_eps_savefig.py
           display: EPS data
 
       - id: check_scons_log
         name: Check build failure
-        if: github.event_name == 'push' || contains(github.event.comment.body, '/run-actions-log') || contains(github.event.comment.body, '/run-actions-all')
+        if: contains(fromJSON(steps.parse_commands.outputs.run), 'Build log')
         continue-on-error: true
         uses: ./.github/actions/timed-check
         with:
-          script: .github/check_sconscript_log.py
+          script: .github/checks/check_sconscript_log.py
           display: Build log
 
       - name: Post results
@@ -86,5 +92,5 @@ jobs:
           PR_NUMBER: ${{ github.event.issue.number }}
           PR_SHA: ${{ env.PR_SHA }}
         run: |
-          python .github/post_check_results.py \
+          python .github/helper_scripts/post_check_results.py \
             ${{ contains(github.event.comment.body, '--post') && '--post' || '' }}
