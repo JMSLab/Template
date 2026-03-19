@@ -1,14 +1,10 @@
 #!/usr/bin/env python3
+import json
 import os
 import subprocess
 import sys
 
-CHECKS = [
-    ("SCons DAG", "check_scons"),
-    ("Newlines",  "check_newlines"),
-    ("EPS data",  "check_eps"),
-    ("Build log", "check_scons_log"),
-]
+CHECKS_JSON = os.path.join(os.path.dirname(__file__), 'checks.json')
 
 def Main():
     repo   = os.environ["GITHUB_REPOSITORY"]
@@ -26,27 +22,33 @@ def Main():
     return 0
 
 def CollectResults():
+    checks      = json.load(open(CHECKS_JSON))
+    results_dir = os.path.join(os.environ["RUNNER_TEMP"], "check_results")
     rows, failed = [], []
-    for name, step_id in CHECKS:
-        key     = step_id.upper()
-        outcome = os.environ.get(f"{key}_OUTCOME", "skipped")
-        time    = os.environ.get(f"{key}_TIME", "")
-        print(f"  {step_id}: {time}s")
-        if outcome == "skipped":
-            rows.append(f"| {name} | SKIP | |")
-        elif outcome == "success":
-            rows.append(f"| {name} | ✅ | {time}s |")
+    for check in checks:
+        name        = check["name"]
+        result_file = os.path.join(results_dir, f"{name}.json")
+        if os.path.exists(result_file):
+            result  = json.load(open(result_file))
+            outcome = result["outcome"]
+            time    = result["time"]
+            print(f"  {name}: {time}s")
+            if outcome == "success":
+                rows.append(f"| {name} | ✅ | {time}s |")
+            else:
+                failed.append(name)
+                rows.append(f"| {name} | ❌ | {time}s |")
         else:
-            failed.append(name)
-            rows.append(f"| {name} | ❌ | {time}s |")
+            print(f"  {name}: skipped")
+            rows.append(f"| {name} | SKIP | |")
     return rows, failed
 
 def PostResults(repo, run_id, rows, failed):
-    run_url    = f"https://github.com/{repo}/actions/runs/{run_id}"
-    table      = "\n".join(["| Check | Result | Time |", "|-------|--------|------|", *rows])
-    body       = f"**Check Results** ([run details]({run_url}))\n\n{table}"
-    pr_num     = os.environ["PR_NUMBER"]
-    pr_sha     = os.environ["PR_SHA"]
+    run_url = f"https://github.com/{repo}/actions/runs/{run_id}"
+    table   = "\n".join(["| Check | Result | Time |", "|-------|--------|------|", *rows])
+    body    = f"**Check Results** ([run details]({run_url}))\n\n{table}"
+    pr_num  = os.environ["PR_NUMBER"]
+    pr_sha  = os.environ["PR_SHA"]
     subprocess.run([
         "gh", "api", f"repos/{repo}/issues/{pr_num}/comments",
         "--method", "POST", "-f", f"body={body}",

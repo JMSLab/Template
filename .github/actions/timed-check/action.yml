@@ -2,16 +2,17 @@ name: Timed Python Check
 inputs:
   script:
     required: true
-outputs:
-  time:
-    description: Elapsed time in seconds
-    value: ${{ steps.run.outputs.time }}
+  display:
+    required: true
 runs:
   using: composite
   steps:
-    - id: run
-      shell: bash
+    - shell: bash
       run: |
-        s=$(date +%s%N); python ${{ inputs.script }} || e=$?
-        awk "BEGIN{printf \"time=%.3f\n\",($(date +%s%N)-$s)/1e9}" >> $GITHUB_OUTPUT
-        exit ${e:-0}
+        mkdir -p "$RUNNER_TEMP/check_results"
+        s=$(date +%s%N)
+        python ${{ inputs.script }} && outcome=success || outcome=failure
+        time=$(awk "BEGIN{printf \"%.3f\",($(date +%s%N)-$s)/1e9}")
+        printf '{"outcome":"%s","time":"%s"}' "$outcome" "$time" \
+          > "$RUNNER_TEMP/check_results/${{ inputs.display }}.json"
+        [ "$outcome" = "success" ]

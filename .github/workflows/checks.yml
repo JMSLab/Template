@@ -50,6 +50,7 @@ jobs:
         uses: ./.github/actions/timed-check
         with:
           script: .github/check_sconscripts.py
+          display: SCons DAG
 
       - id: check_newlines
         name: Check missing newlines
@@ -58,6 +59,7 @@ jobs:
         uses: ./.github/actions/timed-check
         with:
           script: .github/check_newlines.py
+          display: Newlines
 
       - id: check_eps
         name: Check extraneous EPS data
@@ -66,6 +68,7 @@ jobs:
         uses: ./.github/actions/timed-check
         with:
           script: .github/check_eps_savefig.py
+          display: EPS data
 
       - id: check_scons_log
         name: Check build failure
@@ -74,6 +77,7 @@ jobs:
         uses: ./.github/actions/timed-check
         with:
           script: .github/check_sconscript_log.py
+          display: Build log
 
       - name: Post results
         if: always()
@@ -81,14 +85,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ github.event.issue.number }}
           PR_SHA: ${{ env.PR_SHA }}
-          CHECK_SCONS_OUTCOME: ${{ steps.check_scons.outcome }}
-          CHECK_SCONS_TIME: ${{ steps.check_scons.outputs.time }}
-          CHECK_NEWLINES_OUTCOME: ${{ steps.check_newlines.outcome }}
-          CHECK_NEWLINES_TIME: ${{ steps.check_newlines.outputs.time }}
-          CHECK_EPS_OUTCOME: ${{ steps.check_eps.outcome }}
-          CHECK_EPS_TIME: ${{ steps.check_eps.outputs.time }}
-          CHECK_SCONS_LOG_OUTCOME: ${{ steps.check_scons_log.outcome }}
-          CHECK_SCONS_LOG_TIME: ${{ steps.check_scons_log.outputs.time }}
         run: |
           python .github/post_check_results.py \
             ${{ contains(github.event.comment.body, '--post') && '--post' || '' }}

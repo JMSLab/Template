@@ -2,6 +2,7 @@
 
 ## Adding a new check
 
-1. Add a step to `checks.yml` with `id: check_<name>`
-2. Add `CHECK_<NAME>_OUTCOME` and `CHECK_<NAME>_TIME` env vars to the `Post results` step in `checks.yml`
-3. Add `("Display Name", "check_<name>")` to `CHECKS` in `post_check_results.py`
+1. Add a step to `checks.yml` with a unique `id` and `display` (e.g. `id: check_newlines`, `display: Newlines`)
+2. Add `{"name": "Newlines"}` (i.e. matching `display`) to `checks.json`
+
+The order of entries in `checks.json` controls the row order in the results table.
