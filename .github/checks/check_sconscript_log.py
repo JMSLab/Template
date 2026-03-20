@@ -6,7 +6,7 @@ TARGET = "terminated because of errors."
 
 def Main():
     bad = []
-    for p in Path(".").rglob("**/*.log"):
+    for p in Path(".").rglob("*.log"):
         try:
             if TARGET in p.read_text(errors="replace"):
                 bad.append(p)

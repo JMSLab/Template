@@ -3,8 +3,9 @@ import json
 import os
 import subprocess
 import sys
+from pathlib import Path
 
-CHECKS_JSON = os.path.join(os.path.dirname(__file__), '../checks/checks.json')
+CHECKS_JSON = Path(__file__).parent.parent / 'checks' / 'checks.json'
 
 def Main():
     repo   = os.environ["GITHUB_REPOSITORY"]
@@ -22,27 +23,25 @@ def Main():
     return 0
 
 def CollectResults():
-    with open(CHECKS_JSON) as f:
-        checks = json.load(f)
-    results_dir = os.path.join(os.environ["RUNNER_TEMP"], "check_results")
+    checks      = json.loads(CHECKS_JSON.read_text())
+    results_dir = Path(os.environ["RUNNER_TEMP"]) / "check_results"
     rows, failed = [], []
+    STATUS = {"success": "✅", "failure": "❌"}
     for check in checks:
-        name        = check["name"]
-        result_file = os.path.join(results_dir, f"{name}.json")
-        if os.path.exists(result_file):
-            with open(result_file) as f:
-                result = json.load(f)
-            outcome = result["outcome"]
-            time    = result["time"]
-            print(f"  {name}: {time}s")
-            if outcome == "success":
-                rows.append(f"| {name} | ✅ | {time}s |")
-            else:
-                failed.append(name)
-                rows.append(f"| {name} | ❌ | {time}s |")
+        check_name  = check["name"]
+        result_file = results_dir / f"{check_name}.json"
+        if result_file.exists():
+            result      = json.loads(result_file.read_text())
+            outcome     = result["outcome"]
+            elapsed     = result["time"]
+            print(f"  {check_name}: {elapsed}s")
+            status_icon = STATUS.get(outcome, "❌")
+            if outcome != "success":
+                failed.append(check_name)
+            rows.append(f"| {check_name} | {status_icon} | {elapsed}s |")
         else:
-            print(f"  {name}: skipped")
-            rows.append(f"| {name} | SKIP | |")
+            print(f"  {check_name}: skipped")
+            rows.append(f"| {check_name} | SKIP | |")
     return rows, failed
 
 def PostResults(repo, run_id, rows, failed):

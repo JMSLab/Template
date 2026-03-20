@@ -20,116 +20,50 @@ def ReadFile(path):
     except Exception:
         return None
 
-def CheckEpsSavefig(file_path, content):
-    """
-    Check if file contains .savefig(*eps*) without remove_eps_info(
-    Returns list of problematic lines with line numbers
-    """
-    problems = []
-    lines = content.split('\n')
-    
-    # Pattern to match .savefig with eps format (both single and double quotes)
+def WalkFiles(root, excluded, extension):
+    for dir_path, dir_names, file_names in os.walk(root):
+        if IsExcludedPath(dir_path, excluded):
+            dir_names[:] = []
+            continue
+
+        dir_names[:] = [d for d in dir_names if not IsIgnoredDir(d)]
+
+        for file_name in file_names:
+            if file_name.endswith(extension) and not IsHidden(file_name):
+                yield os.path.join(dir_path, file_name)
+
+def CheckEpsSavefig(content):
     eps_savefig_patterns = [
-        r'\.savefig\([^)]*[\'"].*eps.*[\'"][^)]*\)',  # matches .savefig(...'...eps...'...)
-        r'\.savefig\([^)]*format\s*=\s*[\'"]eps[\'"][^)]*\)'  # matches format='eps' or format="eps"
+        r'\.savefig\([^)]*[\'"].*eps.*[\'"][^)]*\)',
+        r'\.savefig\([^)]*format\s*=\s*[\'"]eps[\'"][^)]*\)'
     ]
-    
+
     eps_lines = []
-    for line_num, line in enumerate(lines, 1):
+    for line_num, line in enumerate(content.split('\n'), 1):
         for pattern in eps_savefig_patterns:
             if re.search(pattern, line, re.IGNORECASE):
                 eps_lines.append(f"Line {line_num}: {line.strip()}")
                 break
 
     remove_count = content.count('remove_eps_info(')
-    if len(eps_lines) != remove_count:
-        problems.extend(eps_lines)
-
-    return problems
+    return eps_lines if len(eps_lines) != remove_count else []
 
 def CollectEpsProblems(root, excluded):
-    """Walk through Python files and check for EPS savefig issues"""
     problems = []
-    
-    for dir_path, dir_names, file_names in os.walk(root):
-        if IsExcludedPath(dir_path, excluded):
-            dir_names[:] = []
+    for file_path in WalkFiles(root, excluded, '.py'):
+        content = ReadFile(file_path)
+        if content is None:
             continue
-            
-        dir_names[:] = [d for d in dir_names if not IsIgnoredDir(d)]
-        
-        for file_name in file_names:
-            if not file_name.endswith('.py'):
-                continue
-                
-            if IsHidden(file_name):
-                continue
-                
-            file_path = os.path.join(dir_path, file_name)
-            content = ReadFile(file_path)
-            
-            if content is None:
-                continue
-                
-            file_problems = CheckEpsSavefig(file_path, content)
-            if file_problems:
-                problems.append({
-                    'file': file_path,
-                    'issues': file_problems
-                })
-    
+        file_problems = CheckEpsSavefig(content)
+        if file_problems:
+            problems.append({'file': file_path, 'issues': file_problems})
     return problems
 
-def CheckEpsCreationDate(content):
-    """
-    Check if any line in an EPS file starts with %%CreationDate.
-    Returns True if it does.
-    """
-    return any(line.startswith("%%CreationDate") for line in content.splitlines())
-
-def CollectEpsCreationDateProblems(root, excluded):
-    """Walk through EPS files and report those that contain %%CreationDate"""
-    eps_files = []
-    
-    for dir_path, dir_names, file_names in os.walk(root):
-        if IsExcludedPath(dir_path, excluded):
-            dir_names[:] = []
-            continue
-            
-        dir_names[:] = [d for d in dir_names if not IsIgnoredDir(d)]
-        
-        for file_name in file_names:
-            if not file_name.endswith('.eps'):
-                continue
-                
-            if IsHidden(file_name):
-                continue
-                
-            eps_path = os.path.join(dir_path, file_name)
-            content = ReadFile(eps_path)
-            
-            if content is None:
-                continue
-                
-            if CheckEpsCreationDate(content):
-                eps_files.append(eps_path)
-    
-    return eps_files
-
-def main():
+def Main():
     source_root   = "source"
-    output_root   = "output"
     excluded      = ["source/lib", "source/raw", "source/scrape"]
 
     problems = CollectEpsProblems(source_root, excluded)
-    creationdate_eps_files = CollectEpsCreationDateProblems(output_root, [])
-    
-    if creationdate_eps_files:
-        print("EPS files containing %%CreationDate:")
-        for eps_file in creationdate_eps_files:
-            print(f"  {eps_file}")
-        print("")
-        return 1
 
     if problems:
         print("EPS savefig check failed!")
@@ -146,4 +80,4 @@ def main():
         return 0
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(Main())

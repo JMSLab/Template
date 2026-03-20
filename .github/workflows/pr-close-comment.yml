@@ -1,5 +1,3 @@
-# Post a comment when a PR is closed (merged or unmerged)
-
 name: PR Close Comment
 
 on:
@@ -20,7 +18,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v6
       with:
-        python-version: '3.12'
+        python-version: "3.x"
 
     - name: Install dependencies
       run: pip install PyGithub

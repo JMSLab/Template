@@ -1,5 +1,6 @@
 import os
 import re
+import sys
 from pathlib import Path
 from github import Github
 
@@ -20,6 +21,7 @@ def Main():
 
     issue_comment_url = PostIssueComment(repo, branch_name, last_commit_sha)
     PostPrComment(pr, pr_author, issue_comment_url)
+    return 0
 
 
 def PostIssueComment(repo, branch_name, last_commit_sha):
@@ -44,4 +46,4 @@ def PostPrComment(pr, pr_author, issue_comment_url):
 
 
 if __name__ == "__main__":
-    Main()
+    sys.exit(Main())

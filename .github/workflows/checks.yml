@@ -43,6 +43,7 @@ jobs:
           python-version: "3.x"
 
       - id: parse_commands
+        name: Parse requested checks
         env:
           COMMENT_BODY: ${{ github.event.comment.body }}
         run: echo "run=$(python .github/helper_scripts/parse_commands.py)" >> $GITHUB_OUTPUT
@@ -76,7 +77,7 @@ jobs:
           display: EPS data
 
       - id: check_scons_log
-        name: Check build failure
+        name: Check SCons build log for errors
         if: contains(fromJSON(steps.parse_commands.outputs.run), 'Build log')
         continue-on-error: true
         uses: ./.github/actions/timed-check
