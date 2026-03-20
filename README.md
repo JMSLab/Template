@@ -93,11 +93,11 @@ env.Stata(target, source)
 
 ### Automation
 
-The repository is prebuilt with some automated testing using [Github Actions](./github).
+The repository is prebuilt with some automated testing using [Github Actions](./.github).
 
 To run all tests, add `[run-actions-all]` to a commit message or type `/run-actions-all` in a comment.
 
-To run a particular test, type `/run-actions-NAMEOFTEST` in a comment (e.g., `/run-actions-log` to run [this test](https://github.com/JMSLab/Template/blob/master/.github/checks/check_sconscript_log.py).
+To run a particular test, type `/run-actions-NAMEOFTEST` in a comment (e.g., `/run-actions-log` to run [this test](./.github/checks/check_sconscript_log.py); see [commands](./.github/checks/checks.json) for others).
 
 ### Citations and expectations for usage
 
