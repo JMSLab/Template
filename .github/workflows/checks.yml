@@ -1,0 +1,96 @@
+name: Checks
+
+on:
+  push:
+    branches:
+      - "**"
+  issue_comment:
+    types: [created]
+
+jobs:
+  checks:
+    if: |
+      (github.event_name == 'push' && contains(github.event.head_commit.message, '[run-actions-all]')) ||
+      (github.event_name == 'issue_comment' && github.event.issue.pull_request && contains(github.event.comment.body, '/run-actions-'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    permissions:
+      statuses: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event_name == 'issue_comment' && format('refs/pull/{0}/head', github.event.issue.number) || github.sha }}
+
+      - name: Post pending commit status
+        if: github.event_name == 'issue_comment'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          PR_SHA=$(gh api repos/${{ github.repository }}/pulls/${{ github.event.issue.number }} --jq '.head.sha')
+          echo "PR_SHA=$PR_SHA" >> $GITHUB_ENV
+          gh api repos/${{ github.repository }}/statuses/$PR_SHA \
+            -f state=pending \
+            -f context="Checks" \
+            -f description="Running..." \
+            -f target_url="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+
+      - id: parse_commands
+        name: Parse requested checks
+        env:
+          COMMENT_BODY: ${{ github.event.comment.body }}
+        run: echo "run=$(python .github/helper_scripts/parse_commands.py)" >> $GITHUB_OUTPUT
+        shell: bash
+
+      - id: check_scons
+        name: Check SCons DAG for missing dependencies
+        if: contains(fromJSON(steps.parse_commands.outputs.run), 'SCons DAG')
+        continue-on-error: true
+        uses: ./.github/actions/timed-check
+        with:
+          script: .github/checks/check_sconscripts.py
+          display: SCons DAG
+
+      - id: check_newlines
+        name: Check missing newlines
+        if: contains(fromJSON(steps.parse_commands.outputs.run), 'Newlines')
+        continue-on-error: true
+        uses: ./.github/actions/timed-check
+        with:
+          script: .github/checks/check_newlines.py
+          display: Newlines
+
+      - id: check_eps
+        name: Check extraneous EPS data
+        if: contains(fromJSON(steps.parse_commands.outputs.run), 'EPS data')
+        continue-on-error: true
+        uses: ./.github/actions/timed-check
+        with:
+          script: .github/checks/check_eps_savefig.py
+          display: EPS data
+
+      - id: check_scons_log
+        name: Check SCons build log for errors
+        if: contains(fromJSON(steps.parse_commands.outputs.run), 'Build log')
+        continue-on-error: true
+        uses: ./.github/actions/timed-check
+        with:
+          script: .github/checks/check_sconscript_log.py
+          display: Build log
+
+      - name: Post results
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.issue.number }}
+          PR_SHA: ${{ env.PR_SHA }}
+        run: |
+          python .github/helper_scripts/post_check_results.py \
+            ${{ contains(github.event.comment.body, '--post') && '--post' || '' }}
