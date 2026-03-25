@@ -91,6 +91,14 @@ env.Stata(target, source)
 
 - For tips on batch-specifying targets and sources, see [./docs/batch_specifying.md](./docs/batch_specifying.md).
 
+### Automation
+
+The repository is prebuilt with some automated testing using [Github Actions](./.github).
+
+To run all tests, add `[run-actions-all]` to a commit message or type `/run-actions-all` in a comment.
+
+To run a particular test, type `/run-actions-NAMEOFTEST` in a comment (e.g., `/run-actions-log` to run [this test](./.github/checks/check_sconscript_log.py); see [commands](./.github/checks/checks.json) for others).
+
 ### Citations and expectations for usage
 
 This template is based on [gslab-econ/Template/v4.1.3](https://github.com/gslab-econ/template/releases/tag/4.1.3) and [gslab-python/v4.1.4](https://github.com/gslab-econ/gslab_python/releases/tag/v4.1.4).
