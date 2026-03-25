@@ -4,7 +4,7 @@ A template for research projects developed by JMSLab.
 
 ### Prerequisites
 
-- We recommend installing Python via [Anaconda](https://www.anaconda.com/products/individual).
+- A Python distribution (for example, [Anaconda](https://www.anaconda.com/products/individual) or [CPython](https://www.python.org/downloads/))
     - We use Python to run [SCons](https://scons.org); custom SCons builders are also written in Python.
     - You will need to install the dependencies in `source/lib/requirements.txt` (including SCons). See [quick start](#quick-start) below.
 - [git](https://git-scm.com/downloads) for version control.
@@ -54,13 +54,13 @@ In addition, each project may use other specialized tools. For the working examp
 
     - Do _not_ link a "live" copy of the datastore (i.e. one that is synchronized to the internet). Work with a local, off-line copy before modifying the live copy;  otherwise the data may get unintentionally overwritten for everyone using the datastore.
 
-3. Install dependencies:
+3. Create an isolated Python environment and install the dependencies listed in `source/lib/requirements.txt`.
 
-    ```
-    pip install -r source/lib/requirements.txt
-    ```
+   For example, you can use:
+   - separate tools for environment and package management, such as `venv` + `pip`
+   - an integrated tool, such as `conda` or `uv`
 
-    (If using `conda`, run `conda install --file source/lib/requirements.txt`.)  Requirements for other languages, should there be any, will be found in `source/lib/requirements.{ext}` with `{ext}` equal to `do` (Stata), `r` (R), `m` (Matlab), and so on.
+    Requirements for other languages, should there be any, will be found in `source/lib/requirements.{ext}` with `{ext}` equal to `do` (Stata), `r` (R), `m` (Matlab), and so on.
 
 4. Make sure that all the required program executables are in your system's path.
 
