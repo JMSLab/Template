@@ -56,11 +56,11 @@ In addition, each project may use other specialized tools. For the working examp
 
 3. Create an isolated Python environment and install the dependencies listed in `source/lib/requirements.txt`.
 
-   For example, you can use:
-   - separate tools for environment and package management, such as `venv` + `pip`
-   - an integrated tool, such as `conda` or `uv`
+   - For example, you can use:
+     - separate tools for environment and package management, such as `venv` + `pip`
+     - an integrated tool, such as `conda` or `uv`
 
-    Requirements for other languages, should there be any, will be found in `source/lib/requirements.{ext}` with `{ext}` equal to `do` (Stata), `r` (R), `m` (Matlab), and so on.
+    - Requirements for other languages, should there be any, will be found in `source/lib/requirements.{ext}` with `{ext}` equal to `do` (Stata), `r` (R), `m` (Matlab), and so on.
 
 4. Make sure that all the required program executables are in your system's path.
 
