@@ -12,19 +12,19 @@ def Main():
     github_token    = os.environ["GITHUB_TOKEN"]
     repo_name       = os.environ["REPO"]
     pr_number       = int(os.environ["PR_NUMBER"])
-    pr_author       = os.environ["PR_AUTHOR"]
+    user_closing_pr = os.environ["USER_CLOSING_PR"]
     branch_name     = os.environ["BRANCH_NAME"]
     last_commit_sha = os.environ["LAST_COMMIT_SHA"]
 
     repo = Github(github_token).get_repo(repo_name)
     pr = repo.get_pull(pr_number)
 
-    issue_comment_url = PostIssueComment(repo, branch_name, last_commit_sha)
-    PostPrComment(pr, pr_author, issue_comment_url)
+    issue_comment_url = PostCommentOnIssueThread(repo, branch_name, last_commit_sha)
+    PostCommentOnPRThread(pr, user_closing_pr, issue_comment_url)
     return 0
 
 
-def PostIssueComment(repo, branch_name, last_commit_sha):
+def PostCommentOnIssueThread(repo, branch_name, last_commit_sha):
     issue_match = re.match(r"^(\d+)", branch_name)
     if not issue_match:
         return None
@@ -36,13 +36,13 @@ def PostIssueComment(repo, branch_name, last_commit_sha):
     return comment.html_url
 
 
-def PostPrComment(pr, pr_author, issue_comment_url):
-    pr_body = PR_TEMPLATE.read_text()
+def PostCommentOnPRThread(pr, user_closing_pr, issue_comment_url):
+    post_content = PR_TEMPLATE.read_text()
 
     if issue_comment_url:
-        pr_body = f"[Issue summary]({issue_comment_url})\n\n{pr_body}"
+        post_content = f"[Issue summary]({issue_comment_url})\n\n{post_content}"
 
-    pr.as_issue().create_comment(f"@{pr_author} {pr_body}")
+    pr.as_issue().create_comment(f"@{user_closing_pr} {post_content}")
 
 
 if __name__ == "__main__":
