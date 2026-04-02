@@ -9,6 +9,6 @@ source = ['#source/derived/wb_clean/build.py',
 env.Python(target, source)
 
 target = ['#output/derived/wb_clean/gdp_education_logs.csv']
-source = ['#source/derived/wb_clean/takelogs.do',
+source = ['#source/derived/wb_clean/takelogs.v2.do',
           '#output/derived/wb_clean/gdp_education.csv']
 env.Stata(target, source)
