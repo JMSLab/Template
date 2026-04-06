@@ -2,10 +2,10 @@ import subprocess
 import shutil
 import sys
 import os
+import re
 
 from .jmslab_builder import JMSLabBuilder
 from .._exception_classes import PrerequisiteError
-from .. import misc
 
 
 def build_stata(target, source, env):
@@ -73,9 +73,11 @@ class StataBuilder(JMSLabBuilder):
         self.call_args = args
         return None
 
-    def execute_system_call(self):
-        '''
-        '''
-        super(StataBuilder, self).execute_system_call()
+    def do_call(self):
+        super(StataBuilder, self).do_call()
         shutil.move(self.log_file, self.final_sconscript_log)
-        return None
+        self.log_file = self.final_sconscript_log
+        with open(self.log_file) as f:
+            log = f.read()
+        if re.search(r'\br\([1-9]\d*\);', log):
+            self.raise_system_call_exception()
