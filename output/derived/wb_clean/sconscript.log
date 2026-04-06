@@ -1,5 +1,8 @@
-*** Builder log created: {2026-04-01 22:26:19}
-*** Builder log completed: {2026-04-01 22:26:20}
+*** Builder log created: {2026-04-06 18:56:33}
+*** Builder log completed: {2026-04-06 18:56:34}
+Stata did not run successfully. Please check that the executable, source, and target files are correctly specified. Check output/derived/wb_clean/sconscript.log and sconstruct.log for errors. 
+Command tried: "stata-mp"  -e source/derived/wb_clean/takelogs.do 
+
 
   ___  ____  ____  ____  ____ ®
  /__    /   ____/   /   ____/      StataNow 19.5

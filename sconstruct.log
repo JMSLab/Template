@@ -1,14 +1,21 @@
-*** New build: {2026-04-01 22:26:19} ***
+*** New build: {2026-04-06 18:56:33} ***
 scons: done reading SConscript files.
 scons: Building targets ...
 build_stata(["output/derived/wb_clean/gdp_education_logs.csv"], ["source/derived/wb_clean/takelogs.do", "output/derived/wb_clean/gdp_education.csv"])
-build_python(["output/analysis/plots/educ_gdp.eps", "output/analysis/plots/educ_gdp.png"], ["source/analysis/plots/makeplot.py", "output/derived/wb_clean/gdp_education_logs.csv"])
-build_matlab(["output/analysis/plots/sconscript.log", "output/analysis/plots/gdp_educ.eps", "output/analysis/plots/gdp_educ.png"], ["source/analysis/plots/makeplot.m", "output/derived/wb_clean/gdp_education_logs.csv"])
-build_lyx(["output/paper/TemplateLyx.pdf"], ["source/paper/Template.lyx", "output/tables/top_gdp.lyx", "output/analysis/top_gdp/top_gdp.tex", "source/figures/gdp_educ.lyx", "source/paper/References.bib"])
-build_latex(["output/paper/TemplateTex.pdf"], ["source/paper/Template.tex", "output/tables/top_gdp.tex", "output/analysis/top_gdp/top_gdp.tex", "source/figures/gdp_educ.tex", "source/paper/References.bib"])
-Detected 2 bibliographies in source/paper/Template.tex.
-Run BibTeX foroutput/paper/TemplateTex.1.aux
-Run BibTeX foroutput/paper/TemplateTex.2.aux
-build_lyx(["output/talk/TemplateSlides.pdf", "temp/Template.handout.pdf"], ["source/talk/TemplateSlides.lyx", "output/analysis/plots/gdp_educ.eps"])
-build_latex(["output/talk/TemplateSlidesLatex.pdf", "temp/TemplateLatex.handout.pdf"], ["source/talk/TemplateSlides.tex", "output/analysis/plots/gdp_educ.eps"])
-scons: done building targets.
+scons: *** [output/derived/wb_clean/gdp_education_logs.csv] ExecCallError : Stata did not run successfully. Please check that the executable, source, and target files are correctly specified. Check output/derived/wb_clean/sconscript.log and sconstruct.log for errors. 
+Command tried: "stata-mp"  -e source/derived/wb_clean/takelogs.do 
+Traceback (most recent call last):
+  File "/Users/zpu/miniforge3/lib/python3.12/site-packages/SCons/Action.py", line 1434, in execute
+    result = self.execfunction(target=target, source=rsources, env=env)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/zpu/Documents/gh/Template/source/lib/JMSLab/builders/build_stata.py", line 32, in build_stata
+    builder.execute_system_call()
+  File "/Users/zpu/Documents/gh/Template/source/lib/JMSLab/builders/jmslab_builder.py", line 120, in execute_system_call
+    self.do_call()
+  File "/Users/zpu/Documents/gh/Template/source/lib/JMSLab/builders/build_stata.py", line 83, in do_call
+    self.raise_system_call_exception()
+  File "/Users/zpu/Documents/gh/Template/source/lib/JMSLab/builders/jmslab_builder.py", line 186, in raise_system_call_exception
+    raise ExecCallError(message)
+source.lib.JMSLab._exception_classes.ExecCallError: Stata did not run successfully. Please check that the executable, source, and target files are correctly specified. Check output/derived/wb_clean/sconscript.log and sconstruct.log for errors. 
+Command tried: "stata-mp"  -e source/derived/wb_clean/takelogs.do 
+scons: building terminated because of errors.
