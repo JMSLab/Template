@@ -85,6 +85,15 @@ jobs:
           script: .github/checks/check_sconscript_log.py
           display: Build log
 
+      - id: check_issue_folder
+        name: Check for issue folder
+        if: contains(fromJSON(steps.parse_commands.outputs.run), 'Issue folder')
+        continue-on-error: true
+        uses: ./.github/actions/timed-check
+        with:
+          script: .github/checks/check_issue_folder.py
+          display: Issue folder
+
       - name: Post results
         if: always()
         env:

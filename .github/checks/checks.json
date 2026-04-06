@@ -1,6 +1,7 @@
 [
-  {"name": "SCons DAG", "command": "/run-actions-dag"},
-  {"name": "Newlines",  "command": "/run-actions-newlines"},
-  {"name": "EPS data",  "command": "/run-actions-eps"},
-  {"name": "Build log", "command": "/run-actions-log"}
+  {"name": "SCons DAG",     "command": "/run-actions-dag"},
+  {"name": "Newlines",      "command": "/run-actions-newlines"},
+  {"name": "EPS data",      "command": "/run-actions-eps"},
+  {"name": "Build log",     "command": "/run-actions-log"},
+  {"name": "Issue folder",  "command": "/run-actions-issue-folder"}
 ]
