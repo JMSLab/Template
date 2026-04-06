@@ -4,8 +4,9 @@ import re
 import sys
 from pathlib import Path
 
+from sconscript_exceptions import EXCLUDED_FILES, SKIP_DIRS
+
 ROOT       = Path("source")
-EXCLUDED   = {Path("source/lib"), Path("source/raw"), Path("source/scrape")}
 PAPER_DIR  = Path("source/paper")
 PAPER_EXTS = {".bib", ".tex", ".lyx"}
 
@@ -36,6 +37,7 @@ def Main():
 def CollectProblems():
     missing_dirs     = []
     missing_mentions = []
+    exceptions       = set(EXCLUDED_FILES)
     for dir_path, dir_names, file_names in os.walk(ROOT):
         dir_path = Path(dir_path)
         if IsExcluded(dir_path):
@@ -51,8 +53,10 @@ def CollectProblems():
             if parent_content is None:
                 missing_dirs.append(dir_path)
             continue
+        rel = dir_path.relative_to(ROOT).as_posix()
         for f in sorted(f for f in file_names if f != "SConscript"):
-            if ShouldCheck(dir_path, f) and not IsMentioned(content, f, dir_path):
+            path = f"source/{rel}/{f}"
+            if ShouldCheck(dir_path, f) and path not in exceptions and not IsMentioned(content, f, dir_path):
                 missing_mentions.append(f"{dir_path} -> {f}")
         for subdir in dir_names:
             if re.search(rf"\b{re.escape(subdir)}\b", content):
@@ -73,7 +77,7 @@ def CollectProblems():
 
 
 def IsExcluded(dir_path):
-    return any(dir_path == e or dir_path.is_relative_to(e) for e in EXCLUDED)
+    return any(dir_path == Path(d) or dir_path.is_relative_to(d) for d in SKIP_DIRS)
 
 
 def IsIgnored(name):
