@@ -45,9 +45,12 @@ def CollectResults():
     return rows, failed
 
 def PostResults(repo, run_id, rows, failed):
-    run_url = f"https://github.com/{repo}/actions/runs/{run_id}"
-    table   = "\n".join(["| Check | Result | Time |", "|-------|--------|------|", *rows])
-    body    = f"**Check Results** ([run details]({run_url}))\n\n{table}"
+    run_url        = f"https://github.com/{repo}/actions/runs/{run_id}"
+    comment_author = os.environ.get("COMMENT_AUTHOR", "")
+    comment_url    = os.environ.get("COMMENT_URL", "")
+    table          = "\n".join(["| Check | Result | Time |", "|-------|--------|------|", *rows])
+    attribution    = f"Triggered by @{comment_author} on [this comment]({comment_url})\n\n" if comment_author else ""
+    body           = f"{attribution}**Check Results** ([run details]({run_url}))\n\n{table}"
     pr_num  = os.environ["PR_NUMBER"]
     pr_sha  = os.environ["PR_SHA"]
     subprocess.run([
