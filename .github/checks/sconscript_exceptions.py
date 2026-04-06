@@ -1,7 +1,8 @@
-# filepath: reason the checker skips this file
-EXCLUDED_FILES = {}
+EXCLUDED_FILES = {
+    # "file/path": "reason the checker skips this file"
+}
 
-# directories the checker skips
 SKIP_DIRS = [
+    # directories the checker skips
     "source/lib",
 ]
