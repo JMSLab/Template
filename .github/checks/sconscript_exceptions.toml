@@ -1,5 +1,5 @@
 [excluded_files]
-"source/analysis/coi.txt" = "coi"
+# "source/some/file.R" = "reason for exclusion"
 
 [settings]
 skip_dirs = [
