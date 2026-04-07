@@ -10,7 +10,7 @@ _EXCEPTIONS_FILE = Path(__file__).parent / "sconscript_exceptions.toml"
 def _LoadExceptions():
     with open(_EXCEPTIONS_FILE, "rb") as f:
         data = tomllib.load(f)
-    return data.get("excluded_files") or {}, data.get("settings", {}).get("skip_dirs") or []
+    return data.get("excluded_files") or {}, data.get("skip_dirs", {}).get("skip_dirs") or []
 
 EXCLUDED_FILES, SKIP_DIRS = _LoadExceptions()
 

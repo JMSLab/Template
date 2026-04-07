@@ -1,7 +1,7 @@
 [excluded_files]
 # "source/some/file.R" = "reason for exclusion"
 
-[settings]
+[skip_dirs]
 skip_dirs = [
     "source/lib",
 ]
