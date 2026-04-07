@@ -1,5 +1,0 @@
-excluded_files:
-  # - "file/to/exclude.R": "reason for exclusion"
-
-skip_dirs:
-  - "source/lib"

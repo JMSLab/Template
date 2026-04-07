@@ -3,13 +3,14 @@ import os
 import re
 import sys
 from pathlib import Path
-import yaml
+import tomllib
 
-_EXCEPTIONS_FILE = Path(__file__).parent / "sconscript_exceptions.yaml"
+_EXCEPTIONS_FILE = Path(__file__).parent / "sconscript_exceptions.toml"
 
 def _LoadExceptions():
-    data = yaml.safe_load(_EXCEPTIONS_FILE.read_text(encoding="utf-8")) or {}
-    return data.get("excluded_files") or {}, data.get("skip_dirs") or []
+    with open(_EXCEPTIONS_FILE, "rb") as f:
+        data = tomllib.load(f)
+    return data.get("excluded_files") or {}, data.get("settings", {}).get("skip_dirs") or []
 
 EXCLUDED_FILES, SKIP_DIRS = _LoadExceptions()
 
