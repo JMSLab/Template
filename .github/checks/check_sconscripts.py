@@ -3,8 +3,15 @@ import os
 import re
 import sys
 from pathlib import Path
+import yaml
 
-from sconscript_exceptions import EXCLUDED_FILES, SKIP_DIRS
+_EXCEPTIONS_FILE = Path(__file__).parent / "sconscript_exceptions.yaml"
+
+def _LoadExceptions():
+    data = yaml.safe_load(_EXCEPTIONS_FILE.read_text(encoding="utf-8")) or {}
+    return data.get("excluded_files") or {}, data.get("skip_dirs") or []
+
+EXCLUDED_FILES, SKIP_DIRS = _LoadExceptions()
 
 ROOT       = Path("source")
 PAPER_DIR  = Path("source/paper")
