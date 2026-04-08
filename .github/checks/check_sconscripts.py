@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import fnmatch
 import os
 import re
 import sys
@@ -10,9 +11,9 @@ _EXCEPTIONS_FILE = Path(__file__).parent / "sconscript_exceptions.toml"
 def _LoadExceptions():
     with open(_EXCEPTIONS_FILE, "rb") as f:
         data = tomllib.load(f)
-    return data.get("excluded_files") or {}, data.get("skip_dirs", {}).get("skip_dirs") or []
+    return data.get("exceptions", {}).get("patterns") or []
 
-EXCLUDED_FILES, SKIP_DIRS = _LoadExceptions()
+EXCEPTIONS = _LoadExceptions()
 
 ROOT       = Path("source")
 PAPER_DIR  = Path("source/paper")
@@ -45,7 +46,6 @@ def Main():
 def CollectProblems():
     missing_dirs     = []
     missing_mentions = []
-    exceptions       = set(EXCLUDED_FILES)
     for dir_path, dir_names, file_names in os.walk(ROOT):
         dir_path = Path(dir_path)
         if IsExcluded(dir_path):
@@ -64,7 +64,7 @@ def CollectProblems():
         rel = dir_path.relative_to(ROOT).as_posix()
         for f in sorted(f for f in file_names if f != "SConscript"):
             path = f"source/{rel}/{f}"
-            if ShouldCheck(dir_path, f) and path not in exceptions and not IsMentioned(content, f, dir_path):
+            if ShouldCheck(dir_path, f) and not IsExcludedFile(path) and not IsMentioned(content, f, dir_path):
                 missing_mentions.append(f"{dir_path} -> {f}")
         for subdir in dir_names:
             if re.search(rf"\b{re.escape(subdir)}\b", content):
@@ -85,7 +85,12 @@ def CollectProblems():
 
 
 def IsExcluded(dir_path):
-    return any(dir_path == Path(d) or dir_path.is_relative_to(d) for d in SKIP_DIRS)
+    s = str(dir_path)
+    return any(fnmatch.fnmatch(s, p) or p.startswith(s + "/") for p in EXCEPTIONS)
+
+
+def IsExcludedFile(path):
+    return any(fnmatch.fnmatch(path, p) for p in EXCEPTIONS)
 
 
 def IsIgnored(name):
