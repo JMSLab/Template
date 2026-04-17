@@ -1,0 +1,20 @@
+name: Check issue/ is empty
+
+on:
+  pull_request:
+    branches: [main, master]
+    types: [labeled]
+
+jobs:
+  check-issue:
+    if: github.event.label.name == 'ready-to-merge'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fail if issue/ is non-empty
+        run: |
+          if [ -d "issue" ] && [ -n "$(ls -A issue/)" ]; then
+            echo "issue/ is not empty. Please delete its contents before merging."
+            exit 1
+          fi
+          echo "issue/ is empty or does not exist."
