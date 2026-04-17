@@ -77,7 +77,7 @@ Production encompasses the steps we take before we circulate or submit a paper d
 
   *  A list of unacknowledged sources of funding and comments.
      *  To catch unacknowledged comments, check the project wiki.
-     *  To catch unacknowledged funding sources, make a list of the funding sources acknowledged in each author's recent papers, excluding those already thanked here, and show each author this list to see if one or more of the sources should be thanked.
+     *  To catch unacknowledged funding sources, make a list of the funding sources acknowledged in each author's recent papers (linked from their homepage), excluding those already thanked here, and show each author this list to see if one or more of the sources should be thanked.
 
 ## Code and Data
 
