@@ -24,6 +24,7 @@ Production encompasses the steps we take before we circulate or submit a paper d
    * Avoid compiling on subissue branches unless necessary.
    * When merging a subissue branch, merge back to the main production branch and update other open production branches.
    * Skip review of pulls for tasks where work has already been reviewed by multiple RAs, except where PI review is requested below.
+   * It's often efficient to begin work by asking an LLM to perform the task. From there you can prune the LLM's suggestions, supplement them, or both.
 
 * When producing task deliverables:
    * Post them in a comment in the relevant subissue and tag the PI.
@@ -43,7 +44,7 @@ Production encompasses the steps we take before we circulate or submit a paper d
    
   | Expected Hours | 50% Confidence Interval | # of RAs |
   | -------------- | ----------------------- | -------- |
-  | 1              | (0.5 - 5)               | 1        |
+  | 1              | (0.5 - 3)               | 1        |
 
 #### Goals 
 
