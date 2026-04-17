@@ -3,11 +3,11 @@ name: Check issue/ is empty
 on:
   pull_request:
     branches: [main, master]
-    types: [labeled]
+    types: [opened, labeled]
 
 jobs:
   check-issue:
-    if: github.event.label.name == 'ready-to-merge'
+    if: github.event.action == 'opened' || github.event.label.name == 'ready-to-merge'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
