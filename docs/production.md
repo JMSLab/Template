@@ -227,18 +227,22 @@ Production encompasses the steps we take before we circulate or submit a paper d
 
   | Expected Hours | 50% Confidence Interval | # of RAs |
   | -------------- | ----------------------- | -------- |
-  | 8              | (2 - 16)                | 2        |
+  | 8              | (2 - 16)                | 1        |
 
 #### Goals 
 
-  *  All nontrivial mathematical claims in the paper are documented.
-     * Check with PI whether it is necessary to check statements within proofs.
+  * All nontrivial mathematical claims in the paper are documented.
+  * All mathematical reasoning in the paper is correct.
+     * We should always ask an LLM to confirm this.
+     * Check with PI whether to also have a human review of this part.
 
 #### Deliverables 
 
   *  A list of all theoretical claims that are made in the text of the paper that are not supported by proofs in the paper, appendices, or claims.pdf.
       * For example, we may say, "It is easy to show that equations A, B, and C together imply equation D."
       * You can omit claims that are obvious. We are interested in those where, if somebody challenged the claim, we would need to do at least a few minutes of work (e.g., a few lines of algebra) to confirm that the claim is right.
+  * A list of errors or gaps in mathematical reasoning.
+    * If this is produced by an LLM, please review it and prune back anything you think PI's don't need to consider.
    
 ## Journal
 
