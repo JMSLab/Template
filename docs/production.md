@@ -129,7 +129,9 @@ Production encompasses the steps we take before we circulate or submit a paper d
 #### Goals
 
   *  Main statements made in paper about definitions of samples and variables, and other methodological choices, are consistent with code.
-  *  Limit to a day of person time unless a PI suggests otherwise, and when there are tradeoffs, focus especially o the main analysis and core specification(s), as opposed to sensitivity and supplemental analyses.
+  *  Limit to a day of person time unless a PI suggests otherwise.
+      * An LLM will typically be able to cover the entire paper (possibly in chunks).
+      * Human review can focus especially on the main analysis and core specification(s), as opposed to sensitivity and supplemental analyses.
 
 #### Deliverables 
 
@@ -242,7 +244,6 @@ Production encompasses the steps we take before we circulate or submit a paper d
       * For example, we may say, "It is easy to show that equations A, B, and C together imply equation D."
       * You can omit claims that are obvious. We are interested in those where, if somebody challenged the claim, we would need to do at least a few minutes of work (e.g., a few lines of algebra) to confirm that the claim is right.
   * A list of errors or gaps in mathematical reasoning.
-    * If this is produced by an LLM, please review it and prune back anything you think PI's don't need to consider.
    
 ## Journal
 
