@@ -129,11 +129,7 @@ Production encompasses the steps we take before we circulate or submit a paper d
 #### Goals
 
   *  Main statements made in paper about definitions of samples and variables, and other methodological choices, are consistent with code.
-  *  Checking every variable and sample definition can for some projects take a large amount of time. Accordingly:
-      * Ask an LLM to take a careful first pass. (It can be helpful to break up the main pieces of the analysis and ask separately about each).
-      * Prune the LLM's comments.
-      * Spot-check yourself, focusing especially on the main analysis and core specification(s).
-      * Limit to a day of person time unless a PI suggests otherwise.
+  *  Limit to a day of person time unless a PI suggests otherwise, and when there are tradeoffs, focus especially o the main analysis and core specification(s), as opposed to sensitivity and supplemental analyses.
 
 #### Deliverables 
 
