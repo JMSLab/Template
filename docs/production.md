@@ -118,7 +118,7 @@ Production encompasses the steps we take before we circulate or submit a paper d
 
   * A list of any source/targets specified incorrectly and any directories that need to be recompiled.
 
-### Task [DEF]: Check sample and variable definitions 
+### Task [DEF]: Check consistency of code and text
 
 #### Work allocation
 
@@ -128,8 +128,12 @@ Production encompasses the steps we take before we circulate or submit a paper d
 
 #### Goals
 
-  *  Main statements made in paper about definitions of samples and variables are consistent with code.
-  *  Checking every variable and sample definition can for some projects take a large amount of time. By default, this task should be limited to a single person-day of work. Unless PI notes otherwise, you should focus on checking the definition of the main sample(s) in the paper and variables in the core specification(s), and either ignore or just spot-check robustness analyses, supplemental analyses in appendices, etc.
+  *  Main statements made in paper about definitions of samples and variables, and other methodological choices, are consistent with code.
+  *  Checking every variable and sample definition can for some projects take a large amount of time. Accordingly:
+      * Ask an LLM to take a careful first pass. (It can be helpful to break up the main pieces of the analysis and ask separately about each).
+      * Prune the LLM's comments.
+      * Spot-check yourself, focusing especially on the main analysis and core specification(s).
+      * Limit to a day of person time unless a PI suggests otherwise.
 
 #### Deliverables 
 
