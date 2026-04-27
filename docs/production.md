@@ -137,7 +137,9 @@ Production encompasses the steps we take before we circulate or submit a paper d
 
 #### Deliverables 
 
-  *  A list of any inconsistencies between text and code
+  *  A list of any inconsistencies between text and code, separated into:
+      * Statements in the paper that are inconsistent with the code.
+      * Substantive decisions in the code that are not documented in the paper.
 
 ## Paper
 
