@@ -194,7 +194,7 @@ Production encompasses the steps we take before we circulate or submit a paper d
 
   | Expected Hours | 50% Confidence Interval | # of RAs |
   | -------------- | ----------------------- | -------- |
-  | 6              | (4 - 8)                 | 2        |
+  | 6              | (4 - 8)                 | 1        |
 
 #### Goals 
 
