@@ -113,10 +113,12 @@ Production encompasses the steps we take before we circulate or submit a paper d
 #### Goals
 
   *  Paper would be unchanged if recompiled from scratch.
+  *  Source-target wiring (typically, `scons`) is up to date.
 
 #### Deliverables 
 
-  * A list of any source/targets specified incorrectly and any directories that need to be recompiled.
+  * A list of targets that need to be recompiled.
+  * A list of proposed changes to wiring (typically, `scons` scripts).
 
 ### Task [DEF]: Check consistency of code and text
 
