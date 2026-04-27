@@ -1,0 +1,30 @@
+name: Check issue/ is empty
+
+on:
+  pull_request:
+    branches: [main, master]
+    types: [opened]
+  push:
+    branches:
+      - "**"
+  issue_comment:
+    types: [created]
+
+jobs:
+  check-issue:
+    if: |
+      github.event_name == 'pull_request' ||
+      (github.event_name == 'push' && (contains(github.event.head_commit.message, '[run-actions-all]') || contains(github.event.head_commit.message, '[run-actions-issue]'))) ||
+      (github.event_name == 'issue_comment' && github.event.issue.pull_request && (contains(github.event.comment.body, '/run-actions-issue') || contains(github.event.comment.body, '/run-actions-all')))
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'issue_comment' && format('refs/pull/{0}/head', github.event.issue.number) || github.sha }}
+      - name: Fail if issue/ is non-empty
+        run: |
+          if [ -d "issue" ] && [ -n "$(ls -A issue/)" ]; then
+            echo "issue/ is not empty. Please delete its contents before merging."
+            exit 1
+          fi
+          echo "issue/ is empty or does not exist."
