@@ -2,7 +2,7 @@ import os
 import re
 import sys
 from pathlib import Path
-from github import Github
+from github import Auth, Github
 
 ISSUE_TEMPLATE = Path(".github/post_template_issue_thread_pr_close.md")
 PR_TEMPLATE = Path(".github/post_template_pr_thread_pr_close.md")
@@ -16,7 +16,7 @@ def Main():
     branch_name     = os.environ["BRANCH_NAME"]
     last_commit_sha = os.environ["LAST_COMMIT_SHA"]
 
-    repo = Github(github_token).get_repo(repo_name)
+    repo = Github(auth=Auth.Token(github_token)).get_repo(repo_name)
     pr = repo.get_pull(pr_number)
 
     merge_commit_sha  = pr.merge_commit_sha
