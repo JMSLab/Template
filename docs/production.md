@@ -24,6 +24,7 @@ Production encompasses the steps we take before we circulate or submit a paper d
    * Avoid compiling on subissue branches unless necessary.
    * When merging a subissue branch, merge back to the main production branch and update other open production branches.
    * Skip review of pulls for tasks where work has already been reviewed by multiple RAs, except where PI review is requested below.
+   * It's often efficient to begin work by asking an LLM to perform the task. From there you can prune the LLM's suggestions, supplement them, or both.
 
 * When producing task deliverables:
    * Post them in a comment in the relevant subissue and tag the PI.
@@ -43,7 +44,7 @@ Production encompasses the steps we take before we circulate or submit a paper d
    
   | Expected Hours | 50% Confidence Interval | # of RAs |
   | -------------- | ----------------------- | -------- |
-  | 1              | (0.5 - 5)               | 1        |
+  | 1              | (0.5 - 3)               | 1        |
 
 #### Goals 
 
@@ -53,7 +54,7 @@ Production encompasses the steps we take before we circulate or submit a paper d
 
 #### Deliverables 
 
-  *  A single pdf document with proposed changes to acknowledgments, including information on the location of the relevant DUA in the corresponding raw data directory.
+  *  A list for PI of proposed changes to acknowledgments, including information on the location of the relevant DUA in the corresponding raw data directory.
   *  A list for PI of updates to raw data documentation.
   *  A list for PI of any DUAs that require that we notify someone in advance of posting/submission, and the language giving the details of whom/how/when to notify.
 
@@ -76,7 +77,7 @@ Production encompasses the steps we take before we circulate or submit a paper d
 
   *  A list of unacknowledged sources of funding and comments.
      *  To catch unacknowledged comments, check the project wiki.
-     *  To catch unacknowledged funding sources, make a list of the funding sources acknowledged in each author's recent papers, excluding those already thanked here, and show each author this list to see if one or more of the sources should be thanked.
+     *  To catch unacknowledged funding sources, make a list of the funding sources acknowledged in each author's recent papers (linked from their homepage), excluding those already thanked here, and show each author this list to see if one or more of the sources should be thanked.
 
 ## Code and Data
 
@@ -112,12 +113,14 @@ Production encompasses the steps we take before we circulate or submit a paper d
 #### Goals
 
   *  Paper would be unchanged if recompiled from scratch.
+  *  Source-target wiring (typically, `scons`) is up to date.
 
 #### Deliverables 
 
-  * A list of any source/targets specified incorrectly and any directories that need to be recompiled.
+  * A list of targets that need to be recompiled.
+  * A list of proposed changes to wiring (typically, `scons` scripts).
 
-### Task [DEF]: Check sample and variable definitions 
+### Task [DEF]: Check consistency of code and text
 
 #### Work allocation
 
@@ -127,12 +130,16 @@ Production encompasses the steps we take before we circulate or submit a paper d
 
 #### Goals
 
-  *  Main statements made in paper about definitions of samples and variables are consistent with code.
-  *  Checking every variable and sample definition can for some projects take a large amount of time. By default, this task should be limited to a single person-day of work. Unless PI notes otherwise, you should focus on checking the definition of the main sample(s) in the paper and variables in the core specification(s), and either ignore or just spot-check robustness analyses, supplemental analyses in appendices, etc.
+  *  Main statements made in paper about definitions of samples and variables, and other methodological choices, are consistent with code.
+  *  Limit to a day of person time unless a PI suggests otherwise.
+      * An LLM will typically be able to cover the entire paper (possibly in chunks).
+      * Human review can focus especially on the main analysis and core specification(s), as opposed to sensitivity and supplemental analyses.
 
 #### Deliverables 
 
-  *  A list of any inconsistencies between text and code
+  *  A list of any inconsistencies between text and code, separated into:
+      * Statements in the paper that are inconsistent with the code.
+      * Substantive decisions in the code that are not documented in the paper.
 
 ## Paper
 
@@ -187,7 +194,7 @@ Production encompasses the steps we take before we circulate or submit a paper d
 
   | Expected Hours | 50% Confidence Interval | # of RAs |
   | -------------- | ----------------------- | -------- |
-  | 6              | (4 - 8)                 | 2        |
+  | 6              | (4 - 8)                 | 1        |
 
 #### Goals 
 
@@ -226,18 +233,21 @@ Production encompasses the steps we take before we circulate or submit a paper d
 
   | Expected Hours | 50% Confidence Interval | # of RAs |
   | -------------- | ----------------------- | -------- |
-  | 8              | (2 - 16)                | 2        |
+  | 8              | (2 - 16)                | 1        |
 
 #### Goals 
 
-  *  All nontrivial mathematical claims in the paper are documented.
-     * Check with PI whether it is necessary to check statements within proofs.
+  * All nontrivial mathematical claims in the paper are documented.
+  * All mathematical reasoning in the paper is correct.
+     * We should always ask an LLM to confirm this.
+     * Check with PI whether to also have a human review of this part.
 
 #### Deliverables 
 
   *  A list of all theoretical claims that are made in the text of the paper that are not supported by proofs in the paper, appendices, or claims.pdf.
       * For example, we may say, "It is easy to show that equations A, B, and C together imply equation D."
       * You can omit claims that are obvious. We are interested in those where, if somebody challenged the claim, we would need to do at least a few minutes of work (e.g., a few lines of algebra) to confirm that the claim is right.
+  * A list of errors or gaps in mathematical reasoning.
    
 ## Journal
 

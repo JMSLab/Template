@@ -15,6 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 1
     permissions:
+      contents: read
       statuses: write
       pull-requests: write
 
@@ -91,6 +92,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ github.event.issue.number }}
           PR_SHA: ${{ env.PR_SHA }}
+          COMMENT_AUTHOR: ${{ github.event.comment.user.login }}
+          COMMENT_URL: ${{ github.event.comment.html_url }}
         run: |
           python .github/helper_scripts/post_check_results.py \
             ${{ contains(github.event.comment.body, '--post') && '--post' || '' }}
