@@ -1,13 +1,6 @@
 Import('*')
 
-import os
-import json
-
-with open(File('#source/derived/wb_clean/wb_clean.json')) as f:
-    config = resolve_config(json.load(f), mode)
-os.makedirs(Dir('#temp/derived/wb_clean'), exist_ok=True)
-with open(File('#temp/derived/wb_clean/wb_clean.json'), 'w') as f:
-    json.dump(config, f)
+resolve_config('#source/derived/wb_clean/wb_clean.json', mode)
 
 target = ['#output/derived/wb_clean/gdp_education.csv']
 source = ['#source/derived/wb_clean/build.py',

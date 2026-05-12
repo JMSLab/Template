@@ -1,6 +1,7 @@
 # Preliminaries
 import os
 import sys
+import json
 import atexit
 import source.lib.JMSLab as jms
 
@@ -10,10 +11,15 @@ sys.dont_write_bytecode = True # Don't write .pyc files
 AddOption('--mode', dest='build_mode', type='string', default='full')
 mode = GetOption('build_mode')
 
-def resolve_config(config, mode):
+def resolve_config(source_path, mode):
+    src = File(source_path).abspath
+    dst = File('#temp/' + source_path.removeprefix('#source/')).abspath
+    config = json.load(open(src))
     overrides = config.pop('dev', {})
     if mode == 'dev':
         config.update(overrides)
+    os.makedirs(os.path.dirname(dst), exist_ok=True)
+    json.dump(config, open(dst, 'w'))
     return config
 
 os.environ['PYTHONPATH'] = '.'
