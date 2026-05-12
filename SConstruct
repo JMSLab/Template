@@ -7,6 +7,15 @@ import source.lib.JMSLab as jms
 sys.path.append('config')
 sys.dont_write_bytecode = True # Don't write .pyc files
 
+AddOption('--mode', dest='build_mode', type='string', default='full')
+mode = GetOption('build_mode')
+
+def resolve_config(config, mode):
+    overrides = config.pop('dev', {})
+    if mode == 'dev':
+        config.update(overrides)
+    return config
+
 os.environ['PYTHONPATH'] = '.'
 env = Environment(ENV = {'PATH' : os.environ['PATH']},
                   IMPLICIT_COMMAND_DEPENDENCIES = 0,
@@ -19,7 +28,7 @@ env = Environment(ENV = {'PATH' : os.environ['PATH']},
                               'Latex'     : Builder(action = jms.build_latex)})
 
 env.Decider('MD5-timestamp') # Only computes hash if time-stamp changed
-Export('env')
+Export('env', 'mode', 'resolve_config')
 
 jms.start_log('develop', '')
 
