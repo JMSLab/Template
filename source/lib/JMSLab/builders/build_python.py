@@ -35,8 +35,14 @@ class PythonBuilder(JMSLabBuilder):
     def add_call_args(self):
         '''
         '''
-        args = '%s %s > %s' % (os.path.normpath(self.source_file),
-                               self.cl_arg,
-                               os.path.normpath(self.log_file))
+        mode = self.env.get('MODE')
+        mode_in_source = mode and any(
+            getattr(s, 'value', None) == mode for s in self.source
+        )
+        mode_arg = f"--mode={mode} " if mode_in_source else ''
+        args = '%s %s%s > %s' % (os.path.normpath(self.source_file),
+                                 mode_arg,
+                                 self.cl_arg,
+                                 os.path.normpath(self.log_file))
         self.call_args = args
         return None

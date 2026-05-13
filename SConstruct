@@ -13,6 +13,7 @@ mode = GetOption('mode')
 os.environ['PYTHONPATH'] = '.'
 env = Environment(ENV = {'PATH' : os.environ['PATH']},
                   IMPLICIT_COMMAND_DEPENDENCIES = 0,
+                  MODE = mode,
                   BUILDERS = {'R'         : Builder(action = jms.build_r),
                               'Tablefill' : Builder(action = jms.build_tables),
                               'Stata'     : Builder(action = jms.build_stata),
