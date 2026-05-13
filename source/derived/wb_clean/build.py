@@ -1,5 +1,5 @@
 import argparse
-import json
+import tomllib
 import pandas as pd
 from source.lib.SaveData import SaveData
 from pathlib import Path
@@ -13,12 +13,12 @@ def Main():
     parser.add_argument("--mode", default="full")
     mode = parser.parse_args().mode
 
-    with open("source/derived/wb_clean/wb_clean.json") as f:
-        config = json.load(f)
+    with open("source/derived/wb_clean/wb_clean.toml", "rb") as f:
+        config = tomllib.load(f)
     if mode == "dev":
         config.update(config.pop("dev", {}))
 
-    df = PrepareData(raw_dir, config["nrows"])
+    df = PrepareData(raw_dir, config.get("nrows"))
     SaveData(
         df=df,
         keys=["Country Name"],
