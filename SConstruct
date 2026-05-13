@@ -7,9 +7,13 @@ import source.lib.JMSLab as jms
 sys.path.append('config')
 sys.dont_write_bytecode = True # Don't write .pyc files
 
+AddOption('--mode', dest='mode', type='string', default='full')
+mode = GetOption('mode')
+
 os.environ['PYTHONPATH'] = '.'
 env = Environment(ENV = {'PATH' : os.environ['PATH']},
                   IMPLICIT_COMMAND_DEPENDENCIES = 0,
+                  MODE = mode,
                   BUILDERS = {'R'         : Builder(action = jms.build_r),
                               'Tablefill' : Builder(action = jms.build_tables),
                               'Stata'     : Builder(action = jms.build_stata),
@@ -19,7 +23,7 @@ env = Environment(ENV = {'PATH' : os.environ['PATH']},
                               'Latex'     : Builder(action = jms.build_latex)})
 
 env.Decider('MD5-timestamp') # Only computes hash if time-stamp changed
-Export('env')
+Export('env', 'mode')
 
 jms.start_log('develop', '')
 

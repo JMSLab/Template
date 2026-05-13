@@ -72,6 +72,8 @@ In addition, each project may use other specialized tools. For the working examp
 
     - To run a given script or create a given file, run `scons path/to/script_or_file`; this will recursively run all the dependencies required to run the script or create the file.  e.g.  `scons output/derived/wb_clean/gdp_education.csv`.
 
+    - For a faster, lower-fidelity build for development, run `scons --mode=dev`. SCons passes the mode to each analysis script as a command-line argument; the script reads its TOML config and merges in the `[dev]` overrides when the mode is `dev` (see `source/derived/wb_clean/wb_clean.toml` and `source/derived/wb_clean/build.py` for an example).
+
 ### SConscript files
 
 In order to integrate a new script into the SCons build, you need to modify the SConscript file in the corresponding `source/` sub-folder.  For example, to add `source/derived/wb_clean/takelogs.do` to the SCons build, add an entry to `source/derived/SConscript`. In this case:
