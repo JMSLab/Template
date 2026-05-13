@@ -1,17 +1,16 @@
 Import('*')
 
-resolve_config('#source/derived/wb_clean/wb_clean.json', mode)
-
 target = [
     '#output/derived/wb_clean/gdp_education.csv',
     '#output/derived/wb_clean/gdp_education.log'
 ]
 source = ['#source/derived/wb_clean/build.py',
           '#source/lib/SaveData.py',
-          '#temp/derived/wb_clean/wb_clean.json',
+          '#source/derived/wb_clean/wb_clean.json',
+          env.Value(mode),
           '#datastore/raw/world_bank/orig/API_NY.GDP.PCAP.CD_DS2_en_csv_v2_1740213.csv',
           '#datastore/raw/world_bank/orig/API_SE.XPD.TOTL.GD.ZS_DS2_en_csv_v2_1740282.csv']
-env.Python(target, source)
+env.Python(target, source, CL_ARG = f'--mode={mode}')
 
 target = ['#output/derived/wb_clean/gdp_education_logs.csv']
 source = ['#source/derived/wb_clean/takelogs.do',

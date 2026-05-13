@@ -1,3 +1,4 @@
+import argparse
 import json
 import pandas as pd
 from source.lib.SaveData import SaveData
@@ -8,8 +9,14 @@ def Main():
     raw_dir = Path("datastore/raw/world_bank/orig")
     out_dir = Path("output/derived/wb_clean")
 
-    with open("temp/derived/wb_clean/wb_clean.json") as f:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--mode", default="full")
+    mode = parser.parse_args().mode
+
+    with open("source/derived/wb_clean/wb_clean.json") as f:
         config = json.load(f)
+    if mode == "dev":
+        config.update(config.pop("dev", {}))
 
     df = PrepareData(raw_dir, config["nrows"])
     SaveData(
