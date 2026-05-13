@@ -67,9 +67,9 @@ def CollectProblems():
             if ShouldCheck(dir_path, f) and not IsExcludedFile(path) and not IsMentioned(content, f, dir_path):
                 missing_mentions.append(f"{dir_path} -> {f}")
         for subdir in dir_names:
-            if re.search(rf"\b{re.escape(subdir)}\b", content):
-                continue
             subdir_path = dir_path / subdir
+            if HasLocalSConscript(subdir_path) and re.search(rf"\b{re.escape(subdir)}\b", content):
+                continue
             try:
                 subfiles = sorted(
                     e for e in os.listdir(subdir_path)
@@ -86,7 +86,7 @@ def CollectProblems():
 
 def IsExcluded(dir_path):
     s = str(dir_path)
-    return any(fnmatch.fnmatch(s, p) or p.startswith(s + "/") for p in EXCEPTIONS)
+    return any(fnmatch.fnmatch(s, p) or fnmatch.fnmatch(f"{s}/*", p) for p in EXCEPTIONS)
 
 
 def IsExcludedFile(path):
@@ -108,6 +108,10 @@ def Read(path):
         return Path(path).read_text(encoding="utf-8")
     except Exception:
         return None
+
+
+def HasLocalSConscript(dir_path):
+    return (dir_path / "SConscript").is_file()
 
 
 def IsMentioned(content, name, dir_path):
