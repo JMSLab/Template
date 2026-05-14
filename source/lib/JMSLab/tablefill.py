@@ -190,6 +190,5 @@ def insert_commas(entry):
 
 
 def write_to_lyx(args, lyx_text):
-    outfile = open(args['output'], 'w')
-    outfile.write(''.join(lyx_text))
-    outfile.close()
+    with open(args['output'], 'w', encoding='utf-8', newline='') as outfile:
+        outfile.write(''.join(lyx_text))
