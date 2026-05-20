@@ -46,10 +46,19 @@ class StataBuilder(JMSLabBuilder):
 
     def add_log_file(self):
         super(StataBuilder, self).add_log_file()
-        self.final_sconscript_log = os.path.normpath(self.log_file)
+        self.final_log_file = os.path.normpath(self.log_file)
         log_file = os.path.splitext(os.path.basename(self.source_file))[0]
         log_file = '%s.log' % log_file
         self.log_file = os.path.normpath(log_file)
+        return None
+
+    def finalize_log_file(self):
+        '''
+        Move Stata's native log into the shared per-script log location.
+        '''
+        if self.log_file != self.final_log_file and os.path.isfile(self.log_file):
+            shutil.move(self.log_file, self.final_log_file)
+        self.log_file = self.final_log_file
         return None
 
     def add_executable_options(self):
@@ -73,9 +82,19 @@ class StataBuilder(JMSLabBuilder):
         self.call_args = args
         return None
 
+    def raise_system_call_exception(self, command = '', traceback = ''):
+        self.finalize_log_file()
+        super(StataBuilder, self).raise_system_call_exception(command = command,
+                                                              traceback = traceback)
+        return None
+
     def execute_system_call(self):
         '''
         '''
-        super(StataBuilder, self).execute_system_call()
-        shutil.move(self.log_file, self.final_sconscript_log)
+        self.check_code_extension()
+        self.start_time = misc.current_time()
+        self.do_call()
+        self.finalize_log_file()
+        self.check_targets()
+        self.timestamp_log(misc.current_time())
         return None

@@ -1,0 +1,8 @@
+*** Builder log created: {2026-05-20 17:29:32}
+*** Builder log completed: {2026-05-20 17:29:32}
+*** Builder log status: {failed}
+LyX did not run successfully. Please check that the executable, source, and target files are correctly specified. Check log/input/nonexistent_file.log and sconstruct.log for errors. 
+Command tried: "lyx" -E pdf2 build/lyx.pdf input/nonexistent_file.lyx  > log/input/nonexistent_file.log
+FATAL:   while preparing image: could not create temporary directory: mkdir /scratch/rootfs-3993694927: read-only file system
+
+

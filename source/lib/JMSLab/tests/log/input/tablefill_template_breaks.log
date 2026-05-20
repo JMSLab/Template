@@ -1,0 +1,18 @@
+*** Builder log created: {2026-05-20 17:29:32}
+*** Builder log completed: {2026-05-20 17:29:32}
+*** Builder log status: {failed}
+Tablefill did not run successfully. Please check that the executable, source, and target files are correctly specified. Check log/input/tablefill_template_breaks.log and sconstruct.log for errors. 
+Command tried: tablefill(input    = input/fake_file.txt input/tables_appendix_two.txt,
+          template = input/tablefill_template_breaks.tex,
+          output   = build/tablefill_template_filled.tex)
+
+Traceback (most recent call last):
+  File "/n/home02/cliao/Template/source/lib/JMSLab/tablefill.py", line 13, in tablefill
+    tables = parse_tables(args)
+  File "/n/home02/cliao/Template/source/lib/JMSLab/tablefill.py", line 44, in parse_tables
+    data   = read_data(args['input'])
+  File "/n/home02/cliao/Template/source/lib/JMSLab/tablefill.py", line 55, in read_data
+    with open(file, 'r') as df:
+FileNotFoundError: [Errno 2] No such file or directory: 'input/fake_file.txt'
+
+

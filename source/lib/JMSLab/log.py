@@ -69,9 +69,8 @@ def end_log(cl_args_list = sys.argv, log = 'sconstruct.log', excluded_dirs = [])
 
 
 def collect_builder_logs(parent_dir, excluded_dirs = []):
-    ''' Recursively return dictionary of files named sconscript*.log
-        in parent_dir and nested directories.
-        Also return timestamp from those sconscript.log
+    ''' Recursively return dictionary of builder logs in ./log.
+        Also return timestamp from those per-script logs
         (snippet from SO 3964681)
 
         excluded_dirs (str or list of str):
@@ -80,8 +79,11 @@ def collect_builder_logs(parent_dir, excluded_dirs = []):
     builder_log_collect = {}
 
     # Store paths to logs in a list, found from platform-specific command line tool
-    rel_parent_dir = os.path.relpath(parent_dir)
-    log_name = '*sconscript*.log'
+    rel_parent_dir = os.path.relpath(os.path.join(parent_dir, 'log'))
+    if not os.path.isdir(rel_parent_dir):
+        return {}
+
+    log_name = '*.log'
     excluded_dirs = misc.make_list_if_string(excluded_dirs)
 
     log_paths = misc.finder(rel_parent_dir, log_name, excluded_dirs)

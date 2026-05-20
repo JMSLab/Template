@@ -1,7 +1,6 @@
 Import('*')
 
-target = ['#output/analysis/top_gdp/sconscript.log',
-          '#output/analysis/top_gdp/top_gdp.txt']
+target = ['#output/analysis/top_gdp/top_gdp.txt']
 source = ['#source/analysis/top_gdp/top_gdp_table.R',
           '#output/derived/wb_clean/gdp_education.csv']
 env.R(target, source) 
@@ -11,8 +10,7 @@ source = ['#source/analysis/top_gdp/topgdp_value.py',
           '#output/derived/wb_clean/gdp_education.csv']
 env.Python(target, source) 
 
-target = ['#output/analysis/plots/sconscript.log',
-          '#output/analysis/plots/gdp_educ.eps',
+target = ['#output/analysis/plots/gdp_educ.eps',
           '#output/analysis/plots/gdp_educ.png']
 source = ['#source/analysis/plots/makeplot.m',
           '#output/derived/wb_clean/gdp_education_logs.csv']
@@ -24,5 +22,4 @@ target = ['#output/analysis/plots/educ_gdp.eps',
 source = ['#source/analysis/plots/makeplot.py',
           '#output/derived/wb_clean/gdp_education_logs.csv']
 env.Python(target, source)
-
 

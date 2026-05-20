@@ -7,6 +7,19 @@ from .._exception_classes import ExecCallError, TargetNonexistenceError, BadExte
 from .executables import get_executable
 
 
+def get_log_file_path(source_file, log_ext = ''):
+    '''
+    Map a source script path to its canonical per-script build log path.
+    '''
+    source_path = os.path.normpath(str(source_file).lstrip('#'))
+    source_prefix = 'source%s' % os.sep
+    if source_path.startswith(source_prefix):
+        source_path = source_path[len(source_prefix):]
+    return os.path.normpath(
+        os.path.join('log', '%s%s.log' % (os.path.splitext(source_path)[0], log_ext))
+    )
+
+
 class JMSLabBuilder(object):
     '''
     Abstract Base Class for custom JMSLab SCons builders.
@@ -99,8 +112,16 @@ class JMSLabBuilder(object):
             log_ext = '_%s' % self.env['log_ext']
         except KeyError:
             log_ext = ''
-        self.log_file = os.path.join(self.target_dir, ('sconscript%s.log' % log_ext))
+        self.log_file = self.get_log_file_path(log_ext = log_ext)
         return None
+
+    def get_log_file_path(self, log_ext = ''):
+        '''
+        Store the canonical per-script build log path and ensure its directory exists.
+        '''
+        log_path = get_log_file_path(self.source_file, log_ext = log_ext)
+        os.makedirs(os.path.dirname(log_path), exist_ok = True)
+        return log_path
 
     @abc.abstractmethod
     def add_call_args(self):
@@ -182,7 +203,7 @@ class JMSLabBuilder(object):
                   'Check %s and sconstruct.log for errors. ' \
                   '\nCommand tried: %s%s' % (self.name, self.log_file, command, traceback)
 
-        self.timestamp_log(misc.current_time(), message + '\n\n')
+        self.timestamp_log(misc.current_time(), message + '\n\n', status = 'failed')
         raise ExecCallError(message)
         return None
 
@@ -194,28 +215,37 @@ class JMSLabBuilder(object):
         if missing_targets:
             missing_targets = '\n    '.join(missing_targets)
             message = 'The following target files do not exist after build:\n    %s' % missing_targets
+            self.timestamp_log(misc.current_time(), message + '\n\n', status = 'failed')
             raise TargetNonexistenceError(message)
         return None
 
-    def timestamp_log(self, end_time, content = ''):
+    def timestamp_log(self, end_time, content = '', status = 'succeeded'):
         '''
-        Adds beginning and ending times to a log file made for system call.
+        Adds beginning and ending times plus status to a build log.
         '''
+        builder_log_msg = None
         try:
             with open(self.log_file, mode = 'r') as f:
                 content += f.read()
                 f.seek(0, 0)
                 builder_log_msg = '*** Builder log created: {%s}\n' \
-                                '*** Builder log completed: {%s}\n%s' \
-                                % (self.start_time, end_time, content)
-        except:
+                                '*** Builder log completed: {%s}\n' \
+                                '*** Builder log status: {%s}\n%s' \
+                                % (self.start_time, end_time, status, content)
+        except UnicodeDecodeError:
             with open(self.log_file, encoding ='latin1', mode = 'r') as f:
                 content += f.read()
                 f.seek(0, 0)
                 builder_log_msg = '*** Builder log created: {%s}\n' \
-                                '*** Builder log completed: {%s}\n%s' \
-                                % (self.start_time, end_time, content)
-                
+                                '*** Builder log completed: {%s}\n' \
+                                '*** Builder log status: {%s}\n%s' \
+                                % (self.start_time, end_time, status, content)
+        except FileNotFoundError:
+            builder_log_msg = '*** Builder log created: {%s}\n' \
+                            '*** Builder log completed: {%s}\n' \
+                            '*** Builder log status: {%s}\n%s' \
+                            % (self.start_time, end_time, status, content)
+
         with open(self.log_file, mode = 'w') as f:
             f.write(builder_log_msg)
         return None

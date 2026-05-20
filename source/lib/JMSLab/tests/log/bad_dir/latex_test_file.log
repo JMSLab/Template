@@ -1,0 +1,19 @@
+*** Builder log created: {2026-05-20 17:29:32}
+*** Builder log completed: {2026-05-20 17:29:32}
+*** Builder log status: {failed}
+LaTeX did not run successfully. Please check that the executable, source, and target files are correctly specified. Check log/bad_dir/latex_test_file.log and sconstruct.log for errors. 
+Command tried: "pdflatex" -interaction nonstopmode -jobname build/latex bad_dir/latex_test_file.tex  > log/bad_dir/latex_test_file.log
+
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+! I can't find file `bad_dir/latex_test_file.tex'.
+<*> bad_dir/latex_test_file.tex
+                               
+(Press Enter to retry, or Control-D to exit)
+Please type another input file name
+! Emergency stop.
+<*> bad_dir/latex_test_file.tex
+                               
+!  ==> Fatal error occurred, no output PDF file produced!
+Transcript written on build/latex.log.

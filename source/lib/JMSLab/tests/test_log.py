@@ -4,6 +4,7 @@ from unittest import mock
 from pathlib import Path
 
 import unittest
+import shutil
 import sys
 import os
 import re
@@ -24,6 +25,19 @@ class TestLog(unittest.TestCase):
 
     def setUp(self):
         (TESTDIR / 'sconstruct.log').unlink(missing_ok = True)
+        shutil.rmtree(TESTDIR / 'log', ignore_errors = True)
+        shutil.rmtree(TESTDIR / 'source' / 'log', ignore_errors = True)
+
+    def make_builder_log(self, relative_path, created, completed, status, content = 'Test log\n'):
+        builder_log = TESTDIR / relative_path
+        builder_log.parent.mkdir(parents = True, exist_ok = True)
+        builder_log.write_text(
+            '*** Builder log created: {%s}\n'
+            '*** Builder log completed: {%s}\n'
+            '*** Builder log status: {%s}\n%s'
+            % (created, completed, status, content)
+        )
+        return builder_log
 
     def test_start_log_stdout_on_unix(self):
         '''
@@ -167,6 +181,31 @@ class TestLog(unittest.TestCase):
             line = f.readline()
             self.assertTrue(re.search('Build completed', line))
             self.assertTrue(re.search(r'\{%s\}' % now, line))
+
+    def test_collect_builder_logs_from_log_directory(self):
+        builder_log = self.make_builder_log('log/input/test_script.log',
+                                            '2000-01-01 00:00:00',
+                                            '2000-01-01 00:00:01',
+                                            'succeeded')
+
+        logs = log.collect_builder_logs(TESTDIR)
+
+        self.assertIn(os.path.join('log', 'input', 'test_script.log'), logs)
+
+    def test_end_log_appends_builder_logs_from_log_directory(self):
+        builder_log = self.make_builder_log('log/input/test_script.log',
+                                            '2000-01-01 00:00:01',
+                                            '2000-01-01 00:00:02',
+                                            'failed')
+        with open(TESTDIR / 'sconstruct.log', 'w') as f:
+            f.write('*** New build: {2000-01-01 00:00:00} ***\n')
+
+        log.end_log()
+
+        with open(TESTDIR / 'sconstruct.log', 'r') as f:
+            contents = f.read()
+        self.assertIn(os.path.join('log', 'input', 'test_script.log'), contents)
+        self.assertIn('Test log', contents)
 
     def tearDown(self):
         (TESTDIR / 'test_log.txt').unlink(missing_ok = True)

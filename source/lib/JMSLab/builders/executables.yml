@@ -4,6 +4,6 @@ lyx:       lyx
 python:    python
 r:         Rscript
 matlab:    matlab
-stata:     Statamp
+stata:     stata-mp
 sas:       sas_en
 tablefill: ''

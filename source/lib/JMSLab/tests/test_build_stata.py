@@ -14,7 +14,7 @@ from . import _side_effects as fx
 
 from ..builders.executables import get_executable
 from ..builders.build_stata import build_stata
-from .._exception_classes import PrerequisiteError, ExecCallError
+from .._exception_classes import PrerequisiteError, ExecCallError, TargetNonexistenceError
 
 STATA = get_executable('stata')
 
@@ -119,6 +119,25 @@ class TestBuildStata(unittest.TestCase):
             build_stata(target = 'test_output.txt',
                         source = 'test_script.do',
                         env    = env)
+        helpers.check_log(self, helpers.expected_log_path('test_script.do'), 'failed')
+        self.assertFalse((TESTDIR / 'test_script.log').exists())
+
+    @subprocess_patch
+    def test_missing_target_still_writes_log_to_log_dir(self, mock_check_output):
+        def missing_target_side_effect(*args, **kwargs):
+            with open('test_script.log', 'wb') as logfile:
+                logfile.write(b'Test Stata log.\n')
+
+        mock_check_output.side_effect = missing_target_side_effect
+        env = {'executable_names': {'stata': STATA.strip('"').strip("'")}}
+
+        with self.assertRaises(TargetNonexistenceError):
+            build_stata(target = 'test_output.txt',
+                        source = 'test_script.do',
+                        env    = env)
+
+        helpers.check_log(self, helpers.expected_log_path('test_script.do'), 'failed')
+        self.assertFalse((TESTDIR / 'test_script.log').exists())
 
     @mock.patch('%s.misc.is_in_path' % path)
     @subprocess_patch
@@ -162,7 +181,9 @@ class TestBuildStata(unittest.TestCase):
 
     def tearDown(self):
         shutil.rmtree(TESTDIR / 'build')
+        shutil.rmtree(TESTDIR / 'log', ignore_errors = True)
         (TESTDIR / 'test_output.txt').unlink(missing_ok = True)
+        (TESTDIR / 'test_script.log').unlink(missing_ok = True)
 
 
 if __name__ == '__main__':

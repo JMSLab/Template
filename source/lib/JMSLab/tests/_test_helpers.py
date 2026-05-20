@@ -6,6 +6,7 @@ import re
 
 from unittest import mock
 from .. import misc
+from ..builders.jmslab_builder import get_log_file_path
 from ..builders.executables import get_executable
 from .._exception_classes import BadExtensionError
 
@@ -109,15 +110,30 @@ def command_match(command, language, which = None):
         return match
 
 
-def check_log(test_object, log_path, timestamp = True):
+def expected_log_path(source, log_ext = ''):
+    '''Return the builder log path expected for a given source script.'''
+    if isinstance(source, list):
+        source = source[0]
+    return get_log_file_path(source, log_ext = log_ext)
+
+
+def check_log(test_object, log_path, status, timestamp = True):
     '''Check for the existence of a (timestamped) log'''
     with open(log_path, 'r') as log_file:
         log_data = log_file.read()
 
     if timestamp:
         test_object.assertIn('*** Builder log created:', log_data)
+        created_index = log_data.index('*** Builder log created:')
+        completed_index = log_data.index('*** Builder log completed:')
+        test_object.assertLess(created_index, completed_index)
     else:
         test_object.assertNotIn('Log created:', log_data)
+    status_text = '*** Builder log status: {%s}' % status
+    test_object.assertIn(status_text, log_data)
+    completed_index = log_data.index('*** Builder log completed:')
+    status_index = log_data.index(status_text)
+    test_object.assertLess(completed_index, status_index)
 
     os.remove(log_path)
 
@@ -159,14 +175,7 @@ def standard_test(test_object, builder,
         source = 'input/test_script.%s' % extension
 
     builder(source = source, target = target, env = env)
-
-    if isinstance(target, str):
-        log_directory = misc.get_directory(target)
-    else:
-        log_directory = misc.get_directory(target[0])
-
-    log_path = os.path.join(log_directory, 'sconscript.log')
-    check_log(test_object, log_path)
+    check_log(test_object, expected_log_path(source), 'succeeded')
 
     if system_mock:
         test_object.assertEqual(system_mock.call_count, nsyscalls)
@@ -186,7 +195,7 @@ def input_check(test_object, builder, extension,
 
     if not error:
         builder(source = source, target = target, env = env)
-        check_log(test_object, 'sconscript.log')
+        check_log(test_object, expected_log_path(source), 'succeeded')
     else:
         with test_object.assertRaises(error):
             builder(source = source, target = target, env = env)
@@ -214,7 +223,7 @@ def test_cl_args(test_object, builder, system_mock, extension, env = {}):
 
     test_object.assertIn('test', args.split(' '))
     test_object.assertEqual(len(args.split(' ')), 1)
-    check_log(test_object, 'sconscript.log')
+    check_log(test_object, expected_log_path(source), 'succeeded')
 
     # Multiple command line arguments
     env['CL_ARG'] = [1, 2, None]
@@ -230,4 +239,4 @@ def test_cl_args(test_object, builder, system_mock, extension, env = {}):
         test_object.assertIn(str(arg), args.split(' '))
 
     test_object.assertEqual(len(args.split(' ')), 3)
-    check_log(test_object, 'sconscript.log')
+    check_log(test_object, expected_log_path(source), 'succeeded')

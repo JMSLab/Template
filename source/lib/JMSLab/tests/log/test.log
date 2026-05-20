@@ -1,0 +1,8 @@
+*** Builder log created: {2026-05-20 17:29:25}
+*** Builder log completed: {2026-05-20 17:29:25}
+*** Builder log status: {failed}
+Python did not run successfully. Please check that the executable, source, and target files are correctly specified. Check log/test.log and sconstruct.log for errors. 
+Command tried: "python"  test.py  > log/test.log
+python: can't open file '/n/home02/cliao/Template/source/lib/JMSLab/tests/test.py': [Errno 2] No such file or directory
+
+
