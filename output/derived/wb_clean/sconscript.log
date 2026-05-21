@@ -1,14 +1,14 @@
-*** Builder log created: {2026-04-06 18:56:33}
-*** Builder log completed: {2026-04-06 18:56:34}
+*** Builder log created: {2026-05-21 10:24:10}
+*** Builder log completed: {2026-05-21 10:24:11}
 Stata did not run successfully. Please check that the executable, source, and target files are correctly specified. Check output/derived/wb_clean/sconscript.log and sconstruct.log for errors. 
 Command tried: "stata-mp"  -e source/derived/wb_clean/takelogs.do 
 
 
   ___  ____  ____  ____  ____ ®
- /__    /   ____/   /   ____/      StataNow 19.5
+ /__    /   ____/   /   ____/      StataNow 18.5
 ___/   /   /___/   /   /___/       MP—Parallel Edition
 
- Statistics and Data Science       Copyright 1985-2025 StataCorp LLC
+ Statistics and Data Science       Copyright 1985-2023 StataCorp LLC
                                    StataCorp
                                    4905 Lakeway Drive
                                    College Station, Texas 77845 USA
@@ -26,9 +26,6 @@ Notes:
       3. More than 2 billion observations are allowed; see help obs_advice.
       4. Maximum number of variables is set to 5,000 but can be increased;
           see help set_maxvar.
-
-
-Running /Users/zpu/bin/profile.do ...
 
 . do "source/derived/wb_clean/takelogs.do" 
 

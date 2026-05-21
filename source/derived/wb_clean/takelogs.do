@@ -11,9 +11,6 @@ program main
 
     export delimited "output/derived/wb_clean/gdp_education_logs.csv"
 
-    gl x 100
-    assert $x < 0
-
 end
 
 main

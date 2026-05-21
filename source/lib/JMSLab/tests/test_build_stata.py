@@ -14,7 +14,7 @@ from . import _side_effects as fx
 
 from ..builders.executables import get_executable
 from ..builders.build_stata import build_stata
-from .._exception_classes import PrerequisiteError, ExecCallError
+from .._exception_classes import BadExtensionError, ExecCallError, PrerequisiteError
 
 STATA = get_executable('stata')
 
@@ -160,9 +160,20 @@ class TestBuildStata(unittest.TestCase):
         helpers.bad_extension(self, build_stata,
                               good = 'test.do', env = env)
 
+    @subprocess_patch
+    def test_period_in_do_filename(self, mock_check_output):
+        mock_check_output.side_effect = fx.make_stata_side_effect(STATA)
+        env = {'executable_names': {'stata': None}}
+        with self.assertRaises(BadExtensionError):
+            build_stata(target = 'test_output.txt',
+                        source = 'test_script.v2.do',
+                        env    = env)
+
     def tearDown(self):
         shutil.rmtree(TESTDIR / 'build')
         (TESTDIR / 'test_output.txt').unlink(missing_ok = True)
+        for log in TESTDIR.glob('*.log'):
+            log.unlink(missing_ok = True)
 
 
 if __name__ == '__main__':
