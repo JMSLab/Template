@@ -1,4 +1,4 @@
-import subprocess  # noqa: F401 — required for test mocking
+import subprocess 
 import shutil
 import sys
 import os
