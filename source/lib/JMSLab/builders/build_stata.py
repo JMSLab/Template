@@ -6,7 +6,7 @@ import re
 
 from .jmslab_builder import JMSLabBuilder
 from .._exception_classes import BadExtensionError, PrerequisiteError
-from .. import misc
+from .. import misc  
 
 
 def build_stata(target, source, env):
@@ -90,22 +90,19 @@ class StataBuilder(JMSLabBuilder):
         self.call_args = args
         return None
 
-    def raise_system_call_exception(self, command = '', traceback = ''):
-        self._move_stata_log()
-        super(StataBuilder, self).raise_system_call_exception(command = command,
-                                                              traceback = traceback)
-        return None
-
-    def execute_system_call(self):
-        self.check_code_extension()
-        self.start_time = misc.current_time()
-        self.do_call()
+    def do_call(self):
+        super(StataBuilder, self).do_call()
         self._move_stata_log()
         with open(self.log_file) as f:
             log = f.read()
         stata_runtime_error_code = re.compile(r'\br\([1-9]\d*\);')
         if re.search(stata_runtime_error_code, log):
             self.raise_system_call_exception()
-        self.check_targets()
-        self.timestamp_log(misc.current_time())
+        return None
+
+    def raise_system_call_exception(self, command = '', traceback = ''):
+        if self.log_file != self.final_log_file:
+            self._move_stata_log()
+        super(StataBuilder, self).raise_system_call_exception(command = command,
+                                                              traceback = traceback)
         return None
