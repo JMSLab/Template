@@ -2,11 +2,11 @@
 import sys
 from pathlib import Path
 
-TARGET = "terminated because of errors."
+TARGET = "{failure}"
 
 def Main():
     bad = []
-    for p in Path(".").rglob("*.log"):
+    for p in Path("log").rglob("*.log"):
         try:
             if TARGET in p.read_text(errors="replace"):
                 bad.append(p)
