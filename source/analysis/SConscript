@@ -12,14 +12,14 @@ env.Python(target, source)
 
 target = ['#output/analysis/plots/gdp_educ.eps',
           '#output/analysis/plots/gdp_educ.png']
-source = ['#source/analysis/plots/makeplot.m',
+source = ['#source/analysis/plots/plot_gdp_educ_exp.m',
           '#output/derived/wb_clean/gdp_education_logs.csv']
 env.Matlab(target, source)
 
 
 target = ['#output/analysis/plots/educ_gdp.eps',
           '#output/analysis/plots/educ_gdp.png']
-source = ['#source/analysis/plots/makeplot.py',
+source = ['#source/analysis/plots/plot_educ_exp_gdp.py',
           '#output/derived/wb_clean/gdp_education_logs.csv']
 env.Python(target, source)
 
