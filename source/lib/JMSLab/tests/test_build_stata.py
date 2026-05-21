@@ -91,7 +91,7 @@ class TestBuildStata(unittest.TestCase):
     @subprocess_patch
     def test_stata_unix(self, mock_check_output):
         mock_check_output.side_effect = fx.make_stata_side_effect(STATA)
-        env = {'executable_names': {'stata': STATA_EXE}}
+        env = {'executable_names': {'stata': 'stata-mp'}}
         helpers.standard_test(self, build_stata, 'do',
                               env = env, system_mock = mock_check_output)
 
