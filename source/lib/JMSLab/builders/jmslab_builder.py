@@ -217,28 +217,19 @@ class JMSLabBuilder(object):
         '''
         Adds beginning and ending times plus status to a build log.
         '''
-        builder_log_msg = None
         try:
             with open(self.log_file, mode = 'r') as f:
                 content += f.read()
-                f.seek(0, 0)
-                builder_log_msg = '*** Builder log created: {%s}\n' \
-                                '*** Builder log completed: {%s}\n' \
-                                '*** Builder log status: {%s}\n%s' \
-                                % (self.start_time, end_time, status, content)
-        except UnicodeDecodeError:
-            with open(self.log_file, encoding ='latin1', mode = 'r') as f:
-                content += f.read()
-                f.seek(0, 0)
-                builder_log_msg = '*** Builder log created: {%s}\n' \
-                                '*** Builder log completed: {%s}\n' \
-                                '*** Builder log status: {%s}\n%s' \
-                                % (self.start_time, end_time, status, content)
         except FileNotFoundError:
-            builder_log_msg = '*** Builder log created: {%s}\n' \
-                            '*** Builder log completed: {%s}\n' \
-                            '*** Builder log status: {%s}\n%s' \
-                            % (self.start_time, end_time, status, content)
+            pass
+        except Exception:
+            with open(self.log_file, encoding = 'latin1', mode = 'r') as f:
+                content += f.read()
+
+        builder_log_msg = ('*** Builder log created: {%s}\n'
+                           '*** Builder log completed: {%s}\n'
+                           '*** Builder log status: {%s}\n%s'
+                           % (self.start_time, end_time, status, content))
 
         with open(self.log_file, mode = 'w') as f:
             f.write(builder_log_msg)
