@@ -167,7 +167,7 @@ class TestBuildStata(unittest.TestCase):
         Stata runtime errors must cause build_stata to fail
         even when all targets are produced and the subprocess exits cleanly.
         '''
-        env = {'executable_names': {'stata': STATA_EXE}}
+        env = {'executable_names': {'stata': 'stata-mp'}}
         with self.assertRaises(ExecCallError):
             build_stata(target = 'test_output.txt',
                         source = 'input/test_error_script.do',
