@@ -59,7 +59,7 @@ class StataBuilder(JMSLabBuilder):
         self.log_file = os.path.normpath(log_file)
         return None
 
-    def finalize_log_file(self):
+    def _move_stata_log(self):
         '''
         Move Stata's native log into the shared per-script log location.
         '''
@@ -90,7 +90,7 @@ class StataBuilder(JMSLabBuilder):
         return None
 
     def raise_system_call_exception(self, command = '', traceback = ''):
-        self.finalize_log_file()
+        self._move_stata_log()
         super(StataBuilder, self).raise_system_call_exception(command = command,
                                                               traceback = traceback)
         return None
@@ -99,7 +99,7 @@ class StataBuilder(JMSLabBuilder):
         self.check_code_extension()
         self.start_time = misc.current_time()
         self.do_call()
-        self.finalize_log_file()
+        self._move_stata_log()
         with open(self.log_file) as f:
             log = f.read()
         stata_runtime_error_code = re.compile(r'\br\([1-9]\d*\);')
