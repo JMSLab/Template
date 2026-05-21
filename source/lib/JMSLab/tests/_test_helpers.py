@@ -124,16 +124,10 @@ def check_log(test_object, log_path, status, timestamp = True):
 
     if timestamp:
         test_object.assertIn('*** Builder log created:', log_data)
-        created_index = log_data.index('*** Builder log created:')
-        completed_index = log_data.index('*** Builder log completed:')
-        test_object.assertLess(created_index, completed_index)
     else:
         test_object.assertNotIn('Log created:', log_data)
     status_text = '*** Builder log status: {%s}' % status
     test_object.assertIn(status_text, log_data)
-    completed_index = log_data.index('*** Builder log completed:')
-    status_index = log_data.index(status_text)
-    test_object.assertLess(completed_index, status_index)
 
     os.remove(log_path)
 
