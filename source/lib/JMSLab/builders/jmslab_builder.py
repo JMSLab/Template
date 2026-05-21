@@ -220,8 +220,6 @@ class JMSLabBuilder(object):
         try:
             with open(self.log_file, mode = 'r') as f:
                 content += f.read()
-        except FileNotFoundError:
-            pass
         except Exception:
             with open(self.log_file, encoding = 'latin1', mode = 'r') as f:
                 content += f.read()

@@ -63,6 +63,7 @@ class StataBuilder(JMSLabBuilder):
         '''
         Move Stata's native log into the shared per-script log location.
         '''
+        open(self.final_log_file, 'w').close()
         if self.log_file != self.final_log_file and os.path.isfile(self.log_file):
             shutil.move(self.log_file, self.final_log_file)
         self.log_file = self.final_log_file

@@ -120,7 +120,8 @@ class TestBuildStata(unittest.TestCase):
                         source = 'test_script.do',
                         env    = env)
         helpers.check_log(self, helpers.expected_log_path('test_script.do'), 'failed')
-        self.assertFalse((TESTDIR / 'test_script.log').exists())
+        original_stata_log = TESTDIR / 'test_script.log'
+        self.assertFalse(original_stata_log.exists())
 
     @subprocess_patch
     def test_missing_target_still_writes_log_to_log_dir(self, mock_check_output):
@@ -137,7 +138,8 @@ class TestBuildStata(unittest.TestCase):
                         env    = env)
 
         helpers.check_log(self, helpers.expected_log_path('test_script.do'), 'failed')
-        self.assertFalse((TESTDIR / 'test_script.log').exists())
+        original_stata_log = TESTDIR / 'test_script.log'
+        self.assertFalse(original_stata_log.exists())
 
     @mock.patch('%s.misc.is_in_path' % path)
     @subprocess_patch
