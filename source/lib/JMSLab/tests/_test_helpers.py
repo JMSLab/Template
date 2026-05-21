@@ -6,7 +6,7 @@ import re
 
 from unittest import mock
 from .. import misc
-from ..builders.jmslab_builder import get_log_file_path
+from ..builders.jmslab_builder import JMSLabBuilder
 from ..builders.executables import get_executable
 from .._exception_classes import BadExtensionError
 
@@ -114,7 +114,7 @@ def expected_log_path(source, log_ext = ''):
     '''Return the builder log path expected for a given source script.'''
     if isinstance(source, list):
         source = source[0]
-    return get_log_file_path(source, log_ext = log_ext)
+    return JMSLabBuilder.get_log_file_path(source, log_ext = log_ext)
 
 
 def check_log(test_object, log_path, status, timestamp = True):

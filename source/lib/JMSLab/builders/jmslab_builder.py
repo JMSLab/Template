@@ -7,19 +7,6 @@ from .._exception_classes import ExecCallError, TargetNonexistenceError, BadExte
 from .executables import get_executable
 
 
-def get_log_file_path(source_file, log_ext = ''):
-    '''
-    Map a source script path to its canonical per-script build log path.
-    '''
-    source_path = os.path.normpath(str(source_file).lstrip('#'))
-    source_prefix = 'source%s' % os.sep
-    if source_path.startswith(source_prefix):
-        source_path = source_path[len(source_prefix):]
-    return os.path.normpath(
-        os.path.join('log', '%s%s.log' % (os.path.splitext(source_path)[0], log_ext))
-    )
-
-
 class JMSLabBuilder(object):
     '''
     Abstract Base Class for custom JMSLab SCons builders.
@@ -112,16 +99,23 @@ class JMSLabBuilder(object):
             log_ext = '_%s' % self.env['log_ext']
         except KeyError:
             log_ext = ''
-        self.log_file = self.get_log_file_path(log_ext = log_ext)
+        log_path = JMSLabBuilder.get_log_file_path(self.source_file, log_ext = log_ext)
+        os.makedirs(os.path.dirname(log_path), exist_ok = True)
+        self.log_file = log_path
         return None
 
-    def get_log_file_path(self, log_ext = ''):
+    @staticmethod
+    def get_log_file_path(source_file, log_ext = ''):
         '''
-        Store the canonical per-script build log path and ensure its directory exists.
+        Map a source script path to its canonical per-script build log path.
         '''
-        log_path = get_log_file_path(self.source_file, log_ext = log_ext)
-        os.makedirs(os.path.dirname(log_path), exist_ok = True)
-        return log_path
+        source_path = os.path.normpath(str(source_file).lstrip('#'))
+        source_prefix = 'source%s' % os.sep
+        if source_path.startswith(source_prefix):
+            source_path = source_path[len(source_prefix):]
+        return os.path.normpath(
+            os.path.join('log', '%s%s.log' % (os.path.splitext(source_path)[0], log_ext))
+        )
 
     @abc.abstractmethod
     def add_call_args(self):
