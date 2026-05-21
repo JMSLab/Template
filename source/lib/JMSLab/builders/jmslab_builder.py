@@ -220,14 +220,17 @@ class JMSLabBuilder(object):
         try:
             with open(self.log_file, mode = 'r') as f:
                 content += f.read()
-        except Exception:
+        except UnicodeDecodeError:
             with open(self.log_file, encoding = 'latin1', mode = 'r') as f:
                 content += f.read()
+        except FileNotFoundError:
+            pass
 
         builder_log_msg = ('*** Builder log created: {%s}\n'
                            '*** Builder log completed: {%s}\n'
                            '*** Builder log status for {%s}: {%s}\n%s'
                            % (self.start_time, end_time, self.source_file, status, content))
+
 
         with open(self.log_file, mode = 'w') as f:
             f.write(builder_log_msg)
