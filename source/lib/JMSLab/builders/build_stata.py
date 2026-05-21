@@ -1,10 +1,11 @@
-import subprocess
+import subprocess  # noqa: F401 — required for test mocking
 import shutil
 import sys
 import os
+import re
 
 from .jmslab_builder import JMSLabBuilder
-from .._exception_classes import PrerequisiteError
+from .._exception_classes import BadExtensionError, PrerequisiteError
 from .. import misc
 
 
@@ -43,6 +44,12 @@ class StataBuilder(JMSLabBuilder):
         super(StataBuilder, self).__init__(target, source, env, name = name,
                                            exec_opts = exec_opts,
                                            valid_extensions = valid_extensions)
+
+    def check_code_extension(self):
+        super(StataBuilder, self).check_code_extension()
+        stem = os.path.splitext(os.path.basename(self.source_file))[0]
+        if '.' in stem:
+            raise BadExtensionError('Periods disallowed in .do file stems to avoid log file collision.')
 
     def add_log_file(self):
         super(StataBuilder, self).add_log_file()
@@ -89,12 +96,15 @@ class StataBuilder(JMSLabBuilder):
         return None
 
     def execute_system_call(self):
-        '''
-        '''
         self.check_code_extension()
         self.start_time = misc.current_time()
         self.do_call()
         self.finalize_log_file()
+        with open(self.log_file) as f:
+            log = f.read()
+        stata_runtime_error_code = re.compile(r'\br\([1-9]\d*\);')
+        if re.search(stata_runtime_error_code, log):
+            self.raise_system_call_exception()
         self.check_targets()
         self.timestamp_log(misc.current_time())
         return None
