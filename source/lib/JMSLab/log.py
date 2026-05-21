@@ -1,9 +1,29 @@
 import os
+import re
 import sys
 
+import pandas as pd
 from pathlib import Path
 from datetime import datetime
 from . import misc
+from source.lib.SaveData import SaveData
+
+
+def parse_log_status(log_path):
+    line = open(log_path).readlines()[2]
+    filename, run_status = re.findall(r'\{([^}]+)\}', line)
+    return filename, int(run_status == 'succeeded')
+
+
+def write_run_csv(log_paths, outdir = Path('output')):
+    outdir.mkdir(parents = True, exist_ok = True)
+    df = pd.DataFrame(map(parse_log_status, log_paths), columns = ['filename', 'success'])
+    SaveData(df, keys = ['filename'], out_file = outdir / 'run.csv', log_file = outdir / 'run.log')
+
+
+def write_run_csv_from_log_dir():
+    builder_logs = collect_builder_logs(os.getcwd())
+    write_run_csv(sorted(builder_logs))
 
 
 def clean_orphaned_logs(source_dir = 'source', log_dir = 'log'):

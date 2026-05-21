@@ -9,6 +9,7 @@ import shutil
 import sys
 import os
 import re
+import pandas as pd
 
 # Import testing helper modules
 from .. import log
@@ -238,6 +239,60 @@ class TestLog(unittest.TestCase):
     def tearDown(self):
         (TESTDIR / 'test_log.txt').unlink(missing_ok = True)
         (TESTDIR / 'sconstruct.log').unlink(missing_ok = True)
+
+
+class TestRunCsv(unittest.TestCase):
+
+    def setUp(self):
+        (TESTDIR / 'sconstruct.log').unlink(missing_ok = True)
+        shutil.rmtree(TESTDIR / 'log', ignore_errors = True)
+        shutil.rmtree(TESTDIR / 'output', ignore_errors = True)
+
+    def make_builder_log(self, relative_path, status):
+        builder_log = TESTDIR / relative_path
+        builder_log.parent.mkdir(parents = True, exist_ok = True)
+        builder_log.write_text(
+            '*** Builder log created: {2000-01-01 00:00:00}\n'
+            '*** Builder log completed: {2000-01-01 00:00:01}\n'
+            '*** Builder log status for {%s}: {%s}\nTest log\n'
+            % (Path('source') / Path(relative_path).relative_to('log').with_suffix('.py'), status)
+        )
+        return str(builder_log.relative_to(TESTDIR))
+
+    def test_parse_succeeded(self):
+        p = self.make_builder_log('log/analysis/script.log', 'succeeded')
+        fn, success = log.parse_log_status(p)
+        self.assertEqual(fn, 'source/analysis/script.py')
+        self.assertEqual(success, 1)
+
+    def test_parse_failed(self):
+        p = self.make_builder_log('log/analysis/script.log', 'failed')
+        fn, success = log.parse_log_status(p)
+        self.assertEqual(fn, 'source/analysis/script.py')
+        self.assertEqual(success, 0)
+
+    def test_write_mixed(self):
+        p1 = self.make_builder_log('log/analysis/a.log', 'succeeded')
+        p2 = self.make_builder_log('log/analysis/b.log', 'failed')
+        log.write_run_csv([p1, p2], outdir = TESTDIR / 'output')
+        df = pd.read_csv(TESTDIR / 'output/run.csv').set_index('filename')
+        self.assertEqual(df.loc['source/analysis/a.py', 'success'], 1)
+        self.assertEqual(df.loc['source/analysis/b.py', 'success'], 0)
+
+    def test_write_run_csv_from_log_dir(self):
+        self.make_builder_log('log/analysis/a.log', 'succeeded')
+        self.make_builder_log('log/analysis/b.log', 'failed')
+        log.write_run_csv_from_log_dir()
+        csv_path = TESTDIR / 'output/run.csv'
+        self.assertTrue(csv_path.exists())
+        df = pd.read_csv(csv_path)
+        self.assertEqual(set(df.columns), {'filename', 'success'})
+        self.assertEqual(len(df), 2)
+
+    def tearDown(self):
+        (TESTDIR / 'sconstruct.log').unlink(missing_ok = True)
+        shutil.rmtree(TESTDIR / 'log', ignore_errors = True)
+        shutil.rmtree(TESTDIR / 'output', ignore_errors = True)
 
 
 if __name__ == '__main__':

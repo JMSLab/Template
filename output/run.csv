@@ -1,0 +1,10 @@
+filename,success
+source/analysis/plots/plot_educ_exp_gdp.py,1
+source/analysis/plots/plot_gdp_educ_exp.m,1
+source/analysis/top_gdp/top_gdp_table.R,1
+source/analysis/top_gdp/topgdp_value.py,1
+source/derived/wb_clean/build.py,1
+source/derived/wb_clean/takelogs.do,1
+source/paper/Template.tex,1
+source/tables/top_gdp.lyx,1
+source/talk/TemplateSlides.tex,1

@@ -12,7 +12,7 @@ additional information on their functionalities.
 '''
 import os
 from . import misc
-from .log import start_log, end_log, clean_orphaned_logs
+from .log import start_log, end_log, clean_orphaned_logs, write_run_csv_from_log_dir
 
 from .builders.build_r         import build_r
 from .builders.build_latex     import build_latex

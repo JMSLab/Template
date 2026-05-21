@@ -1,0 +1,10 @@
+File: output/run.csv
+
+MD5 hash: f70a332df2c423f76ee1ddc88afb9dfc
+
+Keys: filename 
+
+            type count unique   mean    std    min    50%    max
+filename  object     9      9                                   
+success    int64     9         1.000  0.000  1.000  1.000  1.000
+

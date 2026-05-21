@@ -23,6 +23,7 @@ Export('env')
 
 jms.start_log('develop', '')
 jms.clean_orphaned_logs()
+atexit.register(jms.write_run_csv_from_log_dir)
 
 SConscript('source/derived/SConscript')
 SConscript('source/analysis/SConscript')
