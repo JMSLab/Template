@@ -49,7 +49,7 @@ class StataBuilder(JMSLabBuilder):
         super(StataBuilder, self).check_code_extension()
         stem = os.path.splitext(os.path.basename(self.source_file))[0]
         if '.' in stem:
-            raise BadExtensionError('Periods disallowed in .do filenames to avoid log file collision.')
+            raise BadExtensionError('Periods disallowed in .do file stems to avoid log file collision.')
 
     def add_log_file(self):
         super(StataBuilder, self).add_log_file()
