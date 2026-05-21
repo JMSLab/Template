@@ -192,6 +192,7 @@ class TestBuildStata(unittest.TestCase):
             build_stata(target = 'test_output.txt',
                         source = 'input/test_error_script.do',
                         env    = env)
+        helpers.check_log(self, helpers.expected_log_path('input/test_error_script.do'), 'failed')
 
     @subprocess_patch
     def test_period_in_do_filename(self, mock_check_output):

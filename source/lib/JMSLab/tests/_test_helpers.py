@@ -126,8 +126,8 @@ def check_log(test_object, log_path, status, timestamp = True):
         test_object.assertIn('*** Builder log created:', log_data)
     else:
         test_object.assertNotIn('Log created:', log_data)
-    status_text = '*** Builder log status: {%s}' % status
-    test_object.assertIn(status_text, log_data)
+    test_object.assertIn('*** Builder log status for', log_data)
+    test_object.assertIn('{succeeded}' if status == 'succeeded' else '{failed}', log_data)
 
     os.remove(log_path)
 

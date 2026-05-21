@@ -34,7 +34,7 @@ class TestLog(unittest.TestCase):
         builder_log.write_text(
             '*** Builder log created: {%s}\n'
             '*** Builder log completed: {%s}\n'
-            '*** Builder log status: {%s}\n%s'
+            '*** Builder log status for {test_script.do}: {%s}\n%s'
             % (created, completed, status, content)
         )
         return builder_log
