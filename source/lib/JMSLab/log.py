@@ -1,8 +1,21 @@
 import os
 import sys
 
+from pathlib import Path
 from datetime import datetime
 from . import misc
+
+
+def clean_orphaned_logs(source_dir = 'source', log_dir = 'log'):
+    '''Delete logs in log/ whose corresponding source file no longer exists in source/.'''
+    log_dir_path = Path(log_dir)
+    if not log_dir_path.exists():
+        return
+    for log_path in log_dir_path.rglob('*.log'):
+        rel        = log_path.relative_to(log_dir_path)
+        source_stem = Path(source_dir) / rel.with_suffix('')
+        if not list(source_stem.parent.glob(source_stem.name + '.*')):
+            log_path.unlink()
 
 
 def start_log(mode, cl_args_list = sys.argv, log = 'sconstruct.log'):

@@ -4,6 +4,7 @@ from unittest import mock
 from pathlib import Path
 
 import unittest
+import tempfile
 import shutil
 import sys
 import os
@@ -206,6 +207,33 @@ class TestLog(unittest.TestCase):
             contents = f.read()
         self.assertIn(os.path.join('log', 'input', 'test_script.log'), contents)
         self.assertIn('Test log', contents)
+
+    def test_clean_orphaned_logs_removes_orphan(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = Path(tmp)
+            (tmp / 'source' / 'analysis').mkdir(parents = True)
+            (tmp / 'log'    / 'analysis').mkdir(parents = True)
+            orphan = tmp / 'log' / 'analysis' / 'old_script.log'
+            orphan.write_text('orphaned log')
+
+            log.clean_orphaned_logs(source_dir = str(tmp / 'source'),
+                                    log_dir    = str(tmp / 'log'))
+
+            self.assertFalse(orphan.exists())
+
+    def test_clean_orphaned_logs_keeps_valid_log(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = Path(tmp)
+            (tmp / 'source' / 'analysis').mkdir(parents = True)
+            (tmp / 'source' / 'analysis' / 'script.py').write_text('')
+            (tmp / 'log'    / 'analysis').mkdir(parents = True)
+            valid = tmp / 'log' / 'analysis' / 'script.log'
+            valid.write_text('valid log')
+
+            log.clean_orphaned_logs(source_dir = str(tmp / 'source'),
+                                    log_dir    = str(tmp / 'log'))
+
+            self.assertTrue(valid.exists())
 
     def tearDown(self):
         (TESTDIR / 'test_log.txt').unlink(missing_ok = True)

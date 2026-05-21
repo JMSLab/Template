@@ -22,6 +22,7 @@ env.Decider('MD5-timestamp') # Only computes hash if time-stamp changed
 Export('env')
 
 jms.start_log('develop', '')
+jms.clean_orphaned_logs()
 
 SConscript('source/derived/SConscript')
 SConscript('source/analysis/SConscript')
