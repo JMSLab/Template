@@ -17,6 +17,7 @@ from ..builders.build_stata import build_stata
 from .._exception_classes import PrerequisiteError, ExecCallError, TargetNonexistenceError, BadExtensionError
 
 STATA = get_executable('stata')
+STATA_EXE = STATA.strip('"').strip("'")
 
 # Define path to the builder for use in patching
 path = 'JMSLab.builders.build_stata'
@@ -74,7 +75,7 @@ class TestBuildStata(unittest.TestCase):
 
         # build_stata() will fail to define a command irrespective of
         # whether a stata is specified
-        env = {'executable_names': {'stata': STATA.strip('"').strip("'")}}
+        env = {'executable_names': {'stata': STATA_EXE}}
         with self.assertRaises(PrerequisiteError):
             build_stata(target = 'test_output.txt',
                         source = 'test_script.do',
@@ -90,7 +91,7 @@ class TestBuildStata(unittest.TestCase):
     @subprocess_patch
     def test_stata_unix(self, mock_check_output):
         mock_check_output.side_effect = fx.make_stata_side_effect(STATA)
-        env = {'executable_names': {'stata': STATA.strip('"').strip("'")}}
+        env = {'executable_names': {'stata': STATA_EXE}}
         helpers.standard_test(self, build_stata, 'do',
                               env = env, system_mock = mock_check_output)
 
@@ -99,7 +100,7 @@ class TestBuildStata(unittest.TestCase):
     def test_stata_windows(self, mock_check_output):
         mock_check_output.side_effect = fx.make_stata_side_effect(STATA)
 
-        env = {'executable_names': {'stata': STATA.strip('"').strip("'")}}
+        env = {'executable_names': {'stata': STATA_EXE}}
         helpers.standard_test(self, build_stata, 'do',
                               env = env, system_mock = mock_check_output)
 
@@ -166,7 +167,7 @@ class TestBuildStata(unittest.TestCase):
         Test build_stata()'s behaviour when a Stata executable that
         isn't recognised is specified.
         '''
-        mock_check_output.side_effect = fx.make_stata_side_effect('stata-mp')
+        mock_check_output.side_effect = fx.make_stata_side_effect(STATA)
 
         env = {'executable_names': {'stata': 'stata-se'}}
         with self.assertRaises(ExecCallError):
@@ -177,7 +178,7 @@ class TestBuildStata(unittest.TestCase):
     @subprocess_patch
     def test_bad_extension(self, mock_check_output):
         mock_check_output.side_effect = fx.make_stata_side_effect(STATA)
-        env = {'executable_names': {'stata': 'stata-mp'}}
+        env = {'executable_names': {'stata': STATA_EXE}}
         helpers.bad_extension(self, build_stata,
                               good = 'test.do', env = env)
 
@@ -187,7 +188,7 @@ class TestBuildStata(unittest.TestCase):
         Stata runtime errors must cause build_stata to fail
         even when all targets are produced and the subprocess exits cleanly.
         '''
-        env = {'executable_names': {'stata': 'stata-mp'}}
+        env = {'executable_names': {'stata': STATA_EXE}}
         with self.assertRaises(ExecCallError):
             build_stata(target = 'test_output.txt',
                         source = 'input/test_error_script.do',
