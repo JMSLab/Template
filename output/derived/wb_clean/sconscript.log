@@ -1,8 +1,5 @@
-*** Builder log created: {2026-05-21 10:24:10}
-*** Builder log completed: {2026-05-21 10:24:11}
-Stata did not run successfully. Please check that the executable, source, and target files are correctly specified. Check output/derived/wb_clean/sconscript.log and sconstruct.log for errors. 
-Command tried: "stata-mp"  -e source/derived/wb_clean/takelogs.do 
-
+*** Builder log created: {2026-05-21 12:17:40}
+*** Builder log completed: {2026-05-21 12:17:41}
 
   ___  ____  ____  ____  ____ ®
  /__    /   ____/   /   ____/      StataNow 18.5
@@ -45,9 +42,6 @@ Notes:
   4. 
 .     export delimited "output/derived/wb_clean/gdp_education_logs.csv"
   5. 
-.     gl x 100
-  6.     assert $x < 0
-  7. 
 . end
 
 . 
@@ -56,8 +50,6 @@ Notes:
 (12 missing values generated)
 (100 missing values generated)
 file output/derived/wb_clean/gdp_education_logs.csv saved
-assertion is false
-r(9);
 
+. 
 end of do-file
-r(9);
