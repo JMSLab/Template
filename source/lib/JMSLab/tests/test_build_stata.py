@@ -160,6 +160,18 @@ class TestBuildStata(unittest.TestCase):
         helpers.bad_extension(self, build_stata,
                               good = 'test.do', env = env)
 
+    @unittest.skipUnless(os.name == 'posix', 'Unix-like (POSIX) only test')
+    def test_stata_runtime_error_raises(self):
+        '''
+        Stata runtime errors must cause build_stata to fail
+        even when all targets are produced and the subprocess exits cleanly.
+        '''
+        env = {'executable_names': {'stata': 'stata-mp'}}
+        with self.assertRaises(ExecCallError):
+            build_stata(target = 'test_output.txt',
+                        source = 'input/test_error_script.do',
+                        env    = env)
+
     @subprocess_patch
     def test_period_in_do_filename(self, mock_check_output):
         mock_check_output.side_effect = fx.make_stata_side_effect(STATA)
