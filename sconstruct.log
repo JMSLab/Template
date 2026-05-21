@@ -1,21 +1,11 @@
-*** New build: {2026-05-20 17:31:21} ***
+*** New build: {2026-05-21 09:42:24} ***
 scons: done reading SConscript files.
 scons: Building targets ...
+build_lyx(["output/paper/TemplateLyx.pdf"], ["source/paper/Template.lyx", "output/tables/top_gdp.lyx", "output/analysis/top_gdp/top_gdp.tex", "source/figures/gdp_educ.lyx", "source/paper/References.bib"])
 build_latex(["output/paper/TemplateTex.pdf"], ["source/paper/Template.tex", "output/tables/top_gdp.tex", "output/analysis/top_gdp/top_gdp.tex", "source/figures/gdp_educ.tex", "source/paper/References.bib"])
-scons: *** [output/paper/TemplateTex.pdf] ExecCallError : LaTeX did not run successfully. Please check that the executable, source, and target files are correctly specified. Check log/paper/Template.log and sconstruct.log for errors. 
-Command tried: "pdflatex" -interaction nonstopmode -jobname output/paper/TemplateTex source/paper/Template.tex  > log/paper/Template.log
-Traceback (most recent call last):
-  File "/n/home02/cliao/.conda/envs/Template/lib/python3.12/site-packages/SCons/Action.py", line 1441, in execute
-    result = self.execfunction(target=target, source=rsources, env=env)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/n/home02/cliao/Template/source/lib/JMSLab/builders/build_latex.py", line 41, in build_latex
-    builder.execute_system_call(target, source, env)
-  File "/n/home02/cliao/Template/source/lib/JMSLab/builders/build_latex.py", line 284, in execute_system_call
-    self.do_call(target, source, env)
-  File "/n/home02/cliao/Template/source/lib/JMSLab/builders/build_latex.py", line 272, in do_call
-    self.raise_system_call_exception(traceback = traceback)
-  File "/n/home02/cliao/Template/source/lib/JMSLab/builders/jmslab_builder.py", line 207, in raise_system_call_exception
-    raise ExecCallError(message)
-source.lib.JMSLab._exception_classes.ExecCallError: LaTeX did not run successfully. Please check that the executable, source, and target files are correctly specified. Check log/paper/Template.log and sconstruct.log for errors. 
-Command tried: "pdflatex" -interaction nonstopmode -jobname output/paper/TemplateTex source/paper/Template.tex  > log/paper/Template.log
-scons: building terminated because of errors.
+Detected 2 bibliographies in source/paper/Template.tex.
+Run BibTeX foroutput/paper/TemplateTex.1.aux
+Run BibTeX foroutput/paper/TemplateTex.2.aux
+build_lyx(["output/talk/TemplateSlides.pdf", "temp/Template.handout.pdf"], ["source/talk/TemplateSlides.lyx", "output/analysis/plots/gdp_educ.eps"])
+build_latex(["output/talk/TemplateSlidesLatex.pdf", "temp/TemplateLatex.handout.pdf"], ["source/talk/TemplateSlides.tex", "output/analysis/plots/gdp_educ.eps"])
+scons: done building targets.

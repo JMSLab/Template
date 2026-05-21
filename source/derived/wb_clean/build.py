@@ -1,7 +1,6 @@
 import pandas as pd
 from source.lib.SaveData import SaveData
 from pathlib import Path
-import time
 
 
 def Main():
@@ -40,5 +39,4 @@ def PrepareData(infolder):
 
 
 if __name__ == "__main__":
-    time.sleep(17)
     Main()
