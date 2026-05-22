@@ -102,6 +102,7 @@ class JMSLabBuilder(object):
         log_path = JMSLabBuilder.get_log_file_path(self.source_file, log_ext = log_ext)
         os.makedirs(os.path.dirname(log_path), exist_ok = True)
         self.log_file = log_path
+        open(log_path, 'w').close()
         return None
 
     @staticmethod
@@ -226,10 +227,14 @@ class JMSLabBuilder(object):
         except FileNotFoundError:
             pass
 
+        from datetime import datetime
+        runtime = (datetime.strptime(end_time, "%Y-%m-%d %H:%M:%S") -
+                   datetime.strptime(self.start_time, "%Y-%m-%d %H:%M:%S")).total_seconds()
         builder_log_msg = ('*** Builder log created: {%s}\n'
                            '*** Builder log completed: {%s}\n'
+                           '*** Builder runtime (in seconds): {%s}\n'
                            '*** Builder log status for {%s}: {%s}\n%s'
-                           % (self.start_time, end_time, self.source_file, status, content))
+                           % (self.start_time, end_time, runtime, self.source_file, status, content))
 
 
         with open(self.log_file, mode = 'w') as f:

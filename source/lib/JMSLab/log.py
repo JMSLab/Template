@@ -10,14 +10,16 @@ from source.lib.SaveData import SaveData
 
 
 def parse_log_status(log_path):
-    line = open(log_path).readlines()[2]
-    filename, run_status = re.findall(r'\{([^}]+)\}', line)
-    return filename, int(run_status == 'succeeded')
+    lines = open(log_path).readlines()
+    start_time = datetime.strptime(re.findall(r'\{([^}]+)\}', lines[0])[0], "%Y-%m-%d %H:%M:%S")
+    end_time   = datetime.strptime(re.findall(r'\{([^}]+)\}', lines[1])[0], "%Y-%m-%d %H:%M:%S")
+    filename, run_status = re.findall(r'\{([^}]+)\}', lines[3])
+    return filename, int(run_status == 'succeeded'), start_time, end_time
 
 
 def write_run_csv(log_paths, outdir = Path('output')):
     outdir.mkdir(parents = True, exist_ok = True)
-    df = pd.DataFrame(map(parse_log_status, log_paths), columns = ['filename', 'success'])
+    df = pd.DataFrame(map(parse_log_status, log_paths), columns = ['filename', 'success', 'start_time', 'end_time'])
     SaveData(df, keys = ['filename'], out_file = outdir / 'run.csv', log_file = outdir / 'run.log')
 
 

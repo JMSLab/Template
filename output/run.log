@@ -1,10 +1,12 @@
 File: output/run.csv
 
-MD5 hash: f70a332df2c423f76ee1ddc88afb9dfc
+MD5 hash: 55ef1a4536af092b53c43584988be473
 
 Keys: filename 
 
-            type count unique   mean    std    min    50%    max
-filename  object     9      9                                   
-success    int64     9         1.000  0.000  1.000  1.000  1.000
+                      type count unique                           mean                  min                  50%                  max    std
+filename            object     9      9                                                                                                     
+success              int64     9                                 1.000                1.000                1.000                1.000  0.000
+start_time  datetime64[ns]     9         2026-05-22 08:53:44.555555584  2026-05-22 08:53:33  2026-05-22 08:53:46  2026-05-22 08:54:09       
+end_time    datetime64[ns]     9         2026-05-22 08:53:47.888888832  2026-05-22 08:53:34  2026-05-22 08:53:47  2026-05-22 08:54:16       
 
