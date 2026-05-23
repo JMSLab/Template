@@ -101,7 +101,7 @@ def insert_tables_lyx(args, tables):
                 while search_table is True:
                     i += 1
                     if re.match('^.*###', lyx_text[i]):
-                        lyx_text[i] = lyx_text[i].replace('###', tables[tag][entry_count])
+                        lyx_text[i] = lyx_text[i].replace('###', ToUnicodeMinus(tables[tag][entry_count]))
                         entry_count += 1
 
                     elif re.match(r'^.*#\d+#', lyx_text[i]) or re.match(r'^.*#\d+,#', lyx_text[i]):
@@ -112,7 +112,7 @@ def insert_tables_lyx(args, tables):
                             rounded_entry = round_entry(entry_tag, tables[tag][entry_count])
                             if re.match(r'^.*#\d+,#', lyx_text[i]):
                                 rounded_entry = insert_commas(rounded_entry)
-                        lyx_text[i] = lyx_text[i].replace('#' + entry_tag + '#', rounded_entry)
+                        lyx_text[i] = lyx_text[i].replace('#' + entry_tag + '#', ToUnicodeMinus(rounded_entry))
                         entry_count += 1
 
                     elif lyx_text[i] == '</lyxtabular>\n':
@@ -137,7 +137,7 @@ def insert_tables_latex(args, tables):
                     lyx_text_i = lyx_text[i].split("&")
                     for col in range(len(lyx_text_i)):
                         if re.match('^.*###', lyx_text_i[col]):
-                            lyx_text_i[col] = lyx_text_i[col].replace('###', tables[tag][entry_count])
+                            lyx_text_i[col] = lyx_text_i[col].replace('###', ToUnicodeMinus(tables[tag][entry_count]))
                             entry_count += 1
 
                         elif re.match(r'^.*#\d+#', lyx_text_i[col]) or re.match(r'^.*#\d+,#', lyx_text_i[col]):
@@ -148,13 +148,17 @@ def insert_tables_latex(args, tables):
                                 rounded_entry = round_entry(entry_tag, tables[tag][entry_count])
                                 if re.match(r'^.*#\d+,#', lyx_text_i[col]):
                                     rounded_entry = insert_commas(rounded_entry)
-                            lyx_text_i[col] = lyx_text_i[col].replace('#' + entry_tag + '#', rounded_entry)
+                            lyx_text_i[col] = lyx_text_i[col].replace('#' + entry_tag + '#', ToUnicodeMinus(rounded_entry))
                             entry_count += 1
 
                     lyx_text[i] = "&".join(lyx_text_i)
                     if re.search('end{tabular}', lyx_text[i]):
                         search_table = False
     return lyx_text
+
+
+def ToUnicodeMinus(s):
+    return '\u2212' + s[1:] if s.startswith('-') else s
 
 
 def round_entry(entry_tag, entry):
@@ -186,6 +190,5 @@ def insert_commas(entry):
 
 
 def write_to_lyx(args, lyx_text):
-    outfile = open(args['output'], 'w')
-    outfile.write(''.join(lyx_text))
-    outfile.close()
+    with open(args['output'], 'w', encoding='utf-8', newline='') as outfile:
+        outfile.write(''.join(lyx_text))
