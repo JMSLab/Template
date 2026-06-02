@@ -17,8 +17,10 @@ def SaveData(df, keys, out_file, log_file="", append=False, sortbykey=True):
     cols_reordered = keys + [col for col in df.columns if col not in keys]
     df = df[cols_reordered]
     summary_stats = GetSummaryStats(df)
-    df_saved = SaveDf(df, keys, out_file, sortbykey, extension)
-    df_hash = hashlib.md5(pd.util.hash_pandas_object(df_saved, index=False).values).hexdigest()
+    if sortbykey:
+        df = df.sort_values(keys)
+    SaveDf(df, keys, out_file, sortbykey, extension)
+    df_hash = hashlib.md5(pd.util.hash_pandas_object(df, index=False).values).hexdigest()
     SaveLog(df_hash, keys, summary_stats, out_file, append, log_file)
 
 
@@ -106,17 +108,12 @@ def GetSummaryStats(df):
 
 
 def SaveDf(df, keys, out_file, sortbykey, extension):
-    df_saved = df.copy()
-    if sortbykey:
-        df_saved = df.sort_values(keys)        
-
     if extension == ".csv":
-        df_saved.to_csv(out_file, index=False)
+        df.to_csv(out_file, index=False)
     if extension == ".dta":
-        df_saved.to_stata(out_file, write_index=False)
+        df.to_stata(out_file, write_index=False)
 
     print(f"File '{out_file}' saved successfully.")
-    return df_saved
 
 
 def SaveLog(df_hash, keys, summary_stats, out_file, append, log_file):
