@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 import sys
 import shutil
+import re
 sys.path.append("source/lib")
 from SaveData import SaveData
 # Define path to the builder for use in patching
@@ -14,6 +15,13 @@ TESTDIR = Path(__file__).resolve().parent
 os.chdir(TESTDIR)
 
 class TestSaveData(unittest.TestCase):
+
+    def _extract_log_hash(self, log_path):
+        with open(log_path, "r") as log_file:
+            log_text = log_file.read()
+        match = re.search(r"^MD5 hash: ([0-9a-f]+)$", log_text, flags=re.MULTILINE)
+        self.assertIsNotNone(match)
+        return match.group(1)
     
     def test_wrong_extension(self):
         df = pd.read_csv('data/data.csv')
@@ -135,6 +143,30 @@ class TestSaveData(unittest.TestCase):
 
         self.assertEqual(first_line, 'File: temp_save/df.csv')
         shutil.rmtree('temp_save')
+
+    def test_hash_ignores_index_when_output_matches(self):
+        df = pd.read_csv('data/data.csv')
+        df_reindexed = df.copy()
+        df_reindexed.index = range(100, 100 + len(df_reindexed))
+
+        SaveData(df, ['id'], 'df_left.csv', 'df_left.log')
+        SaveData(df_reindexed, ['id'], 'df_right.csv', 'df_right.log')
+
+        left_hash = self._extract_log_hash('df_left.log')
+        right_hash = self._extract_log_hash('df_right.log')
+
+        with open('df_left.csv', 'r') as left_file:
+            left_csv = left_file.read()
+        with open('df_right.csv', 'r') as right_file:
+            right_csv = right_file.read()
+
+        self.assertEqual(left_csv, right_csv)
+        self.assertEqual(left_hash, right_hash)
+
+        os.remove('df_left.csv')
+        os.remove('df_right.csv')
+        os.remove('df_left.log')
+        os.remove('df_right.log')
 
         
 if __name__ == '__main__':
