@@ -44,6 +44,7 @@ class JMSLabBuilder(object):
         self.exec_opts        = exec_opts
 
         # Build system call and store components
+        self.source           = misc.make_list_if_string(source) if source else []
         self.add_source_file(source)
         self.target           = [str(t) for t in misc.make_list_if_string(target)]
         self.target_dir       = misc.get_directory(self.target[0])
