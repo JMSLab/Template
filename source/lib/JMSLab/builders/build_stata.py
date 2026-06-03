@@ -1,3 +1,4 @@
+import subprocess
 import shutil
 import sys
 import os
@@ -5,6 +6,7 @@ import re
 
 from .jmslab_builder import JMSLabBuilder
 from .._exception_classes import BadExtensionError, PrerequisiteError
+from .. import misc
 
 
 def build_stata(target, source, env):
