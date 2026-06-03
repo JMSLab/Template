@@ -1,6 +1,5 @@
 version 14
 set more off
-preliminaries
 
 program main
 
