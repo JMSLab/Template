@@ -14,7 +14,7 @@ A template for research projects developed by JMSLab.
 In addition, each project may use other specialized tools. For the working example in this template, install:
 
 - [R](https://www.r-project.org/)
-- [Stata](https://www.stata.com/install-guide/)
+- [Stata SE/MP](https://www.stata.com/install-guide/)
 - [Matlab](https://www.mathworks.com/help/install/install-products.html)
 
 ### Repository structure
