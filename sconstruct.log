@@ -1,5 +1,18 @@
-*** New build: {2026-05-13 15:42:44} ***
+*** New build: {2026-05-21 12:17:40} ***
 scons: done reading SConscript files.
 scons: Building targets ...
-scons: `.' is up to date.
+build_stata(["output/derived/wb_clean/gdp_education_logs.csv"], ["source/derived/wb_clean/takelogs.do", "output/derived/wb_clean/gdp_education.csv"])
+build_python(["output/analysis/plots/educ_gdp.eps", "output/analysis/plots/educ_gdp.png"], ["source/analysis/plots/makeplot.py", "output/derived/wb_clean/gdp_education_logs.csv"])
+build_matlab(["output/analysis/plots/sconscript.log", "output/analysis/plots/gdp_educ.eps", "output/analysis/plots/gdp_educ.png"], ["source/analysis/plots/makeplot.m", "output/derived/wb_clean/gdp_education_logs.csv"])
+build_r(["output/analysis/top_gdp/sconscript.log", "output/analysis/top_gdp/top_gdp.txt"], ["source/analysis/top_gdp/top_gdp_table.R", "output/derived/wb_clean/gdp_education.csv"])
+build_python(["output/analysis/top_gdp/top_gdp.tex"], ["source/analysis/top_gdp/topgdp_value.py", "output/derived/wb_clean/gdp_education.csv"])
+build_tables(["output/tables/top_gdp.lyx"], ["source/tables/top_gdp.lyx", "output/analysis/top_gdp/top_gdp.txt"])
+source/tables/top_gdp.lyx filled successfully by tablefill
+build_lyx(["output/paper/TemplateLyx.pdf"], ["source/paper/Template.lyx", "output/tables/top_gdp.lyx", "output/analysis/top_gdp/top_gdp.tex", "source/figures/gdp_educ.lyx", "source/paper/References.bib"])
+build_latex(["output/paper/TemplateTex.pdf"], ["source/paper/Template.tex", "output/tables/top_gdp.tex", "output/analysis/top_gdp/top_gdp.tex", "source/figures/gdp_educ.tex", "source/paper/References.bib"])
+Detected 2 bibliographies in source/paper/Template.tex.
+Run BibTeX foroutput/paper/TemplateTex.1.aux
+Run BibTeX foroutput/paper/TemplateTex.2.aux
+build_lyx(["output/talk/TemplateSlides.pdf", "temp/Template.handout.pdf"], ["source/talk/TemplateSlides.lyx", "output/analysis/plots/gdp_educ.eps"])
+build_latex(["output/talk/TemplateSlidesLatex.pdf", "temp/TemplateLatex.handout.pdf"], ["source/talk/TemplateSlides.tex", "output/analysis/plots/gdp_educ.eps"])
 scons: done building targets.
