@@ -2,24 +2,21 @@
 import sys
 from pathlib import Path
 
-TARGET = "{failure}"
+import pandas as pd
+
+RUN_CSV = Path("output") / "run.csv"
 
 def Main():
-    bad = []
-    for p in Path("log").rglob("*.log"):
-        try:
-            if TARGET in p.read_text(errors="replace"):
-                bad.append(p)
-        except Exception:
-            pass
+    df = pd.read_csv(RUN_CSV)
 
-    if not bad:
-        print("No log files contain the error string.")
+    failed = df[df['success'] != 1]
+    if failed.empty:
+        print("All builds succeeded.")
         return 0
 
-    print("Problematic log files:")
-    for p in bad:
-        print(" -", p)
+    print("Failed scripts:")
+    for filename in failed['filename']:
+        print(" -", filename)
 
     return 1
 
