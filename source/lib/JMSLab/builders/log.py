@@ -6,7 +6,7 @@ import pandas as pd
 from pathlib import Path
 from datetime import datetime
 from .. import misc
-from ..SaveData import SaveData
+from ...SaveData import SaveData
 
 def parse_log_status(log_path):
     fields = re.findall(r'\{([^}]+)\}', open(log_path).read())
