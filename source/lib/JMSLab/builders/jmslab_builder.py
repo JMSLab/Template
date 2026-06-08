@@ -1,6 +1,7 @@
 import abc
 import os
 import subprocess
+from datetime import datetime
 
 from .. import misc
 from .._exception_classes import ExecCallError, TargetNonexistenceError, BadExtensionError
@@ -228,7 +229,6 @@ class JMSLabBuilder(object):
         except FileNotFoundError:
             pass
 
-        from datetime import datetime
         runtime = (datetime.strptime(end_time, "%Y-%m-%d %H:%M:%S") -
                    datetime.strptime(self.start_time, "%Y-%m-%d %H:%M:%S")).total_seconds()
         builder_log_msg = ('*** Builder log created: {%s}\n'
