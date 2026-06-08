@@ -11,7 +11,7 @@ from SaveData import SaveData
 
 def parse_log_status(log_path):
     fields = re.findall(r'\{([^}]+)\}', open(log_path).read())
-    build_ran_to_completion = len(fields) == 5
+    build_ran_to_completion = len(fields) >= 5
     if not build_ran_to_completion:
         return log_path, 0, None, None
     start_time, end_time, _, filename, run_status = fields[:5]
