@@ -3,7 +3,7 @@ source/analysis/plots/plot_educ_exp_gdp.py,1,2026-05-22 08:53:35,2026-05-22 08:5
 source/analysis/plots/plot_gdp_educ_exp.m,1,2026-05-22 08:53:36,2026-05-22 08:53:46
 source/analysis/top_gdp/top_gdp_table.R,1,2026-06-08 09:16:37,2026-06-08 09:16:40
 source/analysis/top_gdp/topgdp_value.py,1,2026-05-22 08:53:46,2026-05-22 08:53:47
-source/derived/wb_clean/build.py,1,2026-05-22 08:53:33,2026-05-22 08:53:34
+source/derived/wb_clean/build.py,1,2026-06-08 10:22:06,2026-06-08 10:22:06
 source/derived/wb_clean/takelogs.do,1,2026-05-22 08:53:34,2026-05-22 08:53:35
 source/paper/Template.lyx,1,2026-06-08 09:16:57,2026-06-08 09:17:06
 source/tables/top_gdp.lyx,1,2026-06-08 09:16:40,2026-06-08 09:16:40
