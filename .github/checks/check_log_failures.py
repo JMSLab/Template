@@ -1,22 +1,22 @@
 #!/usr/bin/env python3
+import csv
 import sys
 from pathlib import Path
-
-import pandas as pd
 
 RUN_CSV = Path("output") / "run.csv"
 
 def Main():
-    df = pd.read_csv(RUN_CSV)
+    with open(RUN_CSV, newline="") as f:
+        rows = list(csv.DictReader(f))
 
-    failed = df[df['success'] != 1]
-    if failed.empty:
+    failed = [row for row in rows if row["success"] != "1"]
+    if not failed:
         print("All builds succeeded.")
         return 0
 
     print("Failed scripts:")
-    for filename in failed['filename']:
-        print(" -", filename)
+    for row in failed:
+        print(" -", row["filename"])
 
     return 1
 
