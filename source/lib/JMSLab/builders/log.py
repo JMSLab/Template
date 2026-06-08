@@ -5,22 +5,26 @@ import sys
 import pandas as pd
 from pathlib import Path
 from datetime import datetime
-from . import misc
+from .. import misc
 from source.lib.SaveData import SaveData
 
 
 def parse_log_status(log_path):
-    lines = open(log_path).readlines()
-    start_time = datetime.strptime(re.findall(r'\{([^}]+)\}', lines[0])[0], "%Y-%m-%d %H:%M:%S")
-    end_time   = datetime.strptime(re.findall(r'\{([^}]+)\}', lines[1])[0], "%Y-%m-%d %H:%M:%S")
-    filename, run_status = re.findall(r'\{([^}]+)\}', lines[3])
-    return filename, int(run_status == 'succeeded'), start_time, end_time
+    fields = re.findall(r'\{([^}]+)\}', open(log_path).read())
+    build_ran_to_completion = len(fields) == 5
+    if not build_ran_to_completion:
+        return log_path, 0, None, None
+    start_time, end_time, _, filename, run_status = fields[:5]
+    return (filename,
+            int(run_status == 'succeeded'),
+            datetime.strptime(start_time, "%Y-%m-%d %H:%M:%S"),
+            datetime.strptime(end_time,   "%Y-%m-%d %H:%M:%S"))
 
 
 def write_run_csv(log_paths, outdir = Path('output')):
     outdir.mkdir(parents = True, exist_ok = True)
     df = pd.DataFrame(map(parse_log_status, log_paths), columns = ['filename', 'success', 'start_time', 'end_time'])
-    SaveData(df, keys = ['filename'], out_file = outdir / 'run.csv', log_file = outdir / 'run.log')
+    SaveData(df, keys = ['filename'], out_file = outdir / 'run.csv', log_file = False)
 
 
 def write_run_csv_from_log_dir():

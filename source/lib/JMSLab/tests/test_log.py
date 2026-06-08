@@ -13,11 +13,11 @@ import pandas as pd
 from datetime import datetime
 
 # Import testing helper modules
-from .. import log
+from ..builders import log
 from . import _test_helpers as helpers
 
 # Define path to the builder for use in patching
-path = 'JMSLab.log'
+path = 'JMSLab.builders.log'
 
 # Run tests from test folder
 TESTDIR = Path(__file__).resolve().parent
@@ -276,6 +276,19 @@ class TestRunCsv(unittest.TestCase):
         self.assertEqual(success, 0)
         self.assertEqual(start_time, datetime(2000, 1, 1, 0, 0, 0))
         self.assertEqual(end_time,   datetime(2000, 1, 1, 0, 0, 1))
+
+    def test_parse_log_from_script_that_crashed_mid_run(self):
+        crashed_log = TESTDIR / 'log/analysis/crashed.log'
+        crashed_log.parent.mkdir(parents = True, exist_ok = True)
+        crashed_log.write_text('*** Builder log created: {2000-01-01 00:00:00}\n')  # no completion or status line
+        crashed_log_path = str(crashed_log.relative_to(TESTDIR))
+
+        filename, success, start_time, end_time = log.parse_log_status(crashed_log_path)
+
+        self.assertEqual(filename, crashed_log_path)
+        self.assertEqual(success, 0)
+        self.assertIsNone(start_time)
+        self.assertIsNone(end_time)
 
     def test_write_mixed(self):
         p1 = self.make_builder_log('log/analysis/a.log', 'succeeded')
