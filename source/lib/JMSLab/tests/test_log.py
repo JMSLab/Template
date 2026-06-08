@@ -257,7 +257,7 @@ class TestRunCsv(unittest.TestCase):
             '*** Builder log completed: {2000-01-01 00:00:01}\n'
             '*** Builder runtime (in seconds): {1.0}\n'
             '*** Builder log status for {%s}: {%s}\nTest log\n'
-            % (Path('source') / Path(relative_path).relative_to('log').with_suffix('.py'), status)
+            % ((Path('source') / Path(relative_path).relative_to('log').with_suffix('.py')).as_posix(), status)
         )
         return str(builder_log.relative_to(TESTDIR))
 
