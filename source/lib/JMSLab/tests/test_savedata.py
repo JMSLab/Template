@@ -1,6 +1,7 @@
 import unittest
 import pandas as pd
 import os
+import re
 from pathlib import Path
 import sys
 import shutil
@@ -14,7 +15,11 @@ TESTDIR = Path(__file__).resolve().parent
 os.chdir(TESTDIR)
 
 class TestSaveData(unittest.TestCase):
-    
+
+    def get_manifest_hash(self, log_path):
+        text = Path(log_path).read_text()
+        return re.search(r"MD5 hash: ([0-9a-f]+)", text).group(1)
+
     def test_wrong_extension(self):
         df = pd.read_csv('data/data.csv')
         with self.assertRaises(ValueError):
@@ -136,6 +141,16 @@ class TestSaveData(unittest.TestCase):
         self.assertEqual(first_line, 'File: temp_save/df.csv')
         shutil.rmtree('temp_save')
 
-        
+    def test_hash_invariant_to_row_order(self):
+        df = pd.read_csv('data/data.csv')
+        df_reordered = df.iloc[::-1]
+        os.mkdir('temp_save')
+        SaveData(df, ['id'], 'temp_save/df_a.csv', 'temp_save/df_a.log')
+        SaveData(df_reordered, ['id'], 'temp_save/df_b.csv', 'temp_save/df_b.log')
+        self.assertEqual(self.get_manifest_hash('temp_save/df_a.log'),
+                         self.get_manifest_hash('temp_save/df_b.log'))
+        shutil.rmtree('temp_save')
+
+
 if __name__ == '__main__':
     unittest.main()
