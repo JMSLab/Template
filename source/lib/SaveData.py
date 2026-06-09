@@ -16,9 +16,11 @@ def SaveData(df, keys, out_file, log_file="", append=False, sortbykey=True):
     # reorder df so keys are on the left
     cols_reordered = keys + [col for col in df.columns if col not in keys]
     df = df[cols_reordered]
-    df_hash = hashlib.md5(pd.util.hash_pandas_object(df).values).hexdigest()
     summary_stats = GetSummaryStats(df)
-    SaveDf(df, keys, out_file, sortbykey, extension)
+    if sortbykey:
+        df = df.sort_values(keys)
+    SaveDf(df, out_file, extension)
+    df_hash = hashlib.md5(pd.util.hash_pandas_object(df, index=False).values).hexdigest()
     SaveLog(df_hash, keys, summary_stats, out_file, append, log_file)
 
 
@@ -105,10 +107,7 @@ def GetSummaryStats(df):
     return summary_stats
 
 
-def SaveDf(df, keys, out_file, sortbykey, extension):
-    if sortbykey:
-        df.sort_values(keys, inplace=True)
-
+def SaveDf(df, out_file, extension):
     if extension == ".csv":
         df.to_csv(out_file, index=False)
     if extension == ".dta":
