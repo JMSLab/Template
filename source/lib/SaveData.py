@@ -107,7 +107,7 @@ def GetSummaryStats(df):
     return summary_stats
 
 
-def SaveDf(df, keys, out_file, sortbykey, extension):
+def SaveDf(df, out_file, extension):
     if extension == ".csv":
         df.to_csv(out_file, index=False)
     if extension == ".dta":
