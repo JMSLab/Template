@@ -19,7 +19,7 @@ def SaveData(df, keys, out_file, log_file="", append=False, sortbykey=True):
     summary_stats = GetSummaryStats(df)
     if sortbykey:
         df = df.sort_values(keys)
-    SaveDf(df, keys, out_file, sortbykey, extension)
+    SaveDf(df, out_file, extension)
     df_hash = hashlib.md5(pd.util.hash_pandas_object(df, index=False).values).hexdigest()
     SaveLog(df_hash, keys, summary_stats, out_file, append, log_file)
 
