@@ -186,15 +186,17 @@ class TestLog(unittest.TestCase):
             self.assertTrue(re.search(r'\{%s\}' % now, line))
 
     def test_collect_builder_logs_from_log_directory(self):
-        builder_log = self.make_builder_log('log/input/test_script.log',
+        test_log_path = os.path.join('log', 'input', 'test_script.log')
+        builder_log = self.make_builder_log(test_log_path,
                                             '2000-01-01 00:00:00',
                                             '2000-01-01 00:00:01',
                                             'succeeded')
 
         logs = log.collect_builder_logs(TESTDIR)
 
-        self.assertIn(os.path.join('log', 'input', 'test_script.log'), logs)
-
+        self.assertIn(test_log_path, logs)
+        self.assertEqual(logs[test_log_path], datetime(2000, 1, 1, 0, 0, 1))
+        
     def test_end_log_appends_builder_logs_from_log_directory(self):
         builder_log = self.make_builder_log('log/input/test_script.log',
                                             '2000-01-01 00:00:01',
