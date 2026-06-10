@@ -110,7 +110,7 @@ class JMSLabBuilder(object):
     @staticmethod
     def get_log_file_path(source_file, log_ext = ''):
         '''
-        Map a source script path to its canonical per-script build log path.
+        Map a source script path to its per-script build log path.
         '''
         source_path = os.path.normpath(str(source_file).lstrip('#'))
         source_prefix = 'source%s' % os.sep
