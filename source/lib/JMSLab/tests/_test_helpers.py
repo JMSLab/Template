@@ -64,7 +64,7 @@ def command_match(command, language, which = None):
                          r'(?P<args>.*)',
                          command)
     elif language == 'lyx':
-        # e.g. "lyx -E pdf2 target_file file.lyx > file.log"
+        # e.g. "lyx -E pdf2 target_file source/paper/file.lyx > log/paper/file.log"
         default = re.escape(get_executable('lyx'))
         match = re.match(r'\s*'
                          rf'(?P<executable>\w+|{default})'
@@ -79,7 +79,7 @@ def command_match(command, language, which = None):
                          command)
 
     elif language in ['latex', 'pdflatex']:
-        # e.g. "pdflatex -interaction nonstopmode -jobname target_file file.tex > file.log"
+        # e.g. "pdflatex -interaction nonstopmode -jobname target_file source/paper/file.tex > log/paper/file.log"        
         default = re.escape(get_executable('latex'))
         match = re.match(r'\s*'
                          rf'(?P<executable>\w+|{default})'
@@ -94,7 +94,7 @@ def command_match(command, language, which = None):
                          command)
 
     elif language in ['bibtex']:
-        # e.g. "bibtex target_file > log/paper/file.log"
+        # e.g. "bibtex target_file > log/paper/file.bibtex.log"
         default = re.escape(get_executable('bibtex'))
         match = re.match(r'\s*'
                          rf'(?P<executable>\w+|{default})'

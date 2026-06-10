@@ -54,7 +54,11 @@ class LatexBuilder(JMSLabBuilder):
                                   self.cl_arg,
                                   os.path.normpath(self.log_file))
         self.call_args = args
+        self.bibtex_log_file = os.path.normpath('%s.bibtex.log' % os.path.splitext(self.log_file)[0])
         return None
+
+    def bibtex_call(self, aux_name):
+        return '%s %s > %s' % (self.bibtex_executable, aux_name, self.bibtex_log_file)
 
     def check_handout(self, target, env):
 
@@ -228,9 +232,9 @@ class LatexBuilder(JMSLabBuilder):
                             if not os.path.isfile(f):
                                 time.sleep(3) # Wait a bit to make sure all .aux files have been created
                             print('Run BibTeX for' + f + '.aux')
-                            self.bibtex_system_call = '%s %s' % (self.bibtex_executable, f)
+                            self.bibtex_system_call = self.bibtex_call(f)
                     else:
-                        self.bibtex_system_call = '%s %s' % (self.bibtex_executable, self.out_name) 
+                        self.bibtex_system_call = self.bibtex_call(self.out_name)
                     subprocess.check_output(self.bibtex_system_call, shell = True, stderr = subprocess.STDOUT)
                 subprocess.check_output(self.handout_call, shell = True, stderr = subprocess.STDOUT)
                 subprocess.check_output(self.handout_call, shell = True, stderr = subprocess.STDOUT)
@@ -256,10 +260,10 @@ class LatexBuilder(JMSLabBuilder):
                         if not os.path.isfile(f):
                             time.sleep(3) # Wait a bit to make sure all .aux files have been created
                         print("Run BibTeX for" + f + ".aux")
-                        self.bibtex_system_call = '%s %s' % (self.bibtex_executable, f)
+                        self.bibtex_system_call = self.bibtex_call(f)
                         subprocess.check_output(self.bibtex_system_call, shell = True, stderr = subprocess.STDOUT)
                 else:
-                    self.bibtex_system_call = '%s %s' % (self.bibtex_executable, self.out_name)
+                    self.bibtex_system_call = self.bibtex_call(self.out_name)
                     subprocess.check_output(self.bibtex_system_call, shell = True, stderr = subprocess.STDOUT)
             subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
             subprocess.check_output(self.system_call, shell = True, stderr = subprocess.STDOUT)
