@@ -16,7 +16,7 @@ def command_match(command, language, which = None):
 
     '''Parse Python, R, and Stata system calls as re.match objects'''
     if language in ['python', 'py']:
-        # e.g. "python script.py cl_arg > script.log"
+        # e.g. "python script.py cl_arg > log/script.log"
         default = re.escape(get_executable('python'))
         match = re.match(r'\s*'
                          rf'(?P<executable>python|{default})'
@@ -29,7 +29,7 @@ def command_match(command, language, which = None):
                          command)
 
     elif language in ['r', 'R']:
-        # e.g. "Rscript --no-save --no-restore --verbose script.R input.txt > script.log 2>&1"
+        # e.g. "Rscript --no-save --no-restore --verbose script.R input.txt > log/script.log 2>&1"
         default = re.escape(get_executable('r'))
         match = re.match(r'\s*'
                          rf'(?P<executable>Rscript|{default})'
