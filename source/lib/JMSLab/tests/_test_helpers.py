@@ -94,7 +94,7 @@ def command_match(command, language, which = None):
                          command)
 
     elif language in ['bibtex']:
-        # e.g. "bibtex target_file > log/paper/file.bibtex.log"
+        # e.g. "bibtex output/paper/target_file" (no redirect; output folds into the tex log)
         default = re.escape(get_executable('bibtex'))
         match = re.match(r'\s*'
                          rf'(?P<executable>\w+|{default})'

@@ -54,11 +54,11 @@ class LatexBuilder(JMSLabBuilder):
                                   self.cl_arg,
                                   os.path.normpath(self.log_file))
         self.call_args = args
-        self.bibtex_log_file = os.path.normpath('%s.bibtex.log' % os.path.splitext(self.log_file)[0])
         return None
 
     def bibtex_call(self, aux_name):
-        return '%s %s > %s' % (self.bibtex_executable, aux_name, self.bibtex_log_file)
+        # No redirect: check_output captures output -- folded into the tex log on failure, discarded on success.
+        return '%s %s' % (self.bibtex_executable, aux_name)
 
     def check_handout(self, target, env):
 
