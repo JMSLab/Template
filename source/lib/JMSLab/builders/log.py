@@ -13,7 +13,7 @@ def find_source_using_logname(log_path, source_dir = 'source', log_dir = 'log'):
     rel = Path(log_path).relative_to(log_dir)
     source_stem = Path(source_dir) / rel.with_suffix('')
     matches     = sorted(source_stem.parent.glob(source_stem.name + '.*'))
-    return str(matches[0]) if matches else None
+    return matches[0].as_posix() if matches else None
 
 
 def parse_log_status(log_path):
