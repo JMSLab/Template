@@ -1,11 +1,11 @@
 filename,success,start_time,end_time
-source/analysis/plots/plot_educ_exp_gdp.py,1,2026-06-11 13:36:52,2026-06-11 13:36:52
-source/analysis/plots/plot_gdp_educ_exp.m,1,2026-06-11 13:36:52,2026-06-11 13:37:06
-source/analysis/top_gdp/top_gdp_table.R,1,2026-06-11 13:37:06,2026-06-11 13:37:07
-source/analysis/top_gdp/topgdp_value.py,1,2026-06-11 13:37:06,2026-06-11 13:37:06
-source/derived/wb_clean/build.py,1,2026-06-11 13:36:50,2026-06-11 13:36:50
-source/derived/wb_clean/takelogs.do,1,2026-06-11 13:36:50,2026-06-11 13:36:52
-source/paper/TemplateLyx.lyx,1,2026-06-11 14:16:11,2026-06-11 14:16:15
-source/paper/TemplateTex.tex,1,2026-06-11 14:14:30,2026-06-11 14:14:37
-source/tables/top_gdp.lyx,1,2026-06-11 13:37:07,2026-06-11 13:37:07
-source/talk/TemplateSlides.tex,1,2026-06-11 13:37:51,2026-06-11 13:37:55
+source/analysis/plots/plot_educ_exp_gdp.py,1,2026-06-11 15:58:58,2026-06-11 15:58:59
+source/analysis/plots/plot_gdp_educ_exp.m,1,2026-06-11 15:59:31,2026-06-11 15:59:37
+source/analysis/top_gdp/top_gdp_table.R,1,2026-06-11 15:59:38,2026-06-11 15:59:38
+source/analysis/top_gdp/topgdp_value.py,1,2026-06-11 15:59:37,2026-06-11 15:59:38
+source/derived/wb_clean/build.py,1,2026-06-11 15:58:57,2026-06-11 15:58:57
+source/derived/wb_clean/takelogs.do,1,2026-06-11 15:58:57,2026-06-11 15:58:58
+source/paper/TemplateLyx.lyx,1,2026-06-11 15:59:47,2026-06-11 15:59:51
+source/paper/TemplateTex.tex,1,2026-06-11 15:59:51,2026-06-11 15:59:59
+source/tables/top_gdp.lyx,1,2026-06-11 15:59:38,2026-06-11 15:59:38
+source/talk/TemplateSlides.tex,1,2026-06-11 16:00:05,2026-06-11 16:00:10

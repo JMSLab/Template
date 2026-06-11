@@ -9,11 +9,19 @@ from .. import misc
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from SaveData import SaveData
 
+def find_source_using_logname(log_path, source_dir = 'source', log_dir = 'log'):
+    rel = Path(log_path).relative_to(log_dir)
+    source_stem = Path(source_dir) / rel.with_suffix('')
+    matches     = sorted(source_stem.parent.glob(source_stem.name + '.*'))
+    return str(matches[0]) if matches else None
+
+
 def parse_log_status(log_path):
     fields = re.findall(r'\{([^}]+)\}', open(log_path).read())
     build_ran_to_completion = len(fields) >= 5
     if not build_ran_to_completion:
-        return log_path, 0, None, None
+        # Killed before timestamp_log wrote the status header (e.g. scons process forece-quit):
+        return find_source_using_logname(log_path), 0, None, None
     start_time, end_time, _, filename, run_status = fields[:5]
     return (filename,
             int(run_status == 'succeeded'),
@@ -38,9 +46,7 @@ def clean_orphaned_logs(source_dir = 'source', log_dir = 'log'):
     if not log_dir_path.exists():
         return
     for log_path in log_dir_path.rglob('*.log'):
-        rel        = log_path.relative_to(log_dir_path)
-        source_stem = Path(source_dir) / rel.with_suffix('')
-        if not list(source_stem.parent.glob(source_stem.name + '.*')):
+        if find_source_using_logname(log_path, source_dir, log_dir) is None:
             log_path.unlink()
 
 

@@ -280,14 +280,20 @@ class TestRunCsv(unittest.TestCase):
         self.assertEqual(end_time,   datetime(2000, 1, 1, 0, 0, 1))
 
     def test_parse_log_from_script_that_crashed_mid_run(self):
+        crashed_script = 'source/analysis/crashed.py'
         crashed_log = TESTDIR / 'log/analysis/crashed.log'
         crashed_log.parent.mkdir(parents = True, exist_ok = True)
-        crashed_log.write_text('*** Builder log created: {2000-01-01 00:00:00}\n')  # no completion or status line
+        crashed_log.write_text('*** Builder log created: {2000-01-01 00:00:00}\n') 
         crashed_log_path = str(crashed_log.relative_to(TESTDIR))
+
+        source_file = TESTDIR / crashed_script
+        source_file.parent.mkdir(parents = True, exist_ok = True)
+        source_file.write_text('# crashed mid-run\n')
+        self.addCleanup(shutil.rmtree, TESTDIR / 'source', ignore_errors = True)
 
         filename, success, start_time, end_time = log.parse_log_status(crashed_log_path)
 
-        self.assertEqual(filename, crashed_log_path)
+        self.assertEqual(filename, crashed_script)
         self.assertEqual(success, 0)
         self.assertIsNone(start_time)
         self.assertIsNone(end_time)
