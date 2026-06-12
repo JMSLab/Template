@@ -72,5 +72,24 @@ class Test(TestCase):
         self.assertEqual(content, "\\newcommand{\\Epsilon}{-1.19}\n\\newcommand{\\MarginalCost}{2.59}\n")
         return None
 
+    def test_append_multiple_calls(self):
+        AutoFill({"Alpha": 1.0}, self.outfile, "{:.1f}")
+        AutoFill({"Beta": 2.0}, self.outfile, "{:.1f}", append=True)
+        with open(self.outfile) as f:
+            content = f.read()
+        self.assertEqual(
+            content,
+            "\\newcommand{\\Alpha}{1.0}\n\\newcommand{\\Beta}{2.0}\n"
+        )
+        return None
+
+    def test_overwrite_without_append(self):
+        AutoFill({"Epsilon": -1.19}, self.outfile, "{:.2f}")
+        AutoFill({"MarginalCost": 2.59}, self.outfile, "{:.2f}")
+        with open(self.outfile) as f:
+            content = f.read()
+        self.assertEqual(content, "\\newcommand{\\MarginalCost}{2.59}\n")
+        return None
+
 if __name__ == '__main__':
     main()
