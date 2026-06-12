@@ -6,10 +6,10 @@ from typing import Any, Literal
 
 def AutoFill(
     macros: dict[str, Any] | list[str],
-    format: str | None = "{:.2f}",
-    outfile: str | Path = "autofill.tex",
-    mode: Literal["math", "text"] = "math",
+    outfile: str | Path,
+    format: str | list[str | None] | None = None,
     append: bool = False,
+    mode: Literal["math", "text"] = "math",
 ) -> None:
     if isinstance(macros, dict):
         resolved = macros
@@ -26,8 +26,16 @@ def AutoFill(
     else:
         raise Exception("Argument 'macros' must be a dict or list")
 
+    if isinstance(format, list):
+        if len(format) != len(resolved):
+            raise Exception("AutoFill: 'format' list length must match number of macros")
+        formats = format
+    else:
+        formats = [format] * len(resolved)
+
     output = "".join(
-        _FormatMacro(name, value, format, mode) for name, value in resolved.items()
+        _FormatMacro(name, value, fmt, mode)
+        for (name, value), fmt in zip(resolved.items(), formats)
     )
     open_mode = "a" if append else "w"
     with open(outfile, open_mode) as f:

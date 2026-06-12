@@ -24,7 +24,7 @@ class Test(TestCase):
         return None
 
     def test_dict_output(self):
-        AutoFill({"Epsilon": -1.19, "MarginalCost": 2.59}, "{:.2f}", self.outfile)
+        AutoFill({"Epsilon": -1.19, "MarginalCost": 2.59}, self.outfile, "{:.2f}")
         with open(self.outfile) as f:
             content = f.read()
         self.assertEqual(content, "\\newcommand{\\Epsilon}{-1.19}\n\\newcommand{\\MarginalCost}{2.59}\n")
@@ -32,7 +32,7 @@ class Test(TestCase):
 
     def test_list_output(self):
         Epsilon = -1.19
-        AutoFill(["Epsilon"], "{:.2f}", self.outfile)
+        AutoFill(["Epsilon"], self.outfile, "{:.2f}")
         with open(self.outfile) as f:
             content = f.read()
         self.assertEqual(content, "\\newcommand{\\Epsilon}{-1.19}\n")
@@ -51,22 +51,22 @@ class Test(TestCase):
         return None
 
     def test_text_mode(self):
-        AutoFill({"MarginalCost": 2.59}, "{:.2f}", self.outfile, mode="text")
+        AutoFill({"MarginalCost": 2.59}, self.outfile, "{:.2f}", mode="text")
         with open(self.outfile) as f:
             content = f.read()
         self.assertEqual(content, "\\newcommand{\\MarginalCost}{\\textnormal{2.59}}\n")
         return None
 
     def test_none_format(self):
-        AutoFill({"SampleStart": "January 2010"}, None, self.outfile)
+        AutoFill({"SampleStart": "January 2010"}, self.outfile)
         with open(self.outfile) as f:
             content = f.read()
         self.assertEqual(content, "\\newcommand{\\SampleStart}{January 2010}\n")
         return None
 
     def test_append(self):
-        AutoFill({"Epsilon": -1.19}, "{:.2f}", self.outfile)
-        AutoFill({"MarginalCost": 2.59}, "{:.2f}", self.outfile, append=True)
+        AutoFill({"Epsilon": -1.19}, self.outfile, "{:.2f}")
+        AutoFill({"MarginalCost": 2.59}, self.outfile, "{:.2f}", append=True)
         with open(self.outfile) as f:
             content = f.read()
         self.assertEqual(content, "\\newcommand{\\Epsilon}{-1.19}\n\\newcommand{\\MarginalCost}{2.59}\n")
