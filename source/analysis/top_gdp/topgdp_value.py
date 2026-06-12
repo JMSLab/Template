@@ -9,7 +9,7 @@ def Main():
     df = pd.read_csv(instub / "gdp_education.csv")
     top_gdp_value = df['GDP_2010'].sort_values(ascending=False).iloc[0]
 
-    AutoFill({"TopGDPValue": top_gdp_value}, "{:,.0f}", outstub / "top_gdp.tex")
+    AutoFill({"TopGDPValue": top_gdp_value}, outstub / "top_gdp.tex", "{:,.0f}")
 
 
 if __name__ == '__main__':
