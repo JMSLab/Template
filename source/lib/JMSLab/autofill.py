@@ -14,7 +14,7 @@ def AutoFill(
     if isinstance(macros, dict):
         resolved = macros
     elif isinstance(macros, list):
-        caller_frame = inspect.currentframe().f_back
+        caller_frame = inspect.currentframe().f_back # type: ignore
         resolved = {}
         for var in macros:
             frame = caller_frame
