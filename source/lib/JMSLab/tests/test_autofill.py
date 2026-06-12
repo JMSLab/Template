@@ -1,5 +1,6 @@
 from unittest import main, TestCase
 from os.path import exists
+from pathlib import Path
 
 import tempfile, shutil
 
@@ -17,8 +18,9 @@ class Test(TestCase):
         return
 
     def test_file_exists(self):
-        AutoFill({"Epsilon": -1.19}, outfile=self.outfile)
-        self.assertTrue(exists(self.outfile))
+        for outfile in [self.outfile, Path(self.outfile)]:
+            AutoFill({"Epsilon": -1.19}, outfile=outfile)
+            self.assertTrue(exists(outfile))
         return None
 
     def test_dict_output(self):
