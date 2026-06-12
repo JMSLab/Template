@@ -1,14 +1,14 @@
 from __future__ import annotations
 import inspect
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 
 def AutoFill(
     macros: dict[str, Any] | list[str],
     format: str | None = "{:.2f}",
     outfile: str | Path = "autofill.tex",
-    mode: str = "math",
+    mode: Literal["math", "text"] = "math",
     append: bool = False,
 ) -> None:
     if isinstance(macros, dict):
