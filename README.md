@@ -33,6 +33,8 @@ In addition, each project may use other specialized tools. For the working examp
 
 - `temp/` is not under version control; create the folder after cloning the repository.  `temp/` may used by scripts to store temporary or intermediate files (though some projects may not need it).
 
+- `log/` is not under version control; SCons builders write full per-script build logs there, mirroring `source/`. The root `sconstruct.log` remains the top-level build log.
+
 - _Issue folders_: When working on issue branches, you may create an issue folder at the top of the directory under version control (e.g. `./issue1_short_task_name`).
 
     - Code and (small) deliverables related to the issue are organized inside the issue folder. See [this example](https://github.com/JMSLab/Template/blob/05337cfa4a50ecfeda56afbdd295378d8e071a39/issue10_readme).
@@ -86,6 +88,8 @@ env.Stata(target, source)
 ```
 
 - `target` is a list with all of the files produced by the script.
+
+    - Build logs are not listed as SCons targets. Builder output is written automatically to `log/.../<script>.log`.
 
 - `source` is a list with the script's name and all of the files used as input; the script _must_ be the first element of the list.
 

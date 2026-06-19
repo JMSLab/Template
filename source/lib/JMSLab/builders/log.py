@@ -1,8 +1,53 @@
 import os
+import re
 import sys
 
+import pandas as pd
+from pathlib import Path
 from datetime import datetime
-from . import misc
+from .. import misc
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from SaveData import SaveData
+
+def find_source_using_logname(log_path, source_dir = 'source', log_dir = 'log'):
+    rel = Path(log_path).relative_to(log_dir)
+    source_stem = Path(source_dir) / rel.with_suffix('')
+    matches     = sorted(source_stem.parent.glob(source_stem.name + '.*'))
+    return matches[0].as_posix() if matches else None
+
+
+def parse_log_status(log_path):
+    fields = re.findall(r'\{([^}]+)\}', open(log_path).read())
+    build_ran_to_completion = len(fields) >= 5
+    if not build_ran_to_completion:
+        # Killed before timestamp_log wrote the status header (e.g. scons process forece-quit):
+        return find_source_using_logname(log_path), 0, None, None
+    start_time, end_time, _, filename, run_status = fields[:5]
+    return (filename,
+            int(run_status == 'succeeded'),
+            datetime.strptime(start_time, "%Y-%m-%d %H:%M:%S"),
+            datetime.strptime(end_time,   "%Y-%m-%d %H:%M:%S"))
+
+
+def write_run_csv(log_paths, outdir = Path('output')):
+    outdir.mkdir(parents = True, exist_ok = True)
+    df = pd.DataFrame(map(parse_log_status, log_paths), columns = ['filename', 'success', 'start_time', 'end_time'])
+    SaveData(df, keys = ['filename'], out_file = outdir / 'run.csv', log_file = False)
+
+
+def write_run_csv_from_log_dir():
+    builder_logs = collect_builder_logs(os.getcwd())
+    write_run_csv(sorted(builder_logs))
+
+
+def clean_orphaned_logs(source_dir = 'source', log_dir = 'log'):
+    '''Delete logs in log/ whose corresponding source file no longer exists in source/.'''
+    log_dir_path = Path(log_dir)
+    if not log_dir_path.exists():
+        return
+    for log_path in log_dir_path.rglob('*.log'):
+        if find_source_using_logname(log_path, source_dir, log_dir) is None:
+            log_path.unlink()
 
 
 def start_log(mode, cl_args_list = sys.argv, log = 'sconstruct.log'):
@@ -69,9 +114,8 @@ def end_log(cl_args_list = sys.argv, log = 'sconstruct.log', excluded_dirs = [])
 
 
 def collect_builder_logs(parent_dir, excluded_dirs = []):
-    ''' Recursively return dictionary of files named sconscript*.log
-        in parent_dir and nested directories.
-        Also return timestamp from those sconscript.log
+    ''' Recursively return dictionary of builder logs in ./log.
+        Also return timestamp from those per-script logs
         (snippet from SO 3964681)
 
         excluded_dirs (str or list of str):
@@ -80,8 +124,11 @@ def collect_builder_logs(parent_dir, excluded_dirs = []):
     builder_log_collect = {}
 
     # Store paths to logs in a list, found from platform-specific command line tool
-    rel_parent_dir = os.path.relpath(parent_dir)
-    log_name = '*sconscript*.log'
+    rel_parent_dir = os.path.relpath(os.path.join(parent_dir, 'log'))
+    if not os.path.isdir(rel_parent_dir):
+        return {}
+
+    log_name = '*.log'
     excluded_dirs = misc.make_list_if_string(excluded_dirs)
 
     log_paths = misc.finder(rel_parent_dir, log_name, excluded_dirs)

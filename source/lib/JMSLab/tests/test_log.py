@@ -4,16 +4,20 @@ from unittest import mock
 from pathlib import Path
 
 import unittest
+import tempfile
+import shutil
 import sys
 import os
 import re
+import pandas as pd
+from datetime import datetime
 
 # Import testing helper modules
-from .. import log
+from ..builders import log
 from . import _test_helpers as helpers
 
 # Define path to the builder for use in patching
-path = 'JMSLab.log'
+path = 'JMSLab.builders.log'
 
 # Run tests from test folder
 TESTDIR = Path(__file__).resolve().parent
@@ -24,6 +28,19 @@ class TestLog(unittest.TestCase):
 
     def setUp(self):
         (TESTDIR / 'sconstruct.log').unlink(missing_ok = True)
+        shutil.rmtree(TESTDIR / 'log', ignore_errors = True)
+        shutil.rmtree(TESTDIR / 'source' / 'log', ignore_errors = True)
+
+    def make_builder_log(self, relative_path, created, completed, status, content = 'Test log\n'):
+        builder_log = TESTDIR / relative_path
+        builder_log.parent.mkdir(parents = True, exist_ok = True)
+        builder_log.write_text(
+            '*** Builder log created: {%s}\n'
+            '*** Builder log completed: {%s}\n'
+            '*** Builder log status for {test_script.do}: {%s}\n%s'
+            % (created, completed, status, content)
+        )
+        return builder_log
 
     def test_start_log_stdout_on_unix(self):
         '''
@@ -168,9 +185,142 @@ class TestLog(unittest.TestCase):
             self.assertTrue(re.search('Build completed', line))
             self.assertTrue(re.search(r'\{%s\}' % now, line))
 
+    def test_collect_builder_logs_from_log_directory(self):
+        test_log_path = os.path.join('log', 'input', 'test_script.log')
+        builder_log = self.make_builder_log(test_log_path,
+                                            '2000-01-01 00:00:00',
+                                            '2000-01-01 00:00:01',
+                                            'succeeded')
+
+        logs = log.collect_builder_logs(TESTDIR)
+
+        self.assertIn(test_log_path, logs)
+        self.assertEqual(logs[test_log_path], datetime(2000, 1, 1, 0, 0, 1))
+        
+    def test_end_log_appends_builder_logs_from_log_directory(self):
+        builder_log = self.make_builder_log('log/input/test_script.log',
+                                            '2000-01-01 00:00:01',
+                                            '2000-01-01 00:00:02',
+                                            'failed')
+        with open(TESTDIR / 'sconstruct.log', 'w') as f:
+            f.write('*** New build: {2000-01-01 00:00:00} ***\n')
+
+        log.end_log()
+
+        with open(TESTDIR / 'sconstruct.log', 'r') as f:
+            contents = f.read()
+        self.assertIn(os.path.join('log', 'input', 'test_script.log'), contents)
+        self.assertIn('Test log', contents)
+
+    def test_clean_orphaned_logs_removes_orphan(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = Path(tmp)
+            (tmp / 'source' / 'analysis').mkdir(parents = True)
+            (tmp / 'log'    / 'analysis').mkdir(parents = True)
+            orphan = tmp / 'log' / 'analysis' / 'old_script.log'
+            orphan.write_text('orphaned log')
+
+            log.clean_orphaned_logs(source_dir = str(tmp / 'source'),
+                                    log_dir    = str(tmp / 'log'))
+
+            self.assertFalse(orphan.exists())
+
+    def test_clean_orphaned_logs_keeps_valid_log(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = Path(tmp)
+            (tmp / 'source' / 'analysis').mkdir(parents = True)
+            (tmp / 'source' / 'analysis' / 'script.py').write_text('')
+            (tmp / 'log'    / 'analysis').mkdir(parents = True)
+            valid = tmp / 'log' / 'analysis' / 'script.log'
+            valid.write_text('valid log')
+
+            log.clean_orphaned_logs(source_dir = str(tmp / 'source'),
+                                    log_dir    = str(tmp / 'log'))
+
+            self.assertTrue(valid.exists())
+
     def tearDown(self):
         (TESTDIR / 'test_log.txt').unlink(missing_ok = True)
         (TESTDIR / 'sconstruct.log').unlink(missing_ok = True)
+
+
+class TestRunCsv(unittest.TestCase):
+
+    def setUp(self):
+        (TESTDIR / 'sconstruct.log').unlink(missing_ok = True)
+        shutil.rmtree(TESTDIR / 'log', ignore_errors = True)
+        shutil.rmtree(TESTDIR / 'output', ignore_errors = True)
+
+    def make_builder_log(self, relative_path, status):
+        builder_log = TESTDIR / relative_path
+        builder_log.parent.mkdir(parents = True, exist_ok = True)
+        builder_log.write_text(
+            '*** Builder log created: {2000-01-01 00:00:00}\n'
+            '*** Builder log completed: {2000-01-01 00:00:01}\n'
+            '*** Builder runtime (in seconds): {1.0}\n'
+            '*** Builder log status for {%s}: {%s}\nTest log\n'
+            % ((Path('source') / Path(relative_path).relative_to('log').with_suffix('.py')).as_posix(), status)
+        )
+        return str(builder_log.relative_to(TESTDIR))
+
+    def test_parse_succeeded(self):
+        p = self.make_builder_log('log/analysis/script.log', 'succeeded')
+        fn, success, start_time, end_time = log.parse_log_status(p)
+        self.assertEqual(fn, 'source/analysis/script.py')
+        self.assertEqual(success, 1)
+        self.assertEqual(start_time, datetime(2000, 1, 1, 0, 0, 0))
+        self.assertEqual(end_time,   datetime(2000, 1, 1, 0, 0, 1))
+
+    def test_parse_failed(self):
+        p = self.make_builder_log('log/analysis/script.log', 'failed')
+        fn, success, start_time, end_time = log.parse_log_status(p)
+        self.assertEqual(fn, 'source/analysis/script.py')
+        self.assertEqual(success, 0)
+        self.assertEqual(start_time, datetime(2000, 1, 1, 0, 0, 0))
+        self.assertEqual(end_time,   datetime(2000, 1, 1, 0, 0, 1))
+
+    def test_parse_log_from_script_that_crashed_mid_run(self):
+        crashed_script = 'source/analysis/crashed.py'
+        crashed_log = TESTDIR / 'log/analysis/crashed.log'
+        crashed_log.parent.mkdir(parents = True, exist_ok = True)
+        crashed_log.write_text('*** Builder log created: {2000-01-01 00:00:00}\n') 
+        crashed_log_path = str(crashed_log.relative_to(TESTDIR))
+
+        source_file = TESTDIR / crashed_script
+        source_file.parent.mkdir(parents = True, exist_ok = True)
+        source_file.write_text('# crashed mid-run\n')
+        self.addCleanup(shutil.rmtree, TESTDIR / 'source', ignore_errors = True)
+
+        filename, success, start_time, end_time = log.parse_log_status(crashed_log_path)
+
+        self.assertEqual(filename, crashed_script)
+        self.assertEqual(success, 0)
+        self.assertIsNone(start_time)
+        self.assertIsNone(end_time)
+
+    def test_write_mixed(self):
+        p1 = self.make_builder_log('log/analysis/a.log', 'succeeded')
+        p2 = self.make_builder_log('log/analysis/b.log', 'failed')
+        log.write_run_csv([p1, p2], outdir = TESTDIR / 'output')
+        df = pd.read_csv(TESTDIR / 'output/run.csv').set_index('filename')
+        self.assertEqual(df.loc['source/analysis/a.py', 'success'], 1)
+        self.assertEqual(df.loc['source/analysis/b.py', 'success'], 0)
+        self.assertEqual(set(df.columns), {'success', 'start_time', 'end_time'})
+
+    def test_write_run_csv_from_log_dir(self):
+        self.make_builder_log('log/analysis/a.log', 'succeeded')
+        self.make_builder_log('log/analysis/b.log', 'failed')
+        log.write_run_csv_from_log_dir()
+        csv_path = TESTDIR / 'output/run.csv'
+        self.assertTrue(csv_path.exists())
+        df = pd.read_csv(csv_path)
+        self.assertEqual(set(df.columns), {'filename', 'success', 'start_time', 'end_time'})
+        self.assertEqual(len(df), 2)
+
+    def tearDown(self):
+        (TESTDIR / 'sconstruct.log').unlink(missing_ok = True)
+        shutil.rmtree(TESTDIR / 'log', ignore_errors = True)
+        shutil.rmtree(TESTDIR / 'output', ignore_errors = True)
 
 
 if __name__ == '__main__':
