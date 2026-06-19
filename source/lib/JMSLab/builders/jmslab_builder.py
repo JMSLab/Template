@@ -1,6 +1,7 @@
 import abc
 import os
 import subprocess
+from datetime import datetime
 
 from .. import misc
 from .._exception_classes import ExecCallError, TargetNonexistenceError, BadExtensionError
@@ -100,8 +101,24 @@ class JMSLabBuilder(object):
             log_ext = '_%s' % self.env['log_ext']
         except KeyError:
             log_ext = ''
-        self.log_file = os.path.join(self.target_dir, ('sconscript%s.log' % log_ext))
+        log_path = JMSLabBuilder.get_log_file_path(self.source_file, log_ext = log_ext)
+        os.makedirs(os.path.dirname(log_path), exist_ok = True)
+        self.log_file = log_path
+        open(log_path, 'w').close()
         return None
+
+    @staticmethod
+    def get_log_file_path(source_file, log_ext = ''):
+        '''
+        Map a source script path to its per-script build log path.
+        '''
+        source_path = os.path.normpath(str(source_file).lstrip('#'))
+        source_prefix = 'source%s' % os.sep
+        if source_path.startswith(source_prefix):
+            source_path = source_path[len(source_prefix):]
+        return os.path.normpath(
+            os.path.join('log', '%s%s.log' % (os.path.splitext(source_path)[0], log_ext))
+        )
 
     @abc.abstractmethod
     def add_call_args(self):
@@ -183,7 +200,7 @@ class JMSLabBuilder(object):
                   'Check %s and sconstruct.log for errors. ' \
                   '\nCommand tried: %s%s' % (self.name, self.log_file, command, traceback)
 
-        self.timestamp_log(misc.current_time(), message + '\n\n')
+        self.timestamp_log(misc.current_time(), message + '\n\n', status = 'failed')
         raise ExecCallError(message)
         return None
 
@@ -195,12 +212,13 @@ class JMSLabBuilder(object):
         if missing_targets:
             missing_targets = '\n    '.join(missing_targets)
             message = 'The following target files do not exist after build:\n    %s' % missing_targets
+            self.timestamp_log(misc.current_time(), message + '\n\n', status = 'failed')
             raise TargetNonexistenceError(message)
         return None
 
-    def timestamp_log(self, end_time, content = ''):
+    def timestamp_log(self, end_time, content = '', status = 'succeeded'):
         '''
-        Adds beginning and ending times to a log file made for system call.
+        Adds beginning and ending times plus status to a build log.
         '''
         try:
             with open(self.log_file, mode = 'r') as f:
@@ -211,9 +229,14 @@ class JMSLabBuilder(object):
         except FileNotFoundError:
             pass
 
-        builder_log_msg = '*** Builder log created: {%s}\n' \
-                        '*** Builder log completed: {%s}\n%s' \
-                        % (self.start_time, end_time, content)
+        runtime = (datetime.strptime(end_time, "%Y-%m-%d %H:%M:%S") -
+                   datetime.strptime(self.start_time, "%Y-%m-%d %H:%M:%S")).total_seconds()
+        builder_log_msg = ('*** Builder log created: {%s}\n'
+                           '*** Builder log completed: {%s}\n'
+                           '*** Builder runtime (in seconds): {%s}\n'
+                           '*** Builder log status for {%s}: {%s}\n%s'
+                           % (self.start_time, end_time, runtime, self.source_file, status, content))
+
 
         with open(self.log_file, mode = 'w') as f:
             f.write(builder_log_msg)

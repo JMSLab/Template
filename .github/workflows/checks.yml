@@ -78,13 +78,13 @@ jobs:
           display: EPS data
 
       - id: check_scons_log
-        name: Check SCons build log for errors
-        if: contains(fromJSON(steps.parse_commands.outputs.run), 'Build log')
+        name: Check log files for failures
+        if: contains(fromJSON(steps.parse_commands.outputs.run), 'Log failures')
         continue-on-error: true
         uses: ./.github/actions/timed-check
         with:
-          script: .github/checks/check_sconscript_log.py
-          display: Build log
+          script: .github/checks/check_log_failures.py
+          display: Log failures
 
       - name: Post results
         if: always()
