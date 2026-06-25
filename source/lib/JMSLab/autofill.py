@@ -11,34 +11,46 @@ def AutoFill(
     mode: Literal["math", "text"] = "math",
 ) -> None:
     if isinstance(macros, dict):
-        resolved = macros
+        macro_values = macros
     elif isinstance(macros, list):
         caller_frame = inspect.currentframe().f_back # type: ignore
-        resolved = {}
+        macro_values = {}
         for var in macros:
             frame = caller_frame
-            while frame is not None and var not in frame.f_locals:
+            found = False
+            while frame is not None:
+                found, value = _LookupVar(var, frame)
+                if found:
+                    break
                 frame = frame.f_back
-            if frame is None:
+            if not found:
                 raise Exception(f"AutoFill: Variable '{var}' not found")
-            resolved[var] = frame.f_locals[var]
+            macro_values[var] = value
     else:
         raise Exception("Argument 'macros' must be a dict or list")
 
     if isinstance(format, list):
-        if len(format) != len(resolved):
+        if len(format) != len(macro_values):
             raise Exception("AutoFill: 'format' list length must match number of macros")
         formats = format
     else:
-        formats = [format] * len(resolved)
+        formats = [format] * len(macro_values)
 
     output = "".join(
         _FormatMacro(name, value, fmt, mode)
-        for (name, value), fmt in zip(resolved.items(), formats)
+        for (name, value), fmt in zip(macro_values.items(), formats)
     )
     open_mode = "a" if append else "w"
     with open(outfile, open_mode) as f:
         f.write(output)
+
+
+def _LookupVar(name: str, frame) -> tuple[bool, Any]:
+    if name in frame.f_locals:
+        return True, frame.f_locals[name]
+    if name in frame.f_globals:
+        return True, frame.f_globals[name]
+    return False, None
 
 
 def _FormatMacro(name: str, value: Any, format: str | None, mode: str) -> str:
