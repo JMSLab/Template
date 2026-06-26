@@ -1,68 +1,73 @@
 from unittest import main, TestCase
-from os.path import exists
+import os
+import tempfile
+import shutil
 from pathlib import Path
-
-import tempfile, shutil
 
 from ..autofill import AutoFill
 
-class Test(TestCase):
+
+class TestOutputContent(TestCase):
 
     def setUp(self):
         self.tempdir = tempfile.mkdtemp()
-        self.outfile = self.tempdir + r"\output_macros.tex"
-        return None
+        self.outfile = os.path.join(self.tempdir, "output_macros.tex")
 
     def tearDown(self):
         shutil.rmtree(self.tempdir)
-        return
-
-    def test_file_exists(self):
-        for outfile in [self.outfile, Path(self.outfile)]:
-            AutoFill({"Epsilon": -1.19}, outfile=outfile)
-            self.assertTrue(exists(outfile))
-        return None
 
     def test_dict_output(self):
-        AutoFill({"Epsilon": -1.19, "MarginalCost": 2.59}, self.outfile, "{:.2f}")
-        with open(self.outfile) as f:
-            content = f.read()
-        self.assertEqual(content, "\\newcommand{\\Epsilon}{-1.19}\n\\newcommand{\\MarginalCost}{2.59}\n")
-        return None
+        for outfile in [self.outfile, Path(self.outfile)]:
+            AutoFill({"Epsilon": -1.19, "MarginalCost": 2.59}, outfile, "{:.2f}")
+            with open(outfile) as f:
+                content = f.read()
+            self.assertEqual(content, "\\newcommand{\\Epsilon}{-1.19}\n\\newcommand{\\MarginalCost}{2.59}\n")
 
     def test_list_output(self):
         Epsilon = -1.19
-        AutoFill(["Epsilon"], self.outfile, "{:.2f}")
+        MarginalCost = 2.59
+        AutoFill(["Epsilon", "MarginalCost"], self.outfile, "{:.2f}")
         with open(self.outfile) as f:
             content = f.read()
-        self.assertEqual(content, "\\newcommand{\\Epsilon}{-1.19}\n")
-        return None
-
-    def test_list_variable_not_found(self):
-        with self.assertRaises(Exception) as context:
-            AutoFill(["Epsilon"], outfile=self.outfile)
-        self.assertIn("AutoFill: Variable 'Epsilon' not found", str(context.exception))
-        return None
-
-    def test_invalid_macros_type(self):
-        with self.assertRaises(Exception) as context:
-            AutoFill("Epsilon", outfile=self.outfile)
-        self.assertIn("Argument 'macros' must be a dict or list", str(context.exception))
-        return None
-
-    def test_text_mode(self):
-        AutoFill({"MarginalCost": 2.59}, self.outfile, "{:.2f}", mode="text")
-        with open(self.outfile) as f:
-            content = f.read()
-        self.assertEqual(content, "\\newcommand{\\MarginalCost}{\\textnormal{2.59}}\n")
-        return None
+        self.assertEqual(content, "\\newcommand{\\Epsilon}{-1.19}\n\\newcommand{\\MarginalCost}{2.59}\n")
 
     def test_none_format(self):
         AutoFill({"SampleStart": "January 2010"}, self.outfile)
         with open(self.outfile) as f:
             content = f.read()
         self.assertEqual(content, "\\newcommand{\\SampleStart}{January 2010}\n")
-        return None
+
+
+class TestModeAndFormat(TestCase):
+
+    def setUp(self):
+        self.tempdir = tempfile.mkdtemp()
+        self.outfile = os.path.join(self.tempdir, "output_macros.tex")
+
+    def tearDown(self):
+        shutil.rmtree(self.tempdir)
+
+    def test_text_mode(self):
+        AutoFill({"MarginalCost": 2.59}, self.outfile, "{:.2f}", mode="text")
+        with open(self.outfile) as f:
+            content = f.read()
+        self.assertEqual(content, "\\newcommand{\\MarginalCost}{\\textnormal{2.59}}\n")
+
+    def test_format_list(self):
+        AutoFill({"Epsilon": -1.19, "MarginalCost": 2.59}, self.outfile, ["{:.2f}", "{:.1f}"])
+        with open(self.outfile) as f:
+            content = f.read()
+        self.assertEqual(content, "\\newcommand{\\Epsilon}{-1.19}\n\\newcommand{\\MarginalCost}{2.6}\n")
+
+
+class TestFileBehavior(TestCase):
+
+    def setUp(self):
+        self.tempdir = tempfile.mkdtemp()
+        self.outfile = os.path.join(self.tempdir, "output_macros.tex")
+
+    def tearDown(self):
+        shutil.rmtree(self.tempdir)
 
     def test_append(self):
         AutoFill({"Epsilon": -1.19}, self.outfile, "{:.2f}")
@@ -70,18 +75,6 @@ class Test(TestCase):
         with open(self.outfile) as f:
             content = f.read()
         self.assertEqual(content, "\\newcommand{\\Epsilon}{-1.19}\n\\newcommand{\\MarginalCost}{2.59}\n")
-        return None
-
-    def test_append_multiple_calls(self):
-        AutoFill({"Alpha": 1.0}, self.outfile, "{:.1f}")
-        AutoFill({"Beta": 2.0}, self.outfile, "{:.1f}", append=True)
-        with open(self.outfile) as f:
-            content = f.read()
-        self.assertEqual(
-            content,
-            "\\newcommand{\\Alpha}{1.0}\n\\newcommand{\\Beta}{2.0}\n"
-        )
-        return None
 
     def test_overwrite_without_append(self):
         AutoFill({"Epsilon": -1.19}, self.outfile, "{:.2f}")
@@ -89,7 +82,27 @@ class Test(TestCase):
         with open(self.outfile) as f:
             content = f.read()
         self.assertEqual(content, "\\newcommand{\\MarginalCost}{2.59}\n")
-        return None
+
+
+class TestErrors(TestCase):
+
+    def setUp(self):
+        self.tempdir = tempfile.mkdtemp()
+        self.outfile = os.path.join(self.tempdir, "output_macros.tex")
+
+    def tearDown(self):
+        shutil.rmtree(self.tempdir)
+
+    def test_list_variable_not_found(self):
+        with self.assertRaises(Exception) as context:
+            AutoFill(["Epsilon"], outfile=self.outfile)
+        self.assertIn("AutoFill: Variable 'Epsilon' not found", str(context.exception))
+
+    def test_invalid_macros_type(self):
+        with self.assertRaises(Exception) as context:
+            AutoFill("Epsilon", outfile=self.outfile)
+        self.assertIn("Argument 'macros' must be a dict or list", str(context.exception))
+
 
 if __name__ == '__main__':
     main()
