@@ -18,20 +18,26 @@ class TestOutputContent(TestCase):
 
     def test_dict_output(self):
         for outfile in [self.outfile, Path(self.outfile)]:
-            AutoFill({"Epsilon": -1.19, "MarginalCost": 2.59}, outfile, "{:.2f}")
+            AutoFill({"NegativePi": -3.1415, "Pi": 3.1415}, outfile, "{:.2f}")
             with open(outfile) as f:
                 content = f.read()
-            self.assertEqual(content, "\\newcommand{\\Epsilon}{-1.19}\n\\newcommand{\\MarginalCost}{2.59}\n")
+            self.assertEqual(content, "\\newcommand{\\NegativePi}{-3.14}\n\\newcommand{\\Pi}{3.14}\n")
 
     def test_list_output(self):
-        Epsilon = -1.19
-        MarginalCost = 2.59
-        AutoFill(["Epsilon", "MarginalCost"], self.outfile, "{:.2f}")
+        NegativePi = -3.1415
+        Pi = 3.1415
+        AutoFill(["NegativePi", "Pi"], self.outfile, "{:.2f}")
         with open(self.outfile) as f:
             content = f.read()
-        self.assertEqual(content, "\\newcommand{\\Epsilon}{-1.19}\n\\newcommand{\\MarginalCost}{2.59}\n")
+        self.assertEqual(content, "\\newcommand{\\NegativePi}{-3.14}\n\\newcommand{\\Pi}{3.1415}\n")
 
-    def test_none_format(self):
+    def test_none_format_numeric(self):
+        AutoFill({"NegativePi": -3.1415, "Pi": 3.1415}, self.outfile)
+        with open(self.outfile) as f:
+            content = f.read()
+        self.assertEqual(content, "\\newcommand{\\NegativePi}{-3.1415}\n\\newcommand{\\Pi}{3.1415}\n")
+    
+    def test_none_format_text(self):
         AutoFill({"SampleStart": "January 2010"}, self.outfile)
         with open(self.outfile) as f:
             content = f.read()
@@ -48,16 +54,16 @@ class TestModeAndFormat(TestCase):
         shutil.rmtree(self.tempdir)
 
     def test_text_mode(self):
-        AutoFill({"MarginalCost": 2.59}, self.outfile, "{:.2f}", mode="text")
+        AutoFill({"Pi": 3.1415}, self.outfile, "{:.2f}", mode="text")
         with open(self.outfile) as f:
             content = f.read()
-        self.assertEqual(content, "\\newcommand{\\MarginalCost}{\\textnormal{2.59}}\n")
+        self.assertEqual(content, "\\newcommand{\\Pi}{\\textnormal{3.14}}\n")
 
     def test_format_list(self):
-        AutoFill({"Epsilon": -1.19, "MarginalCost": 2.59}, self.outfile, ["{:.2f}", "{:.1f}"])
+        AutoFill({"NegativePi": -3.1415, "IntegerPi": 3.1415}, self.outfile, ["{:.2f}", "{:.0f}"])
         with open(self.outfile) as f:
             content = f.read()
-        self.assertEqual(content, "\\newcommand{\\Epsilon}{-1.19}\n\\newcommand{\\MarginalCost}{2.6}\n")
+        self.assertEqual(content, "\\newcommand{\\NegativePi}{-3.14}\n\\newcommand{\\IntegerPi}{3}\n")
 
 
 class TestFileBehavior(TestCase):
@@ -70,18 +76,18 @@ class TestFileBehavior(TestCase):
         shutil.rmtree(self.tempdir)
 
     def test_append(self):
-        AutoFill({"Epsilon": -1.19}, self.outfile, "{:.2f}")
-        AutoFill({"MarginalCost": 2.59}, self.outfile, "{:.2f}", append=True)
+        AutoFill({"NegativePi": -3.1415}, self.outfile, "{:.2f}")
+        AutoFill({"Pi": 3.1415}, self.outfile, "{:.2f}", append=True)
         with open(self.outfile) as f:
             content = f.read()
-        self.assertEqual(content, "\\newcommand{\\Epsilon}{-1.19}\n\\newcommand{\\MarginalCost}{2.59}\n")
+        self.assertEqual(content, "\\newcommand{\\NegativePi}{-3.14}\n\\newcommand{\\Pi}{3.14}\n")
 
     def test_overwrite_without_append(self):
-        AutoFill({"Epsilon": -1.19}, self.outfile, "{:.2f}")
-        AutoFill({"MarginalCost": 2.59}, self.outfile, "{:.2f}")
+        AutoFill({"NegativePi": -3.1415}, self.outfile, "{:.2f}")
+        AutoFill({"Pi": 3.1415}, self.outfile, "{:.2f}")
         with open(self.outfile) as f:
             content = f.read()
-        self.assertEqual(content, "\\newcommand{\\MarginalCost}{2.59}\n")
+        self.assertEqual(content, "\\newcommand{\\Pi}{3.14}\n")
 
 
 class TestErrors(TestCase):
@@ -95,12 +101,12 @@ class TestErrors(TestCase):
 
     def test_list_variable_not_found(self):
         with self.assertRaises(Exception) as context:
-            AutoFill(["Epsilon"], outfile=self.outfile)
-        self.assertIn("AutoFill: Variable 'Epsilon' not found", str(context.exception))
+            AutoFill(["NegativePi"], outfile=self.outfile)
+        self.assertIn("AutoFill: Variable 'NegativePi' not found", str(context.exception))
 
     def test_invalid_macros_type(self):
         with self.assertRaises(Exception) as context:
-            AutoFill("Epsilon", outfile=self.outfile)
+            AutoFill("NegativePi", outfile=self.outfile)
         self.assertIn("Argument 'macros' must be a dict or list", str(context.exception))
 
 
