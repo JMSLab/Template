@@ -19,28 +19,24 @@ class TestOutputContent(TestCase):
     def test_dict_output(self):
         for outfile in [self.outfile, Path(self.outfile)]:
             AutoFill({"NegativePi": -3.1415, "Pi": 3.1415}, outfile, "{:.2f}")
-            with open(outfile) as f:
-                content = f.read()
+            content = Path(outfile).read_text()
             self.assertEqual(content, "\\newcommand{\\NegativePi}{-3.14}\n\\newcommand{\\Pi}{3.14}\n")
 
     def test_list_output(self):
         NegativePi = -3.1415
         Pi = 3.1415
         AutoFill(["NegativePi", "Pi"], self.outfile, "{:.2f}")
-        with open(self.outfile) as f:
-            content = f.read()
-        self.assertEqual(content, "\\newcommand{\\NegativePi}{-3.14}\n\\newcommand{\\Pi}{3.1415}\n")
+        content = Path(self.outfile).read_text()
+        self.assertEqual(content, "\\newcommand{\\NegativePi}{-3.14}\n\\newcommand{\\Pi}{3.14}\n")
 
     def test_none_format_numeric(self):
         AutoFill({"NegativePi": -3.1415, "Pi": 3.1415}, self.outfile)
-        with open(self.outfile) as f:
-            content = f.read()
+        content = Path(self.outfile).read_text()
         self.assertEqual(content, "\\newcommand{\\NegativePi}{-3.1415}\n\\newcommand{\\Pi}{3.1415}\n")
     
     def test_none_format_text(self):
         AutoFill({"SampleStart": "January 2010"}, self.outfile)
-        with open(self.outfile) as f:
-            content = f.read()
+        content = Path(self.outfile).read_text()
         self.assertEqual(content, "\\newcommand{\\SampleStart}{January 2010}\n")
 
 
@@ -55,14 +51,12 @@ class TestModeAndFormat(TestCase):
 
     def test_text_mode(self):
         AutoFill({"Pi": 3.1415}, self.outfile, "{:.2f}", mode="text")
-        with open(self.outfile) as f:
-            content = f.read()
+        content = Path(self.outfile).read_text()
         self.assertEqual(content, "\\newcommand{\\Pi}{\\textnormal{3.14}}\n")
 
     def test_format_list(self):
         AutoFill({"NegativePi": -3.1415, "IntegerPi": 3.1415}, self.outfile, ["{:.2f}", "{:.0f}"])
-        with open(self.outfile) as f:
-            content = f.read()
+        content = Path(self.outfile).read_text()
         self.assertEqual(content, "\\newcommand{\\NegativePi}{-3.14}\n\\newcommand{\\IntegerPi}{3}\n")
 
 
@@ -78,15 +72,13 @@ class TestFileBehavior(TestCase):
     def test_append(self):
         AutoFill({"NegativePi": -3.1415}, self.outfile, "{:.2f}")
         AutoFill({"Pi": 3.1415}, self.outfile, "{:.2f}", append=True)
-        with open(self.outfile) as f:
-            content = f.read()
+        content = Path(self.outfile).read_text()
         self.assertEqual(content, "\\newcommand{\\NegativePi}{-3.14}\n\\newcommand{\\Pi}{3.14}\n")
 
     def test_overwrite_without_append(self):
         AutoFill({"NegativePi": -3.1415}, self.outfile, "{:.2f}")
         AutoFill({"Pi": 3.1415}, self.outfile, "{:.2f}")
-        with open(self.outfile) as f:
-            content = f.read()
+        content = Path(self.outfile).read_text()
         self.assertEqual(content, "\\newcommand{\\Pi}{3.14}\n")
 
 
