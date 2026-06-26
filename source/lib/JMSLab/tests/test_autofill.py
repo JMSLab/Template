@@ -1,69 +1,106 @@
 from unittest import main, TestCase
-from os.path import exists
+import os
+import tempfile
+import shutil
+from pathlib import Path
 
-import tempfile, shutil 
+from ..autofill import AutoFill
 
-from ..autofill import GenerateAutofillMacros
 
-class Test(TestCase):
+class TestOutputContent(TestCase):
 
     def setUp(self):
-        self.tempdir = tempfile.mkdtemp() 
-        self.outfile = self.tempdir + r"output_macros.tex"
-        return None
+        self.tempdir = tempfile.mkdtemp()
+        self.outfile = os.path.join(self.tempdir, "output_macros.tex")
 
     def tearDown(self):
         shutil.rmtree(self.tempdir)
-        return
 
-    def test_file_exists(self):
-        Epsilon = -1.19
-        
-        GenerateAutofillMacros(["Epsilon"], autofill_outfile = self.outfile)
-        self.assertTrue(exists(self.outfile))
-        return None
+    def test_dict_output(self):
+        for outfile in [self.outfile, Path(self.outfile)]:
+            AutoFill({"NegativePi": -3.1415, "Pi": 3.1415}, outfile, "{:.2f}")
+            content = Path(outfile).read_text()
+            self.assertEqual(content, "\\newcommand{\\NegativePi}{-3.14}\n\\newcommand{\\Pi}{3.14}\n")
 
-    def test_exception(self):
+    def test_list_output(self):
+        NegativePi = -3.1415
+        Pi = 3.1415
+        AutoFill(["NegativePi", "Pi"], self.outfile, "{:.2f}")
+        content = Path(self.outfile).read_text()
+        self.assertEqual(content, "\\newcommand{\\NegativePi}{-3.14}\n\\newcommand{\\Pi}{3.14}\n")
+
+    def test_none_format_numeric(self):
+        AutoFill({"NegativePi": -3.1415, "Pi": 3.1415}, self.outfile)
+        content = Path(self.outfile).read_text()
+        self.assertEqual(content, "\\newcommand{\\NegativePi}{-3.1415}\n\\newcommand{\\Pi}{3.1415}\n")
+    
+    def test_none_format_text(self):
+        AutoFill({"SampleStart": "January 2010"}, self.outfile)
+        content = Path(self.outfile).read_text()
+        self.assertEqual(content, "\\newcommand{\\SampleStart}{January 2010}\n")
+
+
+class TestModeAndFormat(TestCase):
+
+    def setUp(self):
+        self.tempdir = tempfile.mkdtemp()
+        self.outfile = os.path.join(self.tempdir, "output_macros.tex")
+
+    def tearDown(self):
+        shutil.rmtree(self.tempdir)
+
+    def test_text_mode(self):
+        AutoFill({"Pi": 3.1415}, self.outfile, "{:.2f}", mode="text")
+        content = Path(self.outfile).read_text()
+        self.assertEqual(content, "\\newcommand{\\Pi}{\\textnormal{3.14}}\n")
+
+    def test_format_list(self):
+        AutoFill({"NegativePi": -3.1415, "IntegerPi": 3.1415}, self.outfile, ["{:.2f}", "{:.0f}"])
+        content = Path(self.outfile).read_text()
+        self.assertEqual(content, "\\newcommand{\\NegativePi}{-3.14}\n\\newcommand{\\IntegerPi}{3}\n")
+
+
+class TestFileBehavior(TestCase):
+
+    def setUp(self):
+        self.tempdir = tempfile.mkdtemp()
+        self.outfile = os.path.join(self.tempdir, "output_macros.tex")
+
+    def tearDown(self):
+        shutil.rmtree(self.tempdir)
+
+    def test_append(self):
+        AutoFill({"NegativePi": -3.1415}, self.outfile, "{:.2f}")
+        AutoFill({"Pi": 3.1415}, self.outfile, "{:.2f}", append=True)
+        content = Path(self.outfile).read_text()
+        self.assertEqual(content, "\\newcommand{\\NegativePi}{-3.14}\n\\newcommand{\\Pi}{3.14}\n")
+
+    def test_overwrite_without_append(self):
+        AutoFill({"NegativePi": -3.1415}, self.outfile, "{:.2f}")
+        AutoFill({"Pi": 3.1415}, self.outfile, "{:.2f}")
+        content = Path(self.outfile).read_text()
+        self.assertEqual(content, "\\newcommand{\\Pi}{3.14}\n")
+
+
+class TestErrors(TestCase):
+
+    def setUp(self):
+        self.tempdir = tempfile.mkdtemp()
+        self.outfile = os.path.join(self.tempdir, "output_macros.tex")
+
+    def tearDown(self):
+        shutil.rmtree(self.tempdir)
+
+    def test_list_variable_not_found(self):
         with self.assertRaises(Exception) as context:
-            GenerateAutofillMacros(["Epsilon"], autofill_outfile =  self.outfile)
+            AutoFill(["NegativePi"], outfile=self.outfile)
+        self.assertIn("AutoFill: Variable 'NegativePi' not found", str(context.exception))
 
-        self.assertTrue("Autofill: Variable 'Epsilon' not found" in str(context.exception))
-        return None
-
-    def test_output(self):
-        Epsilon = - 1.19
-        MarginalCost = 2.59
-        
-        GenerateAutofillMacros([["Epsilon"], ["MarginalCost"]], 
-                               autofill_formats = ["{:.2f}", "\\textnormal{{{:.2f}}}"], 
-                               autofill_outfile = self.outfile)
-        tex_file = open(self.outfile, 'r')
-        content = tex_file.read()
-        self.assertEqual(content, "\\newcommand{\\Epsilon}{-1.19}\n\\newcommand{\\MarginalCost}{\\textnormal{2.59}}\n")
-        tex_file.close()
-        return None
-
-    def test_list_format(self):
-        Epsilon = - 1.19
-        MarginalCost = 2.59
-
+    def test_invalid_macros_type(self):
         with self.assertRaises(Exception) as context:
-            GenerateAutofillMacros("Epsilon", autofill_outfile = self.outfile)
+            AutoFill("NegativePi", outfile=self.outfile)
+        self.assertIn("Argument 'macros' must be a dict or list", str(context.exception))
 
-        self.assertTrue("Argument 'autofill_lists' must be list" in str(context.exception))
 
-        with self.assertRaises(Exception) as context:
-            GenerateAutofillMacros(["Epsilon"], autofill_formats = ["{:.2f}", "\\textnormal{{{:.2f}}}"], 
-                                   autofill_outfile = self.outfile)
-
-        self.assertTrue("Arguments 'autofill_lists' and 'autofill_formats' are incompatible" in str(context.exception))
-
-        with self.assertRaises(Exception) as context:
-            GenerateAutofillMacros([["Epsilon"], ["MarginalCost"]], autofill_outfile = self.outfile)
-
-        self.assertTrue("Arguments 'autofill_lists' and 'autofill_formats' are incompatible" in str(context.exception))
-        return None
-        
 if __name__ == '__main__':
     main()
-

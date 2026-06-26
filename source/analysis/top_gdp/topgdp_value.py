@@ -1,19 +1,15 @@
 from pathlib import Path
 import pandas as pd
-from source.lib.JMSLab.autofill import GenerateAutofillMacros
+from source.lib.JMSLab.autofill import AutoFill
 
 def Main():
     instub  = Path("output/derived/wb_clean")
     outstub = Path("output/analysis/top_gdp")
 
     df = pd.read_csv(instub / "gdp_education.csv")
-    TopGDPValue = df['GDP_2010'].sort_values(ascending=False).iloc[0]
+    top_gdp_value = df['GDP_2010'].sort_values(ascending=False).iloc[0]
 
-    GenerateAutofillMacros(
-        ["TopGDPValue"],
-        "{:,.0f}",
-        outstub / "top_gdp.tex"
-    )
+    AutoFill({"TopGDPValue": top_gdp_value}, outstub / "top_gdp.tex", "{:,.0f}")
 
 
 if __name__ == '__main__':
