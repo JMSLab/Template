@@ -19,7 +19,7 @@ We suggest the following adaptation of [Github flow](https://docs.github.com/en/
   * **Assign** one or more _assignees_.
     * These are usually the original _assignees_ on the _issue_.
   * _Reviewers_ **review** the deliverable.
-    * Check for details the LLM may have missed.
+    * Check for details the LLM may have missed (especially code clarity and data integrity).
     * Instantiate comments as pull threads.
     * _Reviewers_ **approve** the pull when all pull threads are resolved.
   * _Assignees_ **close** the pull.
