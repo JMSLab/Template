@@ -19,8 +19,8 @@ We suggest the following adaptation of [Github flow](https://docs.github.com/en/
   * **Assign** one or more _assignees_.
     * These are usually the original _assignees_ on the _issue_.
   * _Reviewers_ **review** the deliverable.
-    * Check for violations of our [standards for code clarity and data integrity](./principles.md) (production deliverables).
-    * Check for clear errors or reasons reproducibility will fail (all deliverables.)
+    * Check for details the LLM may have missed.
+    * Instantiate comments as pull threads.
     * _Reviewers_ **approve** the pull when all pull threads are resolved.
   * _Assignees_ **close** the pull.
     * **Squash-merge** the issue branch back to the `main` branch (production deliverables).
