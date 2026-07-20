@@ -8,8 +8,8 @@ When conducting an LLM pull review, we use the prompt below as a starting point 
    * Carefully review the changes to the code for compliance with our [coding principles](./principles.md).
    * Carefully review the changes to the code for errors, ambiguities, or inconsistencies.
    * Carefully review the changes to the draft, slides, or other documents for errors, ambiguities, or inconsistencies.
-   * Carefully review the changes to file locations for compliance with our [storage principles](./storage.md).
-   * Carefully review the changes to smaller ASCII-formatted output files for evidence of errors or unexpected changes. Ask me if you need to also review changes to larger or binary files.
+   * Carefully review the changes to file sizes and locations for compliance with our [storage principles](./storage.md).
+   * Carefully review the changes to smaller ASCII-formatted output files for evidence of errors or unexpected changes. Ask me whether you need to also review changes to larger or binary files.
 * Deliver
    * Deliver your findings in a single markdown.
    * Separate comments by file and note which line they apply to.
