@@ -14,7 +14,7 @@ We suggest the following adaptation of [Github flow](https://docs.github.com/en/
     * you have not worked on the _issue_ for at least 5 business days since the last update
     * you have a substantive interaction about the issue outside of github (e.g., in a meeting)
 * **Open** a _pull request_ when the goals of the _issue_ are completed.
-  * **Conduct** an [LLM review](./pullreviewprompt.md).
+  * **Conduct** an [LLM review](./pullreviewprompt.md) and post its output.
   * **Assign** one or more _reviewers_.
   * **Assign** one or more _assignees_.
     * These are usually the original _assignees_ on the _issue_.
