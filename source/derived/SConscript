@@ -16,7 +16,7 @@ env.Python(target, source)
 
 target = ['#output/derived/wb_clean/gdp_education_logs.csv']
 
-if env.Value(mode) == "dev":
+if mode == "dev":
     source = ['#source/derived/wb_clean/takelogs.py',
               '#output/derived/wb_clean/gdp_education.csv']
     env.Python(target, source)

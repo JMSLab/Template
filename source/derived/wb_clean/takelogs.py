@@ -20,9 +20,7 @@ def Main():
 
 
 def TakeLogs(data_dir):
-    gdp_and_educ = pd.read_csv(
-        data_dir / "gdp_education.csv", header=2
-    )
+    gdp_and_educ = pd.read_csv(data_dir / "gdp_education.csv")
 
     gdp_and_educ["log_gdp_2010"] = np.log(gdp_and_educ["GDP_2010"])
     gdp_and_educ["log_education_exp_2010"] = np.log(gdp_and_educ["Education_Exp_2010"])
