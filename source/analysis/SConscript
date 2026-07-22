@@ -1,9 +1,15 @@
 Import('*')
 
-target = ['#output/analysis/top_gdp/top_gdp.txt']
-source = ['#source/analysis/top_gdp/top_gdp_table.R',
-          '#output/derived/wb_clean/gdp_education.csv']
-env.R(target, source) 
+if mode == "dev":
+    target = ['#output/analysis/top_gdp/top_gdp.txt']
+    source = ['#source/analysis/top_gdp/top_gdp_table.py',
+              '#output/derived/wb_clean/gdp_education.csv']
+    env.Python(target, source) 
+else:
+    target = ['#output/analysis/top_gdp/top_gdp.txt']
+    source = ['#source/analysis/top_gdp/top_gdp_table.R',
+              '#output/derived/wb_clean/gdp_education.csv']
+    env.R(target, source) 
 
 target = ['#output/analysis/top_gdp/top_gdp.tex']
 source = ['#source/analysis/top_gdp/topgdp_value.py',
