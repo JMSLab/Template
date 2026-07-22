@@ -162,7 +162,7 @@ Country
 \begin_inset Text
 
 \begin_layout Plain Layout
-Monaco
+Australia
 \end_layout
 
 \end_inset
@@ -171,7 +171,7 @@ Monaco
 \begin_inset Text
 
 \begin_layout Plain Layout
-150725.1941
+52022.1256
 \end_layout
 
 \end_inset
@@ -182,7 +182,7 @@ Monaco
 \begin_inset Text
 
 \begin_layout Plain Layout
-Liechtenstein
+Austria
 \end_layout
 
 \end_inset
@@ -191,27 +191,7 @@ Liechtenstein
 \begin_inset Text
 
 \begin_layout Plain Layout
-141200.3800
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Luxembourg
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-104965.3061
+46858.0433
 \end_layout
 
 \end_inset
@@ -222,7 +202,7 @@ Luxembourg
 \begin_inset Text
 
 \begin_layout Plain Layout
-Bermuda
+Belgium
 \end_layout
 
 \end_inset
@@ -231,7 +211,27 @@ Bermuda
 \begin_inset Text
 
 \begin_layout Plain Layout
-88207.3276
+44141.8781
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Andorra
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+40852.6668
 \end_layout
 
 \end_inset
@@ -242,7 +242,7 @@ Bermuda
 \begin_inset Text
 
 \begin_layout Plain Layout
-Norway
+United Arab Emirates
 \end_layout
 
 \end_inset
@@ -251,7 +251,7 @@ Norway
 \begin_inset Text
 
 \begin_layout Plain Layout
-87693.7901
+33893.3035
 \end_layout
 
 \end_inset
@@ -345,7 +345,7 @@ Gap in 2010 GDP per capita
 \begin_inset Text
 
 \begin_layout Plain Layout
-Norway - Monaco
+United Arab Emirates - Australia
 \end_layout
 
 \end_inset
@@ -354,7 +354,7 @@ Norway - Monaco
 \begin_inset Text
 
 \begin_layout Plain Layout
-−63031.4041
+−18128.8221
 \end_layout
 
 \end_inset
