@@ -12,14 +12,15 @@ source = ['#source/derived/wb_clean/build.py',
 env.Python(target, source)
 
 
-target = ['#output/derived/wb_clean/gdp_education_logs.csv'
+target = ['#output/derived/wb_clean/gdp_education_logs.csv',
           '#output/derived/wb_clean/gdp_education_logs.log']
 source = ['#source/derived/wb_clean/takelogs.py',
           '#output/derived/wb_clean/gdp_education.csv']
 env.Python(target, source)
 
-target = ['#output/derived/wb_clean/gdp_education_panel.csv']
-source = ['#source/derived/wb_clean/build_panel.do',
-          '#datastore/raw/world_bank/orig/API_NY.GDP.PCAP.CD_DS2_en_csv_v2_1740213.csv',
-          '#datastore/raw/world_bank/orig/API_SE.XPD.TOTL.GD.ZS_DS2_en_csv_v2_1740282.csv']
-env.Stata(target, source)
+if mode == "full":
+    target = ['#output/derived/wb_clean/gdp_education_panel.csv']
+    source = ['#source/derived/wb_clean/build_panel.do',
+              '#datastore/raw/world_bank/orig/API_NY.GDP.PCAP.CD_DS2_en_csv_v2_1740213.csv',
+              '#datastore/raw/world_bank/orig/API_SE.XPD.TOTL.GD.ZS_DS2_en_csv_v2_1740282.csv']
+    env.Stata(target, source)
