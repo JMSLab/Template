@@ -78,18 +78,20 @@ In addition, each project may use other specialized tools. For the working examp
 
 ### SConscript files
 
-In order to integrate a new script into the SCons build, you need to modify the SConscript file in the corresponding `source/` sub-folder.  For example, to add `source/derived/wb_clean/takelogs.do` to the SCons build, add an entry to `source/derived/SConscript`. In this case:
+In order to integrate a new script into the SCons build, you need to modify the SConscript file in the corresponding `source/` sub-folder.  For example, to add `source/derived/wb_clean/build_panel.do` to the SCons build, add an entry to `source/derived/SConscript`. In this case:
 
 ```python
-target = ['#output/derived/wb_clean/gdp_education_logs.csv']
-source = ['#source/derived/wb_clean/takelogs.do',
-          '#output/derived/wb_clean/gdp_education.csv']
+target = ['#output/derived/wb_clean/gdp_education_panel.csv']
+source = ['#source/derived/wb_clean/build_panel.do',
+          '#datastore/raw/world_bank/orig/API_NY.GDP.PCAP.CD_DS2_en_csv_v2_1740213.csv',
+          '#datastore/raw/world_bank/orig/API_SE.XPD.TOTL.GD.ZS_DS2_en_csv_v2_1740282.csv']
 env.Stata(target, source)
 ```
 
 - `target` is a list with all of the files produced by the script.
 
     - Build logs are not listed as SCons targets. Builder output is written automatically to `log/.../<script>.log`.
+    - Logs from the usage of SaveData to save dataframes in Python are listed as SCons targets.
 
 - `source` is a list with the script's name and all of the files used as input; the script _must_ be the first element of the list.
 
