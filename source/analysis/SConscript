@@ -17,12 +17,6 @@ source = ['#source/analysis/plots/plot_gdp_educ_exp.py',
 env.Python(target, source)
 
 
-target = ['#output/analysis/plots/educ_gdp.eps',
-          '#output/analysis/plots/educ_gdp.png']
-source = ['#source/analysis/plots/plot_educ_exp_gdp.py',
-          '#output/derived/wb_clean/gdp_education_logs.csv']
-env.Python(target, source)
-
 if mode == "full":
     target = ['#output/analysis/regressions/gdp_vs_educ_logs_2010.txt']
     source = ['#source/analysis/regressions/gdp_vs_educ_logs.m',
