@@ -1,13 +1,13 @@
 File: output/derived/wb_clean/gdp_education_logs.csv
 
-MD5 hash: a7c098bc9a77318672a15505d7056bae
+MD5 hash: e575055089b4a789bbb427c353e0640d
 
 Keys: countryname 
 
-                           type count unique        mean         std      min        50%         max
-countryname              object    20     20                                                        
-gdp_2010                float64    20         15,385.887  17,812.384  234.236  6,372.095  52,022.126
-education_exp_2010      float64    14              4.528       1.487    2.781      3.781       6.929
-log_gdp_2010            float64    20              8.699       1.653    5.456      8.757      10.859
-log_education_exp_2010  float64    14              1.462       0.322    1.023      1.330       1.936
+                           type count unique        mean         std      min        50%          max
+countryname              object   264    264                                                         
+gdp_2010                float64   252         14,626.469  21,914.825  234.236  5,436.698  150,725.194
+education_exp_2010      float64   164              4.540       1.768    1.118      4.487       12.837
+log_gdp_2010            float64   252              8.633       1.460    5.456      8.601       11.923
+log_education_exp_2010  float64   164              1.436       0.406    0.111      1.501        2.552
 
