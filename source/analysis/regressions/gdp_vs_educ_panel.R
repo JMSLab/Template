@@ -1,6 +1,6 @@
 Main <- function() {
   instub  <- "output/derived/wb_clean"
-  outstub <- "output/analysis/regressions_full_only"
+  outstub <- "output/analysis/regressions"
 
   panel <- read.csv(file.path(instub, "gdp_education_panel.csv"))
   panel <- panel[!is.na(panel$gdp) & !is.na(panel$educ_exp), ]

@@ -1,5 +1,5 @@
 infile  = fullfile('output/derived/wb_clean', 'gdp_education_logs.csv');
-outfile = fullfile('output/analysis/regressions_full_only', 'gdp_vs_educ_logs_2010.txt');
+outfile = fullfile('output/analysis/regressions', 'gdp_vs_educ_logs_2010.txt');
 
 dataset = readtable(infile);
 x = dataset{:,'log_education_exp_2010'};
