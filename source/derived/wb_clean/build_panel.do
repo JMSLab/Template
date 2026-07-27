@@ -59,6 +59,7 @@ end
 
 
 program save_panel
+    isid countrycode year
     export delimited using "output/derived/wb_clean/gdp_education_panel.csv", replace
 end
 
