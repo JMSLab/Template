@@ -13,7 +13,7 @@ env.Python(target, source)
 target = ['#output/analysis/plots/gdp_educ.eps',
           '#output/analysis/plots/gdp_educ.png']
 source = ['#source/analysis/plots/plot_gdp_educ_exp.py',
-              '#output/derived/wb_clean/gdp_education_logs.csv']
+          '#output/derived/wb_clean/gdp_education_logs.csv']
 env.Python(target, source)
 
 
