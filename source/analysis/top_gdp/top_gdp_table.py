@@ -1,6 +1,5 @@
 from pathlib import Path
 import pandas as pd
-from source.lib.JMSLab.autofill import AutoFill
 
 def Main():
     in_dir  = Path("output/derived/wb_clean")
