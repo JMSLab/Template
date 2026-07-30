@@ -1,2 +1,2 @@
 <tab:top_gdp_gap>
-Norway - Monaco	-63031.4040583971
+Norway - Monaco	-63031.40405839709
