@@ -79,7 +79,8 @@ def CollectProblems():
                 missing_dirs.append(subdir_path)
                 continue
             for f in subfiles:
-                if not IsMentioned(content, f, subdir_path):
+                subpath = f"source/{rel}/{subdir}/{f}"
+                if not IsExcludedFile(subpath) and not IsMentioned(content, f, subdir_path):
                     missing_mentions.append(f"{dir_path} -> {subdir}/{f}")
     return missing_dirs, missing_mentions
 
