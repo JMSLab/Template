@@ -105,7 +105,7 @@ The repository is prebuilt with some automated testing using [Github Actions](./
 
 To run all tests, add `[run-actions-all]` to a commit message or type `/run-actions-all` in a comment.
 
-To run a particular test, type `/run-actions-NAMEOFTEST` in a comment (e.g., `/run-actions-log` to run [this test](./.github/checks/check_sconscript_log.py); see [commands](./.github/checks/checks.json) for others).
+To run a particular test, type `/run-actions-NAMEOFTEST` in a comment (e.g., `/run-actions-log` to run [this test](./.github/checks/check_log_failures.py); see [commands](./.github/checks/checks.json) for others).
 
 ### Citations and expectations for usage
 
