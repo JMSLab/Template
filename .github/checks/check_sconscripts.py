@@ -66,27 +66,15 @@ def CollectProblems():
             path = f"source/{rel}/{f}"
             if ShouldCheck(dir_path, f) and not IsExcludedFile(path) and not IsMentioned(content, f, dir_path):
                 missing_mentions.append(f"{dir_path} -> {f}")
-        for subdir in dir_names:
-            subdir_path = dir_path / subdir
-            if HasLocalSConscript(subdir_path) and re.search(rf"\b{re.escape(subdir)}\b", content):
-                continue
-            try:
-                subfiles = sorted(
-                    e for e in os.listdir(subdir_path)
-                    if not IsIgnored(e) and (subdir_path / e).is_file() and ShouldCheck(subdir_path, e)
-                )
-            except Exception:
-                missing_dirs.append(subdir_path)
-                continue
-            for f in subfiles:
-                subpath = f"source/{rel}/{subdir}/{f}"
-                if not IsExcludedFile(subpath) and not IsMentioned(content, f, subdir_path):
         for subdir in list(dir_names):
             subdir_path = dir_path / subdir
             if HasLocalSConscript(subdir_path) and re.search(rf"\b{re.escape(subdir)}\b", content):
                 continue
             for nested_dir_path, nested_dir_names, nested_file_names in os.walk(subdir_path):
                 nested_dir_path = Path(nested_dir_path)
+                if nested_dir_path != subdir_path and HasLocalSConscript(nested_dir_path):
+                    nested_dir_names[:] = []
+                    continue
                 nested_dir_names[:] = sorted(d for d in nested_dir_names if not IsIgnored(d))
                 nested_files = sorted(
                     f for f in nested_file_names
