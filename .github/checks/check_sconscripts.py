@@ -66,21 +66,26 @@ def CollectProblems():
             path = f"source/{rel}/{f}"
             if ShouldCheck(dir_path, f) and not IsExcludedFile(path) and not IsMentioned(content, f, dir_path):
                 missing_mentions.append(f"{dir_path} -> {f}")
-        for subdir in dir_names:
+        for subdir in list(dir_names):
             subdir_path = dir_path / subdir
             if HasLocalSConscript(subdir_path) and re.search(rf"\b{re.escape(subdir)}\b", content):
                 continue
-            try:
-                subfiles = sorted(
-                    e for e in os.listdir(subdir_path)
-                    if not IsIgnored(e) and (subdir_path / e).is_file() and ShouldCheck(subdir_path, e)
+            for nested_dir_path, nested_dir_names, nested_file_names in os.walk(subdir_path):
+                nested_dir_path = Path(nested_dir_path)
+                if nested_dir_path != subdir_path and HasLocalSConscript(nested_dir_path):
+                    nested_dir_names[:] = []
+                    continue
+                nested_dir_names[:] = sorted(d for d in nested_dir_names if not IsIgnored(d))
+                nested_files = sorted(
+                    f for f in nested_file_names
+                    if not IsIgnored(f) and ShouldCheck(nested_dir_path, f)
                 )
-            except Exception:
-                missing_dirs.append(subdir_path)
-                continue
-            for f in subfiles:
-                if not IsMentioned(content, f, subdir_path):
-                    missing_mentions.append(f"{dir_path} -> {subdir}/{f}")
+                for f in nested_files:
+                    nested_path = f"source/{nested_dir_path.relative_to(ROOT).as_posix()}/{f}"
+                    if not IsExcludedFile(nested_path) and not IsMentioned(content, f, nested_dir_path):
+                        missing_mentions.append(f"{dir_path} -> {nested_dir_path.relative_to(dir_path).as_posix()}/{f}")
+            if not HasLocalSConscript(subdir_path):
+                dir_names.remove(subdir)
     return missing_dirs, missing_mentions
 
 
