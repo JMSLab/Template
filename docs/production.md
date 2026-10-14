@@ -141,6 +141,32 @@ Production encompasses the steps we take before we circulate or submit a paper d
       * Statements in the paper that are inconsistent with the code.
       * Substantive decisions in the code that are not documented in the paper.
 
+### Task [LIB]: Check external-facing packages
+
+#### Work allocation
+
+  | Expected Hours | 50% Confidence Interval | # of RAs |
+  | -------------- | ----------------------- | -------- |
+  | 3              | (1 - 8)                 | 1        |
+
+#### Goals
+
+  *  Check with PIs whether this is needed; applies only if we will release a code package.
+  *  A single readme explains how to use the package.
+  *  All requirements are explicit either in documentation or (preferably) in formats (e.g. `requirements.txt`) accessible for automated use.
+  *  Documentation does not duplicate information available in the published docs of dependencies (e.g. generic instructions on how to install python packages).
+  *  All user-facing functions have a terse docstring.
+  *  Code adheres to our [principles](principles.md) and is abstracted where possible.
+  *  Unit tests are especially dense for load-bearing functions and take advantage of our substantive knowledge of how these functions should behave.
+  *  There is at least one fully worked example serving as an obstacle course for the package.
+  *  The package installs and its tests pass in a fresh environment on the minimum supported Python version.
+  *  We are not releasing any code or data that we do not have permission to release.
+
+#### Deliverables 
+
+  *  A list of details checked.
+  *  A list of suggested improvements.
+
 ## Paper
 
 ### Task [PROOF]: Proofread
