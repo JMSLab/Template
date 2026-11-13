@@ -4,7 +4,7 @@ When conducting an LLM pull review, we use the prompt below as a starting point 
   * Read the discussion threads for the issue, all subissues, and the pull request.
   * Review the git diff to understand what changed.
   * Summarize the goals of the issue and the main changes associated with each. Flag any unmet goal.
-  * If the draft, slides, or other documents changed, ask the user whether they want a PDF diff and, if so, how to build it. If the pdf is out of date on either the issue branch or `main` branch, ask the user if you should use a fresh compile for the diff.
+  * If the draft, slides, or other documents changed, ask the user whether they want a PDF diff and, if so, how to build it. If the pdf is out of date on either the issue branch or the base branch, ask the user if you should use a fresh compile for the diff.
 * Review
    * Carefully review the changes to the code for compliance with our [coding principles](./principles.md).
    * Carefully review the changes to the code for errors, ambiguities, or inconsistencies.
