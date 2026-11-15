@@ -17,7 +17,7 @@ def find_source_using_logname(log_path, source_dir = 'source', log_dir = 'log'):
 
 
 def parse_log_status(log_path):
-    fields = re.findall(r'\{([^}]+)\}', open(log_path).read())
+    fields = re.findall(r'\{([^}]+)\}', open(log_path, encoding = 'utf-8', errors = 'replace').read())
     build_ran_to_completion = len(fields) >= 5
     if not build_ran_to_completion:
         # Killed before timestamp_log wrote the status header (e.g. scons process forece-quit):
@@ -135,7 +135,7 @@ def collect_builder_logs(parent_dir, excluded_dirs = []):
 
     # Read the file at each path to a log and store output complete-time in a dict at filename
     for log_path in log_paths:
-        with open(log_path, 'r') as f:
+        with open(log_path, 'r', encoding = 'utf-8', errors = 'replace') as f:
             try:
                 s = f.readlines()[1]  # line 0 = log start time, line 1 = log end time
             except IndexError:
