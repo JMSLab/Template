@@ -119,7 +119,7 @@ def expected_log_path(source, log_ext = ''):
 
 def check_log(test_object, log_path, status, timestamp = True):
     '''Check for the existence of a (timestamped) log'''
-    with open(log_path, 'r') as log_file:
+    with open(log_path, 'r', encoding = 'utf-8', errors = 'replace') as log_file:
         log_data = log_file.read()
 
     if timestamp:
