@@ -1,25 +1,8 @@
-*** New build: {2026-11-16 09:51:58} ***
+*** New build: {2026-11-16 09:53:29} ***
 scons: done reading SConscript files.
 scons: Building targets ...
 build_python(["output\ascii.txt"], ["code\ascii.py"])
 build_python(["output\cp1252.txt"], ["code\cp1252.py"])
 build_python(["output\utf8_open.txt"], ["code\utf8_open.py"])
 build_python(["output\utf8_quote.txt"], ["code\utf8_quote.py"])
-scons: *** [output\utf8_quote.txt] UnicodeEncodeError : 'charmap' codec can't encode characters in position 212-213: character maps to <undefined>
-Traceback (most recent call last):
-  File "C:\Users\sher0042\AppData\Local\anaconda3\Lib\site-packages\SCons\Action.py", line 1434, in execute
-    result = self.execfunction(target=target, source=rsources, env=env)
-  File "C:\Users\sher0042\Documents\GitHub\Template\source\lib\JMSLab\builders\build_python.py", line 28, in build_python
-    builder.execute_system_call()
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
-  File "C:\Users\sher0042\Documents\GitHub\Template\source\lib\JMSLab\builders\jmslab_builder.py", line 140, in execute_system_call
-    self.timestamp_log(misc.current_time())
-    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\sher0042\Documents\GitHub\Template\source\lib\JMSLab\builders\jmslab_builder.py", line 242, in timestamp_log
-    f.write(builder_log_msg)
-    ~~~~~~~^^^^^^^^^^^^^^^^^
-  File "C:\Users\sher0042\AppData\Local\anaconda3\Lib\encodings\cp1252.py", line 19, in encode
-    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
-           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-UnicodeEncodeError: 'charmap' codec can't encode characters in position 212-213: character maps to <undefined>
-scons: building terminated because of errors.
+scons: done building targets.
