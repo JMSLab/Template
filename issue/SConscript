@@ -1,0 +1,6 @@
+Import('*')
+
+for name in ['ascii', 'utf8_open', 'utf8_quote', 'cp1252']:
+    target = ['#output/%s.txt' % name]
+    source = ['#code/%s.py' % name]
+    env.Python(target, source)

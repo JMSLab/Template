@@ -187,7 +187,7 @@ def shutil_copy2_effect(*args, **kwargs):
         with open(args[1], 'wb') as out_file:
             out_file.write(b'Mock copy')
 
-def latex_side_effect(*args, **kwargs):
+def latex_side_effect(*args, log_text = b'Test log\n', **kwargs):
     '''
     This side effect mocks the behaviour of a subprocess.check_output call.
     The mocked machine has pdflatex set up as a command-line executable
@@ -221,7 +221,7 @@ def latex_side_effect(*args, **kwargs):
     if log_redirect:
         log_path = re.sub(r'\>\s*', '', log_redirect)
         with open(log_path, 'wb') as log_file:
-            log_file.write(b'Test log\n')
+            log_file.write(log_text)
 
     # If pdflatex is the executable, the options are correctly specified,
     # and the source exists, produce a .pdf file with the name specified in

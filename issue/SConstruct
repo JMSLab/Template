@@ -1,0 +1,16 @@
+import os
+import sys
+import atexit
+
+sys.path.insert(0, os.path.abspath('..'))
+import source.lib.JMSLab as jms
+
+env = Environment(ENV = {'PATH' : os.environ['PATH']},
+                  IMPLICIT_COMMAND_DEPENDENCIES = 0,
+                  BUILDERS = {'Python' : Builder(action = jms.build_python)})
+Export('env')
+
+jms.start_log('develop', '')
+atexit.register(jms.write_run_csv_from_log_dir)
+
+SConscript('SConscript')

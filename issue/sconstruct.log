@@ -1,0 +1,8 @@
+*** New build: {2026-11-16 09:55:43} ***
+scons: done reading SConscript files.
+scons: Building targets ...
+build_python(["output\ascii.txt"], ["code\ascii.py"])
+build_python(["output\cp1252.txt"], ["code\cp1252.py"])
+build_python(["output\utf8_open.txt"], ["code\utf8_open.py"])
+build_python(["output\utf8_quote.txt"], ["code\utf8_quote.py"])
+scons: done building targets.
