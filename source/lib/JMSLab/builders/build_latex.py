@@ -49,8 +49,6 @@ class LatexBuilder(JMSLabBuilder):
         '''
         '''
         target_name = os.path.splitext(self.target[0])[0]
-        # TeX treats backslashes in a job name as control sequences.
-        # Use forward slashes in output names on every platform.
         target_name = target_name.replace('\\', '/')
         args = '%s %s %s > %s' % (target_name,
                                   os.path.normpath(self.source_file),
