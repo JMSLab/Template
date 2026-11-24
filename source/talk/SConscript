@@ -1,13 +1,15 @@
 Import('*')
 
-target = ['#output/talk/TemplateSlides.pdf', '#temp/Template.handout.pdf']
-source = ['#source/talk/TemplateSlides.lyx',
-	  '#output/analysis/plots/gdp_educ.eps']
+figure = '#output/analysis/plots/gdp_educ.eps' 
 
+target = ['#output/talk/TemplateSlidesLyx.pdf', 
+    	  '#temp/Template.handout.pdf']
+source = ['#source/talk/TemplateSlidesLyx.lyx',
+	  	  figure]
 env.Lyx(target, source)
 
-target = ['#output/talk/TemplateSlidesLatex.pdf', '#temp/TemplateLatex.handout.pdf']
-source = ['#source/talk/TemplateSlides.tex',
-	  '#output/analysis/plots/gdp_educ.eps']
-
+target = ['#output/talk/TemplateSlidesTex.pdf', 
+          '#temp/TemplateLatex.handout.pdf']
+source = ['#source/talk/TemplateSlidesTex.tex',
+	      figure]
 env.Latex(target, source)
