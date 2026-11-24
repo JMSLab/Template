@@ -1,0 +1,12 @@
+OLS regression (cross-section, 2010)
+log_gdp_2010 = alpha + beta * log_education_exp_2010
+Source: output/derived/wb_clean/gdp_education_logs.csv
+Observations: 163
+
+Variable                            Coef.    Std. Err.            t        P>|t|
+--------------------------------------------------------------------------------
+log_education_exp_2010             1.1290       0.2843       3.9718       0.0001
+_cons (alpha)                      6.9615       0.4244      16.4016       0.0000
+--------------------------------------------------------------------------------
+R-squared:      0.0892
+Adj. R-squared: 0.0836

@@ -1,0 +1,14 @@
+Two-way fixed-effects panel regression
+gdp_{c,t} = phi_t (year FE) + psi_c (country FE) + beta * educ_exp_{c,t}
+Source: output/derived/wb_clean/gdp_education_panel.csv
+Observations: 4764
+
+Variable                            Coef.    Std. Err.            t        P>|t|
+--------------------------------------------------------------------------------
+educ_exp                        -165.9530     101.6303      -1.6329       0.1026
+--------------------------------------------------------------------------------
+R-squared:      0.8158
+Adj. R-squared: 0.8040
+
+Country fixed effects: 239; Year fixed effects: 50
+(Fixed-effect coefficients estimated but omitted from the table above.)
