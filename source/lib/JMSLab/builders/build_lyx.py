@@ -1,6 +1,7 @@
 import subprocess
 import os
 import shutil
+import fileinput
 
 from .. import misc
 from .jmslab_builder import JMSLabBuilder
@@ -53,15 +54,12 @@ class LyxBuilder(JMSLabBuilder):
 
         shutil.copy2(self.source_file, self.handout_in)
         beamer = False
-        with open(self.handout_in, 'r', newline='') as handout_file:
-            lines = handout_file.readlines()
-        with open(self.handout_in, 'w', newline='') as handout_file:
-            for line in lines:
-                if r'\textclass beamer' in line:
-                    beamer = True
-                elif r'\begin_inset Note Note' in line and beamer:
-                    line = line.replace('Note Note', 'Note Greyedout')
-                handout_file.write(line)
+        for line in fileinput.input(self.handout_in, inplace = True):
+            if r'\textclass beamer' in line:
+                beamer = True
+            elif r'\begin_inset Note Note' in line and beamer:
+                line = line.replace('Note Note', 'Note Greyedout')
+            print(line, end='')
         
         args = '%s %s %s > %s' % (self.handout_out,
                                 self.handout_in,

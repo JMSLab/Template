@@ -3,6 +3,7 @@ import os
 import time
 import re
 import shutil
+import fileinput
 
 from .. import misc
 from .executables import get_executable
@@ -106,15 +107,12 @@ class LatexBuilder(JMSLabBuilder):
 
         shutil.copy2(self.source_file, self.handout_in)
         beamer = False
-        with open(self.handout_in, 'r', newline='') as handout_file:
-            lines = handout_file.readlines()
-        with open(self.handout_in, 'w', newline='') as handout_file:
-            for line in lines:
-                if bool(re.search(r'\\documentclass.*{beamer}', line)):
-                    beamer = True
-                elif bool(re.search(r'\\setbeameroption.*{hide notes}', line)) and beamer:
-                    line = line.replace('hide notes', 'show notes')
-                handout_file.write(line)
+        for line in fileinput.input(self.handout_in, inplace = True):
+            if bool(re.search(r'\\documentclass.*{beamer}', line)):
+                beamer = True
+            elif bool(re.search(r'\\setbeameroption.*{hide notes}', line)) and beamer:
+                line = line.replace('hide notes', 'show notes')
+            print(line, end='')
 
         args = '%s %s %s > %s' % (self.handout_out,
                                 self.handout_in,
