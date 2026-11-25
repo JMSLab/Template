@@ -25,7 +25,7 @@ def Main():
 def WriteTable(tag, df, out):
     with open(out, "w") as outfile:
         outfile.write(tag + "\n")
-        df.to_csv(outfile, index=False, header=False, mode="a", sep="\t")
+        df.to_csv(outfile, index=False, header=False, mode="a", sep="\t", lineterminator="\n")
 
 if __name__ == '__main__':
     Main()

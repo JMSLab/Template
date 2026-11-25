@@ -1,6 +1,6 @@
 OLS regression (cross-section, 2010)
 log_gdp_2010 = alpha + beta * log_education_exp_2010
-Source: output/derived/wb_clean/gdp_education_logs.csv
+Source: output\derived\wb_clean\gdp_education_logs.csv
 Observations: 163
 
 Variable                            Coef.    Std. Err.            t        P>|t|
