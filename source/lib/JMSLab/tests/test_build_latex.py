@@ -250,6 +250,38 @@ class TestBuildLateX(unittest.TestCase):
             self.assertTrue(os.path.isfile(target[1]))
             self.assertTrue(os.path.isfile(target[2]))
 
+    def test_jobname_backslash_target(self):
+        '''
+        Test that backslashes in the target path are passed to -jobname
+        as forward slashes, since TeX reads backslashes as control sequences.
+        '''
+        builder_attributes = {'name': 'LaTeX',
+                              'valid_extensions': ['.tex'],
+                              'exec_opts': '-interaction nonstopmode -jobname'}
+        builder = LatexBuilder([r'build\latex.pdf'], ['test_script.tex'], {},
+                               **builder_attributes)
+
+        self.assertIn('-jobname build/latex ', builder.system_call)
+        self.assertNotIn('build\\latex', builder.system_call)
+
+    def test_handout_jobname_backslash_target(self):
+        '''
+        Test that backslashes in the main target path are passed to the
+        handout's -jobname as forward slashes.
+        '''
+        builder_attributes = {'name': 'LaTeX',
+                              'valid_extensions': ['.tex'],
+                              'exec_opts': '-interaction nonstopmode -jobname'}
+        builder = LatexBuilder([r'build\path_to_clean.pdf'],
+                               ['input/test_script.tex'], {},
+                               **builder_attributes)
+        builder.main_target = r'build\path_to_clean.pdf'
+        builder.create_handout()
+        os.remove(builder.handout_in)
+
+        self.assertIn('-jobname build/path_to_clean ', builder.handout_call)
+        self.assertNotIn('build\\path_to_clean', builder.handout_call)
+
     def tearDown(self):
         shutil.rmtree(TESTDIR / 'build')
 

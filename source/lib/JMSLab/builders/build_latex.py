@@ -49,7 +49,8 @@ class LatexBuilder(JMSLabBuilder):
         '''
         '''
         target_name = os.path.splitext(self.target[0])[0]
-        args = '%s %s %s > %s' % (os.path.normpath(target_name),
+        target_name = target_name.replace('\\', '/')
+        args = '%s %s %s > %s' % (target_name,
                                   os.path.normpath(self.source_file),
                                   self.cl_arg,
                                   os.path.normpath(self.log_file))
@@ -99,7 +100,7 @@ class LatexBuilder(JMSLabBuilder):
         If beamer document class, show notes.
         '''   
 
-        self.handout_out = os.path.splitext(str(self.main_target))[0]
+        self.handout_out = os.path.splitext(str(self.main_target))[0].replace('\\', '/')
         self.handout_in  = os.path.splitext(self.source_file)[0] + '.handout.tex' 
 
         shutil.copy2(self.source_file, self.handout_in)
