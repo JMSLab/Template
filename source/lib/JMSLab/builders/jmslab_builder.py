@@ -221,10 +221,7 @@ class JMSLabBuilder(object):
         Adds beginning and ending times plus status to a build log.
         '''
         try:
-            with open(self.log_file, mode = 'r') as f:
-                content += f.read()
-        except UnicodeDecodeError:
-            with open(self.log_file, encoding = 'latin1', mode = 'r') as f:
+            with open(self.log_file, encoding = 'utf-8', errors = 'surrogateescape', mode = 'r') as f:
                 content += f.read()
         except FileNotFoundError:
             pass
@@ -238,7 +235,7 @@ class JMSLabBuilder(object):
                            % (self.start_time, end_time, runtime, self.source_file, status, content))
 
 
-        with open(self.log_file, mode = 'w') as f:
+        with open(self.log_file, encoding = 'utf-8', errors = 'surrogateescape', mode = 'w') as f:
             f.write(builder_log_msg)
         return None
 

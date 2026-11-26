@@ -119,6 +119,26 @@ class TestBuildLateX(unittest.TestCase):
         for file in target:
             self.assertTrue(os.path.isfile(file))
 
+    @subprocess_patch
+    def test_non_ascii_log(self, mock_check_output):
+        '''
+        Test that build_latex() keeps the bytes of a log with
+        non-ASCII characters when adding timestamps.
+        '''
+
+        source   = ['test_script.tex']
+        log_path = helpers.expected_log_path(source)
+        
+        for log_text in ['Log text: “quoted text”'.encode('utf-8'),
+                         'café “quoted text”'.encode('cp1252')]:
+            mock_check_output.side_effect = lambda *args, **kwargs: \
+                fx.latex_side_effect(*args, log_text = log_text, **kwargs)
+            build_latex(target = 'build/latex.pdf', source = source, env = {})
+
+            with open(log_path, 'rb') as log_file:
+                self.assertTrue(log_file.read().endswith(log_text))
+            helpers.check_log(self, log_path, 'succeeded')
+
     def test_bad_extension(self):
         '''Test that build_latex() recognises an improper file extension'''
         helpers.bad_extension(self, build_latex, good = 'test.tex')

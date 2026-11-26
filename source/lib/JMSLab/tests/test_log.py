@@ -317,6 +317,20 @@ class TestRunCsv(unittest.TestCase):
         self.assertEqual(set(df.columns), {'filename', 'success', 'start_time', 'end_time'})
         self.assertEqual(len(df), 2)
 
+    def test_write_run_csv_from_log_dir_non_ascii(self):
+        utf8_log_path = self.make_builder_log('log/analysis/utf8.log', 'succeeded')
+        with open(utf8_log_path, 'ab') as log_file:
+            log_file.write('Log text: “quoted text”'.encode('utf-8'))
+
+        cp1252_log_path = self.make_builder_log('log/analysis/cp1252.log', 'succeeded')
+        with open(cp1252_log_path, 'ab') as log_file:
+            log_file.write('café “quoted text”'.encode('cp1252'))
+
+        log.write_run_csv_from_log_dir()
+        df = pd.read_csv(TESTDIR / 'output/run.csv').set_index('filename')
+        self.assertEqual(df.loc['source/analysis/utf8.py', 'success'], 1)
+        self.assertEqual(df.loc['source/analysis/cp1252.py', 'success'], 1)
+
     def tearDown(self):
         (TESTDIR / 'sconstruct.log').unlink(missing_ok = True)
         shutil.rmtree(TESTDIR / 'log', ignore_errors = True)
